@@ -9,10 +9,7 @@ public class Matrix4f {
     public static final int SIZE = 4 * 4;
     public float[] elements = new float[SIZE];
 
-    public Matrix4f() {
-    }
-
-    ;
+    public Matrix4f() {};
 
     public static Matrix4f identity() {
         Matrix4f result = new Matrix4f();

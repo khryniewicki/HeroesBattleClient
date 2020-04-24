@@ -12,9 +12,9 @@ import static org.lwjgl.opengl.GL20.*;
 public class Shader {
 
 
-    public static final int VERTEX_ATTRIB=0;
-    public static final int TCORD_ATTRIB=1;
-    public static Shader BG;
+    public static final int VERTEX_ATTRIB = 0;
+    public static final int TCORD_ATTRIB = 1;
+    public static Shader BG, BIRD;
 
     private boolean enabled = false;
     private final int ID;
@@ -24,8 +24,11 @@ public class Shader {
         ID = ShaderUtils.load(vertex, fragment);
     }
 
-    public static void loadAll(){
-        BG= new Shader("shaders/bg.vert", "shaders/bg.frag");
+    public static void loadAll() {
+
+        BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
+        BIRD = new Shader("shaders/bird.vert", "shaders/bird.frag");
+
     }
 
 

@@ -170,7 +170,7 @@ private int width = 1280;
     private Thread thread;
     private boolean running = false;
 
-    private long window;
+    public static long window;
 
     private Level level;
 
@@ -251,6 +251,8 @@ private int width = 1280;
         Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.BG.setUniform1i("tex", 1);
 
+        Shader.BIRD.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.BIRD.setUniform1i("tex", 1);
         level = new Level();
     }
 
@@ -289,7 +291,9 @@ private int width = 1280;
     }
 
     private void update() {
+
         glfwPollEvents();
+        level.update();
 
     }
 

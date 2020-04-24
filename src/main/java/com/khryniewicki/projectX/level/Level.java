@@ -3,6 +3,8 @@ package com.khryniewicki.projectX.level;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
+import com.khryniewicki.projectX.math.Matrix4f;
+import com.khryniewicki.projectX.math.Vector;
 
 public class Level {
 
@@ -10,6 +12,9 @@ public class Level {
     private Texture bgTexture;
 
     private int xScroll = 0;
+    private int map =0;
+
+    private Bird bird;
 
     public Level() {
         float[] vertices = new float[]{
@@ -33,21 +38,31 @@ public class Level {
 
         background= new VertexArray(vertices,indices,tcs);
         bgTexture=new Texture("res/bg.jpeg");
+
+        bird= new Bird();
     }
 
     public void update(){
         xScroll--;
+        if (-xScroll % 300 == 0)map++;
+
+        bird.update();
     }
 
 
     public void render(){
         bgTexture.bind();
         Shader.BG.enable();
-
+        background.bind();
+        for (int i = 0; i < map+3; i++) {
+            Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(i * 10 + xScroll* 0.03f, 0.0f,0.0f)));
+            background.draw();
+        }
         background.render();
         Shader.BG.disable();
         bgTexture.unbind();
 
+        bird.render();
     }
 }
 

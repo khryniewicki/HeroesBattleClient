@@ -9,7 +9,14 @@ public class Input extends GLFWKeyCallback {
     public static int[] keys=new int [65536];
 
     @Override
-    public void invoke(long l, int i, int i1, int i2, int i3) {
-        keys[i]= GLFW.GLFW_RELEASE;
+    public void invoke(long window, int key, int scancode, int action, int mods) {
+        keys[key]=  GLFW.GLFW_PRESS;
     }
 }
+
+//    private void moveWithKey(int pressedKey) {
+//        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+//            if (key == pressedKey && action != GLFW_RELEASE)
+//                System.out.println("Jump");
+//        });
+//    }
