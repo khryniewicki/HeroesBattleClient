@@ -14,14 +14,14 @@ public class Level {
     private int xScroll = 0;
     private int map =0;
 
-    private Bird bird;
+    private Wizard wizard;
 
     public Level() {
         float[] vertices = new float[]{
                 -10.0f, -10.0f * 9.0f / 16.0f, 0.0f,
                 -10.0f, 10.0f * 9.0f / 16.0f, 0.0f,
-                0.0f, 10.0f * 9.0f / 16.0f, 0.0f,
-                0.0f, -10.0f * 9.0f / 16.0f, 0.0f
+                10.0f, 10.0f * 9.0f / 16.0f, 0.0f,
+                10.0f, -10.0f * 9.0f / 16.0f, 0.0f
         };
 
         byte[] indices = new byte[] {
@@ -37,16 +37,15 @@ public class Level {
         };
 
         background= new VertexArray(vertices,indices,tcs);
-        bgTexture=new Texture("res/bg.jpeg");
+        bgTexture=new Texture("res/desertforum.png");
 
-        bird= new Bird();
+        wizard = new Wizard();
     }
 
     public void update(){
-        xScroll--;
-        if (-xScroll % 300 == 0)map++;
 
-        bird.update();
+
+        wizard.update();
     }
 
 
@@ -62,7 +61,7 @@ public class Level {
         Shader.BG.disable();
         bgTexture.unbind();
 
-        bird.render();
+        wizard.render();
     }
 }
 
