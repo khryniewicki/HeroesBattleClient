@@ -1,12 +1,15 @@
 package flappy.input;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 public class Input extends GLFWKeyCallback {
 	
 	public static boolean[] keys = new boolean[65536];
-
+	private double mouseX,mouseY;
+	private GLFWCursorPosCallback mouse;
 	public void invoke(long window, int key, int scancode, int action, int mods) {
 		keys[key] = action != GLFW.GLFW_RELEASE; 
 	}
@@ -14,5 +17,12 @@ public class Input extends GLFWKeyCallback {
 	public static boolean isKeyDown(int keycode) {
 		return keys[keycode];
 	}
-	
+
+//	 mouse=new GLFWCursorPosCallback(){
+//		@Override
+//		public void invoke(long window ,double Xpos, double Ypos) {
+//			mouseX=Xpos;
+//			mouseY=Ypos;
+//		}
+//	};
 }

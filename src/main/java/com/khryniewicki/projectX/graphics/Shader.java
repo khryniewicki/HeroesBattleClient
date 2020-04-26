@@ -14,7 +14,7 @@ public class Shader {
 
     public static final int VERTEX_ATTRIB = 0;
     public static final int TCORD_ATTRIB = 1;
-    public static Shader BG, BIRD;
+    public static Shader BG, HERO, OBSTACLE;
 
     private boolean enabled = false;
     private final int ID;
@@ -27,7 +27,8 @@ public class Shader {
     public static void loadAll() {
 
         BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
-        BIRD = new Shader("shaders/bird.vert", "shaders/bird.frag");
+        HERO = new Shader("shaders/bird.vert", "shaders/bird.frag");
+        OBSTACLE = new Shader("shaders/object.vert", "shaders/object.frag");
 
     }
 

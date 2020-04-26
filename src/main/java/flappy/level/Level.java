@@ -1,5 +1,6 @@
 package flappy.level;
 
+import com.khryniewicki.projectX.level.Hero;
 import flappy.graphics.Shader;
 import flappy.graphics.Texture;
 import flappy.graphics.VertexArray;
@@ -25,7 +26,6 @@ public class Level {
 	private int index = 0;
 	private float OFFSET = 5.0f;
 	private boolean control = true, reset = false;
-	
 	private Random random = new Random();
 	
 	private float time = 0.0f;
@@ -139,7 +139,7 @@ public class Level {
 	public boolean isGameOver() {
 		return reset;
 	}
-	
+
 	public void render() {
 		bgTexture.bind();
 		Shader.BG.enable();
