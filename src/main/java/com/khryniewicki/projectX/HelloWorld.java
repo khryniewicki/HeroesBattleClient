@@ -20,8 +20,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class HelloWorld implements Runnable {
 
 
-private int width = 1280;
-    private int height = 720;
+private int width = 1600;
+    private int height = 800;
 
     private Thread thread;
     private boolean running = false;
@@ -112,6 +112,14 @@ private int width = 1280;
 
         Shader.OBSTACLE.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.OBSTACLE.setUniform1i("tex", 1);
+        Shader.TERRAIN.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.TERRAIN.setUniform1i("tex", 1);
+
+        Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.HERO.setUniform1i("tex", 1);
+
+
+
         level = new Level();
     }
 

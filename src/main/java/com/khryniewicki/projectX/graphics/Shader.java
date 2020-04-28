@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.graphics;
 
+import com.khryniewicki.projectX.level.Terrain;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ShaderUtils;
@@ -14,7 +15,7 @@ public class Shader {
 
     public static final int VERTEX_ATTRIB = 0;
     public static final int TCORD_ATTRIB = 1;
-    public static Shader BG, HERO, OBSTACLE;
+    public static Shader BG, HERO, OBSTACLE,TERRAIN;
 
     private boolean enabled = false;
     private final int ID;
@@ -27,8 +28,9 @@ public class Shader {
     public static void loadAll() {
 
         BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
-        HERO = new Shader("shaders/bird.vert", "shaders/bird.frag");
+        HERO = new Shader("shaders/hero.vert", "shaders/hero.frag");
         OBSTACLE = new Shader("shaders/object.vert", "shaders/object.frag");
+        TERRAIN = new Shader("shaders/terrain.vert", "shaders/terrain.frag");
 
     }
 

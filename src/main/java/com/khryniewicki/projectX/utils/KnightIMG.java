@@ -21,7 +21,7 @@ public class KnightIMG {
     public static final Texture SILVER_KNIGHT_WALK_0 = new Texture("res/knights/PNG/silver_knight/2_WALK_000.png");
     public static final Texture SILVER_KNIGHT_RUN_0 = new Texture("res/knights/PNG/silver_knight/3_RUN_000.png");
 
-
+    public static final Texture DOT= new Texture("res/dot.png");
 
 
 }

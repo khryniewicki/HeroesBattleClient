@@ -7,32 +7,31 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.KnightIMG;
-import flappy.level.Pipe;
-import lombok.Data;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
-@Data
-public class Hero {
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-    public float SIZE = 1.0f;
+public class Pointer {
+
+    public float SIZE = 0.1f;
 
 
     private VertexArray mesh;
     private Texture texture;
 
     private Vector position = new Vector();
-    private float rot;
+
     private float delta = 0.0f;
     public static boolean isMovingLeft = false;
 
-    public static float hero_positionX0 = 1f;
-    public static float hero_positionY0 = 1f;
+    public static float hero_positionX0 = -0f;
+    public static float hero_positionY0 = -0f;
     private float[] tcs;
 
-    public Hero() {
+    public Pointer() {
         setMesh(isMovingLeft(false));
-        texture = KnightIMG.SILVER_KNIGHT_IDLE;
+        texture = KnightIMG.DOT;
     }
 
     public VertexArray isMovingLeft(boolean isMovingLeft) {
@@ -40,6 +39,7 @@ public class Hero {
         if (isMovingLeft) {
             i = -1;
         }
+
         float[] vertices = new float[]{
                 hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 1.0f,
                 hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + SIZE / 2.0f, 1.0f,
@@ -70,34 +70,29 @@ public class Hero {
         });
         glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
 
-                    if (key == GLFW.GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
+                    if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_UP && action != GLFW_RELEASE && !Level.collisions[2]) {
                         System.out.println();
-                        position.y += 0.2f;
-                        texture = KnightIMG.SILVER_KNIGHT_WALK_0;
+                        position.y += 0.05f;
                         setMesh(isMovingLeft(false));
 
-                    } else if (key == GLFW.GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
+                    } else if (key == GLFW.GLFW_KEY_DOWN && action != GLFW_RELEASE && !Level.collisions[3]) {
                         System.out.println();
-                        position.y -= 0.2f;
-                        texture = KnightIMG.SILVER_KNIGHT_WALK_0;
+                        position.y -= 0.05f;
                         setMesh(isMovingLeft(false));
 
 
-                    } else if (key == GLFW.GLFW_KEY_LEFT && action != GLFW_RELEASE && !Collision.collisions[1]) {
+                    } else if (key == GLFW.GLFW_KEY_LEFT && action != GLFW_RELEASE && !Level.collisions[1]) {
                         System.out.println();
-                        position.x -= 0.2f;
-                        texture = KnightIMG.SILVER_KNIGHT_WALK_0;
+                        position.x -= 0.05f;
                         setMesh(isMovingLeft(true));
 
 
-                    } else if (key == GLFW.GLFW_KEY_RIGHT && action != GLFW_RELEASE  && !Collision.collisions[0]) {
+                    } else if (key == GLFW.GLFW_KEY_RIGHT && action != GLFW_RELEASE  && !Level.collisions[0]) {
                         System.out.println();
-                        position.x += 0.2f;
-                        texture = KnightIMG.SILVER_KNIGHT_WALK_0;
+                        position.x += 0.05f;
                         setMesh(isMovingLeft(false));
 
                     } else {
-                        texture = KnightIMG.SILVER_KNIGHT_IDLE;
                         isMovingLeft = false;
 
                     }
@@ -134,6 +129,4 @@ public class Hero {
         return position.y;
     }
 
-
 }
-

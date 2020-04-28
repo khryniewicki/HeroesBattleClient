@@ -1,32 +1,44 @@
 package com.khryniewicki.projectX.level;
 
 
-import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.utils.ObstacleStorage;
+import lombok.Data;
 
-
-public class Obstacle {
+@Data
+public class Obstacle implements MapObstacles {
 
     private Vector position = new Vector();
     private Matrix4f ml_matrix;
 
     private static Texture texture;
-    private static VertexArray mesh;
+    private VertexArray mesh;
 
-    private static float width = 0.11f;
-    private static float height = 1.0f;
-    public static float obstacle_positionX0 = -5.2f;
-    public static float obstacle_positionY0 = -3.2f;
+    private float width;
+    private float height;
+    private float obstacle_positionX0;
+    private float obstacle_positionY0;
+    private float obstacle_positionX1;
+    private float obstacle_positionY1;
 
-    public Obstacle() {
+    private float visible=-1;
+
+    public Obstacle(float width, float height, float obstacle_positionX0, float obstacle_positionY0) {
+        setWidth(width);
+        setHeight(height);
+        setObstacle_positionX0(obstacle_positionX0);
+        setObstacle_positionY0(obstacle_positionY0);
+        setObstacle_positionX1(obstacle_positionX0 + width);
+        setObstacle_positionY1(obstacle_positionY0 + height);
+
         float[] vertices = new float[]{
-                obstacle_positionX0 + 0.0f,  obstacle_positionY0 + 0.0f,  -0.1f,
-                obstacle_positionX0 + 0.0f,  obstacle_positionY0 + height,-0.1f,
-                obstacle_positionX0 + width, obstacle_positionY0 + height,-0.1f,
-                obstacle_positionX0 + width, obstacle_positionY0 + 0.0f,  -0.1f
+                0 + 0.0f, 0 + 0.0f,    visible*0.1f,
+                0 + 0.0f, 0 + height,  visible*0.1f,
+                0 + width, 0 + height, visible*0.1f,
+                0 + width, 0 + 0.0f,   visible*0.1f
         };
 
         byte[] indices = new byte[]{
@@ -42,29 +54,10 @@ public class Obstacle {
         };
 
         mesh = new VertexArray(vertices, indices, tcs);
-        texture = new Texture("res/pipe.png");
-    }
-
-    public Obstacle(float x, float y) {
-        position.x = x;
-        position.y = y;
+        texture = ObstacleStorage.pipe;
+        position.x = obstacle_positionX0;
+        position.y = obstacle_positionY0;
         ml_matrix = Matrix4f.translate(position);
-    }
-
-    public void update() {
-    }
-
-
-    public void render() {
-        Shader.OBSTACLE.enable();
-
-        Shader.OBSTACLE.setUniformMat4f("ml_matrix", com.khryniewicki.projectX.math.Matrix4f.translate(position));
-
-        texture.bind();
-
-        mesh.render();
-
-        Shader.OBSTACLE.disable();
     }
 
     public float getX() {
@@ -75,11 +68,17 @@ public class Obstacle {
         return position.y;
     }
 
+
+    @Override
+    public float getTangens() {
+        return 0;
+    }
+
     public Matrix4f getModelMatrix() {
         return ml_matrix;
     }
 
-    public static VertexArray getMesh() {
+    public VertexArray getMesh() {
         return mesh;
     }
 
@@ -87,11 +86,5 @@ public class Obstacle {
         return texture;
     }
 
-    public static float getWidth() {
-        return width;
-    }
 
-    public static float getHeight() {
-        return height;
-    }
 }
