@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.Map;
 
+import com.khryniewicki.projectX.game.Character.HeroMock;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -26,6 +27,7 @@ public class Level {
     private Vector position = new Vector();
 
     private static Hero hero;
+    private static HeroMock heroMock;
 
     public static Float getHero_x() {
         if (hero==null)
@@ -72,6 +74,7 @@ public class Level {
 
 
         hero = new Hero();
+        heroMock=new HeroMock();
         pointer = new Pointer();
         obstacles=ObstacleStorage.getObstacle();
         terrains=ObstacleStorage.getTerrainList();
@@ -110,6 +113,7 @@ public class Level {
 
     public void update() {
         hero.update();
+       heroMock.update();
         if (pointerON)
         pointer.update();
     }
@@ -134,6 +138,7 @@ public class Level {
         MyCollision.collisionTest(hero);
 
         hero.render();
+        heroMock.render();
            if (pointerON)
                pointer.render();
 

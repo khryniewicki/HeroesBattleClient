@@ -119,6 +119,8 @@ private int width = 1600;
         Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.HERO.setUniform1i("tex", 1);
 
+        Shader.MOCKHERO.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.MOCKHERO.setUniform1i("tex", 1);
 
 
         level = new Level();

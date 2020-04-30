@@ -41,7 +41,7 @@ function getCoordinates() {
 
     $.get("/checkCoordinate", function onSuccess(HeroDTO) {
         let elementById = document.getElementById('hero');
-        elementById.innerText = HeroDTO.character +" [x:" +HeroDTO.positionX+",y:"+HeroDTO.positionY+"]";
+        elementById.innerText = HeroDTO.character +" [x: " +HeroDTO.positionX+",y: "+HeroDTO.positionY+"]";
             sendHeroCoordinates(HeroDTO);
     });
 }
