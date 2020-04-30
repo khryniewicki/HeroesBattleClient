@@ -7,11 +7,13 @@ window.addEventListener('load', connect);
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
+    setInterval(getCoordinates, 50);
 }
-
+let connected;
 function connect() {
     var contextPath = window.location.protocol + "//" + window.location.host+ '/websocket-example';
     console.log(contextPath);
+
     var socket = new SockJS(contextPath);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -21,7 +23,9 @@ function connect() {
 
         });
     });
+
 }
+
 
 function disconnect() {
     if (stompClient !== null) {
@@ -37,18 +41,11 @@ function getCoordinates() {
 
     $.get("/checkCoordinate", function onSuccess(HeroDTO) {
         let elementById = document.getElementById('hero');
-        elementById.innerText = HeroDTO;
-
+        elementById.innerText = HeroDTO.character +" [x:" +HeroDTO.positionX+",y:"+HeroDTO.positionY+"]";
             sendHeroCoordinates(HeroDTO);
-
-            // console.log(HeroDTO);
-
-
     });
 }
 
-setInterval(getCoordinates, 50);
-setTimeout(getCoordinates, 2000);
 
 function sendHeroCoordinates(HeroDTO) {
     if(X!=HeroDTO.positionX || Y!=HeroDTO.positionY) {
@@ -63,7 +60,8 @@ function sendHeroCoordinates(HeroDTO) {
 }
 
 function receiveHeroCoordinates(HeroCoordiantes) {
-        console.log(HeroCoordiantes +" delivered")
+
+    console.log(HeroCoordiantes +" delivered")
 }
 
 
