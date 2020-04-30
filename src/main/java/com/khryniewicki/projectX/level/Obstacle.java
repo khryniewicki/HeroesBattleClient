@@ -24,7 +24,7 @@ public class Obstacle implements MapObstacles {
     private float obstacle_positionX1;
     private float obstacle_positionY1;
 
-    private float visible=-1;
+    private float visible=1;
 
     public Obstacle(float width, float height, float obstacle_positionX0, float obstacle_positionY0) {
         setWidth(width);

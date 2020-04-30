@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.graphics;
 import com.khryniewicki.projectX.utils.BufferUtilsOwn;
+import org.springframework.stereotype.Component;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;

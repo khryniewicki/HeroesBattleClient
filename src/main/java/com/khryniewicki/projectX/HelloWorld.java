@@ -7,6 +7,8 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.nio.*;
 
@@ -16,7 +18,7 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
-
+@Component
 public class HelloWorld implements Runnable {
 
 
@@ -180,8 +182,7 @@ private int width = 1600;
     }
 
 
-    public static void main(String[] args) {
-        new HelloWorld().start();
+    public static void main(String[] args) { new HelloWorld().start();
     }
 
 

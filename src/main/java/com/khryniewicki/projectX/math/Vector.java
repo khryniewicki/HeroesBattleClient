@@ -1,10 +1,13 @@
 package com.khryniewicki.projectX.math;
 
+import lombok.Data;
+
+@Data
 public class Vector {
 
-    public float x, y, z;
+    public Float x, y, z;
 
-    public Vector(float x, float y, float z) {
+    public Vector(Float x, Float y, Float z) {
         this.x = x;
         this.y = y;
         this.z = z;

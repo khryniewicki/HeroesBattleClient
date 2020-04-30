@@ -124,8 +124,9 @@ public class ObstacleStorage {
     static Terrain mountain_line_9 = new Terrain(2.45f, -1.8f, 2.95f, -1.7f);
     static Terrain mountain_line_10 = new Terrain(2.95f, -1.7f, 4f, -0.2f);
     static Terrain mountain_line_11 = new Terrain(4f, -0.2f, 0.4f);
-    static Terrain mountain_line_12 = new Terrain(3.95f, 0.2f, 3.35f, 0.95f);
-    static Terrain mountain_line_13 = new Terrain(3.35f, 0.95f, 2.8f, 0.80f);
+    static Terrain mountain_line_12 = new Terrain(3.95f, 0.2f, 3.35f, 0.8f);
+    static Terrain mountain_line_13 = new Terrain(3.15f, 0.85f, 0.2f);
+    static Terrain mountain_line_13A = new Terrain(2.95f, 0.85f, 0.2f);
 
     static Terrain mountain_line_14 = new Terrain(2.75f, 0.80f, 1.15f);
     static Terrain mountain_line_15 = new Terrain(2.8f, 1.95f, 1.8f, 2.0f);
@@ -212,7 +213,7 @@ public class ObstacleStorage {
             mountain_line_2A, mountain_line_3, mountain_line_4,
             mountain_line_5, mountain_line_6, mountain_line_7, mountain_line_8,
             mountain_line_9, mountain_line_10, mountain_line_11, mountain_line_12,
-            mountain_line_13, mountain_line_14, mountain_line_15, mountain_line_16,
+            mountain_line_13, mountain_line_13A,mountain_line_14, mountain_line_15, mountain_line_16,
             mountain_line_17, mountain_line_18, mountain_line_19,mountain_line_20,mountain_line_21,
             mountain_line_22,mountain_line_23,mountain_line_24,mountain_line_25,mountain_line_26,
 

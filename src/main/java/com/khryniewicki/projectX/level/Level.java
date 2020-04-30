@@ -7,10 +7,11 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
-
+import java.util.*;
 import java.util.List;
 
 @Data
+
 public class Level {
 
     private VertexArray background;
@@ -20,12 +21,25 @@ public class Level {
     private int map = 0;
     private Vector position = new Vector();
 
-    private Hero hero;
+    private static Hero hero;
+
+    public static Float getHero_x() {
+        if (hero==null)
+            return 0f;
+        else
+        return hero.getX();
+    }
+    public static Float getHero_y() {
+        if (hero==null)
+            return 0f;
+        else
+            return hero.getY();
+    }
     private Pointer pointer;
     private Collision MyCollision;
     private List<MapObstacles> obstacles;
     private List<MapObstacles> terrains;
-
+    private boolean pointerON=false;
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
     public static boolean[] collisions = new boolean[]{collision_right, collision_left, collision_up, collision_down};
 
@@ -92,7 +106,8 @@ public class Level {
 
     public void update() {
         hero.update();
-//        pointer.update();
+        if (pointerON)
+        pointer.update();
     }
 
        public void render() {
@@ -115,7 +130,8 @@ public class Level {
         MyCollision.collisionTest(hero);
 
         hero.render();
-//       pointer.render();
+           if (pointerON)
+               pointer.render();
 
     }
 }

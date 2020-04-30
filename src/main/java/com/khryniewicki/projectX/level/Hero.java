@@ -7,12 +7,15 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.KnightIMG;
-import flappy.level.Pipe;
 import lombok.Data;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.*;
+
 import static org.lwjgl.glfw.GLFW.*;
+
 @Data
+
 public class Hero {
 
     public float SIZE = 1.0f;
@@ -25,6 +28,7 @@ public class Hero {
     private float rot;
     private float delta = 0.0f;
     public static boolean isMovingLeft = false;
+
 
     public static float hero_positionX0 = 1f;
     public static float hero_positionY0 = 1f;
@@ -90,7 +94,7 @@ public class Hero {
                         setMesh(isMovingLeft(true));
 
 
-                    } else if (key == GLFW.GLFW_KEY_RIGHT && action != GLFW_RELEASE  && !Collision.collisions[0]) {
+                    } else if (key == GLFW.GLFW_KEY_RIGHT && action != GLFW_RELEASE && !Collision.collisions[0]) {
                         System.out.println();
                         position.x += 0.2f;
                         texture = KnightIMG.SILVER_KNIGHT_WALK_0;
@@ -126,12 +130,13 @@ public class Hero {
         this.mesh = mesh;
     }
 
-    public float getX() {
-        return position.x;
+    public Float getX() {
+
+        return Optional.ofNullable(position.x).orElse(0f);
     }
 
-    public float getY() {
-        return position.y;
+    public Float getY() {
+        return Optional.ofNullable(position.y).orElse(0f) ;
     }
 
 
