@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.Character;
 
 import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.math.Vector;
@@ -16,6 +17,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public class Hero extends SuperHero{
     private Vector MyPosition;
     private Texture MyTexture;
+    private Application.MyStompSessionHandler application= new Application.MyStompSessionHandler();
     public Hero() {
         setPosition(new Vector());
         setMesh(isMovingLeft(false));
@@ -68,7 +70,7 @@ public class Hero extends SuperHero{
                     }
                 }
         );
-
+        application.sendHeroCoordinatesFromWebsocket();
     }
 
 

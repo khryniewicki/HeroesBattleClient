@@ -1,5 +1,7 @@
 package com.khryniewicki.projectX.game.Map;
 
+import com.khryniewicki.projectX.config.Application;
+import com.khryniewicki.projectX.game.Character.HeroDTO;
 import com.khryniewicki.projectX.game.Character.HeroMock;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -113,7 +115,8 @@ public class Level {
 
     public void update() {
         hero.update();
-       heroMock.update();
+
+        heroMock.update();
         if (pointerON)
         pointer.update();
     }

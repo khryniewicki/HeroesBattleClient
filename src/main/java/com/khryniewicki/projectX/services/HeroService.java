@@ -6,14 +6,12 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 @Data
 public class HeroService {
     private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
-
-
 
     private Float getPositionX() {
         return Level.getHero_x();

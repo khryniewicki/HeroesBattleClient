@@ -50,7 +50,7 @@ public class HeroReceiveService {
             return new HeroDTO(heroMockPositionX, heroMockPositionY);        }
         return heroMock;
     }
-    public static void receivedMockPosition(HeroDTO heroDTO) {
+    public  void receivedMockPosition(HeroDTO heroDTO) {
         setHeroMock(heroDTO);
         setHeroMockPositionX(heroMockPositionX);
         setHeroMockPositionY(heroMockPositionY);
