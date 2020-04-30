@@ -1,13 +1,17 @@
-package com.khryniewicki.projectX.level;
+package com.khryniewicki.projectX.game.Map;
 
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
+import com.khryniewicki.projectX.game.Character.Hero;
+import com.khryniewicki.projectX.game.Character.Pointer;
+import com.khryniewicki.projectX.game.Collision.Collision;
+
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
-import java.util.*;
+
 import java.util.List;
 
 @Data

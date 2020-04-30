@@ -1,6 +1,5 @@
 package flappy.level;
 
-import com.khryniewicki.projectX.level.Hero;
 import flappy.graphics.Shader;
 import flappy.graphics.Texture;
 import flappy.graphics.VertexArray;

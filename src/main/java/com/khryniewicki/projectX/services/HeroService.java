@@ -1,14 +1,16 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.level.Level;
+import com.khryniewicki.projectX.game.Character.Hero;
+import com.khryniewicki.projectX.game.Character.HeroDTO;
+import com.khryniewicki.projectX.game.Map.Level;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class HeroService {
-    Float tmpPositionX, tmpPositionY;
-
+    private Float tmpPositionX, tmpPositionY;
+    private HeroDTO tmpHero;
     private Float getPositionX() {
         return Level.getHero_x();
     }
@@ -26,15 +28,17 @@ public class HeroService {
         }
         tmpPositionX = getPositionX();
         tmpPositionY = getPositionY();
+        tmpHero=new HeroDTO(tmpPositionX,tmpPositionY);
         return true;
     }
 
-    public String getHeroPositions() {
+    public HeroDTO getHeroPositions() {
         Boolean isCoordinatesChanged = checkIfCoordinateChanged();
+
         if (isCoordinatesChanged) {
-            return String.format("[x : %f, y : %f ", getPositionX(), getPositionY());
+          return new HeroDTO(getPositionX(),getPositionY());
         }
-        return "Nothing";
+        return tmpHero ;
 
     }
 }

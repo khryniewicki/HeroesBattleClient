@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.graphics;
 
-import com.khryniewicki.projectX.level.Terrain;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ShaderUtils;

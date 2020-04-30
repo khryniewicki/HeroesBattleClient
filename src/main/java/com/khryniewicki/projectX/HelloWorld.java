@@ -2,12 +2,11 @@ package com.khryniewicki.projectX;
 
 
 import com.khryniewicki.projectX.graphics.Shader;
-import com.khryniewicki.projectX.level.Level;
+import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.math.Matrix4f;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.nio.*;

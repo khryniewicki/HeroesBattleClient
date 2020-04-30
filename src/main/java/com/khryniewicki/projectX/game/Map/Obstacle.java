@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.level;
+package com.khryniewicki.projectX.game.Map;
 
 
 import com.khryniewicki.projectX.graphics.Texture;

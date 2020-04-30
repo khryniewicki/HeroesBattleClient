@@ -1,5 +1,8 @@
-package com.khryniewicki.projectX.level;
+package com.khryniewicki.projectX.game.Collision;
 
+import com.khryniewicki.projectX.game.Character.Hero;
+import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.Map.MapObstacles;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 
