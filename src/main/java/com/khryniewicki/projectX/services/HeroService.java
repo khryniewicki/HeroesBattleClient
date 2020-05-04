@@ -2,15 +2,16 @@ package com.khryniewicki.projectX.services;
 
 import com.khryniewicki.projectX.game.Character.HeroDTO;
 import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.utils.GameUtill;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-//@Service
+
 @RequiredArgsConstructor
 @Data
 public class HeroService {
-    private Float tmpPositionX, tmpPositionY;
+    private Float tmpPositionX= GameUtill.heroStartingPositionX;
+    private Float tmpPositionY=GameUtill.heroStartingPositionY;
     private HeroDTO tmpHero;
 
     private Float getPositionX() {

@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.Map;
 
-import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.Character.HeroDTO;
+import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.game.Attack.Spell;
 import com.khryniewicki.projectX.game.Character.HeroMock;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -12,10 +12,15 @@ import com.khryniewicki.projectX.game.Collision.Collision;
 
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
+import org.lwjgl.BufferUtils;
 
+import java.nio.DoubleBuffer;
 import java.util.List;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 @Data
 
@@ -32,22 +37,19 @@ public class Level {
     private static HeroMock heroMock;
 
     public static Float getHero_x() {
-        if (hero==null)
-            return 0f;
-        else
-        return hero.getX();
+        return hero == null ? GameUtill.heroStartingPositionX : hero.getX();
     }
+
     public static Float getHero_y() {
-        if (hero==null)
-            return 0f;
-        else
-            return hero.getY();
+        return hero == null ? GameUtill.heroStartingPositionY : hero.getY();
     }
+
     private Pointer pointer;
     private Collision MyCollision;
     private List<MapObstacles> obstacles;
     private List<MapObstacles> terrains;
-    private boolean pointerON=false;
+    private Spell spell;
+    private boolean pointerON = false;
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
     public static boolean[] collisions = new boolean[]{collision_right, collision_left, collision_up, collision_down};
 
@@ -76,11 +78,12 @@ public class Level {
 
 
         hero = new Hero();
-        heroMock=new HeroMock();
+        heroMock = new HeroMock();
         pointer = new Pointer();
-        obstacles=ObstacleStorage.getObstacle();
-        terrains=ObstacleStorage.getTerrainList();
-        MyCollision=new Collision();
+        obstacles = ObstacleStorage.getObstacle();
+        terrains = ObstacleStorage.getTerrainList();
+        MyCollision = new Collision();
+        spell = hero.castingSpell();
 
     }
 
@@ -115,13 +118,13 @@ public class Level {
 
     public void update() {
         hero.update();
-
         heroMock.update();
+        spell.update();
         if (pointerON)
-        pointer.update();
+            pointer.update();
     }
 
-       public void render() {
+    public void render() {
         bgTexture.bind();
         Shader.BG.enable();
         background.bind();
@@ -142,10 +145,12 @@ public class Level {
 
         hero.render();
         heroMock.render();
-           if (pointerON)
-               pointer.render();
+        spell.render();
+        if (pointerON)
+            pointer.render();
 
     }
-}
 
+
+}
 

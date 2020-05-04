@@ -14,7 +14,7 @@ public class Shader {
 
     public static final int VERTEX_ATTRIB = 0;
     public static final int TCORD_ATTRIB = 1;
-    public static Shader BG, HERO, OBSTACLE,TERRAIN,MOCKHERO;
+    public static Shader BG, HERO, OBSTACLE, TERRAIN, MOCKHERO, SPELL;
 
     private boolean enabled = false;
     private final int ID;
@@ -31,6 +31,7 @@ public class Shader {
         OBSTACLE = new Shader("shaders/object.vert", "shaders/object.frag");
         TERRAIN = new Shader("shaders/terrain.vert", "shaders/terrain.frag");
         MOCKHERO = new Shader("shaders/hero.vert", "shaders/hero.frag");
+        SPELL = new Shader("shaders/spell.vert", "shaders/spell.frag");
 
     }
 

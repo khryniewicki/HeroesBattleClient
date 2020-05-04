@@ -22,6 +22,8 @@ public class KnightIMG {
     public static final Texture SILVER_KNIGHT_RUN_0 = new Texture("res/knights/PNG/silver_knight/3_RUN_000.png");
 
     public static final Texture DOT= new Texture("res/dot.png");
+    public static final Texture FIRE= new Texture("res/fire3.png");
+    public static final Texture FIREBALL= new Texture("res/fireball.png");
 
 
 }

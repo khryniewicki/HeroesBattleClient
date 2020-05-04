@@ -25,7 +25,7 @@ public class Terrain implements MapObstacles {
     private float obstacle_positionY1;
     private float obstacle_positionX0;
     private float obstacle_positionY0;
-    private float visible = 1;
+    private float visible =- 1;
 
     public Terrain(float obstacle_positionX0, float obstacle_positionY0, float obstacle_positionX1, float obstacle_positionY1) {
         width = obstacle_positionX1 - obstacle_positionX0;

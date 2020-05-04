@@ -6,7 +6,9 @@ import com.khryniewicki.projectX.game.Map.MapObstacles;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -24,6 +26,11 @@ public class Collision {
 
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
     public static Boolean[] collisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
+    public static Boolean[] BoundaryCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
+    public static Boolean[] ObstacleCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
+    public static Boolean[] TerrainCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
+    boolean isCollision;
+    HashMap<MapObstacles, List<Boolean>> mapObstaclesListHashMap;
 
     private List<MapObstacles> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
     private List<MapObstacles> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
@@ -32,37 +39,15 @@ public class Collision {
     private List<MapObstacles> terrainList = ObstacleStorage.getTerrainList();
 
 
-    public boolean collisionTest(Hero hero) {
-        setHero(hero);
-        bx = hero.getX();
-        by = hero.getY();
-        MAP_QUARTERS map_quarter = checkInWhichQuerterIsHero();
-        boolean isCollisionWithObstacle = ObstacleCollisionInHeroQuarter(map_quarter);
-        ;
-        boolean isCollisionWithTerrain = ObstacleCollision(terrainList);
+    public void collisionTest(Hero hero) {
+        setHero(hero); bx = hero.getX();by = hero.getY();
 
-        if (!isCollisionWithObstacle && !isCollisionWithTerrain) {
-            Arrays.fill(collisions, false);
-        }
-        return true;
+        obstacleCollision(checkInWhichQuerterIsHero());
+        terrainCollision(terrainList);
+        boundaryCollision();
+
+        checkCollisionForSpecificDirection();
     }
-
-    private boolean ObstacleCollisionInHeroQuarter(MAP_QUARTERS map_quarter) {
-        switch (map_quarter) {
-            case BOTTOM_LEFT:
-                return ObstacleCollision(obstacleList_BL);
-            case BOTTOM_RIGHT:
-                return ObstacleCollision(obstacleList_BR);
-            case TOP_LEFT:
-                return ObstacleCollision(obstacleList_TL);
-            case TOP_RIGHT:
-                return ObstacleCollision(obstacleList_TR);
-            default:
-                throw new IllegalArgumentException("There is no map quarter");
-        }
-
-    }
-
     private MAP_QUARTERS checkInWhichQuerterIsHero() {
         MAP_QUARTERS quarter;
         if (bx > 0 && by > 0) {
@@ -77,14 +62,82 @@ public class Collision {
         return quarter;
     }
 
-    public boolean ObstacleCollision(List<MapObstacles> obstacles) {
+    private void checkCollisionForSpecificDirection() {
+        Arrays.fill(collisions, false);
+        for (int i = 0; i <4 ; i++) {
+        if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
+            collisions[i] = true;}
+    }
+
+    private boolean boundaryCollision() {
+        Arrays.fill(BoundaryCollisions, false);
+        if (bx >= 9.5f) {
+            BoundaryCollisions[0] = true;
+            return true;
+        } else if (bx <= -9.5f) {
+            BoundaryCollisions[1] = true;
+            return true;
+        } else if (by >= 5.0f) {
+            BoundaryCollisions[2] = true;
+            return true;
+        } else if (by <= -5.2f) {
+            BoundaryCollisions[3] = true;
+            return true;
+        } else
+            return false;
+    }
+
+    private boolean obstacleCollision(MAP_QUARTERS map_quarter) {
+        switch (map_quarter) {
+            case BOTTOM_LEFT:
+                return obstacleCollisionInQuarter(obstacleList_BL);
+            case BOTTOM_RIGHT:
+                return obstacleCollisionInQuarter(obstacleList_BR);
+            case TOP_LEFT:
+                return obstacleCollisionInQuarter(obstacleList_TL);
+            case TOP_RIGHT:
+                return obstacleCollisionInQuarter(obstacleList_TR);
+            default:
+                throw new IllegalArgumentException("There is no map quarter");
+        }
+
+    }
+
+
+
+    public boolean obstacleCollisionInQuarter(List<MapObstacles> mapObstacles) {
+        return checkconditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
+    }
+
+    public boolean terrainCollision(List<MapObstacles> mapObstacles) {
+        return checkconditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
+    }
+
+    private boolean checkconditionForObstacleOrTerrain(List<MapObstacles> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
+        Arrays.fill(obstacleOrTerrainCollisions,false);
+        if (collision(mapObstacles)) {
+            mapObstaclesListHashMap.values().forEach(e -> {
+                for (int i = 0; i < e.size(); i++) {
+                    Boolean isCollisionWithObstacle = e.get(i);
+                    if (isCollisionWithObstacle)
+                        obstacleOrTerrainCollisions[i] = true;
+                }
+            });
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean collision(List<MapObstacles> obstacles) {
 
         bx0 = bx - hero.SIZE / 2.0f + hero_standard_offset;
         bx1 = bx + hero.SIZE / 2.0f - hero_standard_offset;
         by0 = by - hero.SIZE / 2.0f + hero_standard_offset;
         by1 = by + hero.SIZE / 2.0f - hero_top_offset;
+        isCollision = false;
+        mapObstaclesListHashMap=new HashMap<>();
         float proximtyValue;
-        boolean isCollision = false;
+
         for (MapObstacles obstacle : obstacles) {
             float tangens = obstacle.getTangens();
 
@@ -112,43 +165,26 @@ public class Collision {
                 proximtyValue = 0.3f;
 
             }
-
             float[] obstacleCoordinates = {px0, px1, py0, py1};
             float[] heroCoordinates = {bx1, bx0, by1, by0};
-
+            List<Boolean> ListWithDirectionCollision = Arrays.asList(collisions);
+            mapObstaclesListHashMap.put(obstacle, ListWithDirectionCollision);
             if (bx1 > px0 && bx0 < px1) {
                 if (by1 > py0 && by0 < py1) {
+                    ListWithDirectionCollision = new ArrayList<>();
                     for (int i = 0; i < obstacleCoordinates.length; i++) {
                         float proximity = Math.abs(obstacleCoordinates[i] - heroCoordinates[i]);
 
-
                         if (proximity <= proximtyValue) {
-                            collisions[i] = true;
-                        } else if (proximity > proximtyValue && collisions[i] == true)
-                            continue;
-                        else
-                            collisions[i] = false;
+                            ListWithDirectionCollision.add(true);
+                        } else
+                            ListWithDirectionCollision.add(false);
                     }
-//                   System.out.println(String.format("C! RIGHT[(bx1) %f > %f (px)] LEFT[(bx0) %f < %f (px1)] UP[(by1) %f > %f (py0)] DOWN[(by0) %f < %f (py1)] ", bx1,px0,bx0, px1,by1,py0,by0,py1 ));
-
-//                    System.out.println(String.format("Object:[%f,%f,%f,%f] Hero:[%f,%f,%f,%f]", px0, px1, py0, py1, bx0, bx1, by0, by1));
-//                    System.out.println(Arrays.toString(collisions));
+                    mapObstaclesListHashMap.put(obstacle, ListWithDirectionCollision);
                     isCollision = true;
                 }
             }
-//            System.out.println(String.format("RIGHT[(bx1) %f > %f (px)] LEFT[(bx0) %f < %f (px1)] UP[(by1) %f > %f (py0)] DOWN[(by0) %f < %f (py1)] ", bx1,px0,bx0, px1,by1,py0,by0,py1 ));
-
-//            System.out.println(Arrays.toString(collisions));
-
-
         }
-        if (isCollision) {
-            List<Boolean> booleans = Arrays.asList(collisions);
-            if (booleans.stream().allMatch(e -> e.equals(true)))
-                return false;
-            return booleans.stream().anyMatch(e -> e.equals(true));
-        }
-        return false;
+        return isCollision;
     }
-
 }

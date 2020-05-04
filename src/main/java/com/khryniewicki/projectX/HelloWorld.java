@@ -21,8 +21,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class HelloWorld implements Runnable {
 
 
-private int width = 1600;
-    private int height = 800;
+    public static int width = 1600;
+    public static int height = 800;
 
     private Thread thread;
     private boolean running = false;
@@ -122,6 +122,8 @@ private int width = 1600;
         Shader.MOCKHERO.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.MOCKHERO.setUniform1i("tex", 1);
 
+        Shader.SPELL.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.SPELL.setUniform1i("tex", 1);
 
         level = new Level();
     }
@@ -144,7 +146,7 @@ private int width = 1600;
                 updates++;
                 delta--;
             }
-            render();
+                render();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;

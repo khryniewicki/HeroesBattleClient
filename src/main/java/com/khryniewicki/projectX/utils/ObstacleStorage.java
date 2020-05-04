@@ -76,7 +76,7 @@ public class ObstacleStorage {
     static Obstacle palm13 = new Obstacle(0.11f, 0.8f, 6.4f, 3.0f);
     static Obstacle palm14 = new Obstacle(0.11f, 0.7f, 6.25f, 3.55f);
 
-    static Obstacle stone9 = new Obstacle(0.3f, 0.35f, 3.0f, 3.5f);
+    static Obstacle stone9 = new Obstacle(0.3f, 0.45f, 3.0f, 3.4f);
 
     static Obstacle wall1 = new Obstacle(0.75f, 0.5f, 3.7f, 2.95f);
     static Obstacle wall2 = new Obstacle(0.3f, 0.6f, 4.45f, 2.3f);
@@ -89,7 +89,7 @@ public class ObstacleStorage {
 
     public static Obstacle[] obstacles_BL = new Obstacle[]{
             palm, palm1, palm2, palm3, palm4, palm5A,
-            cactus1, cactus2, cactus3, cactus4, cactus5, cactus6, cactus7,
+            cactus1, cactus2, cactus3, cactus5, cactus6, cactus7,
             stone1};
 
     public static Obstacle[] obstacles_BR = new Obstacle[]{
@@ -99,7 +99,9 @@ public class ObstacleStorage {
 
     public static Obstacle[] obstacles_TL = new Obstacle[]{
             palm5, palm6, palm7, palm8, palm9, palm10, palm11, palm12,
-            stone6, stone7, stone8};
+            stone6, stone7, stone8,
+            cactus4
+    };
 
     public static Obstacle[] obstacles_TR = new Obstacle[]{
             cactus19, cactus20, cactus21, cactus22, cactus23,
@@ -122,9 +124,14 @@ public class ObstacleStorage {
     static Terrain mountain_line_8 = new Terrain(2.4f, -2.6f, 0.7f);
 
     static Terrain mountain_line_9 = new Terrain(2.45f, -1.8f, 2.95f, -1.7f);
-    static Terrain mountain_line_10 = new Terrain(2.95f, -1.7f, 4f, -0.2f);
-    static Terrain mountain_line_11 = new Terrain(4f, -0.2f, 0.4f);
-    static Terrain mountain_line_12 = new Terrain(3.95f, 0.2f, 3.35f, 0.8f);
+    static Terrain mountain_line_10 = new Terrain(3.25f, -1.7f, 0.2f);
+    static Terrain mountain_line_10A = new Terrain(3.35f, -1.5f, 0.2f);
+    static Terrain mountain_line_10B = new Terrain(3.55f, -1.3f, 0.2f);
+    static Terrain mountain_line_10C = new Terrain(3.75f, -1.1f, 0.2f);
+    static Terrain mountain_line_10D = new Terrain(3.95f, -0.9f, 0.2f);
+    static Terrain mountain_line_10E = new Terrain(3.90f, -0.7f, 0.6f);
+    static Terrain mountain_line_11 = new Terrain(3.8f, -0.2f, 0.4f);
+    static Terrain mountain_line_12 = new Terrain(3.45f, 0.7f,0.2f);
     static Terrain mountain_line_13 = new Terrain(3.15f, 0.85f, 0.2f);
     static Terrain mountain_line_13A = new Terrain(2.95f, 0.85f, 0.2f);
 
@@ -145,15 +152,28 @@ public class ObstacleStorage {
 
 
 
-    static Terrain mountain_line2_1 = new Terrain(9.95f, 3.15f, -0.5 );
+    static Terrain mountain_line2_1 = new Terrain(9.45f, 3.15f, 0.2f );
+    static Terrain mountain_line2_1A = new Terrain(9.75f, 3.15f, 0.2f );
     static Terrain mountain_line2_2 = new Terrain(8.15f, 1.35f, 9.45f,3.15f );
     static Terrain mountain_line2_3 = new Terrain(8.0f, 0.4f, 1.1f );
-    static Terrain mountain_line2_4 = new Terrain(8.10f, 0.4f, -0.7);
-    static Terrain mountain_line2_5 = new Terrain(7.4f, 0.4f, 6.15f,-1.5f);
+    static Terrain mountain_line2_4 = new Terrain(7.5f, 0.25f, 0.2f );
+    static Terrain mountain_line2_4A = new Terrain(7.8f, 0.25f, 0.2f );
+    static Terrain mountain_line2_5A = new Terrain(6.2f, -1.5f, 0.2f);
+    static Terrain mountain_line2_5B = new Terrain(6.4f, -1.2f, 0.2f);
+    static Terrain mountain_line2_5C = new Terrain(6.5f, -1.0f, 0.2f);
+    static Terrain mountain_line2_5D = new Terrain(6.7f, -0.7f, 0.2f);
+    static Terrain mountain_line2_5E = new Terrain(7.0f,-0.4f,  0.2f);
+    static Terrain mountain_line2_5F = new Terrain(7.2f, 0.1f, 0.2f);
+    static Terrain mountain_line2_5G = new Terrain(7.25f, -0.15f, 0.2f);
+
     static Terrain mountain_line2_6 = new Terrain(6.15f, -2.05f, 0.55f);
-    static Terrain mountain_line2_7 = new Terrain(6.2f, -2.05f, 6.7f,-2.7f);
-    static Terrain mountain_line2_8 = new Terrain(6.7f, -2.7f, 0.6);
-    static Terrain mountain_line2_9 = new Terrain(7.3f, -2.7f, -0.8f);
+    static Terrain mountain_line2_7 = new Terrain( 6.7f,-2.7f,0.2f);
+    static Terrain mountain_line2_7A = new Terrain( 6.5f,-2.7f,0.2f);
+    static Terrain mountain_line2_7B = new Terrain( 6.2f,-2.35f,0.2f);
+
+    static Terrain mountain_line2_8 = new Terrain(6.7f, -2.7f, 0.2f);
+    static Terrain mountain_line2_8A = new Terrain(7.0f, -2.7f, 0.2f);
+    static Terrain mountain_line2_9 = new Terrain(7.15f, -2.7f, -0.8f);
     static Terrain mountain_line2_10 = new Terrain(7.95f, -3.75f, 0.8f);
     static Terrain mountain_line2_11 = new Terrain(7.95f, -3.75f, 0.8f);
     static Terrain mountain_line2_12 = new Terrain(8.0f, -2.9f, 0.9);
@@ -161,11 +181,21 @@ public class ObstacleStorage {
     static Terrain mountain_line2_14 = new Terrain(8.9f, -4.35f, 9.4f,-4.95f);
     static Terrain mountain_line2_15 = new Terrain(9.4f, -4.95f, 0.5);
 
-    static Terrain mountain_line3_1 = new Terrain(9.25f, -1.7f, 9.95f,-0.8f);
-    static Terrain mountain_line3_2 = new Terrain(8.75f, -1.75f, 8.2f,-1.1f);
+    static Terrain mountain_line3_1 = new Terrain(9.25f, -1.7f, 0.2f);
+    static Terrain mountain_line3_1A = new Terrain(9.45f, -1.4f, 0.2f);
+    static Terrain mountain_line3_1B= new Terrain(9.65f, -1.2f, 0.2f);
+
+    static Terrain mountain_line3_2 = new Terrain( 8.65f,-1.7f,0.2f);
+    static Terrain mountain_line3_2A = new Terrain( 8.45f,-1.4f,0.2f);
+
+    static Terrain mountain_line3_2B = new Terrain( 8.25f,-1.2f,0.2f);
+
     static Terrain mountain_line3_3 = new Terrain(8.2f, -1.1f, 0.9f);
-    static Terrain mountain_line3_4 = new Terrain(8.25f, -0.25f, 9.4f,1.45f);
-    static Terrain mountain_line3_5 = new Terrain(9.4f, 1.4f, 0.55);
+    static Terrain mountain_line3_4 = new Terrain(8.45f, -0.25f, 9.6f,1.45f);
+    static Terrain mountain_line3_5 = new Terrain(9.5f, 1.3f, 0.2f);
+    static Terrain mountain_line3_5A = new Terrain(9.7f, 1.3f, 0.2f);
+    static Terrain mountain_line3_6 = new Terrain(8.4f, 0.45f, 0.4f);
+    static Terrain mountain_line3_7 = new Terrain(7.95f, -0.2f, 0.3f);
 
     static Terrain mountain_line4_1 = new Terrain(-3.75f, -0.4f, 0.2f);
     static Terrain mountain_line4_2 = new Terrain(-3.85f, 0.1f, 1.2f);
@@ -183,7 +213,7 @@ public class ObstacleStorage {
     static Terrain mountain_line4_14 = new Terrain(-1.9f,1.25f,0.2f);
     static Terrain mountain_line4_15 = new Terrain(-2.5f,1.25f,0.2f);
 
-    static Terrain mountain_line5_1 = new Terrain(-9.9f,3.35f,-9.05f,5.1f);
+    static Terrain mountain_line5_1 = new Terrain(-10f,3.45f,-9.05f,5.1f);
     static Terrain mountain_line5_2 = new Terrain(-9.05f,5.1f,0.5f);
 
     static Terrain mountain_line6_1 = new Terrain(-7.9f,5.3f,0.7);
@@ -195,10 +225,10 @@ public class ObstacleStorage {
     static Terrain lake_line5 = new Terrain(-6.7f,2.6f,0.2);
 
     static Terrain lake_line6 = new Terrain(-6.55f,1.6f,1f);
-    static Terrain lake_line7A = new Terrain(-6.5f,1f,0.6f);
-
-    static Terrain lake_line7B = new Terrain(-6.65f,0f,1f);
     static Terrain lake_line7 = new Terrain(-6.8f,-0.45f,0.2f);
+    static Terrain lake_line7A = new Terrain(-6.5f,1f,0.6f);
+    static Terrain lake_line7B = new Terrain(-6.65f,0f,1f);
+
     static Terrain lake_line8 = new Terrain(-7.15f,-0.45f,0.2);
     static Terrain lake_line9 = new Terrain(-7.55f,-0.45f,0.2);
     static Terrain lake_line10 = new Terrain(-7.8f,-0.15f,0.2f);
@@ -208,21 +238,23 @@ public class ObstacleStorage {
 
 
     public static Terrain[] terrains = new Terrain[]{
-            mountain_line_1
-            , mountain_line_2,
+            mountain_line_1,mountain_line2_1A , mountain_line_2,
             mountain_line_2A, mountain_line_3, mountain_line_4,
-            mountain_line_5, mountain_line_6, mountain_line_7, mountain_line_8,
-            mountain_line_9, mountain_line_10, mountain_line_11, mountain_line_12,
+            mountain_line_5, mountain_line_6, mountain_line_7, mountain_line2_7A,mountain_line2_7B,mountain_line_8,
+            mountain_line_9, mountain_line_10, mountain_line_10A,mountain_line_10B,mountain_line_10C,
+            mountain_line_10D,mountain_line_10E,mountain_line_11, mountain_line_12,
             mountain_line_13, mountain_line_13A,mountain_line_14, mountain_line_15, mountain_line_16,
             mountain_line_17, mountain_line_18, mountain_line_19,mountain_line_20,mountain_line_21,
             mountain_line_22,mountain_line_23,mountain_line_24,mountain_line_25,mountain_line_26,
 
-            mountain_line2_1, mountain_line2_2,mountain_line2_3,mountain_line2_4,
-            mountain_line2_5, mountain_line2_6, mountain_line2_7,mountain_line2_8,
+            mountain_line2_1, mountain_line2_2,mountain_line2_3,mountain_line2_4,mountain_line2_4A,
+            mountain_line2_5A,mountain_line2_5B,mountain_line2_5C,mountain_line2_5D,mountain_line2_5E,mountain_line2_5F,
+            mountain_line2_5G,mountain_line2_6, mountain_line2_7,mountain_line2_8,mountain_line2_8A,
             mountain_line2_9, mountain_line2_10, mountain_line2_11,mountain_line2_12,
             mountain_line2_13,mountain_line2_14,mountain_line2_15,
 
-            mountain_line3_1,mountain_line3_2,mountain_line3_3,mountain_line3_4,mountain_line3_5,
+            mountain_line3_1,mountain_line3_1A,mountain_line3_1B,mountain_line3_2,mountain_line3_2A,mountain_line3_2B,mountain_line3_3,mountain_line3_4,mountain_line3_5,
+            mountain_line3_5A,mountain_line3_6,mountain_line3_7,
 
             mountain_line4_1,mountain_line4_2,mountain_line4_3,mountain_line4_4,mountain_line4_5,
             mountain_line4_6,mountain_line4_7,mountain_line4_8,mountain_line4_9,mountain_line4_10,

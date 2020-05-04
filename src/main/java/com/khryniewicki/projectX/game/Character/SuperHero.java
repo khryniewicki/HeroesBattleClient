@@ -1,24 +1,17 @@
 package com.khryniewicki.projectX.game.Character;
 
-import com.khryniewicki.projectX.HelloWorld;
-import com.khryniewicki.projectX.game.Collision.Collision;
+import com.khryniewicki.projectX.game.Attack.Spell;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.KnightIMG;
 import lombok.Data;
-import org.lwjgl.glfw.GLFW;
 
-import javax.swing.text.Position;
 import java.util.Optional;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-
 @Data
-public abstract class SuperHero {
+public abstract class   SuperHero {
 
     public float SIZE = 1.0f;
     private VertexArray mesh;
@@ -28,7 +21,7 @@ public abstract class SuperHero {
     private float rot;
     private float delta = 0.0f;
     public static boolean isMovingLeft;
-
+    private Spell spell;
 
     public static float hero_positionX0;
     public static float hero_positionY0;
@@ -40,10 +33,10 @@ public abstract class SuperHero {
             i = -1;
         }
         float[] vertices = new float[]{
-                hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 1.0f,
-                hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + SIZE / 2.0f, 1.0f,
-                hero_positionX0 + SIZE / 2.0f, hero_positionY0 + SIZE / 2.0f, 1.0f,
-                hero_positionX0 + SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 1.0f
+                hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 0.8f,
+                hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + SIZE / 2.0f, 0.8f,
+                hero_positionX0 + SIZE / 2.0f, hero_positionY0 + SIZE / 2.0f, 0.8f,
+                hero_positionX0 + SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 0.8f
         };
 
         byte[] indices = new byte[]{
@@ -98,4 +91,8 @@ public abstract class SuperHero {
     public void setPositionY(Float positionY) {
         this.position.y = positionY;
     }
+
+    public  Spell castingSpell(){
+       return spell;
+    };
 }

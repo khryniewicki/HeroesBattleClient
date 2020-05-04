@@ -1,14 +1,18 @@
 package com.khryniewicki.projectX.config;
 
-import com.khryniewicki.projectX.game.Character.Hero;
 import com.khryniewicki.projectX.game.Character.HeroDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroService;
 import lombok.Data;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.WebSocketMessage;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
@@ -25,9 +29,10 @@ import java.util.concurrent.ThreadLocalRandom;
 @Data
 public class Application {
     private static StompSession session;
-
+    private static boolean client_running;
+    private static boolean server_running;
     static public class MyStompSessionHandler
-            extends StompSessionHandlerAdapter {
+            extends StompSessionHandlerAdapter  {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
 
@@ -52,7 +57,7 @@ public class Application {
 
         public void sendHeroCoordinatesFromWebsocket() {
             heroService = new HeroService();
-            session.send("/app/hero", heroService.getHeroPositions());
+            session.send("/app/hero/1", heroService.getHeroPositions());
         }
 
         public void subscribeTopic(String topic, StompSession session) {
@@ -68,9 +73,22 @@ public class Application {
                                         Object payload) {
                     heroReceiveService = new HeroReceiveService();
                     heroReceiveService.receivedMockPosition((HeroDTO) payload);
-//                    System.err.println(payload.toString());
                 }
             });
+        }
+
+        @Override
+        public void handleTransportError(StompSession stompSession, Throwable throwable) {
+            if (throwable instanceof ConnectionLostException) {
+                System.err.println("Connection lost");
+            }
+        }
+
+        @Override
+        public void handleException(StompSession session, StompCommand stompCommand, StompHeaders stompHeaders, byte[] bytes, Throwable throwable) {
+
+            System.err.println("Connected: " + session.isConnected());
+
         }
 
         @Override
@@ -80,19 +98,18 @@ public class Application {
             System.err.println(userId);
             showHeaders(connectedHeaders);
 
-            subscribeTopic("/topic/hero", session);
+            subscribeTopic("/topic/hero/2", session);
 
             sendHeroCoordinatesFromWebsocket();
 
         }
 
-
     }
 
     public static void startWebsocket() {
-
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
+
         List<Transport> transports = new ArrayList<>(1);
         transports.add(new WebSocketTransport(simpleWebSocketClient));
 
@@ -100,8 +117,7 @@ public class Application {
         WebSocketStompClient stompClient =
                 new WebSocketStompClient(sockJsClient);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
-
-        String url = "http://localhost:8081/websocket-example";
+        String url = "https://heroes.khryniewicki.com.pl/websocket-example";
 
 
         StompSessionHandler sessionHandler = new MyStompSessionHandler();
