@@ -23,7 +23,7 @@ public class HeroMock extends SuperHero {
 
     public HeroMock() {
         setPosition(new Vector());
-        setMesh(isMovingLeft(false));
+        setMesh(createHero());
         setTexture(KnightIMG.BRONZE_KNIGHT_IDLE);
         MyPosition=new Vector();
         setPositionX(startingPositionX);
