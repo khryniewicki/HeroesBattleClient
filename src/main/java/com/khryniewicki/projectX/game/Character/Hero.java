@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.Character;
 
 import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
+import com.khryniewicki.projectX.game.Attack.Ice;
 import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.game.Attack.Fire;
 import com.khryniewicki.projectX.graphics.Texture;

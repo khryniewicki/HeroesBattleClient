@@ -1,13 +1,13 @@
 package com.khryniewicki.projectX.game.Attack;
 
 import com.khryniewicki.projectX.HelloWorld;
-import com.khryniewicki.projectX.game.Character.Hero;
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.KnightIMG;
 import lombok.Data;
 import org.lwjgl.BufferUtils;
@@ -22,16 +22,20 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public abstract class Spell {
     private VertexArray mesh;
     private Texture texture;
-
     private Vector position;
-    private Float relativeX,relativeY;
-    private Float distanceX,distanceY;
+    private Float relativeX, relativeY;
+    private Float distanceX, distanceY;
+    private Texture throwingSpellTexture, consumedSpellTexture;
     private Float castingSpeed;
-    private Long startSpell=null;
-    public float SIZE = 1.0f;
+    private Long startingTimeSpell = null;
+    private Long spellDuration;
+    private boolean isCastingSpellsActivated = true;
+    public Float SIZE = 1.0f;
+    public float[] tcs;
+    private float indexHeight = 1;
+    private float indexWidth = 1;
 
     public VertexArray createSpell() {
-
         float[] vertices = new float[]{
                 0f + -SIZE / 2.0f, 0f + -SIZE / 2.0f, -0.1f,
                 0f + -SIZE / 2.0f, 0f + SIZE / 2.0f, -0.1f,
@@ -45,14 +49,16 @@ public abstract class Spell {
         };
 
         float[] tcs = new float[]{
-                0, 1,
+                0, indexHeight * 1,
                 0, 0,
-                1, 0,
-                1, 1
+                indexWidth * 1, 0,
+                indexWidth * 1, indexHeight * 1
         };
-        position=new Vector();
-        texture=KnightIMG.FIREBALL;
-
+        position = new Vector();
+        texture = throwingSpellTexture;
+        position.x = GameUtill.heroStartingPositionX;
+        position.y = GameUtill.heroStartingPositionY;
+        position.z = 0.1f;
         return new VertexArray(vertices, indices, tcs);
 
     }
@@ -60,10 +66,17 @@ public abstract class Spell {
     public void update() {
         getMousePosition();
         castingSpell();
+        spellDuration();
+    }
 
-        if (startSpell != null && System.currentTimeMillis() - startSpell > 4000) {
-            setPositionZ(-1f);
-            startSpell = null;
+    private void spellDuration() {
+        if (startingTimeSpell != null) {
+            if (startingTimeSpell > 0L) setCastingSpellsActivated(false);
+            if (System.currentTimeMillis() - startingTimeSpell > spellDuration) {
+                setPositionZ(-1f);
+                startingTimeSpell = null;
+                setCastingSpellsActivated(true);
+            }
         }
     }
 
@@ -77,15 +90,29 @@ public abstract class Spell {
                 position.y += Math.signum(distanceY) * castingSpeed;
             }
 
-            if (Math.abs(position.x - relativeX) <= castingSpeed/2 && Math.abs(position.y - relativeY) < castingSpeed/2) {
-                startSpell = System.currentTimeMillis();
-                position.x = relativeX;
-                position.y = relativeY;
+            if (Math.abs(position.x - relativeX) <= castingSpeed / 2 && Math.abs(position.y - relativeY) < castingSpeed / 2) {
+                setSpell(1f, 1f, consumedSpellTexture);
+                setPosition(relativeX, relativeY, 1f);
+                startingTimeSpell = System.currentTimeMillis();
+
                 relativeY = null;
                 relativeX = null;
-                setTexture(KnightIMG.FIRE);
+
             }
         }
+    }
+
+    private void setPosition(Float x, Float y, Float z) {
+        setPositionZ(z);
+        setPositionX(x);
+        setPositionY(y);
+    }
+
+    private void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
+        setIndexHeight(indexHeight);
+        setIndexWidth(indexWidth);
+        setMesh(createSpell());
+        setTexture(texture);
     }
 
     public void getMousePosition() {
@@ -95,15 +122,13 @@ public abstract class Spell {
             glfwGetCursorPos(HelloWorld.window, xBuffer, yBuffer);
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
-            if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE) {
-                setTexture(KnightIMG.FIREBALL);
-                setPositionX(Level.getHero_x());
-                setPositionY(Level.getHero_y());
+            if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
                 setRelativeX((float) (x - HelloWorld.width / 2) / (HelloWorld.width / 20));
                 setRelativeY((float) (HelloWorld.height / 2 - y) / (HelloWorld.height / 10));
-                setPositionZ(1f);
                 distanceX = relativeX - Level.getHero_x();
                 distanceY = relativeY - Level.getHero_y();
+                setSpell(-Math.signum(distanceY),-Math.signum(distanceX),throwingSpellTexture);
+                setPosition(Level.getHero_x(),Level.getHero_y(),1f);
             }
         });
     }
@@ -113,7 +138,7 @@ public abstract class Spell {
         Shader.SPELL.enable();
         Shader.SPELL.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
         texture.bind();
-        mesh.render();
+        getMesh().render();
         Shader.SPELL.disable();
     }
 
