@@ -17,19 +17,13 @@ import static org.lwjgl.glfw.GLFW.*;
 
 @Data
 public class Fire extends Spell {
-    private Vector MyPosition;
-    private Texture MyTexture;
 
     public Fire() {
-        setPosition(new Vector());
         setMesh(createSpell());
-        setTexture(KnightIMG.FIREBALL);
         setPositionX(GameUtill.heroStartingPositionX);
         setPositionY(GameUtill.heroStartingPositionY);
         setPositionZ(-0.1f);
-        MyPosition = getPosition();
-        MyTexture = getTexture();
-
+        setCastingSpeed(0.2f);
     }
 
 }

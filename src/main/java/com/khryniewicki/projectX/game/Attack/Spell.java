@@ -50,23 +50,34 @@ public abstract class Spell {
                 1, 0,
                 1, 1
         };
+        position=new Vector();
+        texture=KnightIMG.FIREBALL;
+
         return new VertexArray(vertices, indices, tcs);
 
     }
 
     public void update() {
         getMousePosition();
+        castingSpell();
 
+        if (startSpell != null && System.currentTimeMillis() - startSpell > 4000) {
+            setPositionZ(-1f);
+            startSpell = null;
+        }
+    }
+
+    private void castingSpell() {
         if (relativeX != null && relativeY != null) {
             if (Math.abs(distanceX) > Math.abs(distanceY)) {
-                position.x += Math.signum(distanceX) * 0.2f;
-                position.y += (distanceY) / Math.abs(distanceX) * 0.2f;
+                position.x += Math.signum(distanceX) * castingSpeed;
+                position.y += (distanceY) / Math.abs(distanceX) * castingSpeed;
             } else {
-                position.x += (distanceX) / Math.abs(distanceY) * 0.2f;
-                position.y += Math.signum(distanceY) * 0.2f;
+                position.x += (distanceX) / Math.abs(distanceY) * castingSpeed;
+                position.y += Math.signum(distanceY) * castingSpeed;
             }
 
-            if (Math.abs(position.x - relativeX) < 0.1 && Math.abs(position.y - relativeY) < 0.1) {
+            if (Math.abs(position.x - relativeX) <= castingSpeed/2 && Math.abs(position.y - relativeY) < castingSpeed/2) {
                 startSpell = System.currentTimeMillis();
                 position.x = relativeX;
                 position.y = relativeY;
@@ -74,10 +85,6 @@ public abstract class Spell {
                 relativeX = null;
                 setTexture(KnightIMG.FIRE);
             }
-        }
-        if (startSpell != null && System.currentTimeMillis() - startSpell > 4000) {
-            setPositionZ(-1f);
-            startSpell = null;
         }
     }
 
