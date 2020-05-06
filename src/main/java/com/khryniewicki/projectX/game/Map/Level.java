@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.Map;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.game.attack.Spell;
-import com.khryniewicki.projectX.game.heroes.character.NewHeroMock;
+import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
@@ -77,7 +77,7 @@ public class Level {
 
 
         hero = new IceWizard();
-        newheroMock = new NewHeroMock(new ThunderWizard());
+        newheroMock = new HeroMock(new ThunderWizard());
         pointer = new Pointer();
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();

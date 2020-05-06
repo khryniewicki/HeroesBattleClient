@@ -45,8 +45,6 @@ public class FireWizard extends SuperHero {
         setMesh(createHero());
     }
 
-
-
     @Override
     public void setTextureRun() {
         setTexture(HeroUtil.FIRE_WIZARD_RUN);

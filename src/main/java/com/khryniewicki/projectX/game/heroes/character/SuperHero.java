@@ -77,7 +77,7 @@ public class SuperHero implements UltraHero {
                         texture = heroIdle;
                     }
                     setMesh(createHero());
-                    application.sendHeroDTOToWebsocket();
+                    application.sendHeroToStompSocket();
                 }
         );
     }

@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.config;
 
+import com.khryniewicki.projectX.game.attack.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
@@ -27,16 +28,19 @@ public class Application {
     private static boolean client_running;
     private static boolean server_running;
     public static StompSessionHandler sessionHandler;
+
     @Data
     static public class MyStompSessionHandler
-            extends StompSessionHandlerAdapter  {
+            extends StompSessionHandlerAdapter {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
         private HeroSendDTO heroSendDTO;
+        private Integer app = 2;
+        private Integer topic = 1;
 
         public MyStompSessionHandler() {
-            heroReceiveService=new HeroReceiveService();
+            heroReceiveService = new HeroReceiveService();
         }
 
         private void showHeaders(StompHeaders headers) {
@@ -52,14 +56,15 @@ public class Application {
             }
         }
 
-        public void sendHeroDTOToWebsocket() {
+        public void sendHeroToStompSocket() {
             heroSendDTO = new HeroSendDTO();
-            session.send("/app/hero/2", heroSendDTO.getHeroPositions());
+            session.send("/app/hero/" + app, heroSendDTO.getHeroPositions());
         }
-//        public void sendSpellDTOToWebsocket() {
-//            SpellDTO spellDTO = new SpellDTO();
-//            session.send("/app/spell/1", spellDTO);
-//        }
+
+        public void sendSpellToStompSocket() {
+            SpellDTO spellDTO = new SpellDTO();
+            session.send("/app/spell/" + app, spellDTO);
+        }
 
         public void subscribeTopic(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
@@ -77,20 +82,19 @@ public class Application {
             });
         }
 
-//        public void subscribeSpells(String topic, StompSession session) {
-//            session.subscribe(topic, new StompFrameHandler() {
-//
-//                @Override
-//                public Type getPayloadType(StompHeaders headers) {
-//                    return SpellDTO.class;
-//                }
-//
-//                @Override
-//                public void handleFrame(StompHeaders headers,
-//                                        Object payload) {
-//                }
-//            });
-//        }
+        public void subscribeSpells(String topic, StompSession session) {
+            session.subscribe(topic, new StompFrameHandler() {
+
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return SpellDTO.class;
+                }
+
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                }
+            });
+        }
 
         @Override
         public void handleTransportError(StompSession stompSession, Throwable throwable) {
@@ -107,15 +111,14 @@ public class Application {
         @Override
         public void afterConnected(StompSession session,
                                    StompHeaders connectedHeaders) {
-            System.err.println("Connected! Headers:");
-            System.err.println(userId);
+            System.err.println("Connected! Headers:" + "\n" + userId);
             showHeaders(connectedHeaders);
 
-            subscribeTopic("/topic/hero/1", session);
-//            subscribeSpells("/topic/spell/1", session);
+            subscribeTopic("/topic/hero/" + topic, session);
+            subscribeSpells("/topic/spell/" + topic, session);
 
-//            sendHeroDTOToWebsocket();
-//            sendSpellDTOToWebsocket();
+            sendHeroToStompSocket();
+            sendSpellToStompSocket();
         }
 
 
