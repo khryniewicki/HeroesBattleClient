@@ -16,10 +16,10 @@ public class IceWizard extends SuperHero {
         setPosition();
         setTexture();
         setSpell(new Ice());
-        setMesh(createHero());
-        setName("IceWizard");
-
+        setMesh();
+        setProperties();
     }
+
     @Override
     public void setTexture() {
         setTexture(HeroUtil.ICE_WIZARD_IDLE);
@@ -29,14 +29,28 @@ public class IceWizard extends SuperHero {
         setHeroUp(HeroUtil.ICE_WIZARD_RUN);
         setHeroDown(HeroUtil.ICE_WIZARD_RUN);
     }
+
+
     @Override
     public void setPosition() {
         setPosition(new Vector());
         setPositionX(GameUtill.mockStartingPositionX);
         setPositionY(GameUtill.mockStartingPositionY);
     }
+
     @Override
     public void setProperties() {
-        setName("FireWizard");
+        setName("IceWizard");
+    }
+
+    @Override
+    public void setMesh() {
+        setMesh(createHero());
+    }
+
+
+    @Override
+    public void setTextureRun() {
+        setTexture(HeroUtil.ICE_WIZARD_RUN);
     }
 }

@@ -1,15 +1,17 @@
 package com.khryniewicki.projectX.game.Map;
 
 import com.khryniewicki.projectX.config.Application;
+import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.game.attack.Spell;
-import com.khryniewicki.projectX.game.heroes.character.*;
+import com.khryniewicki.projectX.game.heroes.character.NewHeroMock;
+import com.khryniewicki.projectX.game.heroes.character.Pointer;
+import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
-import com.khryniewicki.projectX.game.Collision.Collision;
-
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
@@ -36,7 +38,6 @@ public class Level {
     public static Float getHero_x() {
         return hero == null ? GameUtill.heroStartingPositionX : hero.getX();
     }
-
     public static Float getHero_y() {
         return hero == null ? GameUtill.heroStartingPositionY : hero.getY();
     }
@@ -75,8 +76,8 @@ public class Level {
         bgTexture = new Texture("res/desertforum.png");
 
 
-        hero = new ThunderWizard();
-        newheroMock = new NewHeroMock(new IceWizard());
+        hero = new IceWizard();
+        newheroMock = new NewHeroMock(new ThunderWizard());
         pointer = new Pointer();
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();

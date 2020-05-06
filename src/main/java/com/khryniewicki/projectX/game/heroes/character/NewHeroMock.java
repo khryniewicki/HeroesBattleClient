@@ -1,20 +1,47 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
+import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
 public class NewHeroMock implements UltraHero {
     private UltraHero ultraHero;
-    private HeroReceiveService heroReceiveService=new HeroReceiveService();
+    private Float tmpPositionX;
+    private Float tmpPositionY;
+
 
     public NewHeroMock(UltraHero insertedHero) {
         this.ultraHero = insertedHero;
     }
 
+    private Boolean changeMockPosition() {
+        if (tmpPositionX != null && tmpPositionX == HeroReceiveService.heroMockPositionX) {
+            if (tmpPositionY != null && tmpPositionY == HeroReceiveService.heroMockPositionY) {
+                return false;
+            }
+        }
+        changeMockSide();
+        tmpPositionX = HeroReceiveService.heroMockPositionX;
+        tmpPositionY = HeroReceiveService.heroMockPositionY;
+        setPositionX(HeroReceiveService.heroMockPositionX);
+        setPositionY(HeroReceiveService.heroMockPositionY);
+        setMesh();
+
+        return true;
+    }
+
+    private void changeMockSide() {
+        if (tmpPositionX != null) {
+            if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == 1)
+                setMovingLeft(true);
+            else if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == -1)
+                setMovingLeft(false);
+            setTextureRun();
+        }
+    }
 
     @Override
     public void update() {
-        setPositionX(heroReceiveService.heroMockPositionX);
-        setPositionY(heroReceiveService.heroMockPositionY);
+        changeMockPosition();
     }
 
     @Override
@@ -39,10 +66,33 @@ public class NewHeroMock implements UltraHero {
 
     @Override
     public void setPositionY(Float positionY) {
-        ultraHero.setPositionX(positionY);
+        ultraHero.setPositionY(positionY);
     }
+
     @Override
     public void setProperties() {
         ultraHero.setProperties();
     }
+
+    @Override
+    public Vector getPosition() {
+        return ultraHero.getPosition();
+    }
+
+    @Override
+    public void setMesh() {
+        ultraHero.setMesh();
+    }
+
+    @Override
+    public void setMovingLeft(boolean movingLeft) {
+        ultraHero.setMovingLeft(movingLeft);
+    }
+
+    @Override
+    public void setTextureRun() {
+        ultraHero.setTextureRun();
+    }
+
+
 }

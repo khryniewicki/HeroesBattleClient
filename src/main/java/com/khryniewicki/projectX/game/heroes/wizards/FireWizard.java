@@ -13,10 +13,11 @@ public class FireWizard extends SuperHero {
     public FireWizard() {
         setPosition();
         setSpell(new Fire());
-        setMesh(createHero());
+        setMesh();
         setTexture();
-        setName("FireWizard");
+        setProperties();
     }
+
     @Override
     public void setTexture() {
         setTexture(HeroUtil.FIRE_WIZARD_IDLE);
@@ -26,14 +27,28 @@ public class FireWizard extends SuperHero {
         setHeroUp(HeroUtil.FIRE_WIZARD_RUN);
         setHeroDown(HeroUtil.FIRE_WIZARD_RUN);
     }
+
     @Override
     public void setPosition() {
         setPosition(new Vector());
         setPositionX(GameUtill.heroStartingPositionX);
         setPositionY(GameUtill.heroStartingPositionY);
     }
+
     @Override
     public void setProperties() {
         setName("FireWizard");
+    }
+
+    @Override
+    public void setMesh() {
+        setMesh(createHero());
+    }
+
+
+
+    @Override
+    public void setTextureRun() {
+        setTexture(HeroUtil.FIRE_WIZARD_RUN);
     }
 }

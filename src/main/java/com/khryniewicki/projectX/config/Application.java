@@ -27,20 +27,17 @@ public class Application {
     private static boolean client_running;
     private static boolean server_running;
     public static StompSessionHandler sessionHandler;
-
+    @Data
     static public class MyStompSessionHandler
             extends StompSessionHandlerAdapter  {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
+        private HeroReceiveService heroReceiveService;
+        private HeroSendDTO heroSendDTO;
 
         public MyStompSessionHandler() {
+            heroReceiveService=new HeroReceiveService();
         }
-        private HeroSendDTO heroSendDTO;
-        private HeroReceiveService heroReceiveService;
-
-
-
-
 
         private void showHeaders(StompHeaders headers) {
             for (Map.Entry<String, List<String>> e : headers.entrySet()) {
@@ -57,7 +54,7 @@ public class Application {
 
         public void sendHeroDTOToWebsocket() {
             heroSendDTO = new HeroSendDTO();
-            session.send("/app/hero/1", heroSendDTO.getHeroPositions());
+            session.send("/app/hero/2", heroSendDTO.getHeroPositions());
         }
 //        public void sendSpellDTOToWebsocket() {
 //            SpellDTO spellDTO = new SpellDTO();
@@ -75,7 +72,6 @@ public class Application {
                 @Override
                 public void handleFrame(StompHeaders headers,
                                         Object payload) {
-                    System.out.println(payload.toString());
                     heroReceiveService.receivedMockPosition(((HeroDTO) payload));
                 }
             });
@@ -115,7 +111,7 @@ public class Application {
             System.err.println(userId);
             showHeaders(connectedHeaders);
 
-            subscribeTopic("/topic/hero/2", session);
+            subscribeTopic("/topic/hero/1", session);
 //            subscribeSpells("/topic/spell/1", session);
 
 //            sendHeroDTOToWebsocket();

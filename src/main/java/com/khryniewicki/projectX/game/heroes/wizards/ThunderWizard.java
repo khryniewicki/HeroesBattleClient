@@ -15,10 +15,11 @@ public class ThunderWizard extends SuperHero {
     public ThunderWizard() {
         setPosition();
         setSpell(new Thunder());
-        setMesh(createHero());
+        setMesh();
         setTexture();
-        setName("ThunderWizard");
+        setProperties();
     }
+
     @Override
     public void setTexture() {
         setTexture(HeroUtil.THUNDER_WIZARD_IDLE);
@@ -28,14 +29,26 @@ public class ThunderWizard extends SuperHero {
         setHeroUp(HeroUtil.THUNDER_WIZARD_RUN);
         setHeroDown(HeroUtil.THUNDER_WIZARD_RUN);
     }
+
     @Override
     public void setPosition() {
         setPosition(new Vector());
         setPositionX(GameUtill.heroStartingPositionX);
         setPositionY(GameUtill.heroStartingPositionY);
     }
+
     @Override
     public void setProperties() {
-        setName("FireWizard");
+        setName("ThunderWizard");
+    }
+
+    @Override
+    public void setMesh() {
+        setMesh(createHero());
+    }
+
+    @Override
+    public void setTextureRun() {
+        setTexture(HeroUtil.THUNDER_WIZARD_RUN);
     }
 }

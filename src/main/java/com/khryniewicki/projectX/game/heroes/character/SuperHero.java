@@ -10,7 +10,6 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
-import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
 import java.util.Optional;
 
@@ -93,6 +92,10 @@ public class SuperHero implements UltraHero {
 
     }
 
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
     @Override
     public void setTexture() {
 
@@ -132,9 +135,24 @@ public class SuperHero implements UltraHero {
 
     }
 
+    @Override
+    public void setMesh() {
+
+    }
+
+
+
+    @Override
+    public void setTextureRun() {
+
+    }
+
+
     public Spell castingSpell() {
         return spell;
     }
-
-    ;
+    @Override
+    public void setMovingLeft(boolean movingLeft) {
+        isMovingLeft = movingLeft;
+    }
 }
