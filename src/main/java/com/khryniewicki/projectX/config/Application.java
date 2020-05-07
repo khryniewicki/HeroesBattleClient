@@ -4,6 +4,8 @@ import com.khryniewicki.projectX.game.attack.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
+import com.khryniewicki.projectX.services.SpellReceiveService;
+import com.khryniewicki.projectX.services.SpellSendDTO;
 import lombok.Data;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
@@ -35,12 +37,15 @@ public class Application {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
+        private SpellReceiveService spellReceiveService;
         private HeroSendDTO heroSendDTO;
+        private SpellSendDTO spellSendDTO;
         private Integer app = 2;
         private Integer topic = 1;
 
         public MyStompSessionHandler() {
             heroReceiveService = new HeroReceiveService();
+            spellReceiveService=new SpellReceiveService();
         }
 
         private void showHeaders(StompHeaders headers) {
@@ -61,12 +66,12 @@ public class Application {
             session.send("/app/hero/" + app, heroSendDTO.getHeroPositions());
         }
 
-        public void sendSpellToStompSocket() {
-            SpellDTO spellDTO = new SpellDTO();
-            session.send("/app/spell/" + app, spellDTO);
+        public void sendSpellToStompSocket(SpellDTO spellDTO) {
+            spellSendDTO = new SpellSendDTO();
+            session.send("/app/spell/" + app,spellDTO);
         }
 
-        public void subscribeTopic(String topic, StompSession session) {
+        public void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
 
                 @Override
@@ -82,7 +87,7 @@ public class Application {
             });
         }
 
-        public void subscribeSpells(String topic, StompSession session) {
+        public void subscribeSpell(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
 
                 @Override
@@ -92,6 +97,7 @@ public class Application {
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
+                    SpellReceiveService.receiveSpellMock((SpellDTO) payload);
                 }
             });
         }
@@ -114,11 +120,10 @@ public class Application {
             System.err.println("Connected! Headers:" + "\n" + userId);
             showHeaders(connectedHeaders);
 
-            subscribeTopic("/topic/hero/" + topic, session);
-            subscribeSpells("/topic/spell/" + topic, session);
+            subscribeHero("/topic/hero/" + topic, session);
+            subscribeSpell("/topic/spell/" + topic, session);
 
             sendHeroToStompSocket();
-            sendSpellToStompSocket();
         }
 
 

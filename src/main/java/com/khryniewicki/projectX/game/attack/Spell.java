@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.lwjgl.glfw.GLFW.*;
 
 @Data
-public abstract class Spell {
+public  class Spell implements UltraSpell{
     private VertexArray mesh;
     private Texture texture;
     private Vector position;
@@ -28,11 +28,13 @@ public abstract class Spell {
     private Float castingSpeed;
     private Long startingTimeSpell = null;
     private Long spellDuration;
+    private String name;
     private boolean isCastingSpellsActivated = true;
     public Float SIZE = 1.0f;
     public float[] tcs;
     private float indexHeight = 1;
     private float indexWidth = 1;
+    private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
 
     public VertexArray createSpell() {
         float[] vertices = new float[]{
@@ -79,11 +81,11 @@ public abstract class Spell {
         }
     }
 
-    private void castingSpell() {
-//        application.sendSpellDTOToWebsocket();
-
+    public void castingSpell() {
 
         if (relativeX != null && relativeY != null) {
+            SpellDTO spellDTO = new SpellDTO(name,relativeX,relativeY);
+            application.sendSpellToStompSocket(spellDTO);
 
             if (Math.abs(distanceX) > Math.abs(distanceY)) {
                 position.x += Math.signum(distanceX) * castingSpeed;
@@ -134,12 +136,11 @@ public abstract class Spell {
                 distanceY = relativeY - Level.getHero_y();
                 setSpell(-Math.signum(distanceY),-Math.signum(distanceX),throwingSpellTexture);
                 setPosition(Level.getHero_x(),Level.getHero_y(),1f);
-
             }
         });
     }
 
-
+    @Override
     public void render() {
         Shader.SPELL.enable();
         Shader.SPELL.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
@@ -148,14 +149,13 @@ public abstract class Spell {
         Shader.SPELL.disable();
     }
 
+    public void setTexture(Texture texture) {this.texture = texture; }
+
     public void setMesh(VertexArray mesh) {
         this.mesh = mesh;
     }
 
-    public Float getX() {
-
-        return Optional.ofNullable(position.x).orElse(0f);
-    }
+    public Float getX() { return Optional.ofNullable(position.x).orElse(0f);    }
 
     public Float getY() {
         return Optional.ofNullable(position.y).orElse(0f);

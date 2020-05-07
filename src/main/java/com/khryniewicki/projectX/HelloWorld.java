@@ -17,6 +17,7 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
+
 @Component
 public class HelloWorld implements Runnable {
 
@@ -38,7 +39,7 @@ public class HelloWorld implements Runnable {
     }
 
     private void init() {
-                // Setup an error callback. The default implementation
+        // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -105,16 +106,19 @@ public class HelloWorld implements Runnable {
         Shader.loadAll();
 
         Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
+
+        loadGraphicForObjects(pr_matrix);
+        level = new Level();
+    }
+
+    private void loadGraphicForObjects(Matrix4f pr_matrix) {
         Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.BG.setUniform1i("tex", 1);
-
-        Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.HERO.setUniform1i("tex", 1);
-
         Shader.OBSTACLE.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.OBSTACLE.setUniform1i("tex", 1);
         Shader.TERRAIN.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.TERRAIN.setUniform1i("tex", 1);
+
 
         Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.HERO.setUniform1i("tex", 1);
@@ -125,7 +129,8 @@ public class HelloWorld implements Runnable {
         Shader.SPELL.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.SPELL.setUniform1i("tex", 1);
 
-        level = new Level();
+        Shader.SPELL.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.SPELL.setUniform1i("tex", 1);
     }
 
     public void run() {
@@ -146,11 +151,11 @@ public class HelloWorld implements Runnable {
                 updates++;
                 delta--;
             }
-                render();
+            render();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                glfwSetWindowTitle(window,"Project X | "+updates + " ups, " + frames + " fps");
+                glfwSetWindowTitle(window, "Project X | " + updates + " ups, " + frames + " fps");
                 updates = 0;
                 frames = 0;
             }
@@ -172,7 +177,7 @@ public class HelloWorld implements Runnable {
     private void render() {
         int error2 = glGetError();
         if (error2 != GL_NO_ERROR)
-            System.out.println("ERROR2: "+error2);
+            System.out.println("ERROR2: " + error2);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         level.render();
@@ -185,7 +190,8 @@ public class HelloWorld implements Runnable {
     }
 
 
-    public static void main(String[] args) { new HelloWorld().start();
+    public static void main(String[] args) {
+        new HelloWorld().start();
     }
 
 

@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class SpellDTO {
-    private String name="ICEBERG";
-    private Float targetSpellX=1f;
-    private Float targetSpellY=1f;
+    private String name;
+    private Float targetSpellX;
+    private Float targetSpellY;
 
     public SpellDTO(String name, Float targetSpellX, Float targetSpellY) {
         this.name = name;

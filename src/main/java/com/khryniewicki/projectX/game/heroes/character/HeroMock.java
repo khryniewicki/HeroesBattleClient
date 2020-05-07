@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
+import com.khryniewicki.projectX.game.attack.Spell;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
@@ -31,10 +32,8 @@ public class HeroMock implements UltraHero {
 
     private void changeMockSide() {
         if (tmpPositionX != null) {
-            if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == 1)
-                setMovingLeft(true);
-            else if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == -1)
-                setMovingLeft(false);
+            if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == 1) setMovingLeft(true);
+            else if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == -1) setMovingLeft(false);
             setTextureRun();
         }
     }
@@ -77,6 +76,11 @@ public class HeroMock implements UltraHero {
     @Override
     public Vector getPosition() {
         return ultraHero.getPosition();
+    }
+
+    @Override
+    public Spell getSpell() {
+       return ultraHero.getSpell();
     }
 
     @Override

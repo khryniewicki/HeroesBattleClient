@@ -92,29 +92,16 @@ public class SuperHero implements UltraHero {
 
     }
 
+
     public void setTexture(Texture texture) {
         this.texture = texture;
     }
-
-    @Override
-    public void setTexture() {
-
-    }
-
-    @Override
-    public void setPosition() {
-
-    }
-
 
     public void setMesh(VertexArray mesh) {
         this.mesh = mesh;
     }
 
-    public Float getX() {
-
-        return Optional.ofNullable(position.x).orElse(0f);
-    }
+    public Float getX() { return Optional.ofNullable(position.x).orElse(0f);}
 
     public Float getY() {
         return Optional.ofNullable(position.y).orElse(0f);
@@ -131,28 +118,18 @@ public class SuperHero implements UltraHero {
     }
 
     @Override
-    public void setProperties() {
-
+    public Spell getSpell() {
+        return spell;
     }
-
-    @Override
-    public void setMesh() {
-
-    }
-
-
-
-    @Override
-    public void setTextureRun() {
-
-    }
-
 
     public Spell castingSpell() {
         return spell;
     }
+
     @Override
     public void setMovingLeft(boolean movingLeft) {
         isMovingLeft = movingLeft;
     }
+
+
 }

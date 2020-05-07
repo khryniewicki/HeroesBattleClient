@@ -1,18 +1,20 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
+import com.khryniewicki.projectX.game.attack.Spell;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface UltraHero {
     void update();
     void render();
-    void setTexture();
-    void setPosition();
     void setPositionX(Float positionX);
     void setPositionY(Float positionY);
-    void setProperties();
-    Vector getPosition();
-    void setMesh();
     void setMovingLeft(boolean movingLeft);
-    void setTextureRun();
+    Vector getPosition();
+    Spell getSpell();
 
+    default void setTextureRun(){};
+    default void setTexture(){};
+    default void setPosition(){};
+    default void setProperties(){};
+    default void setMesh(){};
 }

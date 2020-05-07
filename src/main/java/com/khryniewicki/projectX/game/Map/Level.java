@@ -3,6 +3,8 @@ package com.khryniewicki.projectX.game.Map;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.game.attack.Spell;
+import com.khryniewicki.projectX.game.attack.SpellMock;
+import com.khryniewicki.projectX.game.attack.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
@@ -33,8 +35,9 @@ public class Level {
     private Vector position = new Vector();
 
     public static SuperHero hero;
-    public static UltraHero newheroMock;
-
+    public static UltraHero heroMock;
+    private Spell spell;
+    private UltraSpell spellMock;
     public static Float getHero_x() {
         return hero == null ? GameUtill.heroStartingPositionX : hero.getX();
     }
@@ -46,7 +49,7 @@ public class Level {
     private Collision MyCollision;
     private List<MapObstacles> obstacles;
     private List<MapObstacles> terrains;
-    private Spell spell;
+
     private boolean pointerON = false;
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
     public static boolean[] collisions = new boolean[]{collision_right, collision_left, collision_up, collision_down};
@@ -71,19 +74,18 @@ public class Level {
                 1, 0,
                 1, 1
         };
-
+        application = Application.sessionHandler;
         background = new VertexArray(vertices, indices, tcs);
         bgTexture = new Texture("res/desertforum.png");
-
-
-        hero = new IceWizard();
-        newheroMock = new HeroMock(new ThunderWizard());
-        pointer = new Pointer();
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
         MyCollision = new Collision();
+        pointer = new Pointer();
+
+        hero = new IceWizard();
+        heroMock = new HeroMock(new ThunderWizard());
         spell = hero.castingSpell();
-        application = Application.sessionHandler;
+        spellMock=new SpellMock(heroMock.getSpell());
     }
 
     public void renderTerrains() {
@@ -117,7 +119,7 @@ public class Level {
 
     public void update() {
         hero.update();
-        newheroMock.update();
+        heroMock.update();
         spell.update();
         if (pointerON)
             pointer.update();
@@ -143,7 +145,7 @@ public class Level {
         MyCollision.collisionTest(hero);
 
         hero.render();
-        newheroMock.render();
+        heroMock.render();
         spell.render();
         if (pointerON)
             pointer.render();
