@@ -55,11 +55,8 @@ public  class Spell implements UltraSpell{
                 indexWidth * 1, 0,
                 indexWidth * 1, indexHeight * 1
         };
-        position = new Vector();
         texture = throwingSpellTexture;
-        position.x = GameUtill.heroStartingPositionX;
-        position.y = GameUtill.heroStartingPositionY;
-        position.z = 0.1f;
+
         return new VertexArray(vertices, indices, tcs);
 
     }
@@ -172,4 +169,6 @@ public  class Spell implements UltraSpell{
     public void setPositionZ(Float positionZ) {
         this.position.z = positionZ;
     }
+
+
 }

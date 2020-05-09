@@ -1,11 +1,14 @@
 package com.khryniewicki.projectX.game.attack;
 
+import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.SpellUtil;
 import lombok.Data;
 
 @Data
 public class Ice extends Spell {
     public Ice() {
+        setPosition();
         setProperties();
         setTexture();
         setMesh();
@@ -39,5 +42,11 @@ public class Ice extends Spell {
     public void setConsumedSpellTexture() {
         setTexture(SpellUtil.ICE);
     }
-
+    @Override
+    public void setPosition() {
+        setPosition(new Vector());
+        setPositionX(GameUtill.heroStartingPositionX);
+        setPositionY(GameUtill.heroStartingPositionY);
+        setPositionZ(0.1f);
+    }
 }

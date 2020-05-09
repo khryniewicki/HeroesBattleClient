@@ -1,12 +1,15 @@
 package com.khryniewicki.projectX.game.attack;
 
+import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 
 public class SpellMock implements UltraSpell {
     private UltraSpell ultraSpell;
 
     public SpellMock(UltraSpell ultraSpell) {
+
         this.ultraSpell = ultraSpell;
+        setPosition();
     }
 
     @Override
@@ -14,6 +17,8 @@ public class SpellMock implements UltraSpell {
         setPositionX(SpellReceiveService.spellMockPositionX);
         setPositionY(SpellReceiveService.spellMockPositionY);
         setPositionZ(1f);
+        setMesh();
+        System.out.println(getPosition().toString());
     }
 
 
@@ -42,6 +47,10 @@ public class SpellMock implements UltraSpell {
         ultraSpell.setMesh();
     }
 
+    @Override
+    public Vector getPosition() {
+        return ultraSpell.getPosition();
+    }
 
 
     @Override
@@ -68,6 +77,9 @@ public class SpellMock implements UltraSpell {
     @Override
     public void setPositionZ(Float positionZ) {
         ultraSpell.setPositionX(positionZ);
-
+    }
+    @Override
+    public void setPosition() {
+        ultraSpell.setPosition();
     }
 }

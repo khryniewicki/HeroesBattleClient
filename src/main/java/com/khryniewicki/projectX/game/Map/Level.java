@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.Map;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
+import com.khryniewicki.projectX.game.attack.Fire;
 import com.khryniewicki.projectX.game.attack.Spell;
 import com.khryniewicki.projectX.game.attack.SpellMock;
 import com.khryniewicki.projectX.game.attack.UltraSpell;
@@ -9,6 +10,7 @@ import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -74,7 +76,6 @@ public class Level {
                 1, 0,
                 1, 1
         };
-        application = Application.sessionHandler;
         background = new VertexArray(vertices, indices, tcs);
         bgTexture = new Texture("res/desertforum.png");
         obstacles = ObstacleStorage.getObstacle();
@@ -83,9 +84,11 @@ public class Level {
         pointer = new Pointer();
 
         hero = new IceWizard();
-        heroMock = new HeroMock(new ThunderWizard());
+        heroMock = new HeroMock(new FireWizard());
         spell = hero.castingSpell();
         spellMock=new SpellMock(heroMock.getSpell());
+        application = Application.sessionHandler;
+
     }
 
     public void renderTerrains() {
@@ -121,6 +124,7 @@ public class Level {
         hero.update();
         heroMock.update();
         spell.update();
+        spellMock.update();
         if (pointerON)
             pointer.update();
     }
@@ -147,6 +151,7 @@ public class Level {
         hero.render();
         heroMock.render();
         spell.render();
+        spellMock.render();
         if (pointerON)
             pointer.render();
 
