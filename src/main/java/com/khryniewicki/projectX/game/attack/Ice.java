@@ -33,15 +33,7 @@ public class Ice extends Spell {
         setMesh(createSpell());
     }
 
-    @Override
-    public void setThrowingSpellTexture() {
-        setTexture(SpellUtil.ICEBALL);
-    }
 
-    @Override
-    public void setConsumedSpellTexture() {
-        setTexture(SpellUtil.ICE);
-    }
     @Override
     public void setPosition() {
         setPosition(new Vector());

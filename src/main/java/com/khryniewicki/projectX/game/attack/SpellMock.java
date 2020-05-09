@@ -16,8 +16,6 @@ public class SpellMock extends Spell implements UltraSpell {
         this.ultraSpell = ultraSpell;
         setPosition();
     }
-
-
     private Boolean changeMockPosition() {
 
         if (tmpPositionX != null && tmpPositionX == SpellReceiveService.spellMockPositionX) {
@@ -30,18 +28,14 @@ public class SpellMock extends Spell implements UltraSpell {
             tmpPositionY = SpellReceiveService.spellMockPositionY;
             setRelativeX(SpellReceiveService.spellMockPositionX);
             setRelativeY(SpellReceiveService.spellMockPositionY);
-            System.out.println("MockX: "+getHeroPositionX()+"MockY"+getHeroPositionY());
             setDistanceX(SpellReceiveService.spellMockPositionX - getHeroPositionX());
             setDistanceY(SpellReceiveService.spellMockPositionY - getHeroPositionY());
             setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
             setPositionX(getHeroPositionX());
             setPositionY(getHeroPositionY());
             setPositionZ(1f);
-            System.out.println(ultraSpell.getPosition().toString());
-
-
-
         }
+
         return true;
     }
 
@@ -68,47 +62,11 @@ public class SpellMock extends Spell implements UltraSpell {
     public void setDistanceY(Float distanceY) {
         ultraSpell.setDistanceY(distanceY);
     }
-    //
-//    @Override
-//    public void setProperties() {
-//        ultraSpell.setProperties();
-//    }
-//
-//    @Override
-//    public void setThrowingSpellTexture() {
-//        ultraSpell.setThrowingSpellTexture();
-//    }
-//
-//    @Override
-//    public void setConsumedSpellTexture() {
-//        ultraSpell.setConsumedSpellTexture();
-//    }
-//
-//    @Override
-//    public void setTexture() {
-//        ultraSpell.setTexture();
-//    }
-//
-//    @Override
-//    public void setMesh() {
-//        ultraSpell.setMesh();
-//    }
-//
-//    @Override
-//    public Vector getPosition() {
-//        return ultraSpell.getPosition();
-//    }
-//
-//
+
     @Override
     public void render() {
         ultraSpell.render();
     }
-
-//    @Override
-//    public void castingSpell() {
-//        ultraSpell.castingSpell();
-//    }
 
     @Override
     public void setPositionX(Float positionX) {
@@ -145,19 +103,8 @@ public class SpellMock extends Spell implements UltraSpell {
     @Override
     public void setRelativeY(Float relativeY) {
         ultraSpell.setRelativeY(relativeY);
-
     }
 
-    @Override
-    public void setProperties() {
-
-    }
-
-    //
-    @Override
-    public void setPosition() {
-
-    }
     @Override
     public void setSpell(Float indexHeight, Float indexWidth, Texture texture){
         ultraSpell.setSpell(indexHeight,indexWidth,texture);

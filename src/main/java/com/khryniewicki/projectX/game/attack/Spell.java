@@ -91,15 +91,16 @@ public class Spell implements UltraSpell {
         return new VertexArray(vertices, indices, tcs);
 
     }
+
     @Override
     public void update() {
         getMousePosition();
         spellCasting();
     }
+
     @Override
     public void spellCasting() {
         if (relativeX != null && relativeY != null) {
-//            sendSpellDTO();
             castingSpell();
         }
         spellDuration();
@@ -117,17 +118,13 @@ public class Spell implements UltraSpell {
     }
 
     public void castingSpell() {
-        System.out.println("Dist X: " + distanceX + " Dist Y: " + distanceY + "Position X" + position.x + "Position Y" + position.y+"PosZ"+position.z);
-
         if (Math.abs(distanceX) > Math.abs(distanceY)) {
             position.x += Math.signum(distanceX) * castingSpeed;
             position.y += (distanceY) / Math.abs(distanceX) * castingSpeed;
-            System.out.println("Dist X: " + distanceX + " Dist Y: " + distanceY + "Position X" + position.x + "Position Y" + position.y);
 
         } else {
             position.x += (distanceX) / Math.abs(distanceY) * castingSpeed;
             position.y += Math.signum(distanceY) * castingSpeed;
-            System.out.println("Dist X: " + distanceX + " Dist Y: " + distanceY + "Position X" + position.x + "Position Y" + position.y);
         }
 
         if (Math.abs(position.x - relativeX) <= castingSpeed / 2 && Math.abs(position.y - relativeY) < castingSpeed / 2) {
@@ -138,9 +135,6 @@ public class Spell implements UltraSpell {
         }
     }
 
-    @Override
-    public void setSpellParametrs() {
-    }
 
     private void sendSpellDTO() {
         SpellDTO spellDTO = new SpellDTO(name, relativeX, relativeY);

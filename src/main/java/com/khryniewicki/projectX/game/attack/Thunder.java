@@ -32,15 +32,6 @@ public class Thunder extends Spell {
         setMesh(createSpell());
     }
 
-    @Override
-    public void setThrowingSpellTexture() {
-        setTexture(SpellUtil.THUNDERBALL);
-    }
-
-    @Override
-    public void setConsumedSpellTexture() {
-        setTexture(SpellUtil.THUNDER);
-    }
 
     @Override
     public void setPosition() {
