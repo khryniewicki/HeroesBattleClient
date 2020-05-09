@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 @Data
-public class Application implements Runnable {
+public class Application  {
     private static StompSession session;
     private static boolean client_running;
     private static boolean server_running;
@@ -131,12 +131,8 @@ public class Application implements Runnable {
 
 
     }
-    @Override
-    public void run() {
-        System.err.println("Thread StompSocket runs");
-        startWebsocket();
-    }
-    public static void startWebsocket() {
+
+    public  void startWebsocket() {
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
 

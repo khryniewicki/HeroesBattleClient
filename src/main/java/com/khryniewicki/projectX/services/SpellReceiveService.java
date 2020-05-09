@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.services;
 
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.attack.SpellDTO;
+import com.khryniewicki.projectX.game.attack.UltraSpell;
 import lombok.Data;
 
 @Data
@@ -11,15 +12,13 @@ public class SpellReceiveService {
     public static Float spellMockPositionZ;
 
     public SpellReceiveService() {
-//        spellMockPositionX = Level.heroMock.getPosition().x;
-//        spellMockPositionY = Level.heroMock.getPosition().y;
-        spellMockPositionX = 3f;
-        spellMockPositionY = 3f;
+
     }
 
     public static void receiveSpellMock(SpellDTO spellDTO) {
-        spellMockPositionX+=(Level.heroMock.getPosition().x-spellDTO.getTargetSpellX())/50;
-        spellMockPositionY+=(Level.heroMock.getPosition().y-spellDTO.getTargetSpellX())/50;
+
+        spellMockPositionX=spellDTO.getTargetSpellX();
+        spellMockPositionY=spellDTO.getTargetSpellY();
         System.out.println("X:"+spellMockPositionX+"Y:"+spellMockPositionY);
 
     }
