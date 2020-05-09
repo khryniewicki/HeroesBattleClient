@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.attack;
 
 import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.math.Vector;
 
 public interface UltraSpell {
     void update();
@@ -16,7 +15,7 @@ public interface UltraSpell {
     void setRelativeY(Float relativeY);
     void setDistanceX(Float distanceX);
     void setDistanceY(Float distanceY);
-    void setSpell(Float indexHeight, Float indexWidth, Texture texture);
+    void setSpellDirection(Float indexHeight, Float indexWidth, Texture texture);
     void spellCasting();
 
     Float getHeroPositionX();

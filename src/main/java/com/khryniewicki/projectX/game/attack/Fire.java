@@ -20,6 +20,8 @@ public class Fire extends Spell {
         setName("FireBall");
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
+        setThrowingSpellSize(0.8f);
+        setConsumedSpellSize(1.5f);
     }
 
     @Override
@@ -41,6 +43,7 @@ public class Fire extends Spell {
         setPositionX(GameUtill.heroStartingPositionX);
         setPositionY(GameUtill.heroStartingPositionY);
         setPositionZ(0.1f);
+        setSIZE(1.5f);
     }
 }
 

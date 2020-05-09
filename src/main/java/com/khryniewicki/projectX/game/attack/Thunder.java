@@ -18,7 +18,8 @@ public class Thunder extends Spell {
         setName("ThunderBolt");
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
-        setSIZE(1.0f);
+        setThrowingSpellSize(0.8f);
+        setConsumedSpellSize(0.8f);
     }
 
     @Override

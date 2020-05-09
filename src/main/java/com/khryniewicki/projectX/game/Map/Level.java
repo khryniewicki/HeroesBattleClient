@@ -21,6 +21,7 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
+import org.lwjgl.system.CallbackI;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
 import java.util.List;
@@ -83,8 +84,8 @@ public class Level {
         MyCollision = new Collision();
         pointer = new Pointer();
 
-        hero = new IceWizard();
-        heroMock = new HeroMock(new FireWizard());
+        hero = new FireWizard();
+        heroMock = new HeroMock(new IceWizard());
         spell = hero.castingSpell();
         spellMock=new SpellMock(heroMock.getSpell());
         application = Application.sessionHandler;

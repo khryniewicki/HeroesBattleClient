@@ -18,25 +18,32 @@ public class SpellMock extends Spell implements UltraSpell {
     }
     private Boolean changeMockPosition() {
 
-        if (tmpPositionX != null && tmpPositionX == SpellReceiveService.spellMockPositionX) {
-            if (tmpPositionY != null && tmpPositionY == SpellReceiveService.spellMockPositionY) {
+        if (tmpPositionX != null && tmpPositionX == getSpellMockPositionX()) {
+            if (tmpPositionY != null && tmpPositionY == getSpellMockPositionY()) {
                 return false;
             }
         }
-        if (SpellReceiveService.spellMockPositionX != null) {
-            tmpPositionX = SpellReceiveService.spellMockPositionX;
-            tmpPositionY = SpellReceiveService.spellMockPositionY;
-            setRelativeX(SpellReceiveService.spellMockPositionX);
-            setRelativeY(SpellReceiveService.spellMockPositionY);
-            setDistanceX(SpellReceiveService.spellMockPositionX - getHeroPositionX());
-            setDistanceY(SpellReceiveService.spellMockPositionY - getHeroPositionY());
-            setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
+        if (getSpellMockPositionX() != null) {
+            tmpPositionX = getSpellMockPositionX();
+            tmpPositionY = getSpellMockPositionY();
+            setRelativeX(getSpellMockPositionX());
+            setRelativeY(getSpellMockPositionY());
+            setDistanceX(getSpellMockPositionX() - getHeroPositionX());
+            setDistanceY(getSpellMockPositionY() - getHeroPositionY());
+            this.setSpellDirection(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
             setPositionX(getHeroPositionX());
             setPositionY(getHeroPositionY());
             setPositionZ(1f);
         }
-
         return true;
+    }
+
+    private Float getSpellMockPositionY() {
+        return SpellReceiveService.spellMockPositionY;
+    }
+
+    private Float getSpellMockPositionX() {
+        return SpellReceiveService.spellMockPositionX;
     }
 
     @Override
@@ -106,8 +113,8 @@ public class SpellMock extends Spell implements UltraSpell {
     }
 
     @Override
-    public void setSpell(Float indexHeight, Float indexWidth, Texture texture){
-        ultraSpell.setSpell(indexHeight,indexWidth,texture);
+    public void setSpellDirection(Float indexHeight, Float indexWidth, Texture texture){
+        ultraSpell.setSpellDirection(indexHeight,indexWidth,texture);
     }
 
     public Float getDistanceX() {
