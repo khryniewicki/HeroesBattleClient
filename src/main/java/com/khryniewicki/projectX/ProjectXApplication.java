@@ -9,11 +9,13 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class ProjectXApplication {
 
 	public static void main(String[] args) {
+		Runnable application = new Application();
+		Thread thread = new Thread(application);
+		thread.setName("Websocket");
 
 		SpringApplication.run(ProjectXApplication.class, args);
-		Application.startWebsocket();
+		thread.start();
 		new HelloWorld().start();
-
 	}
 
 }

@@ -27,7 +27,6 @@ public class ShaderUtils {
 
         glCompileShader(vertID);
         int shaderI = glGetShaderi(vertID, GL_COMPILE_STATUS);
-        System.out.println(shaderI);
 
         if (shaderI == GL_FALSE) {
             System.err.println("Failed to compile vertex shader!");

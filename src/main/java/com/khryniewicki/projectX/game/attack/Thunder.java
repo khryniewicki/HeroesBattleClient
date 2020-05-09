@@ -1,10 +1,13 @@
 package com.khryniewicki.projectX.game.attack;
 
+import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 public class Thunder extends Spell {
 
     public Thunder() {
+        setPosition();
         setProperties();
         setTexture();
         setMesh();
@@ -37,5 +40,13 @@ public class Thunder extends Spell {
     @Override
     public void setConsumedSpellTexture() {
         setTexture(SpellUtil.THUNDER);
+    }
+
+    @Override
+    public void setPosition() {
+        setPosition(new Vector());
+        setPositionX(GameUtill.heroStartingPositionX);
+        setPositionY(GameUtill.heroStartingPositionY);
+        setPositionZ(0.1f);
     }
 }

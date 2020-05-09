@@ -20,16 +20,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 @Data
-public class Application {
+public class Application implements Runnable {
     private static StompSession session;
     private static boolean client_running;
     private static boolean server_running;
     public static StompSessionHandler sessionHandler;
+
+
 
     @Data
     static public class MyStompSessionHandler
@@ -40,8 +43,8 @@ public class Application {
         private SpellReceiveService spellReceiveService;
         private HeroSendDTO heroSendDTO;
         private SpellSendDTO spellSendDTO;
-        private Integer app = 2;
-        private Integer topic = 1;
+        private Integer app = 1;
+        private Integer topic = 2;
 
         public MyStompSessionHandler() {
             heroReceiveService = new HeroReceiveService();
@@ -128,7 +131,11 @@ public class Application {
 
 
     }
-
+    @Override
+    public void run() {
+        System.err.println("Thread StompSocket runs");
+        startWebsocket();
+    }
     public static void startWebsocket() {
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
