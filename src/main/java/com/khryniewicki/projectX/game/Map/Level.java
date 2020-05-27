@@ -2,17 +2,15 @@ package com.khryniewicki.projectX.game.Map;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
-import com.khryniewicki.projectX.game.attack.Fire;
-import com.khryniewicki.projectX.game.attack.Spell;
-import com.khryniewicki.projectX.game.attack.SpellMock;
-import com.khryniewicki.projectX.game.attack.UltraSpell;
+import com.khryniewicki.projectX.game.attack.attackSuccess.Attack;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
-import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
-import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -46,9 +44,10 @@ public class Level {
     public static Float getHero_y() {
         return hero == null ? GameUtill.heroStartingPositionY : hero.getY();
     }
+    private Attack attack;
 
     private Pointer pointer;
-    private Collision MyCollision;
+    public static Collision myCollision;
     private List<MapObstacles> obstacles;
     private List<MapObstacles> terrains;
 
@@ -80,13 +79,15 @@ public class Level {
         bgTexture = new Texture("res/desertforum.png");
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
-        MyCollision = new Collision();
+        myCollision = new Collision();
         pointer = new Pointer();
 
-        hero = new IceWizard();
+        hero = new FireWizard();
         heroMock = new HeroMock(new FireWizard());
         spell = hero.castingSpell();
         spellMock=new SpellMock(heroMock.getSpell());
+        attack=new Attack();
+
         application = Application.sessionHandler;
 
     }
@@ -133,6 +134,8 @@ public class Level {
         bgTexture.bind();
         Shader.BG.enable();
         background.bind();
+        //TODO: flaga, aby nie renderować za każdym razem terenu
+
         for (int i = 0; i < map + 3; i++) {
             Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
             background.draw();
@@ -146,12 +149,14 @@ public class Level {
         renderTerrains();
 
 
-        MyCollision.collisionTest(hero);
+        myCollision.collisionTest(hero);
+        attack.hitsHeroWithSpell(spellMock);
 
         hero.render();
         heroMock.render();
         spell.render();
         spellMock.render();
+
         if (pointerON)
             pointer.render();
 

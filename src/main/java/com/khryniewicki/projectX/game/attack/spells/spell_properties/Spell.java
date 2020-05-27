@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
@@ -45,6 +45,21 @@ public class Spell implements UltraSpell {
 
     public Float getDistanceY() {
         return distanceY;
+    }
+
+    @Override
+    public Float getPositionX() {
+        return Level.heroMock.getSpell().position.x;
+    }
+
+    @Override
+    public Float getPositionY() {
+        return Level.heroMock.getSpell().position.y;
+    }
+
+    @Override
+    public Float getSize() {
+        return SIZE;
     }
 
     public Texture getThrowingSpellTexture() {

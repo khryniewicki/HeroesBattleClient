@@ -1,12 +1,14 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.SpellUtil;
+import lombok.Data;
 
-public class Thunder extends Spell {
-
-    public Thunder() {
+@Data
+public class Ice extends Spell {
+    public Ice() {
         setPosition();
         setProperties();
         setTexture();
@@ -15,16 +17,16 @@ public class Thunder extends Spell {
 
     @Override
     public void setProperties() {
-        setName("ThunderBolt");
+        setName("IceBolt");
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
-        setSIZE(1.0f);
+//        setSIZE(0.8f);
     }
 
     @Override
     public void setTexture() {
-        setThrowingSpellTexture(SpellUtil.THUNDERBALL);
-        setConsumedSpellTexture(SpellUtil.THUNDER);
+        setThrowingSpellTexture(SpellUtil.ICEBALL);
+        setConsumedSpellTexture(SpellUtil.ICE);
     }
 
     @Override

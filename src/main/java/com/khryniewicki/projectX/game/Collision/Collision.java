@@ -107,14 +107,14 @@ public class Collision {
 
 
     public boolean obstacleCollisionInQuarter(List<MapObstacles> mapObstacles) {
-        return checkconditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
+        return checkConditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
     }
 
     public boolean terrainCollision(List<MapObstacles> mapObstacles) {
-        return checkconditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
+        return checkConditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
     }
 
-    private boolean checkconditionForObstacleOrTerrain(List<MapObstacles> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
+    private boolean checkConditionForObstacleOrTerrain(List<MapObstacles> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
         Arrays.fill(obstacleOrTerrainCollisions,false);
         if (collision(mapObstacles)) {
             mapObstaclesListHashMap.values().forEach(e -> {

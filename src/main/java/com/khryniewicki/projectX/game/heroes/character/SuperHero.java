@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
-import com.khryniewicki.projectX.game.attack.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -19,8 +19,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class SuperHero implements UltraHero {
     private boolean isMovingLeft;
     private VertexArray mesh;
-    private Texture texture;
-    private Texture heroUp, heroDown, heroLeft, heroRight, heroIdle;
+    private Texture texture,heroUp, heroDown, heroLeft, heroRight, heroIdle;
     private Vector position;
     private Spell spell;
     private String name;

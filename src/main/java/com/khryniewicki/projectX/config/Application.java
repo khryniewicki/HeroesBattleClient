@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.config;
 
-import com.khryniewicki.projectX.game.attack.SpellDTO;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
@@ -20,7 +20,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,8 +42,8 @@ public class Application  {
         private SpellReceiveService spellReceiveService;
         private HeroSendDTO heroSendDTO;
         private SpellSendDTO spellSendDTO;
-        private Integer app = 1;
-        private Integer topic = 2;
+        private Integer app = 2;
+        private Integer topic = 1;
 
         public MyStompSessionHandler() {
             heroReceiveService = new HeroReceiveService();

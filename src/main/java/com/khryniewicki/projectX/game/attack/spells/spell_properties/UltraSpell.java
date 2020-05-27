@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.math.Vector;
@@ -23,6 +23,9 @@ public interface UltraSpell {
     Float getHeroPositionY();
     Float getDistanceX();
     Float getDistanceY();
+    Float getPositionX();
+    Float getPositionY();
+    Float getSize();
     Texture getThrowingSpellTexture();
 
     default void setPosition(){ };
