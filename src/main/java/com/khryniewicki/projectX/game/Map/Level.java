@@ -2,17 +2,16 @@ package com.khryniewicki.projectX.game.Map;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
-import com.khryniewicki.projectX.game.attack.Fire;
-import com.khryniewicki.projectX.game.attack.Spell;
-import com.khryniewicki.projectX.game.attack.SpellMock;
-import com.khryniewicki.projectX.game.attack.UltraSpell;
+import com.khryniewicki.projectX.game.attack.Attack;
+import com.khryniewicki.projectX.game.attack.spell_group.Spell;
+import com.khryniewicki.projectX.game.attack.spell_group.SpellMock;
+import com.khryniewicki.projectX.game.attack.spell_group.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
-import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -21,7 +20,6 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
-import org.lwjgl.system.CallbackI;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
 import java.util.List;
@@ -50,8 +48,9 @@ public class Level {
 
     private Pointer pointer;
     private Collision MyCollision;
-    private List<MapObstacles> obstacles;
-    private List<MapObstacles> terrains;
+    private Attack attack;
+    private List<Objects> obstacles;
+    private List<Objects> terrains;
 
     private boolean pointerON = false;
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
@@ -82,12 +81,14 @@ public class Level {
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
         MyCollision = new Collision();
+        attack=new Attack();
         pointer = new Pointer();
 
         hero = new FireWizard();
         heroMock = new HeroMock(new IceWizard());
         spell = hero.castingSpell();
         spellMock=new SpellMock(heroMock.getSpell());
+
         application = Application.sessionHandler;
 
     }
@@ -96,7 +97,7 @@ public class Level {
         Shader.TERRAIN.enable();
         Terrain.getTexture().bind();
 
-        for (MapObstacles terrain : terrains) {
+        for (Objects terrain : terrains) {
             terrain.getMesh().bind();
             Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
             terrain.getMesh().draw();
@@ -109,7 +110,7 @@ public class Level {
     public void renderObstacles() {
         Shader.OBSTACLE.enable();
         Obstacle.getTexture().bind();
-        for (MapObstacles obstacle : obstacles) {
+        for (Objects obstacle : obstacles) {
             obstacle.getMesh().bind();
             Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
             obstacle.getMesh().draw();
@@ -126,6 +127,8 @@ public class Level {
         heroMock.update();
         spell.update();
         spellMock.update();
+
+
         if (pointerON)
             pointer.update();
     }
@@ -134,6 +137,7 @@ public class Level {
         bgTexture.bind();
         Shader.BG.enable();
         background.bind();
+        //TODO: flaga, aby nie renderować za każdym razem terenu
         for (int i = 0; i < map + 3; i++) {
             Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
             background.draw();
@@ -148,11 +152,13 @@ public class Level {
 
 
         MyCollision.collisionTest(hero);
+        attack.hitsHeroWithSpell(spellMock);
 
         hero.render();
         heroMock.render();
         spell.render();
         spellMock.render();
+
         if (pointerON)
             pointer.render();
 

@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.wizards;
 
-import com.khryniewicki.projectX.game.attack.Fire;
+import com.khryniewicki.projectX.game.attack.spell_group.spells.Fire;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;

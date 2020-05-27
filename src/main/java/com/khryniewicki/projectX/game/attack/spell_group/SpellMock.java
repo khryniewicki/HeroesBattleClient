@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spell_group;
 
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -8,9 +8,6 @@ public class SpellMock extends Spell implements UltraSpell {
     private UltraSpell ultraSpell;
     private Float tmpPositionX;
     private Float tmpPositionY;
-    private Float distanceX;
-    private Float distanceY;
-    private Texture throwingSpellTexture;
 
     public SpellMock(UltraSpell ultraSpell) {
         this.ultraSpell = ultraSpell;

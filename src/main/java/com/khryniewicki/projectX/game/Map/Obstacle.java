@@ -9,7 +9,7 @@ import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 
 @Data
-public class Obstacle implements MapObstacles {
+public class Obstacle implements Objects {
 
     private Vector position = new Vector();
     private Matrix4f ml_matrix;
@@ -19,20 +19,20 @@ public class Obstacle implements MapObstacles {
 
     private float width;
     private float height;
-    private float obstacle_positionX0;
-    private float obstacle_positionY0;
-    private float obstacle_positionX1;
-    private float obstacle_positionY1;
+    private float object_positionX0;
+    private float object_positionY0;
+    private float object_positionX1;
+    private float object_positionY1;
 
     private float visible=-1;
 
     public Obstacle(float width, float height, float obstacle_positionX0, float obstacle_positionY0) {
         setWidth(width);
         setHeight(height);
-        setObstacle_positionX0(obstacle_positionX0);
-        setObstacle_positionY0(obstacle_positionY0);
-        setObstacle_positionX1(obstacle_positionX0 + width);
-        setObstacle_positionY1(obstacle_positionY0 + height);
+        setObject_positionX0(obstacle_positionX0);
+        setObject_positionY0(obstacle_positionY0);
+        setObject_positionX1(obstacle_positionX0 + width);
+        setObject_positionY1(obstacle_positionY0 + height);
 
         float[] vertices = new float[]{
                 0 + 0.0f, 0 + 0.0f,    visible*0.1f,

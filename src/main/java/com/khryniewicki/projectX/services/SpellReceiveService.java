@@ -1,8 +1,6 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.game.Map.Level;
-import com.khryniewicki.projectX.game.attack.SpellDTO;
-import com.khryniewicki.projectX.game.attack.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell_group.SpellDTO;
 import lombok.Data;
 
 @Data

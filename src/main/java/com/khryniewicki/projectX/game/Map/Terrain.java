@@ -8,7 +8,7 @@ import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 
 @Data
-public class Terrain implements MapObstacles {
+public class Terrain implements Objects {
 
     private Vector position = new Vector();
     private Matrix4f ml_matrix;
@@ -21,53 +21,58 @@ public class Terrain implements MapObstacles {
     private float inclination;
     private float tangens;
 
-    private float obstacle_positionX1;
-    private float obstacle_positionY1;
-    private float obstacle_positionX0;
-    private float obstacle_positionY0;
-    private float visible =- 1;
+    private float object_positionX1;
+    private float object_positionY1;
+    private float object_positionX0;
+    private float object_positionY0;
+    private float visible = -1;
 
-    public Terrain(float obstacle_positionX0, float obstacle_positionY0, float obstacle_positionX1, float obstacle_positionY1) {
-        width = obstacle_positionX1 - obstacle_positionX0;
+    public Terrain(float obstacle_positionX0, float obstacle_positionY0, float terrain_positionX1, float terrain_positionY1) {
+        width = terrain_positionX1 - obstacle_positionX0;
         height = 0.2f;
-        inclination = obstacle_positionY1 - obstacle_positionY0;
+        inclination = terrain_positionY1 - obstacle_positionY0;
         tangens = (inclination) / (width);
 
-        setObstacle_positionX1(obstacle_positionX1);
-        setObstacle_positionY1(obstacle_positionY1);
-
-        createNewTerrain(obstacle_positionX0, obstacle_positionY0 );
-    }
-
-    public Terrain(float obstacle_positionX0, float obstacle_positionY0, float height) {
-        width = 0.2f;
-        inclination=0;
-
-        setTangens(0f);setHeight(height);setWidth(width);
-        setObstacle_positionX1(obstacle_positionX0 + width);
-        setObstacle_positionY1(obstacle_positionY0 + height);
+        setObject_positionX1(terrain_positionX1);
+        setObject_positionY1(terrain_positionY1);
 
         createNewTerrain(obstacle_positionX0, obstacle_positionY0);
     }
+
+    public Terrain(float terrain_positionX0, float terrain_positionY0, float height) {
+        width = 0.2f;
+        inclination = 0;
+
+        setTangens(0f);
+        setHeight(height);
+        setWidth(width);
+        setObject_positionX1(terrain_positionX0 + width);
+        setObject_positionY1(terrain_positionY0 + height);
+
+        createNewTerrain(terrain_positionX0, terrain_positionY0);
+    }
+
     public Terrain(float obstacle_positionX0, float obstacle_positionY0, double widthD) {
         height = 0.2f;
-        inclination=0;
+        inclination = 0;
         setWidth((float) widthD);
-        setTangens(0f);setHeight(height);setWidth(width);
-        setObstacle_positionX1(obstacle_positionX0 + width);
-        setObstacle_positionY1(obstacle_positionY0 + height);
+        setTangens(0f);
+        setHeight(height);
+        setWidth(width);
+        setObject_positionX1(obstacle_positionX0 + width);
+        setObject_positionY1(obstacle_positionY0 + height);
 
         createNewTerrain(obstacle_positionX0, obstacle_positionY0);
     }
 
     private void createNewTerrain(float obstacle_positionX0, float obstacle_positionY0) {
-        setObstacle_positionX0(obstacle_positionX0);
-        setObstacle_positionY0(obstacle_positionY0);
+        setObject_positionX0(obstacle_positionX0);
+        setObject_positionY0(obstacle_positionY0);
 
         float[] vertices = new float[]{
                 0 + 0.0f, 0.0f, visible * 0.1f,
                 0 + 0.0f, height, visible * 0.1f,
-                0 + width, height+inclination, visible * 0.1f,
+                0 + width, height + inclination, visible * 0.1f,
                 0 + width, inclination, visible * 0.1f
         };
 

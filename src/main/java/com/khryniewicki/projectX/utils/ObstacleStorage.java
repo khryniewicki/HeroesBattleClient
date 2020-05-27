@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.utils;
 
 import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.game.Map.MapObstacles;
+import com.khryniewicki.projectX.game.Map.Objects;
 import com.khryniewicki.projectX.game.Map.Obstacle;
 import com.khryniewicki.projectX.game.Map.Terrain;
 
@@ -268,40 +268,40 @@ public class ObstacleStorage {
 
     };
 
-    public static List<MapObstacles> getObstacleList_BL() {
-        List<MapObstacles> obstacleList = new ArrayList<>();
+    public static List<Objects> getObstacleList_BL() {
+        List<Objects> obstacleList = new ArrayList<>();
         obstacleList.addAll(Arrays.asList(obstacles_BL));
         return obstacleList;
     }
 
-    public static List<MapObstacles> getObstacleList_BR() {
-        List<MapObstacles> obstacleList = new ArrayList<>();
+    public static List<Objects> getObstacleList_BR() {
+        List<Objects> obstacleList = new ArrayList<>();
         obstacleList.addAll(Arrays.asList(obstacles_BR));
         return obstacleList;
     }
 
-    public static List<MapObstacles> getObstacleList_TL() {
-        List<MapObstacles> obstacleList = new ArrayList<>();
+    public static List<Objects> getObstacleList_TL() {
+        List<Objects> obstacleList = new ArrayList<>();
         obstacleList.addAll(Arrays.asList(obstacles_TL));
         return obstacleList;
     }
 
-    public static List<MapObstacles> getObstacleList_TR() {
-        List<MapObstacles> obstacleList = new ArrayList<>();
+    public static List<Objects> getObstacleList_TR() {
+        List<Objects> obstacleList = new ArrayList<>();
         obstacleList.addAll(Arrays.asList(obstacles_TR));
         return obstacleList;
     }
 
-    public static List<MapObstacles> getObstacle() {
-        List<MapObstacles> obstacleList = new ArrayList<>();
+    public static List<Objects> getObstacle() {
+        List<Objects> obstacleList = new ArrayList<>();
         obstacleList.addAll(Arrays.asList(obstacles_TR));
         obstacleList.addAll(Arrays.asList(obstacles_TL));
         obstacleList.addAll(Arrays.asList(obstacles_BL));
         obstacleList.addAll(Arrays.asList(obstacles_BR));
         return obstacleList;
     }
-    public static List<MapObstacles> getTerrainList() {
-        List<MapObstacles> terrainList = new ArrayList<>();
+    public static List<Objects> getTerrainList() {
+        List<Objects> terrainList = new ArrayList<>();
         terrainList.addAll(Arrays.asList(terrains));
         return terrainList;
     }

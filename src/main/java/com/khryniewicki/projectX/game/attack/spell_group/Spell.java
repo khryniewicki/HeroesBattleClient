@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spell_group;
 
 import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
@@ -206,6 +206,22 @@ public class Spell implements UltraSpell {
     public Float getDistanceY() {
         return distanceY;
     }
+
+    @Override
+    public Float getPositionX() {
+        return position.x;
+    }
+
+    @Override
+    public Float getPositionY() {
+        return position.y;
+    }
+
+    @Override
+    public Float getSize() {
+        return SIZE;
+    }
+
     public void setDistanceX(Float distanceX) {
         this.distanceX = distanceX;
     }

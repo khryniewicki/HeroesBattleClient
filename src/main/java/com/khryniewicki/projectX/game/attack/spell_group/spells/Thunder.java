@@ -1,14 +1,13 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spell_group.spells;
 
+import com.khryniewicki.projectX.game.attack.spell_group.Spell;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.SpellUtil;
-import lombok.Data;
 
-@Data
-public class Fire extends Spell {
+public class Thunder extends Spell {
 
-    public Fire() {
+    public Thunder() {
         setPosition();
         setProperties();
         setTexture();
@@ -17,17 +16,17 @@ public class Fire extends Spell {
 
     @Override
     public void setProperties() {
-        setName("FireBall");
+        setName("ThunderBolt");
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
         setThrowingSpellSize(0.8f);
-        setConsumedSpellSize(1.5f);
+        setConsumedSpellSize(0.8f);
     }
 
     @Override
     public void setTexture() {
-        setThrowingSpellTexture(SpellUtil.FIREBALL);
-        setConsumedSpellTexture(SpellUtil.FIRE);
+        setThrowingSpellTexture(SpellUtil.THUNDERBALL);
+        setConsumedSpellTexture(SpellUtil.THUNDER);
     }
 
     @Override
@@ -36,14 +35,11 @@ public class Fire extends Spell {
     }
 
 
-
     @Override
     public void setPosition() {
         setPosition(new Vector());
         setPositionX(GameUtill.heroStartingPositionX);
         setPositionY(GameUtill.heroStartingPositionY);
         setPositionZ(0.1f);
-        setSIZE(1.5f);
     }
 }
-

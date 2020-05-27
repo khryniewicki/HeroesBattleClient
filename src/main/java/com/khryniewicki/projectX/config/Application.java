@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.config;
 
-import com.khryniewicki.projectX.game.attack.SpellDTO;
+import com.khryniewicki.projectX.game.attack.spell_group.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
@@ -20,7 +20,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -143,6 +142,7 @@ public class Application  {
         WebSocketStompClient stompClient =
                 new WebSocketStompClient(sockJsClient);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+//        String url = "https://heroes.khryniewicki.com.pl/websocket-example";
         String url = "https://heroes.khryniewicki.com.pl/websocket-example";
 
 

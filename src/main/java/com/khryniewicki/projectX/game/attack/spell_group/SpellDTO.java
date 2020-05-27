@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack;
+package com.khryniewicki.projectX.game.attack.spell_group;
 
 import lombok.Data;
 

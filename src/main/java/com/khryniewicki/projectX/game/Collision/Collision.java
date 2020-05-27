@@ -1,8 +1,8 @@
 package com.khryniewicki.projectX.game.Collision;
 
-import com.khryniewicki.projectX.game.heroes.character.Hero;
 import com.khryniewicki.projectX.game.Map.Level;
-import com.khryniewicki.projectX.game.Map.MapObstacles;
+import com.khryniewicki.projectX.game.Map.Objects;
+import com.khryniewicki.projectX.game.heroes.character.Hero;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
@@ -17,13 +17,15 @@ import java.util.List;
 public class Collision {
     private Level level;
     private SuperHero hero;
-    private float hero_standard_offset = 0.2f;
-    private float hero_top_offset = 0.5f;
-    private float delta_x = 0.1f;
-    private float delta_y = 0.1f;
+    private static float SIZE;
+    private static float hero_standard_offset = 0.2f;
+    private static float hero_top_offset = 0.5f;
+    private static float delta_x = 0.1f;
+    private static float delta_y = 0.1f;
 
-    private float bx, by, bx0, bx1, by0, by1;
-    private float px0, px1, py0, py1;
+    private static float bx, by, bx0, bx1, by0, by1;
+    private static float px0, px1, py0, py1;
+    private static float[] heroCoordinates;
 
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
     public static Boolean[] collisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
@@ -31,24 +33,27 @@ public class Collision {
     public static Boolean[] ObstacleCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
     public static Boolean[] TerrainCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
     boolean isCollision;
-    HashMap<MapObstacles, List<Boolean>> mapObstaclesListHashMap;
+    HashMap<Objects, List<Boolean>> mapObstaclesListHashMap;
 
-    private List<MapObstacles> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
-    private List<MapObstacles> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
-    private List<MapObstacles> obstacleList_TL = ObstacleStorage.getObstacleList_TL();
-    private List<MapObstacles> obstacleList_TR = ObstacleStorage.getObstacleList_TR();
-    private List<MapObstacles> terrainList = ObstacleStorage.getTerrainList();
+    private List<Objects> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
+    private List<Objects> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
+    private List<Objects> obstacleList_TL = ObstacleStorage.getObstacleList_TL();
+    private List<Objects> obstacleList_TR = ObstacleStorage.getObstacleList_TR();
+    private List<Objects> terrainList = ObstacleStorage.getTerrainList();
 
 
     public void collisionTest(SuperHero hero) {
-        setHero(hero); bx = hero.getX();by = hero.getY();
-
+        setHero(hero);
+        bx = hero.getX();
+        by = hero.getY();
+        SIZE = hero.getSIZE();
         obstacleCollision(checkInWhichQuerterIsHero());
         terrainCollision(terrainList);
         boundaryCollision();
 
         checkCollisionForSpecificDirection();
     }
+
     private MAP_QUARTERS checkInWhichQuerterIsHero() {
         MAP_QUARTERS quarter;
         if (bx > 0 && by > 0) {
@@ -65,9 +70,10 @@ public class Collision {
 
     private void checkCollisionForSpecificDirection() {
         Arrays.fill(collisions, false);
-        for (int i = 0; i <4 ; i++) {
-        if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
-            collisions[i] = true;}
+        for (int i = 0; i < 4; i++) {
+            if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
+                collisions[i] = true;
+        }
     }
 
     private boolean boundaryCollision() {
@@ -105,17 +111,16 @@ public class Collision {
     }
 
 
-
-    public boolean obstacleCollisionInQuarter(List<MapObstacles> mapObstacles) {
-        return checkconditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
+    public boolean obstacleCollisionInQuarter(List<Objects> mapObstacles) {
+        return checkConditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
     }
 
-    public boolean terrainCollision(List<MapObstacles> mapObstacles) {
-        return checkconditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
+    public boolean terrainCollision(List<Objects> mapObstacles) {
+        return checkConditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
     }
 
-    private boolean checkconditionForObstacleOrTerrain(List<MapObstacles> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
-        Arrays.fill(obstacleOrTerrainCollisions,false);
+    private boolean checkConditionForObstacleOrTerrain(List<Objects> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
+        Arrays.fill(obstacleOrTerrainCollisions, false);
         if (collision(mapObstacles)) {
             mapObstaclesListHashMap.values().forEach(e -> {
                 for (int i = 0; i < e.size(); i++) {
@@ -129,47 +134,27 @@ public class Collision {
         return false;
     }
 
-    public Boolean collision(List<MapObstacles> obstacles) {
+    public Boolean collision(List<Objects> obstacles) {
 
-        bx0 = bx - hero.SIZE / 2.0f + hero_standard_offset;
-        bx1 = bx + hero.SIZE / 2.0f - hero_standard_offset;
-        by0 = by - hero.SIZE / 2.0f + hero_standard_offset;
-        by1 = by + hero.SIZE / 2.0f - hero_top_offset;
+        heroObjectDimenions();
         isCollision = false;
-        mapObstaclesListHashMap=new HashMap<>();
+        mapObstaclesListHashMap = new HashMap<>();
         float proximtyValue;
 
-        for (MapObstacles obstacle : obstacles) {
-            float tangens = obstacle.getTangens();
+        for (Objects object : obstacles) {
+            float tangens = object.getTangens();
 
             if (tangens == 0) {
-                px0 = (obstacle.getObstacle_positionX0() - Hero.hero_positionX0) + delta_x;
-                py0 = (obstacle.getObstacle_positionY0() - Hero.hero_positionY0) + delta_y;
-                px1 = px0 + obstacle.getWidth();
-                py1 = py0 + obstacle.getHeight();
+                simpleRectangularObjectDimenions(object);
                 proximtyValue = 0.21f;
             } else {
-                float px = (obstacle.getObstacle_positionX0() - Hero.hero_positionX0);
-                float py = (obstacle.getObstacle_positionY0() - Hero.hero_positionY0);
-                float pX = (obstacle.getObstacle_positionX1() - Hero.hero_positionX0);
-                float pY = (obstacle.getObstacle_positionY1() - Hero.hero_positionY0);
-                float X = 1.0f;
-                if (by1 < py) X = 0;
-                if (bx1 < px) X = 0;
-                if (by0 > pY) X = 0;
-                if (bx0 > pX) X = 0;
-
-                px0 = px + X * (by0 - py) / tangens;
-                py0 = py + X * (bx0 - px) * tangens;
-                px1 = px + X * (by1 - py - 0.2f) / tangens + 0.2f;
-                py1 = py + X * (bx1 - px - 0.2f) * tangens + 0.2f;
+                inclinatedObjectDimensions(object, tangens);
                 proximtyValue = 0.3f;
-
             }
             float[] obstacleCoordinates = {px0, px1, py0, py1};
-            float[] heroCoordinates = {bx1, bx0, by1, by0};
             List<Boolean> ListWithDirectionCollision = Arrays.asList(collisions);
-            mapObstaclesListHashMap.put(obstacle, ListWithDirectionCollision);
+            mapObstaclesListHashMap.put(object, ListWithDirectionCollision);
+
             if (bx1 > px0 && bx0 < px1) {
                 if (by1 > py0 && by0 < py1) {
                     ListWithDirectionCollision = new ArrayList<>();
@@ -181,11 +166,45 @@ public class Collision {
                         } else
                             ListWithDirectionCollision.add(false);
                     }
-                    mapObstaclesListHashMap.put(obstacle, ListWithDirectionCollision);
+                    mapObstaclesListHashMap.put(object, ListWithDirectionCollision);
                     isCollision = true;
                 }
             }
         }
         return isCollision;
+    }
+
+
+
+    public static void heroObjectDimenions() {
+        bx0 = bx - SIZE / 2.0f + hero_standard_offset;
+        bx1 = bx + SIZE / 2.0f - hero_standard_offset;
+        by0 = by - SIZE / 2.0f + hero_standard_offset;
+        by1 = by + SIZE / 2.0f - hero_top_offset;
+        heroCoordinates =new float[] {bx1, bx0, by1, by0};
+    }
+
+    public static void simpleRectangularObjectDimenions(Objects object) {
+        px0 = (object.getObject_positionX0() - Hero.hero_positionX0) + delta_x;
+        py0 = (object.getObject_positionY0() - Hero.hero_positionY0) + delta_y;
+        px1 = px0 + object.getWidth();
+        py1 = py0 + object.getHeight();
+    }
+
+    private void inclinatedObjectDimensions(Objects object, float tangens) {
+        float px = (object.getObject_positionX0() - Hero.hero_positionX0);
+        float py = (object.getObject_positionY0() - Hero.hero_positionY0);
+        float pX = (object.getObject_positionX1() - Hero.hero_positionX0);
+        float pY = (object.getObject_positionY1() - Hero.hero_positionY0);
+        float X = 1.0f;
+        if (by1 < py) X = 0;
+        if (bx1 < px) X = 0;
+        if (by0 > pY) X = 0;
+        if (bx0 > pX) X = 0;
+
+        px0 = px + X * (by0 - py) / tangens;
+        py0 = py + X * (bx0 - px) * tangens;
+        px1 = px + X * (by1 - py - 0.2f) / tangens + 0.2f;
+        py1 = py + X * (bx1 - px - 0.2f) * tangens + 0.2f;
     }
 }

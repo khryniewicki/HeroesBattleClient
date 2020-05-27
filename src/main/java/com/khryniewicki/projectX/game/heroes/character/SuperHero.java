@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
-import com.khryniewicki.projectX.game.attack.Spell;
+import com.khryniewicki.projectX.game.attack.spell_group.Spell;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;

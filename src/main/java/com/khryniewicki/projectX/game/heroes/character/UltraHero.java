@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.game.attack.Spell;
+import com.khryniewicki.projectX.game.attack.spell_group.Spell;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface UltraHero {
