@@ -52,9 +52,6 @@ public class Level {
     private List<MapObstacles> terrains;
 
     private boolean pointerON = false;
-    public static boolean collision_left, collision_right, collision_up, collision_down = false;
-    public static boolean[] collisions = new boolean[]{collision_right, collision_left, collision_up, collision_down};
-    public static StompSessionHandler application;
 
     public Level() {
         initVertex();
@@ -69,7 +66,6 @@ public class Level {
         spellMock=new SpellMock(heroMock.getSpell());
         attack=new Attack();
 
-        application = Application.sessionHandler;
 
     }
 
@@ -99,9 +95,6 @@ public class Level {
         };
         background = new VertexArray(vertices, indices, tcs);
     }
-
-
-
 
     public void update() {
         hero.update();
