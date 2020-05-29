@@ -57,6 +57,28 @@ public class Level {
     public static StompSessionHandler application;
 
     public Level() {
+        initVertex();
+        initBackgroundTextures();
+
+        myCollision = new Collision();
+        pointer = new Pointer();
+
+        hero = new FireWizard();
+        heroMock = new HeroMock(new FireWizard());
+        spell = hero.castingSpell();
+        spellMock=new SpellMock(heroMock.getSpell());
+        attack=new Attack();
+
+        application = Application.sessionHandler;
+
+    }
+
+    private void initBackgroundTextures() {
+        bgTexture = new Texture("res/desertforum.png");
+        obstacles = ObstacleStorage.getObstacle();
+        terrains = ObstacleStorage.getTerrainList();
+    }
+    private void initVertex() {
         float[] vertices = new float[]{
                 -10.0f, -10.0f * 9.0f / 16.0f, 0.0f,
                 -10.0f, 10.0f * 9.0f / 16.0f, 0.0f,
@@ -76,49 +98,9 @@ public class Level {
                 1, 1
         };
         background = new VertexArray(vertices, indices, tcs);
-        bgTexture = new Texture("res/desertforum.png");
-        obstacles = ObstacleStorage.getObstacle();
-        terrains = ObstacleStorage.getTerrainList();
-        myCollision = new Collision();
-        pointer = new Pointer();
-
-        hero = new FireWizard();
-        heroMock = new HeroMock(new FireWizard());
-        spell = hero.castingSpell();
-        spellMock=new SpellMock(heroMock.getSpell());
-        attack=new Attack();
-
-        application = Application.sessionHandler;
-
     }
 
-    public void renderTerrains() {
-        Shader.TERRAIN.enable();
-        Terrain.getTexture().bind();
 
-        for (MapObstacles terrain : terrains) {
-            terrain.getMesh().bind();
-            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
-            terrain.getMesh().draw();
-            terrain.getMesh().unbind();
-        }
-        Terrain.getTexture().unbind();
-        Shader.TERRAIN.disable();
-    }
-
-    public void renderObstacles() {
-        Shader.OBSTACLE.enable();
-        Obstacle.getTexture().bind();
-        for (MapObstacles obstacle : obstacles) {
-            obstacle.getMesh().bind();
-            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
-            obstacle.getMesh().draw();
-            obstacle.getMesh().unbind();
-        }
-
-        Obstacle.getTexture().unbind();
-        Shader.OBSTACLE.disable();
-    }
 
 
     public void update() {
@@ -131,23 +113,7 @@ public class Level {
     }
 
     public void render() {
-        bgTexture.bind();
-        Shader.BG.enable();
-        background.bind();
-        //TODO: flaga, aby nie renderować za każdym razem terenu
-
-        for (int i = 0; i < map + 3; i++) {
-            Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
-            background.draw();
-        }
-
-        background.render();
-        Shader.BG.disable();
-        bgTexture.unbind();
-
-        renderObstacles();
-        renderTerrains();
-
+        renderBackground();
 
         myCollision.collisionTest(hero);
         attack.hitsHeroWithSpell(spellMock);
@@ -162,6 +128,48 @@ public class Level {
 
     }
 
+    private void renderBackground() {
+        bgTexture.bind();
+        Shader.BG.enable();
+        background.bind();
 
+        for (int i = 0; i < map + 3; i++) {
+            Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
+            background.draw();
+        }
+
+        background.render();
+        Shader.BG.disable();
+        bgTexture.unbind();
+
+        renderObstacles();
+        renderTerrains();
+    }
+    public void renderTerrains() {
+        Shader.TERRAIN.enable();
+        Terrain.getTexture().bind();
+
+        for (MapObstacles terrain : terrains) {
+            terrain.getMesh().bind();
+            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
+            terrain.getMesh().draw();
+            terrain.getMesh().unbind();
+        }
+        Terrain.getTexture().unbind();
+        Shader.TERRAIN.disable();
+    }
+    public void renderObstacles() {
+        Shader.OBSTACLE.enable();
+        Obstacle.getTexture().bind();
+        for (MapObstacles obstacle : obstacles) {
+            obstacle.getMesh().bind();
+            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
+            obstacle.getMesh().draw();
+            obstacle.getMesh().unbind();
+        }
+
+        Obstacle.getTexture().unbind();
+        Shader.OBSTACLE.disable();
+    }
 }
 
