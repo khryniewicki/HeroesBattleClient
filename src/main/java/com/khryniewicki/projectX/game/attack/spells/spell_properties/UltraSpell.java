@@ -25,6 +25,7 @@ public interface UltraSpell {
     Float getDistanceY();
     Float getPositionX();
     Float getPositionY();
+    Float getPositionZ();
     Float getSize();
     Texture getThrowingSpellTexture();
 

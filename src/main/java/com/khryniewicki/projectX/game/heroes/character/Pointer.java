@@ -4,14 +4,12 @@ import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
-import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 public class Pointer {
 
@@ -71,24 +69,24 @@ public class Pointer {
         });
         glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
 
-                    if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_UP && action != GLFW_RELEASE && !Level.collisions[2]) {
+                    if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_UP && action != GLFW_RELEASE) {
                         System.out.println();
                         position.y += 0.05f;
                         setMesh(isMovingLeft(false));
 
-                    } else if (key == GLFW.GLFW_KEY_DOWN && action != GLFW_RELEASE && !Level.collisions[3]) {
+                    } else if (key == GLFW.GLFW_KEY_DOWN && action != GLFW_RELEASE) {
                         System.out.println();
                         position.y -= 0.05f;
                         setMesh(isMovingLeft(false));
 
 
-                    } else if (key == GLFW.GLFW_KEY_LEFT && action != GLFW_RELEASE && !Level.collisions[1]) {
+                    } else if (key == GLFW.GLFW_KEY_LEFT && action != GLFW_RELEASE) {
                         System.out.println();
                         position.x -= 0.05f;
                         setMesh(isMovingLeft(true));
 
 
-                    } else if (key == GLFW.GLFW_KEY_RIGHT && action != GLFW_RELEASE  && !Level.collisions[0]) {
+                    } else if (key == GLFW.GLFW_KEY_RIGHT && action != GLFW_RELEASE) {
                         System.out.println();
                         position.x += 0.05f;
                         setMesh(isMovingLeft(false));

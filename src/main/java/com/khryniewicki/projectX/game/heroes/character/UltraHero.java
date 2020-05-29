@@ -9,6 +9,8 @@ public interface UltraHero {
     void setPositionX(Float positionX);
     void setPositionY(Float positionY);
     void setMovingLeft(boolean movingLeft);
+    void getProperties();
+
     Vector getPosition();
     Spell getSpell();
 

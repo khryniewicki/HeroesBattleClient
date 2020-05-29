@@ -94,6 +94,11 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
+    public void getProperties() {
+
+    }
+
+    @Override
     public void setTextureRun() {
         ultraHero.setTextureRun();
     }

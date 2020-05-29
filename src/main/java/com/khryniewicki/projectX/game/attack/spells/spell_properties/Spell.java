@@ -58,6 +58,11 @@ public class Spell implements UltraSpell {
     }
 
     @Override
+    public Float getPositionZ() {
+        return Level.heroMock.getSpell().position.z;
+    }
+
+    @Override
     public Float getSize() {
         return SIZE;
     }

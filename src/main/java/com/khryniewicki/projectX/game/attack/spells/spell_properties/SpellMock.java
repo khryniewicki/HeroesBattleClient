@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.attack.attackSuccess.HeroUnderAttack;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 
@@ -8,14 +9,15 @@ public class SpellMock extends Spell implements UltraSpell {
     private UltraSpell ultraSpell;
     private Float tmpPositionX;
     private Float tmpPositionY;
-    private Float distanceX;
-    private Float distanceY;
-    private Texture throwingSpellTexture;
+    private HeroUnderAttack heroUnderAttack;
 
     public SpellMock(UltraSpell ultraSpell) {
         this.ultraSpell = ultraSpell;
         setPosition();
+        heroUnderAttack = new HeroUnderAttack();
+
     }
+
     private Boolean changeMockPosition() {
 
         if (tmpPositionX != null && tmpPositionX == SpellReceiveService.spellMockPositionX) {
@@ -54,10 +56,12 @@ public class SpellMock extends Spell implements UltraSpell {
     public void spellCasting() {
         ultraSpell.spellCasting();
     }
+
     @Override
     public void setDistanceX(Float distanceX) {
         ultraSpell.setDistanceX(distanceX);
     }
+
     @Override
     public void setDistanceY(Float distanceY) {
         ultraSpell.setDistanceY(distanceY);
@@ -66,6 +70,7 @@ public class SpellMock extends Spell implements UltraSpell {
     @Override
     public void render() {
         ultraSpell.render();
+        heroUnderAttack.isAttackedBySpell(this);
     }
 
     @Override
@@ -76,7 +81,6 @@ public class SpellMock extends Spell implements UltraSpell {
     @Override
     public void setPositionY(Float positionY) {
         ultraSpell.setPositionY(positionY);
-
     }
 
     @Override
@@ -106,8 +110,8 @@ public class SpellMock extends Spell implements UltraSpell {
     }
 
     @Override
-    public void setSpell(Float indexHeight, Float indexWidth, Texture texture){
-        ultraSpell.setSpell(indexHeight,indexWidth,texture);
+    public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
+        ultraSpell.setSpell(indexHeight, indexWidth, texture);
     }
 
     public Float getDistanceX() {

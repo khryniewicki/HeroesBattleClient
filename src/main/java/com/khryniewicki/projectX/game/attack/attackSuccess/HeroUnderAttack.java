@@ -1,25 +1,27 @@
 package com.khryniewicki.projectX.game.attack.attackSuccess;
 
-import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
-import com.khryniewicki.projectX.game.heroes.character.Hero;
+import com.khryniewicki.projectX.game.heroes.character.SuperHeroProperties;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class Attack {
+public class HeroUnderAttack {
 
     private Spell spell;
-    private Hero hero;
     private float ox0, ox1, oy0, oy1;
     private float bx0, bx1, by0, by1;
+    private float spellCoordZ;
     private float[] heroCoordinates, spellCoordiantes;
 
-    public boolean hitsHeroWithSpell(UltraSpell currentSpell) {
+
+
+    public boolean isAttackedBySpell(UltraSpell currentSpell) {
         simpleObjectDimenions(currentSpell);
         heroObjectDimenions();
+
         boolean isAttackSucceeded = false;
 
 //        System.out.println(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
@@ -33,11 +35,7 @@ public class Attack {
     }
 
     public void heroObjectDimenions() {
-
-        bx0 = Level.myCollision.getBx0();
-        bx1 = Level.myCollision.getBx1();
-        by0 = Level.myCollision.getBy0();
-        by1 = Level.myCollision.getBy1();
+        SuperHeroProperties.getLocationParameters();
         heroCoordinates = new float[]{bx1, bx0, by1, by0};
     }
 
@@ -46,6 +44,7 @@ public class Attack {
         ox1 = currentSpell.getPositionX() + currentSpell.getSize() / 2.0f;
         oy0 = currentSpell.getPositionY() - currentSpell.getSize() / 2.0f;
         oy1 = currentSpell.getPositionY() + currentSpell.getSize() / 2.0f;
+        spellCoordZ=currentSpell.getPositionZ();
         spellCoordiantes = new float[]{ox1, ox0, oy1, oy0};
     }
 }

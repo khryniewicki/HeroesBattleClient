@@ -19,15 +19,23 @@ import static org.lwjgl.glfw.GLFW.*;
 public class SuperHero implements UltraHero {
     private boolean isMovingLeft;
     private VertexArray mesh;
-    private Texture texture,heroUp, heroDown, heroLeft, heroRight, heroIdle;
-    private Vector position;
+    private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle;
     private Spell spell;
-    private String name;
+
+
+    private Vector position;
     public static float hero_positionX0;
     public static float hero_positionY0;
-    private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
 
-    public float SIZE = 0.9f;
+    private String name;
+    private float hero_standard_offset;
+    private float hero_top_offset;
+    public float SIZE=1f;
+
+
+    private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
+    public Collision myCollision;
+    private SuperHeroProperties superHeroProperties;
 
     public VertexArray createHero() {
         int i = isMovingLeft ? -1 : 1;
@@ -46,10 +54,10 @@ public class SuperHero implements UltraHero {
         float[] tcs = new float[]{
                 0, 1,
                 0, 0,
-                i * 1, 0,
-                i * 1, 1
+                i, 0,
+                i, 1
         };
-
+        superHeroProperties = new SuperHeroProperties(this);
         return new VertexArray(vertices, indices, tcs);
     }
 
@@ -100,7 +108,9 @@ public class SuperHero implements UltraHero {
         this.mesh = mesh;
     }
 
-    public Float getX() { return Optional.ofNullable(position.x).orElse(0f);}
+    public Float getX() {
+        return Optional.ofNullable(position.x).orElse(0f);
+    }
 
     public Float getY() {
         return Optional.ofNullable(position.y).orElse(0f);
@@ -128,6 +138,11 @@ public class SuperHero implements UltraHero {
     @Override
     public void setMovingLeft(boolean movingLeft) {
         isMovingLeft = movingLeft;
+    }
+
+    @Override
+    public void getProperties() {
+        superHeroProperties.getLocationParameters();
     }
 
 
