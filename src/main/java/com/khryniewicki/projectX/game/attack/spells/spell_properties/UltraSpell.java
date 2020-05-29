@@ -7,9 +7,7 @@ public interface UltraSpell {
     void update();
     void render();
 
-    void setPositionX(Float positionX);
-    void setPositionY(Float positionY);
-    void setPositionZ(Float positionZ);
+    void setPosition(Vector position);
     void getMousePosition();
 
     void setRelativeX(Float relativeX);
@@ -23,8 +21,9 @@ public interface UltraSpell {
     Float getHeroPositionY();
     Float getDistanceX();
     Float getDistanceY();
-    Float getPositionX();
-    Float getPositionY();
+    Vector getPosition();
+
+
     Float getSize();
     Texture getThrowingSpellTexture();
 

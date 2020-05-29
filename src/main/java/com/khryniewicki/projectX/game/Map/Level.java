@@ -1,8 +1,7 @@
 package com.khryniewicki.projectX.game.Map;
 
-import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
-import com.khryniewicki.projectX.game.attack.attackSuccess.Attack;
+import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
@@ -16,10 +15,8 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
-import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
 import java.util.List;
 
@@ -29,22 +26,13 @@ public class Level {
 
     private VertexArray background;
     private Texture bgTexture;
-
-    private int xScroll = 0;
-    private int map = 0;
     private Vector position = new Vector();
 
     public static SuperHero hero;
     public static UltraHero heroMock;
     private Spell spell;
     private UltraSpell spellMock;
-    public static Float getHero_x() {
-        return hero == null ? GameUtill.heroStartingPositionX : hero.getX();
-    }
-    public static Float getHero_y() {
-        return hero == null ? GameUtill.heroStartingPositionY : hero.getY();
-    }
-    private Attack attack;
+    private ActivatedAttack activatedAttack;
 
     private Pointer pointer;
     public static Collision myCollision;
@@ -63,8 +51,7 @@ public class Level {
         hero = new FireWizard();
         heroMock = new HeroMock(new FireWizard());
         spell = hero.castingSpell();
-        spellMock=new SpellMock(heroMock.getSpell());
-        attack=new Attack();
+        spellMock = new SpellMock(heroMock.getSpell());
 
 
     }
@@ -74,6 +61,7 @@ public class Level {
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
     }
+
     private void initVertex() {
         float[] vertices = new float[]{
                 -10.0f, -10.0f * 9.0f / 16.0f, 0.0f,
@@ -109,7 +97,6 @@ public class Level {
         renderBackground();
 
         myCollision.collisionTest(hero);
-        attack.hitsHeroWithSpell(spellMock);
 
         hero.render();
         heroMock.render();
@@ -126,10 +113,9 @@ public class Level {
         Shader.BG.enable();
         background.bind();
 
-        for (int i = 0; i < map + 3; i++) {
-            Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
-            background.draw();
-        }
+        Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(0f, 0.0f, 0.0f)));
+        background.draw();
+
 
         background.render();
         Shader.BG.disable();
@@ -138,6 +124,7 @@ public class Level {
         renderObstacles();
         renderTerrains();
     }
+
     public void renderTerrains() {
         Shader.TERRAIN.enable();
         Terrain.getTexture().bind();
@@ -151,6 +138,7 @@ public class Level {
         Terrain.getTexture().unbind();
         Shader.TERRAIN.disable();
     }
+
     public void renderObstacles() {
         Shader.OBSTACLE.enable();
         Obstacle.getTexture().bind();

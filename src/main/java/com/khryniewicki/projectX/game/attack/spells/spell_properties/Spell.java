@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -12,7 +13,6 @@ import lombok.Data;
 import org.lwjgl.BufferUtils;
 
 import java.nio.DoubleBuffer;
-import java.util.Optional;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -20,55 +20,15 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Spell implements UltraSpell {
     private VertexArray mesh;
     private Texture texture;
-
-    boolean flag = true;
+    private static SuperHero hero;
     private Vector position;
     private Float relativeX;
-
     private Float relativeY;
+
     private Float distanceX;
-
-    public void setDistanceX(Float distanceX) {
-        this.distanceX = distanceX;
-    }
-
-    public void setDistanceY(Float distanceY) {
-        this.distanceY = distanceY;
-    }
-
     private Float distanceY;
+
     private Texture throwingSpellTexture;
-
-    public Float getDistanceX() {
-        return distanceX;
-    }
-
-    public Float getDistanceY() {
-        return distanceY;
-    }
-
-    @Override
-    public Float getPositionX() {
-        return Level.heroMock.getSpell().position.x;
-    }
-
-    @Override
-    public Float getPositionY() {
-        return Level.heroMock.getSpell().position.y;
-    }
-
-    @Override
-    public Float getSize() {
-        return SIZE;
-    }
-
-    public Texture getThrowingSpellTexture() {
-        return throwingSpellTexture;
-    }
-
-    public void setThrowingSpellTexture(Texture throwingSpellTexture) {
-        this.throwingSpellTexture = throwingSpellTexture;
-    }
 
     private Texture consumedSpellTexture;
     private Float castingSpeed;
@@ -80,7 +40,37 @@ public class Spell implements UltraSpell {
     public float[] tcs;
     private float indexHeight = 1;
     private float indexWidth = 1;
+
     private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
+
+    public Float getDistanceX() {
+        return distanceX;
+    }
+
+    public Float getDistanceY() {
+        return distanceY;
+    }
+
+    @Override
+    public Float getSize() {
+        return SIZE;
+    }
+
+    public Texture getThrowingSpellTexture() {
+        return throwingSpellTexture;
+    }
+
+    public void setDistanceX(Float distanceX) {
+        this.distanceX = distanceX;
+    }
+
+    public void setDistanceY(Float distanceY) {
+        this.distanceY = distanceY;
+    }
+
+    public void setThrowingSpellTexture(Texture throwingSpellTexture) {
+        this.throwingSpellTexture = throwingSpellTexture;
+    }
 
     public VertexArray createSpell() {
         float[] vertices = new float[]{
@@ -102,7 +92,7 @@ public class Spell implements UltraSpell {
                 indexWidth * 1, indexHeight * 1
         };
         texture = throwingSpellTexture;
-
+        hero = Level.hero;
         return new VertexArray(vertices, indices, tcs);
 
     }
@@ -161,11 +151,16 @@ public class Spell implements UltraSpell {
         relativeX = null;
     }
 
+    public Vector getPosition() {
+        return position;
+    }
     private void setPosition(Float x, Float y, Float z) {
         setPositionZ(z);
         setPositionX(x);
         setPositionY(y);
     }
+
+
 
     public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
         setIndexHeight(indexHeight);
@@ -197,12 +192,12 @@ public class Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionX() {
-        return Level.getHero_x();
+        return hero.getX();
     }
 
     @Override
     public Float getHeroPositionY() {
-        return Level.getHero_y();
+        return hero.getY();
     }
 
     @Override
@@ -222,13 +217,6 @@ public class Spell implements UltraSpell {
         this.mesh = mesh;
     }
 
-    public Float getX() {
-        return Optional.ofNullable(position.x).orElse(0f);
-    }
-
-    public Float getY() {
-        return Optional.ofNullable(position.y).orElse(0f);
-    }
 
     public void setPositionX(Float positionX) {
         this.position.x = positionX;

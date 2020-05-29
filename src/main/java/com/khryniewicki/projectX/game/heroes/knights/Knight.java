@@ -1,15 +1,16 @@
-package com.khryniewicki.projectX.game.heroes.character;
+package com.khryniewicki.projectX.game.heroes.knights;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.Fire;
+import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.HeroUtil;
 import lombok.Data;
 
 @Data
-public class Hero extends SuperHero {
+public class Knight extends SuperHero {
 
-    public Hero() {
+    public Knight() {
         setPosition();
         setTexture();
         setSpell(new Fire());

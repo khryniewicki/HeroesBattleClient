@@ -1,21 +1,25 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.graphics.Texture;
+import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 
 public class SpellMock extends Spell implements UltraSpell {
     private UltraSpell ultraSpell;
     private Float tmpPositionX;
     private Float tmpPositionY;
-    private Float distanceX;
-    private Float distanceY;
-    private Texture throwingSpellTexture;
+    private ActivatedAttack activatedAttack;
 
     public SpellMock(UltraSpell ultraSpell) {
         this.ultraSpell = ultraSpell;
         setPosition();
+        activatedAttack=new ActivatedAttack(this);
     }
+
+
+
     private Boolean changeMockPosition() {
 
         if (tmpPositionX != null && tmpPositionX == SpellReceiveService.spellMockPositionX) {
@@ -31,9 +35,7 @@ public class SpellMock extends Spell implements UltraSpell {
             setDistanceX(SpellReceiveService.spellMockPositionX - getHeroPositionX());
             setDistanceY(SpellReceiveService.spellMockPositionY - getHeroPositionY());
             setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
-            setPositionX(getHeroPositionX());
-            setPositionY(getHeroPositionY());
-            setPositionZ(1f);
+            setPosition( new Vector(getHeroPositionX(),getHeroPositionY(),1f));
         }
 
         return true;
@@ -66,22 +68,12 @@ public class SpellMock extends Spell implements UltraSpell {
     @Override
     public void render() {
         ultraSpell.render();
+        activatedAttack.hitsHeroWithSpell();
     }
 
     @Override
-    public void setPositionX(Float positionX) {
-        ultraSpell.setPositionX(positionX);
-    }
-
-    @Override
-    public void setPositionY(Float positionY) {
-        ultraSpell.setPositionY(positionY);
-
-    }
-
-    @Override
-    public void setPositionZ(Float positionZ) {
-        ultraSpell.setPositionZ(positionZ);
+    public void setPosition(Vector position) {
+        ultraSpell.setPosition(position);
     }
 
     @Override
@@ -91,7 +83,6 @@ public class SpellMock extends Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionY() {
-
         return Level.heroMock.getPosition().y;
     }
 
