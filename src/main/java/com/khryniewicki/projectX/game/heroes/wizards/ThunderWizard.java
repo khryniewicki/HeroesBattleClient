@@ -39,6 +39,8 @@ public class ThunderWizard extends SuperHero {
     @Override
     public void setProperties() {
         setName("ThunderWizard");
+        setHero_standard_offset(0.2f);
+        setHero_top_offset(0.5f);
     }
 
     @Override

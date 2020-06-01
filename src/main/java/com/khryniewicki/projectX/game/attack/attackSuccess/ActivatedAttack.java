@@ -23,11 +23,13 @@ public class ActivatedAttack {
     }
 
     public boolean hitsHeroWithSpell() {
+       if (oz0<0) return false;
         simpleObjectDimenions();
         heroObjectDimenions();
         boolean isAttackSucceeded = false;
 
 //        System.out.println(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
+
         if (bx1 > ox0 && bx0 < ox1) {
             if (by1 > oy0 && by0 < oy1) {
                 log.info("Spell reached hero");
@@ -43,7 +45,6 @@ public class ActivatedAttack {
         bx1 = Level.myCollision.getBx1();
         by0 = Level.myCollision.getBy0();
         by1 = Level.myCollision.getBy1();
-
         heroCoordinates = new float[]{bx1, bx0, by1, by0};
     }
 

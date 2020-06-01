@@ -26,7 +26,8 @@ public class SuperHero implements UltraHero {
     public static float hero_positionX0;
     public static float hero_positionY0;
     private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
-
+    private float hero_standard_offset;
+    private float hero_top_offset;
     public float SIZE = 0.9f;
 
     public VertexArray createHero() {

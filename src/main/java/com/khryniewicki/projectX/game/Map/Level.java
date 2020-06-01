@@ -41,14 +41,14 @@ public class Level {
 
     private boolean pointerON = false;
 
-    public Level() {
+    public Level(SuperHero heroFromScanner) {
         initVertex();
         initBackgroundTextures();
 
         myCollision = new Collision();
         pointer = new Pointer();
 
-        hero = new FireWizard();
+        hero = heroFromScanner;
         heroMock = new HeroMock(new FireWizard());
         spell = hero.castingSpell();
         spellMock = new SpellMock(heroMock.getSpell());

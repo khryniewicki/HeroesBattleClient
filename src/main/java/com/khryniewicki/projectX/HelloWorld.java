@@ -1,22 +1,32 @@
 package com.khryniewicki.projectX;
 
 
-import com.khryniewicki.projectX.graphics.Shader;
+import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
+import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
+import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.math.Matrix4f;
-import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
-import org.lwjgl.system.*;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.system.MemoryStack;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
-import java.nio.*;
+import java.nio.IntBuffer;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.system.MemoryStack.*;
-import static org.lwjgl.system.MemoryUtil.*;
+import static org.lwjgl.system.MemoryStack.stackPush;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Component
 public class HelloWorld implements Runnable {
@@ -27,10 +37,11 @@ public class HelloWorld implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-
     public static long window;
+    private String inputText;
 
     private Level level;
+    private Scanner scanner = new Scanner(System.in);
 
     public void start() {
         running = true;
@@ -108,8 +119,45 @@ public class HelloWorld implements Runnable {
         Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
 
         loadGraphicForObjects(pr_matrix);
-        level = new Level();
+
+
     }
+
+    private SuperHero getWizardType() {
+        WizardFactory factory = new WizardFactory();
+
+        return factory.createWizard(inputText);
+    }
+
+    private void checkedInput() {
+
+        getInput();
+        if (inputText != null) {
+            Set<String> characters = new HashSet<>();
+            characters.addAll(Arrays.asList("1", "2", "3"));
+            boolean contains = characters.contains(inputText);
+
+            if (!contains) inputText = null;
+        }
+    }
+
+    private void getInput() {
+        glfwPollEvents();
+        glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
+
+            if (key == GLFW_KEY_1 && action != GLFW_RELEASE) {
+                inputText = "1";
+            } else if (key == GLFW_KEY_2 && action != GLFW_RELEASE) {
+                inputText = "2";
+            } else if (key == GLFW_KEY_3 && action != GLFW_RELEASE) {
+                inputText = "3";
+            }
+
+        });
+
+
+    }
+
 
     private void loadGraphicForObjects(Matrix4f pr_matrix) {
         Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
@@ -136,12 +184,20 @@ public class HelloWorld implements Runnable {
     public void run() {
         init();
 
+
         long lastTime = System.nanoTime();
         double delta = 0.0;
         double ns = 1000000000.0 / 60.0;
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
+
+        initializePlayerType();
+
+        initializeWebsocketConnection();
+
+        level = new Level(getWizardType());
+
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -165,6 +221,23 @@ public class HelloWorld implements Runnable {
 
         glfwDestroyWindow(window);
         glfwTerminate();
+    }
+
+    private void initializeWebsocketConnection() {
+        System.out.println("Waiting for connection");
+        Application application = new Application();
+        application.startWebsocket();
+    }
+
+    private void initializePlayerType() {
+        System.out.println("Choose character: [1]FireWizard [2]IceWizard [3]ThunderWizard");
+        running = false;
+        do {
+            checkedInput();
+            if (inputText != null) {
+                running = true;
+            }
+        } while (!running);
     }
 
     private void update() {
