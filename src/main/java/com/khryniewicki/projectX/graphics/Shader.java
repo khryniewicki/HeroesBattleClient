@@ -5,6 +5,7 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ShaderUtils;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.lwjgl.opengl.GL20.*;
@@ -14,11 +15,11 @@ public class Shader {
 
     public static final int VERTEX_ATTRIB = 0;
     public static final int TCORD_ATTRIB = 1;
-    public static Shader BG, HERO, OBSTACLE, TERRAIN, MOCKHERO, SPELL;
+    public static Shader BG, HERO, OBSTACLE, TERRAIN, MOCKHERO, SPELL,TEXT;
 
     private boolean enabled = false;
     private final int ID;
-    private Map<String, Integer> locationCache = new HashMap<>();
+    private Map<String, Integer> locationCache = new LinkedHashMap<>();
 
     public Shader(String vertex, String fragment) {
         ID = ShaderUtils.load(vertex, fragment);
@@ -32,7 +33,7 @@ public class Shader {
         TERRAIN = new Shader("shaders/terrain.vert", "shaders/terrain.frag");
         MOCKHERO = new Shader("shaders/hero.vert", "shaders/hero.frag");
         SPELL = new Shader("shaders/spell.vert", "shaders/spell.frag");
-
+        TEXT= new Shader("shaders/object.vert", "shaders/object.frag");
     }
 
 

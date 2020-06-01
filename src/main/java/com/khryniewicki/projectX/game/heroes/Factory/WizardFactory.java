@@ -9,11 +9,11 @@ public class WizardFactory {
 
     public SuperHero createWizard(String s){
         switch (s){
-            case "1":
+            case "fire":
                 return new FireWizard();
-            case "2":
+            case "ice":
                 return new IceWizard();
-            case "3":
+            case "thunder":
                 return new ThunderWizard();
             default:
                 throw new IllegalArgumentException("Wrong input ");

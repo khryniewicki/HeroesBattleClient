@@ -5,21 +5,19 @@ import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
+import com.khryniewicki.projectX.game.menu.TextureLoader;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.math.Matrix4f;
+import com.khryniewicki.projectX.utils.TextUtil;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.nio.charset.Charset;
+import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -42,6 +40,8 @@ public class HelloWorld implements Runnable {
 
     private Level level;
     private Scanner scanner = new Scanner(System.in);
+    TextureLoader textureLoader;
+    public static final Map<String, TextureLoader> mapWithTextures = new HashMap<>();
 
     public void start() {
         running = true;
@@ -134,29 +134,40 @@ public class HelloWorld implements Runnable {
         getInput();
         if (inputText != null) {
             Set<String> characters = new HashSet<>();
-            characters.addAll(Arrays.asList("1", "2", "3"));
+            characters.addAll(Arrays.asList("fire", "ice", "thunder"));
             boolean contains = characters.contains(inputText);
 
-            if (!contains) inputText = null;
+            if (!contains) {
+                inputText = null;
+                renderError();
+            }
         }
     }
+
 
     private void getInput() {
         glfwPollEvents();
         glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
 
             if (key == GLFW_KEY_1 && action != GLFW_RELEASE) {
-                inputText = "1";
+                inputText = "fire";
+                renderText(TextUtil.CHOSE_FIREWIZARD);
+
             } else if (key == GLFW_KEY_2 && action != GLFW_RELEASE) {
-                inputText = "2";
+                inputText = "ice";
+                renderText(TextUtil.CHOSE_ICEWIZARD);
+
             } else if (key == GLFW_KEY_3 && action != GLFW_RELEASE) {
-                inputText = "3";
-            }
+                inputText = "thunder";
+                renderText(TextUtil.CHOSE_THUNDERWIZARD);
 
-        });
+            } else
+                inputText = "else";
+
+    });
 
 
-    }
+}
 
 
     private void loadGraphicForObjects(Matrix4f pr_matrix) {
@@ -170,15 +181,12 @@ public class HelloWorld implements Runnable {
 
         Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.HERO.setUniform1i("tex", 1);
-
-        Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.HERO.setUniform1i("tex", 1);
-
         Shader.SPELL.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.SPELL.setUniform1i("tex", 1);
 
-        Shader.SPELL.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.SPELL.setUniform1i("tex", 1);
+        Shader.TEXT.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.TEXT.setUniform1i("tex", 1);
+
     }
 
     public void run() {
@@ -207,6 +215,7 @@ public class HelloWorld implements Runnable {
                 updates++;
                 delta--;
             }
+
             render();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
@@ -224,15 +233,20 @@ public class HelloWorld implements Runnable {
     }
 
     private void initializeWebsocketConnection() {
-        System.out.println("Waiting for connection");
+        renderWaitingForConnection();
         Application application = new Application();
         application.startWebsocket();
     }
 
+    private void renderWaitingForConnection() {
+        renderText(TextUtil.CONNECTION);
+    }
+
     private void initializePlayerType() {
-        System.out.println("Choose character: [1]FireWizard [2]IceWizard [3]ThunderWizard");
+
         running = false;
         do {
+            renderChooseWizard();
             checkedInput();
             if (inputText != null) {
                 running = true;
@@ -240,12 +254,50 @@ public class HelloWorld implements Runnable {
         } while (!running);
     }
 
-    private void update() {
+    private void renderChooseWizard() {
+        renderText(TextUtil.ASK_FOR_CHAR);
+    }
 
+    private void renderError() {
+        renderText(TextUtil.ERROR);
+    }
+
+    private void update() {
         glfwPollEvents();
         level.update();
-
     }
+
+    private void renderText(String path) {
+        textureLoader = new TextureLoader(path);
+
+        textScheme(path);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        textureLoader.render();
+
+        swapBuffers();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void textScheme(String path) {
+
+        if (!mapWithTextures.containsKey(TextUtil.ASK_FOR_CHAR))
+            mapWithTextures.put(path, textureLoader);
+        if (!path.equals(TextUtil.ASK_FOR_CHAR)) {
+            byte[] array = new byte[7];
+            new Random().nextBytes(array);
+            String generatedString = new String(array, Charset.forName("UTF-8"));
+            mapWithTextures.put(generatedString, textureLoader);
+        }
+        if (mapWithTextures.size()==20){
+            mapWithTextures.clear();
+        }
+    }
+
 
     private void render() {
         int error2 = glGetError();
@@ -255,13 +307,16 @@ public class HelloWorld implements Runnable {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         level.render();
 
+        swapBuffers();
+    }
+
+    private void swapBuffers() {
         int error = glGetError();
         if (error != GL_NO_ERROR)
             System.out.println(error);
 
         glfwSwapBuffers(window);
     }
-
 
     public static void main(String[] args) {
         new HelloWorld().start();
