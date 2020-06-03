@@ -3,13 +3,16 @@ package com.khryniewicki.projectX.game.heroes.wizards;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.Thunder;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.HeroUtil;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Data
 public class ThunderWizard extends SuperHero {
+
 
     public ThunderWizard() {
         setPosition();
@@ -31,9 +34,10 @@ public class ThunderWizard extends SuperHero {
 
     @Override
     public void setPosition() {
+        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
         setPosition(new Vector());
-        setPositionX(GameUtill.heroStartingPositionX);
-        setPositionY(GameUtill.heroStartingPositionY);
+        setPositionX(heroStartingPosition.getX());
+        setPositionY(heroStartingPosition.getY());
     }
 
     @Override

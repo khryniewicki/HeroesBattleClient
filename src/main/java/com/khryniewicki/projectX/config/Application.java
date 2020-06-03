@@ -2,6 +2,8 @@ package com.khryniewicki.projectX.config;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
+import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
 import com.khryniewicki.projectX.services.SpellReceiveService;
@@ -72,6 +74,9 @@ public class Application  {
             spellSendDTO = new SpellSendDTO();
             session.send("/app/spell/" + app,spellDTO);
         }
+        public void getHeroId(SuperHero superhero) {
+            session.send("/app/getHeroId",new Message(superhero.getName()));
+        }
 
         public void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
@@ -103,7 +108,23 @@ public class Application  {
                 }
             });
         }
+        public void subscribeGameInitials(String topic, StompSession session) {
+            session.subscribe(topic, new StompFrameHandler() {
 
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return Message.class;
+                }
+
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    Message message=(Message) payload;
+                    MultiplayerInitializer multiplayerInitializer = new MultiplayerInitializer();
+                    multiplayerInitializer.setMessage(message);
+                    multiplayerInitializer.validateMessage();
+                }
+            });
+        }
         @Override
         public void handleTransportError(StompSession stompSession, Throwable throwable) {
             if (throwable instanceof ConnectionLostException) {
@@ -122,10 +143,11 @@ public class Application  {
             System.err.println("Connected! Headers:" + "\n" + userId);
             showHeaders(connectedHeaders);
 
+            subscribeGameInitials("/topic/getHeroId", session);
+
             subscribeHero("/topic/hero/" + topic, session);
             subscribeSpell("/topic/spell/" + topic, session);
 
-            sendHeroToStompSocket();
         }
 
 

@@ -48,12 +48,12 @@ public class TextureLoader {
     }
 
     public float calculateTextY() {
-        textY = 5.0f - HelloWorld.mapWithTextures.size() * 0.5f;
+        textY = 5.0f - RenderTexture.mapWithTextures.size() * 0.5f;
         return textY;
     }
 
     public void render() {
-        Map<String, TextureLoader> mapWithTextures = HelloWorld.mapWithTextures;
+        Map<String, TextureLoader> mapWithTextures = RenderTexture.mapWithTextures;
 
         mapWithTextures.values().forEach(t -> {
             t.texture.bind();

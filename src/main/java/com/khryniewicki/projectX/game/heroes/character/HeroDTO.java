@@ -2,8 +2,10 @@ package com.khryniewicki.projectX.game.heroes.character;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class HeroDTO {
+public class HeroDTO implements Serializable {
     private String name;
     private Integer life=100;
     private Integer mana=100;

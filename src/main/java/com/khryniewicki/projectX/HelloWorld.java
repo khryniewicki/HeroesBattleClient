@@ -5,7 +5,8 @@ import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.TextureLoader;
+import com.khryniewicki.projectX.game.menu.RenderTexture;
+import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.utils.TextUtil;
@@ -16,8 +17,10 @@ import org.lwjgl.system.MemoryStack;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -37,13 +40,14 @@ public class HelloWorld implements Runnable {
     private boolean running = false;
     public static long window;
     private String inputText;
-
+    public  RenderTexture renderTexture;
     private Level level;
-    private Scanner scanner = new Scanner(System.in);
-    TextureLoader textureLoader;
-    public static final Map<String, TextureLoader> mapWithTextures = new HashMap<>();
+    public static CountDownLatch latch;
+    public static SuperHero wizard;
+    public static boolean isHeroEstablishedCorrectly;
 
     public void start() {
+        latch = new CountDownLatch(1);
         running = true;
         thread = new Thread(this, "Game");
         thread.start();
@@ -117,29 +121,33 @@ public class HelloWorld implements Runnable {
         Shader.loadAll();
 
         Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
+        createRenderTexture();
 
         loadGraphicForObjects(pr_matrix);
 
 
     }
 
-    private SuperHero getWizardType() {
-        WizardFactory factory = new WizardFactory();
+    private void createRenderTexture() {
+        renderTexture = new RenderTexture();
+    }
 
-        return factory.createWizard(inputText);
+    private SuperHero getWizardType() {
+        wizard = new WizardFactory().createWizard(inputText);
+        return wizard;
     }
 
     private void checkedInput() {
 
         getInput();
         if (inputText != null) {
-            Set<String> characters = new HashSet<>();
-            characters.addAll(Arrays.asList("fire", "ice", "thunder"));
+            Set<String> characters = new HashSet<>(Arrays.asList("fire", "ice", "thunder"));
             boolean contains = characters.contains(inputText);
 
             if (!contains) {
                 inputText = null;
-                renderError();
+                renderTexture.createText(TextUtil.ERROR);
+
             }
         }
     }
@@ -149,25 +157,25 @@ public class HelloWorld implements Runnable {
         glfwPollEvents();
         glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
 
-            if (key == GLFW_KEY_1 && action != GLFW_RELEASE) {
+            if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
                 inputText = "fire";
-                renderText(TextUtil.CHOSE_FIREWIZARD);
+                renderTexture.createText(TextUtil.CHOSE_FIREWIZARD);
 
-            } else if (key == GLFW_KEY_2 && action != GLFW_RELEASE) {
+            } else if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
                 inputText = "ice";
-                renderText(TextUtil.CHOSE_ICEWIZARD);
+                renderTexture.createText(TextUtil.CHOSE_ICEWIZARD);
 
-            } else if (key == GLFW_KEY_3 && action != GLFW_RELEASE) {
+            } else if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
                 inputText = "thunder";
-                renderText(TextUtil.CHOSE_THUNDERWIZARD);
+                renderTexture.createText(TextUtil.CHOSE_THUNDERWIZARD);
 
             } else
                 inputText = "else";
 
-    });
+        });
 
 
-}
+    }
 
 
     private void loadGraphicForObjects(Matrix4f pr_matrix) {
@@ -200,11 +208,9 @@ public class HelloWorld implements Runnable {
         int updates = 0;
         int frames = 0;
 
-        initializePlayerType();
+        initializeMultiplayerGame();
 
-        initializeWebsocketConnection();
-
-        level = new Level(getWizardType());
+        createLevel();
 
         while (running) {
             long now = System.nanoTime();
@@ -232,70 +238,70 @@ public class HelloWorld implements Runnable {
         glfwTerminate();
     }
 
-    private void initializeWebsocketConnection() {
-        renderWaitingForConnection();
-        Application application = new Application();
-        application.startWebsocket();
+    private void initializeMultiplayerGame() {
+        initializeHeroType();
+        initializeWebsocketConnection();
+        setMultiplayerGame();
     }
-
-    private void renderWaitingForConnection() {
-        renderText(TextUtil.CONNECTION);
-    }
-
-    private void initializePlayerType() {
-
+    private void initializeHeroType() {
+        renderTexture.createText(TextUtil.WELCOME);
         running = false;
         do {
-            renderChooseWizard();
+            renderTexture.createText(TextUtil.ASK_FOR_CHAR);
             checkedInput();
             if (inputText != null) {
                 running = true;
             }
         } while (!running);
     }
+    private void initializeWebsocketConnection() {
+        renderTexture.createText(TextUtil.CONNECTION);
+        Application application = new Application();
+        application.startWebsocket();
+        renderTexture.createText(TextUtil.CONNECTION_ESTABLISHED);
+    }
+    private void setMultiplayerGame() {
+        if (isInitialHeroPropertiesLoadedProperly()) {
 
-    private void renderChooseWizard() {
-        renderText(TextUtil.ASK_FOR_CHAR);
+            renderTexture.createText(TextUtil.OTHER_PLAYER);
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            renderTexture.createText(TextUtil.TRY_LATER);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            running=false;
+        }
     }
 
-    private void renderError() {
-        renderText(TextUtil.ERROR);
+    private boolean isInitialHeroPropertiesLoadedProperly() {
+        WebsocketInitializer websocketInitializer = new WebsocketInitializer();
+        websocketInitializer.setSuperHero(getWizardType());
+        Thread websocket = new Thread(websocketInitializer,"websocket");
+        websocket.start();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return isHeroEstablishedCorrectly;
+    }
+
+    private void createLevel() {
+        if (running)
+        level = new Level(getWizardType());
     }
 
     private void update() {
         glfwPollEvents();
         level.update();
-    }
-
-    private void renderText(String path) {
-        textureLoader = new TextureLoader(path);
-
-        textScheme(path);
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        textureLoader.render();
-
-        swapBuffers();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void textScheme(String path) {
-
-        if (!mapWithTextures.containsKey(TextUtil.ASK_FOR_CHAR))
-            mapWithTextures.put(path, textureLoader);
-        if (!path.equals(TextUtil.ASK_FOR_CHAR)) {
-            byte[] array = new byte[7];
-            new Random().nextBytes(array);
-            String generatedString = new String(array, Charset.forName("UTF-8"));
-            mapWithTextures.put(generatedString, textureLoader);
-        }
-        if (mapWithTextures.size()==20){
-            mapWithTextures.clear();
-        }
     }
 
 
@@ -307,16 +313,9 @@ public class HelloWorld implements Runnable {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         level.render();
 
-        swapBuffers();
+        RenderTexture.swapBuffers();
     }
 
-    private void swapBuffers() {
-        int error = glGetError();
-        if (error != GL_NO_ERROR)
-            System.out.println(error);
-
-        glfwSwapBuffers(window);
-    }
 
     public static void main(String[] args) {
         new HelloWorld().start();

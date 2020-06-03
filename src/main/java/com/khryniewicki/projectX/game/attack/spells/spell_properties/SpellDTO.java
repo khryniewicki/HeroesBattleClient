@@ -2,8 +2,10 @@ package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class SpellDTO {
+public class SpellDTO implements Serializable {
     private String name;
     private Float targetSpellX;
     private Float targetSpellY;

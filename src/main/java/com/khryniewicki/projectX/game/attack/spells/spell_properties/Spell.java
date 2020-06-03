@@ -17,6 +17,8 @@ import java.nio.DoubleBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 
 @Data
+
+
 public class Spell implements UltraSpell {
     private VertexArray mesh;
     private Texture texture;

@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.graphics;
 
 import com.khryniewicki.projectX.utils.BufferUtilsOwn;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import static org.lwjgl.opengl.GL11.*;
 
 @Data
+
 public class Texture {
 
     private int width, height;

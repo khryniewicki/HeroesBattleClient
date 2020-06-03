@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.services;
 
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
+import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.utils.GameUtill;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,8 @@ public class HeroReceiveService {
     private static Float tmpPositionY;
 
     public HeroReceiveService() {
-        heroMockPositionX=GameUtill.mockStartingPositionX;
-        heroMockPositionY=GameUtill.mockStartingPositionY;
+        heroMockPositionX=-HeroStartingPosition.getX();
+        heroMockPositionY=-HeroStartingPosition.getY();
     }
 
 

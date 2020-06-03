@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.SpellUtil;
@@ -38,8 +39,8 @@ public class Ice extends Spell {
     @Override
     public void setPosition() {
         setPosition(new Vector());
-        setPositionX(GameUtill.heroStartingPositionX);
-        setPositionY(GameUtill.heroStartingPositionY);
+        setPositionX(HeroStartingPosition.getX());
+        setPositionY(HeroStartingPosition.getY());
         setPositionZ(0.1f);
     }
 }

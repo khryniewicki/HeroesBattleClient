@@ -3,14 +3,14 @@ package com.khryniewicki.projectX.services;
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.utils.GameUtill;
+import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
 import lombok.Data;
 
 
 @Data
 public class HeroSendDTO {
-    private Float tmpPositionX = GameUtill.heroStartingPositionX;
-    private Float tmpPositionY = GameUtill.heroStartingPositionY;
+    private Float tmpPositionX = HeroStartingPosition.getX();
+    private Float tmpPositionY = HeroStartingPosition.getY();
     private HeroDTO tmpHero;
     private SuperHero hero;
 
