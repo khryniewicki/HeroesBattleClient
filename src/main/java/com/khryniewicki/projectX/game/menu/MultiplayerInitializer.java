@@ -26,7 +26,7 @@ public class MultiplayerInitializer {
         heroStartingPosition = HeroStartingPosition.getInstance();
 
         if (message.getContent().equals("1") || message.getContent().equals("2")) {
-            Integer appDTO = Integer.valueOf(message.getContent());
+            int appDTO = Integer.parseInt(message.getContent());
             handler.setApp(appDTO);
 
             if (appDTO == 1) {

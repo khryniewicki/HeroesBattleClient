@@ -7,8 +7,6 @@ import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPos
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Data
 public class ThunderWizard extends SuperHero {
@@ -34,8 +32,8 @@ public class ThunderWizard extends SuperHero {
 
     @Override
     public void setPosition() {
-        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
         setPosition(new Vector());
+        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
         setPositionX(heroStartingPosition.getX());
         setPositionY(heroStartingPosition.getY());
     }

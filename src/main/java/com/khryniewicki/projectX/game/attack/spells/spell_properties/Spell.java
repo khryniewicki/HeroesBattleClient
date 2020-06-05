@@ -4,6 +4,7 @@ import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.SuperheroInstance.SuperHeroInstance;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -22,7 +23,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Spell implements UltraSpell {
     private VertexArray mesh;
     private Texture texture;
-    private static SuperHero hero;
+    private static SuperHero superHero;
     private Vector position;
     private Float relativeX;
     private Float relativeY;
@@ -94,7 +95,9 @@ public class Spell implements UltraSpell {
                 indexWidth * 1, indexHeight * 1
         };
         texture = throwingSpellTexture;
-        hero = Level.hero;
+        SuperHeroInstance instance = SuperHeroInstance.getInstance();
+        superHero = instance.getHero();
+
         return new VertexArray(vertices, indices, tcs);
 
     }
@@ -194,12 +197,12 @@ public class Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionX() {
-        return hero.getX();
+        return superHero.getX();
     }
 
     @Override
     public Float getHeroPositionY() {
-        return hero.getY();
+        return superHero.getY();
     }
 
     @Override

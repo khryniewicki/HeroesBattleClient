@@ -33,8 +33,9 @@ public class IceWizard extends SuperHero {
     @Override
     public void setPosition() {
         setPosition(new Vector());
-        setPositionX(HeroStartingPosition.getX());
-        setPositionY(HeroStartingPosition.getY());
+        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
+        setPositionX(heroStartingPosition.getX());
+        setPositionY(heroStartingPosition.getY());
     }
 
     @Override

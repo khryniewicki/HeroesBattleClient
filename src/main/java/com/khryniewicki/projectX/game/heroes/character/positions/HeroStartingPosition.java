@@ -1,11 +1,10 @@
 package com.khryniewicki.projectX.game.heroes.character.positions;
 
 public class HeroStartingPosition {
-    private static float X=1f;
-    private static float Y=1f;
+    private static float X=-4f;
+    private static float Y=-4f;
     private static final HeroStartingPosition instance = new HeroStartingPosition();
 
-    //private constructor to avoid client applications to use constructor
     private HeroStartingPosition(){}
 
     public static HeroStartingPosition getInstance(){

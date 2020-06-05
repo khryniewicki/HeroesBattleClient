@@ -39,8 +39,9 @@ public class Ice extends Spell {
     @Override
     public void setPosition() {
         setPosition(new Vector());
-        setPositionX(HeroStartingPosition.getX());
-        setPositionY(HeroStartingPosition.getY());
+        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
+        setPositionX(heroStartingPosition.getX());
+        setPositionY(heroStartingPosition.getY());
         setPositionZ(0.1f);
     }
 }

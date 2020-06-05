@@ -8,6 +8,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.SuperheroInstance.SuperHeroInstance;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -41,15 +42,15 @@ public class Level {
 
     private boolean pointerON = false;
 
-    public Level(SuperHero heroFromScanner) {
+    public Level() {
         initVertex();
         initBackgroundTextures();
 
         myCollision = new Collision();
         pointer = new Pointer();
-
-        hero = heroFromScanner;
-        heroMock = new HeroMock(new FireWizard());
+        SuperHeroInstance instance = SuperHeroInstance.getInstance();
+        hero = instance.getHero();
+        heroMock = new HeroMock(instance.getMock());
         spell = hero.castingSpell();
         spellMock = new SpellMock(heroMock.getSpell());
 

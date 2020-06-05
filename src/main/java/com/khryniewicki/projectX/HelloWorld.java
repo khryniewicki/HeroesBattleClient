@@ -2,9 +2,11 @@ package com.khryniewicki.projectX;
 
 
 import com.khryniewicki.projectX.config.Application;
+import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.SuperheroInstance.SuperHeroInstance;
 import com.khryniewicki.projectX.game.menu.RenderTexture;
 import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -17,9 +19,7 @@ import org.lwjgl.system.MemoryStack;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -45,6 +45,9 @@ public class HelloWorld implements Runnable {
     public static CountDownLatch latch;
     public static SuperHero wizard;
     public static boolean isHeroEstablishedCorrectly;
+    private WebsocketInitializer websocketInitializer;
+    public static HashMap<String, Message> mapWithHeroes;
+
 
     public void start() {
         latch = new CountDownLatch(1);
@@ -140,8 +143,9 @@ public class HelloWorld implements Runnable {
     private void checkedInput() {
 
         getInput();
+
         if (inputText != null) {
-            Set<String> characters = new HashSet<>(Arrays.asList("fire", "ice", "thunder"));
+            Set<String> characters = new HashSet<>(Arrays.asList("FireWizard", "IceWizard", "ThunderWizard"));
             boolean contains = characters.contains(inputText);
 
             if (!contains) {
@@ -158,15 +162,15 @@ public class HelloWorld implements Runnable {
         glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
 
             if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
-                inputText = "fire";
+                inputText = "FireWizard";
                 renderTexture.createText(TextUtil.CHOSE_FIREWIZARD);
 
             } else if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
-                inputText = "ice";
+                inputText = "IceWizard";
                 renderTexture.createText(TextUtil.CHOSE_ICEWIZARD);
 
             } else if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
-                inputText = "thunder";
+                inputText = "ThunderWizard";
                 renderTexture.createText(TextUtil.CHOSE_THUNDERWIZARD);
 
             } else
@@ -212,6 +216,8 @@ public class HelloWorld implements Runnable {
 
         createLevel();
 
+
+
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -233,7 +239,7 @@ public class HelloWorld implements Runnable {
             if (glfwWindowShouldClose(window))
                 running = false;
         }
-
+        websocketInitializer.disconnect();
         glfwDestroyWindow(window);
         glfwTerminate();
     }
@@ -254,22 +260,33 @@ public class HelloWorld implements Runnable {
             }
         } while (!running);
     }
+
+
     private void initializeWebsocketConnection() {
         renderTexture.createText(TextUtil.CONNECTION);
         Application application = new Application();
         application.startWebsocket();
         renderTexture.createText(TextUtil.CONNECTION_ESTABLISHED);
     }
+
+
     private void setMultiplayerGame() {
         if (isInitialHeroPropertiesLoadedProperly()) {
-
             renderTexture.createText(TextUtil.OTHER_PLAYER);
+            latch=new CountDownLatch(1);
 
             try {
+                websocketInitializer.getMapWithHeroes();
+                latch.await();
+                getMockType();
+                renderTexture.createText(TextUtil.GET_READY);
                 Thread.sleep(5000);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+
         } else {
             renderTexture.createText(TextUtil.TRY_LATER);
             try {
@@ -281,9 +298,24 @@ public class HelloWorld implements Runnable {
         }
     }
 
+    private SuperHero getMockType() {
+        SuperHero mock=null;
+        String sessionId = websocketInitializer.getSessionId();
+        for (Map.Entry<String, Message> hero : mapWithHeroes.entrySet()) {
+            if (!hero.getKey().equals(sessionId)){
+                String heroType = hero.getValue().getContent();
+                mock = new WizardFactory().createWizard(heroType);
+            }
+
+        }
+        return mock;
+    }
+
     private boolean isInitialHeroPropertiesLoadedProperly() {
-        WebsocketInitializer websocketInitializer = new WebsocketInitializer();
-        websocketInitializer.setSuperHero(getWizardType());
+        websocketInitializer = new WebsocketInitializer();
+        SuperHeroInstance instance = SuperHeroInstance.getInstance();
+        instance.setHero(getWizardType());
+
         Thread websocket = new Thread(websocketInitializer,"websocket");
         websocket.start();
         try {
@@ -295,8 +327,11 @@ public class HelloWorld implements Runnable {
     }
 
     private void createLevel() {
-        if (running)
-        level = new Level(getWizardType());
+        if (running){
+            SuperHeroInstance instance = SuperHeroInstance.getInstance();
+            instance.setMock(getMockType());
+
+            level = new Level();}
     }
 
     private void update() {
