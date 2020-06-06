@@ -6,10 +6,10 @@ import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.heroStorage.MapWithHeroes;
+import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
+import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
 import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 import com.khryniewicki.projectX.game.menu.renderer.RenderFactory;
-import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.utils.TextUtil;
@@ -20,9 +20,10 @@ import org.lwjgl.system.MemoryStack;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
-import java.util.*;
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
+import static com.khryniewicki.projectX.game.menu.MultiplayerInitializer.getWizardType;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
@@ -48,7 +49,7 @@ public class Game implements Runnable {
     public static boolean isHeroEstablishedCorrectly;
     private WebsocketInitializer websocketInitializer;
     public static HashMap<String, Message> mapWithHeroes;
-
+    private SuperHeroInstance superHeroInstance;
 
     public void start() {
         latch = new CountDownLatch(1);
@@ -125,62 +126,27 @@ public class Game implements Runnable {
         Shader.loadAll();
 
         Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
-        createRenderTexture();
+        createRenderFactoryInstance();
+        createWebsocketInitializerInstance();
+        createSuperHeroInstance();
 
         loadGraphicForObjects(pr_matrix);
 
 
     }
 
-    private void createRenderTexture() {
+    private void createRenderFactoryInstance() {
         renderFactory = RenderFactory.getRenderFactory();
     }
 
-    private SuperHero getWizardType() {
-        wizard = new WizardFactory().createWizard(inputText);
-        return wizard;
+    private void createWebsocketInitializerInstance() {
+        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
     }
 
-    private void checkedInput() {
-
-        getInput();
-
-        if (inputText != null) {
-            Set<String> characters = new HashSet<>(Arrays.asList("FireWizard", "IceWizard", "ThunderWizard"));
-            boolean contains = characters.contains(inputText);
-
-            if (!contains) {
-                inputText = null;
-                renderFactory.createText(TextUtil.ERROR);
-
-            }
-        }
+    private void createSuperHeroInstance() {
+        superHeroInstance = SuperHeroInstance.getInstance();
     }
 
-
-    private void getInput() {
-        glfwPollEvents();
-        glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
-
-            if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
-                inputText = "FireWizard";
-                renderFactory.createText(TextUtil.CHOSE_FIREWIZARD);
-
-            } else if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
-                inputText = "IceWizard";
-                renderFactory.createText(TextUtil.CHOSE_ICEWIZARD);
-
-            } else if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
-                inputText = "ThunderWizard";
-                renderFactory.createText(TextUtil.CHOSE_THUNDERWIZARD);
-
-            } else
-                inputText = "else";
-
-        });
-
-
-    }
 
 
     private void loadGraphicForObjects(Matrix4f pr_matrix) {
@@ -218,7 +184,6 @@ public class Game implements Runnable {
         createBoard();
 
 
-
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -246,41 +211,32 @@ public class Game implements Runnable {
     }
 
     private void initializeMultiplayerGame() {
-        initializeHeroType();
+        MultiplayerInitializer multiplayerInitializer = new MultiplayerInitializer();
+        multiplayerInitializer.getHeroFromPlayer();
         initializeWebsocketConnection();
         setMultiplayerGame();
-    }
-    private void initializeHeroType() {
-        renderFactory.createText(TextUtil.WELCOME);
-        running = false;
-        do {
-            renderFactory.createText(TextUtil.ASK_FOR_CHAR);
-            checkedInput();
-            if (inputText != null) {
-                running = true;
-            }
-        } while (!running);
     }
 
 
     private void initializeWebsocketConnection() {
-        renderFactory.createText(TextUtil.CONNECTION);
+        renderFactory.render(TextUtil.CONNECTION);
         Application application = new Application();
         application.startWebsocket();
-        renderFactory.createText(TextUtil.CONNECTION_ESTABLISHED);
+        renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
     }
 
 
     private void setMultiplayerGame() {
         if (isInitialHeroPropertiesLoadedProperly()) {
-            renderFactory.createText(TextUtil.OTHER_PLAYER);
-            latch=new CountDownLatch(1);
+            renderFactory.render(TextUtil.OTHER_PLAYER);
+            latch = new CountDownLatch(1);
 
             try {
                 websocketInitializer.getMapWithHeroes();
                 latch.await();
+                superHeroInstance.setMock();
 
-                renderFactory.createText(TextUtil.GET_READY);
+                renderFactory.render(TextUtil.GET_READY);
                 Thread.sleep(5000);
 
             } catch (InterruptedException e) {
@@ -289,37 +245,23 @@ public class Game implements Runnable {
 
 
         } else {
-            renderFactory.createText(TextUtil.TRY_LATER);
+            renderFactory.render(TextUtil.TRY_LATER);
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            running=false;
+            running = false;
         }
     }
 
-    private SuperHero getMockType() {
-        SuperHero mock=null;
-        String sessionId = websocketInitializer.getSessionId();
-        MapWithHeroes instance = MapWithHeroes.getINSTANCE();
-        Map<String, Message> mapWithHeroes = instance.getMapWithHeroes();
-        for (Map.Entry<String, Message> hero : mapWithHeroes.entrySet()) {
-            if (!hero.getKey().equals(sessionId)){
-                String heroType = hero.getValue().getContent();
-                mock = new WizardFactory().createWizard(heroType);
-            }
-
-        }
-        return mock;
-    }
 
     private boolean isInitialHeroPropertiesLoadedProperly() {
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         SuperHeroInstance instance = SuperHeroInstance.getInstance();
         instance.setHero(getWizardType());
 
-        Thread websocket = new Thread(websocketInitializer,"websocket");
+        Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
         try {
             latch.await();
@@ -330,10 +272,10 @@ public class Game implements Runnable {
     }
 
     private void createBoard() {
-            SuperHeroInstance instance = SuperHeroInstance.getInstance();
-            instance.setMock();
 
-            board = new Board();}
+
+        board = new Board();
+    }
 
     private void update() {
         glfwPollEvents();

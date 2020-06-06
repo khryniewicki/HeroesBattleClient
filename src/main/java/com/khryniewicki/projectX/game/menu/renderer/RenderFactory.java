@@ -23,7 +23,7 @@ public class RenderFactory {
         return RENDER_FACTORY;
     }
 
-    public void createText(String path) {
+    public void render(String path) {
          textureLoader = new TextureLoader(path);
 
         textScheme(path);
