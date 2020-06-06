@@ -26,6 +26,17 @@ public class MultiplayerInitializer {
         renderFactory = RenderFactory.getRenderFactory();
     }
 
+    public void getHeroTypeFromPlayer() {
+        renderFactory.render(TextUtil.WELCOME);
+        boolean running = false;
+        do {
+            renderFactory.render(TextUtil.ASK_FOR_CHAR);
+            checkedInput();
+            if (inputText != null) {
+                running = true;
+            }
+        } while (!running);
+    }
 
     private void checkedInput() {
 
@@ -70,20 +81,6 @@ public class MultiplayerInitializer {
     public static SuperHero getWizardType() {
         return new WizardFactory().createWizard(inputText);
     }
-
-
-    public void getHeroTypeFromPlayer() {
-        renderFactory.render(TextUtil.WELCOME);
-        boolean running = false;
-        do {
-            renderFactory.render(TextUtil.ASK_FOR_CHAR);
-            checkedInput();
-            if (inputText != null) {
-                running = true;
-            }
-        } while (!running);
-    }
-
 
     public void waitingForSecondPlayer() {
         renderFactory.render(TextUtil.OTHER_PLAYER);

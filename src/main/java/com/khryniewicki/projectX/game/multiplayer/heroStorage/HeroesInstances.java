@@ -7,6 +7,8 @@ import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
 
 import java.util.Map;
 
+import static com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer.getWizardType;
+
 
 public class HeroesInstances {
     private SuperHero hero;
@@ -26,8 +28,8 @@ public class HeroesInstances {
         return mock;
     }
 
-    public void setHero(SuperHero hero) {
-        this.hero = hero;
+    public void setHero() {
+        this.hero = getWizardType();
     }
 
     public void setMock() {

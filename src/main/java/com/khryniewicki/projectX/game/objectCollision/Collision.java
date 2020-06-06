@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.Collision;
+package com.khryniewicki.projectX.game.objectCollision;
 
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.knights.Knight;

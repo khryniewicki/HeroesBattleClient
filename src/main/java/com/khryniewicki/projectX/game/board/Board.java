@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.board;
 
-import com.khryniewicki.projectX.game.Collision.Collision;
+import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;

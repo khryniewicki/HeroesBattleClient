@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.Collision.Collision;
+import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;

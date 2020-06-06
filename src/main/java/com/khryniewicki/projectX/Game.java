@@ -165,18 +165,26 @@ public class Game implements Runnable {
     public void run() {
         init();
 
+        initializeMultiplayerGame();
+        createBoard();
+        workingGame();
 
+        terminateGame();
+    }
+
+    private void terminateGame() {
+        websocketInitializer.disconnect();
+        glfwDestroyWindow(window);
+        glfwTerminate();
+    }
+
+    private void workingGame() {
         long lastTime = System.nanoTime();
         double delta = 0.0;
         double ns = 1000000000.0 / 60.0;
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
-
-        initializeMultiplayerGame();
-        createBoard();
-
-
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -198,9 +206,6 @@ public class Game implements Runnable {
             if (glfwWindowShouldClose(window))
                 running = false;
         }
-        websocketInitializer.disconnect();
-        glfwDestroyWindow(window);
-        glfwTerminate();
     }
 
     private void initializeMultiplayerGame() {
@@ -230,7 +235,12 @@ public class Game implements Runnable {
 
 
     private boolean isHeroLoadedProperly() {
-        heroesInstances.setHero(getWizardType());
+        registerHero();
+        return isHeroEstablishedCorrectly;
+    }
+
+    private void registerHero() {
+        heroesInstances.setHero();
         Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
         try {
@@ -238,7 +248,6 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return isHeroEstablishedCorrectly;
     }
 
     private void createBoard() {
