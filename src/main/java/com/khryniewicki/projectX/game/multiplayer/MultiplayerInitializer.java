@@ -1,13 +1,10 @@
-package com.khryniewicki.projectX.game.menu;
+package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
-import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
-import com.khryniewicki.projectX.game.menu.renderer.RenderFactory;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.utils.TextUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -15,60 +12,21 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 @Data
 @Slf4j
 public class MultiplayerInitializer {
-    private Message message;
-    private static Application.MyStompSessionHandler handler ;
-    private boolean isHeroEstablishedCorrectly;
     private RenderFactory renderFactory;
-    private HeroStartingPosition heroStartingPosition;
     private static String inputText;
 
 
     public MultiplayerInitializer() {
         renderFactory = RenderFactory.getRenderFactory();
-        handler= new Application.MyStompSessionHandler();
     }
 
-    public void setMessage(Message message) {
-        this.message = message;
 
-    }
-
-    public boolean validateMessage() {
-        heroStartingPosition = HeroStartingPosition.getInstance();
-
-        if (message.getContent().equals("1") || message.getContent().equals("2")) {
-            int appDTO = Integer.parseInt(message.getContent());
-            handler.setApp(appDTO);
-
-            if (appDTO == 1) {
-                handler.setTopic(2);
-                HeroStartingPosition.setX(4f);
-                HeroStartingPosition.setY(4f);
-            } else {
-                handler.setTopic(1);
-                HeroStartingPosition.setX(-3f);
-                HeroStartingPosition.setY(-3f);
-            }
-            Game.isHeroEstablishedCorrectly =true;
-            Game.latch.countDown();
-            handler.sendHeroToStompSocket();
-
-            return true;
-
-
-        } else {
-            Game.isHeroEstablishedCorrectly =false;
-            return false;
-        }
-
-    }
     private void checkedInput() {
 
         getInput();
@@ -131,10 +89,10 @@ public class MultiplayerInitializer {
         renderFactory.render(TextUtil.OTHER_PLAYER);
 
         WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-        SuperHeroInstance superHeroInstance = SuperHeroInstance.getInstance();
+        HeroesInstances heroesInstances = HeroesInstances.getInstance();
         try {
             websocketInitializer.getSecondPlayerMockType();
-            superHeroInstance.setMock();
+            heroesInstances.setMock();
 
             renderFactory.render(TextUtil.GET_READY);
             Thread.sleep(5000);

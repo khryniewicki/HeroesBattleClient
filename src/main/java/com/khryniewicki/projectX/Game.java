@@ -3,10 +3,10 @@ package com.khryniewicki.projectX;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
-import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
-import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
-import com.khryniewicki.projectX.game.menu.renderer.RenderFactory;
+import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
+import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.utils.TextUtil;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.nio.IntBuffer;
 import java.util.concurrent.CountDownLatch;
 
-import static com.khryniewicki.projectX.game.menu.MultiplayerInitializer.getWizardType;
+import static com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer.getWizardType;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
@@ -43,7 +43,7 @@ public class Game implements Runnable {
     public static CountDownLatch latch;
     public static boolean isHeroEstablishedCorrectly;
     private WebsocketInitializer websocketInitializer;
-    private SuperHeroInstance superHeroInstance;
+    private HeroesInstances heroesInstances;
     private MultiplayerInitializer multiplayerInitializer;
     public void start() {
         latch = new CountDownLatch(1);
@@ -138,7 +138,7 @@ public class Game implements Runnable {
     }
 
     private void createSuperHeroInstance() {
-        superHeroInstance = SuperHeroInstance.getInstance();
+        heroesInstances = HeroesInstances.getInstance();
     }
 
 
@@ -230,7 +230,7 @@ public class Game implements Runnable {
 
 
     private boolean isHeroLoadedProperly() {
-        superHeroInstance.setHero(getWizardType());
+        heroesInstances.setHero(getWizardType());
         Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
         try {

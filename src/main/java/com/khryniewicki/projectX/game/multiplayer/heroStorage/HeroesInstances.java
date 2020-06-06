@@ -1,20 +1,20 @@
-package com.khryniewicki.projectX.game.menu.heroStorage;
+package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
-import com.khryniewicki.projectX.config.Message;
+import com.khryniewicki.projectX.config.messageHandler.Message;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
 
 import java.util.Map;
 
 
-public class SuperHeroInstance {
+public class HeroesInstances {
     private SuperHero hero;
     private SuperHero mock;
 
-    private SuperHeroInstance() {
+    private HeroesInstances() {
     }
-    public static SuperHeroInstance getInstance() {
+    public static HeroesInstances getInstance() {
         return HELPER.INSTANCE;
     }
 
@@ -49,7 +49,7 @@ public class SuperHeroInstance {
 
     private static class HELPER {
 
-        public static final SuperHeroInstance INSTANCE = new SuperHeroInstance();
+        public static final HeroesInstances INSTANCE = new HeroesInstances();
 
     }
 }

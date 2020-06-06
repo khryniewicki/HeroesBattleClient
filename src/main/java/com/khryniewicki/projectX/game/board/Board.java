@@ -8,7 +8,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -47,7 +47,7 @@ public class Board {
 
         myCollision = new Collision();
         pointer = new Pointer();
-        SuperHeroInstance instance = SuperHeroInstance.getInstance();
+        HeroesInstances instance = HeroesInstances.getInstance();
         hero = instance.getHero();
         heroMock = new HeroMock(instance.getMock());
         spell = hero.castingSpell();

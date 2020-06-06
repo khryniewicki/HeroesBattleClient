@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -94,7 +94,7 @@ public class Spell implements UltraSpell {
                 indexWidth * 1, indexHeight * 1
         };
         texture = throwingSpellTexture;
-        SuperHeroInstance instance = SuperHeroInstance.getInstance();
+        HeroesInstances instance = HeroesInstances.getInstance();
         superHero = instance.getHero();
 
         return new VertexArray(vertices, indices, tcs);

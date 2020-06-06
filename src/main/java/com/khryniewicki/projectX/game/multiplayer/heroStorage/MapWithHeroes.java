@@ -1,7 +1,7 @@
-package com.khryniewicki.projectX.game.menu.heroStorage;
+package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
-import com.khryniewicki.projectX.config.Message;
 
+import com.khryniewicki.projectX.config.messageHandler.Message;
 import java.util.Map;
 
 public class MapWithHeroes {

@@ -1,11 +1,12 @@
 package com.khryniewicki.projectX.config;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.config.messageHandler.ConnectionStatus;
+import com.khryniewicki.projectX.config.messageHandler.Message;
+import com.khryniewicki.projectX.config.messageHandler.MessageHandler;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
-import com.khryniewicki.projectX.game.menu.heroStorage.MapWithHeroes;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.MapWithHeroes;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
 import com.khryniewicki.projectX.services.SpellReceiveService;
@@ -53,7 +54,7 @@ public class Application {
         private SpellSendDTO spellSendDTO;
         private Integer app = 2;
         private Integer topic = 1;
-        private  ResponseEntity<HashMap<String, Message>> exchange;
+        private ResponseEntity<HashMap<String, Message>> exchange;
 
         public String getSessionID() {
             return session.getSessionId();
@@ -96,36 +97,37 @@ public class Application {
         }
 
         public void unregister() {
-            session.send("/app/room", new Message(  session.getSessionId(), ConnectionStatus.DISCONNECTED));
+            session.send("/app/room", new Message(session.getSessionId(), ConnectionStatus.DISCONNECTED));
         }
 
         public void getMapWithHeroesFromServer() {
             RestTemplate restTemplate = new RestTemplate();
             ParameterizedTypeReference<HashMap<String, Message>> responseType =
-                    new ParameterizedTypeReference<>() {};
+                    new ParameterizedTypeReference<>() {
+                    };
             RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/map"))
                     .accept(MediaType.APPLICATION_JSON).build();
 
-            timeSchudeler(restTemplate, responseType, request);
+            requestSchudeler(restTemplate, responseType, request);
 
         }
 
-        private void timeSchudeler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
+        private void requestSchudeler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
             Timer timer = new Timer();
             CountDownLatch latch = new CountDownLatch(1);
 
-            timer.schedule( new TimerTask() {
+            timer.schedule(new TimerTask() {
 
                 public void run() {
-                     exchange=restTemplate.exchange(request, responseType);
-                     if (Objects.requireNonNull(exchange.getBody()).size()==2){
-                         timer.cancel();
-                         MapWithHeroes instance = MapWithHeroes.getINSTANCE();
-                         instance.setMapWithHeroes(exchange.getBody());
+                    exchange = restTemplate.exchange(request, responseType);
+                    if (Objects.requireNonNull(exchange.getBody()).size() == 2) {
+                        timer.cancel();
+                        MapWithHeroes instance = MapWithHeroes.getINSTANCE();
+                        instance.setMapWithHeroes(exchange.getBody());
                         latch.countDown();
-                     }
+                    }
                 }
-            }, 0, 3*1000);
+            }, 0, 3 * 1000);
 
             try {
                 latch.await();
@@ -176,10 +178,10 @@ public class Application {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
                     Message message = (Message) payload;
-                    MultiplayerInitializer multiplayerInitializer = new MultiplayerInitializer();
+                    MessageHandler messageHandler = new MessageHandler();
 
-                    multiplayerInitializer.setMessage(message);
-                    multiplayerInitializer.validateMessage();
+                    messageHandler.setMessage(message);
+                    messageHandler.validateMessage();
 
                 }
             });
@@ -199,7 +201,7 @@ public class Application {
         @Override
         public void afterConnected(StompSession session,
                                    StompHeaders connectedHeaders) {
-            sessionID=session.getSessionId();
+            sessionID = session.getSessionId();
             System.err.println("Connected! Headers:" + "\n" + sessionID);
             showHeaders(connectedHeaders);
 

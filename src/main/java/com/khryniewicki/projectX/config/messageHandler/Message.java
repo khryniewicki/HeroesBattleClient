@@ -1,5 +1,6 @@
-package com.khryniewicki.projectX.config;
+package com.khryniewicki.projectX.config.messageHandler;
 
+import com.khryniewicki.projectX.config.messageHandler.ConnectionStatus;
 import lombok.Data;
 
 import java.io.Serializable;

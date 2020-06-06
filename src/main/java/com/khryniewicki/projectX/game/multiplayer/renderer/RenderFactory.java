@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.menu.renderer;
+package com.khryniewicki.projectX.game.multiplayer.renderer;
 
 import com.khryniewicki.projectX.utils.TextUtil;
 

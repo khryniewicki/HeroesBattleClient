@@ -1,8 +1,8 @@
-package com.khryniewicki.projectX.game.menu;
+package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 
 public class WebsocketInitializer implements Runnable {
     private SuperHero superHero;
@@ -22,7 +22,7 @@ public class WebsocketInitializer implements Runnable {
     }
 
     public void setSuperHero() {
-        SuperHeroInstance instance = SuperHeroInstance.getInstance();
+        HeroesInstances instance = HeroesInstances.getInstance();
         this.superHero = instance.getHero();
     }
 
