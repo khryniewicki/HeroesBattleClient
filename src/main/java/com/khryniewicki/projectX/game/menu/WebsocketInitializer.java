@@ -7,9 +7,10 @@ import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 public class WebsocketInitializer implements Runnable {
     private SuperHero superHero;
     private Application.MyStompSessionHandler handler;
+    private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
 
-    private WebsocketInitializer(){}
-    private final static WebsocketInitializer WEBSOCKET_INSTANCE=new WebsocketInitializer();
+    private WebsocketInitializer() {
+    }
 
     public static WebsocketInitializer getWebsocketInstance() {
         return WEBSOCKET_INSTANCE;
@@ -25,8 +26,7 @@ public class WebsocketInitializer implements Runnable {
         this.superHero = instance.getHero();
     }
 
-    private void initialize()
-    {
+    private void initialize() {
         handler = new Application.MyStompSessionHandler();
         setSuperHero();
         handler.register(superHero);
@@ -36,11 +36,11 @@ public class WebsocketInitializer implements Runnable {
         handler.unregister();
     }
 
-    public void getMapWithHeroes() {
+    public void getSecondPlayerMockType() {
         handler.getMapWithHeroesFromServer();
     }
 
     public String getSessionId() {
-       return handler.getSessionID();
+        return handler.getSessionID();
     }
 }

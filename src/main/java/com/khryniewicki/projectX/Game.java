@@ -4,7 +4,6 @@ package com.khryniewicki.projectX;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
@@ -220,8 +219,7 @@ public class Game implements Runnable {
 
     private void initializeWebsocketConnection() {
         renderFactory.render(TextUtil.CONNECTION);
-        Application application = new Application();
-        application.startWebsocket();
+        new Application().startWebsocket();
         renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
     }
 
@@ -232,7 +230,7 @@ public class Game implements Runnable {
             latch = new CountDownLatch(1);
 
             try {
-                websocketInitializer.getMapWithHeroes();
+                websocketInitializer.getSecondPlayerMockType();
                 latch.await();
                 superHeroInstance.setMock();
 
@@ -258,8 +256,7 @@ public class Game implements Runnable {
 
     private boolean isInitialHeroPropertiesLoadedProperly() {
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-        SuperHeroInstance instance = SuperHeroInstance.getInstance();
-        instance.setHero(getWizardType());
+        superHeroInstance.setHero(getWizardType());
 
         Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
@@ -272,8 +269,6 @@ public class Game implements Runnable {
     }
 
     private void createBoard() {
-
-
         board = new Board();
     }
 
