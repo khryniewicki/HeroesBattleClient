@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.menu;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.SuperheroInstance.SuperHeroInstance;
+import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 
 public class WebsocketInitializer implements Runnable {
     private SuperHero superHero;

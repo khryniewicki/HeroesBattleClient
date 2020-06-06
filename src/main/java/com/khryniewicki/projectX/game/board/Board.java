@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.Map;
+package com.khryniewicki.projectX.game.board;
 
 import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
@@ -8,9 +8,8 @@ import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.SuperheroInstance.SuperHeroInstance;
+import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
-import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @Data
 
-public class Level {
+public class Board {
 
     private VertexArray background;
     private Texture bgTexture;
@@ -37,12 +36,12 @@ public class Level {
 
     private Pointer pointer;
     public static Collision myCollision;
-    private List<MapObstacles> obstacles;
-    private List<MapObstacles> terrains;
+    private List<BoardObjects> obstacles;
+    private List<BoardObjects> terrains;
 
     private boolean pointerON = false;
 
-    public Level() {
+    public Board() {
         initVertex();
         initBackgroundTextures();
 
@@ -130,7 +129,7 @@ public class Level {
         Shader.TERRAIN.enable();
         Terrain.getTexture().bind();
 
-        for (MapObstacles terrain : terrains) {
+        for (BoardObjects terrain : terrains) {
             terrain.getMesh().bind();
             Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
             terrain.getMesh().draw();
@@ -143,7 +142,7 @@ public class Level {
     public void renderObstacles() {
         Shader.OBSTACLE.enable();
         Obstacle.getTexture().bind();
-        for (MapObstacles obstacle : obstacles) {
+        for (BoardObjects obstacle : obstacles) {
             obstacle.getMesh().bind();
             Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
             obstacle.getMesh().draw();

@@ -1,6 +1,5 @@
-package com.khryniewicki.projectX.game.menu;
+package com.khryniewicki.projectX.game.menu.renderer;
 
-import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.utils.TextUtil;
 
 import java.nio.charset.Charset;
@@ -8,13 +7,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static com.khryniewicki.projectX.HelloWorld.window;
+import static com.khryniewicki.projectX.Game.window;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.*;
 
-public class RenderTexture {
+public class RenderFactory {
     private TextureLoader textureLoader;
     public static final Map<String, TextureLoader> mapWithTextures = new HashMap<>();
+    private RenderFactory() {
+    }
+
+    private final static RenderFactory RENDER_FACTORY = new RenderFactory();
+
+    public static RenderFactory getRenderFactory() {
+        return RENDER_FACTORY;
+    }
 
     public void createText(String path) {
          textureLoader = new TextureLoader(path);

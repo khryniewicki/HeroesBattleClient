@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.Collision.Collision;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
@@ -56,7 +56,7 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
-        glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
+        glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
                     SIZE = 1f;
                     if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
                         position.y += 0.2f;

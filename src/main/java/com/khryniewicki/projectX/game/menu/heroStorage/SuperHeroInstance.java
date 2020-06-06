@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.heroes.character.SuperheroInstance;
+package com.khryniewicki.projectX.game.menu.heroStorage;
 
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 

@@ -1,10 +1,9 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
-import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.SuperheroInstance.SuperHeroInstance;
+import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -176,15 +175,15 @@ public class Spell implements UltraSpell {
 
     @Override
     public void getMousePosition() {
-        glfwSetMouseButtonCallback(HelloWorld.window, (window, key, action, mods) -> {
+        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
             DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
             DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
-            glfwGetCursorPos(HelloWorld.window, xBuffer, yBuffer);
+            glfwGetCursorPos(Game.window, xBuffer, yBuffer);
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
-                setRelativeX((float) (x - HelloWorld.width / 2) / (HelloWorld.width / 20));
-                setRelativeY((float) (HelloWorld.height / 2 - y) / (HelloWorld.height / 10));
+                setRelativeX((float) (x - Game.width / 2) / (Game.width / 20));
+                setRelativeY((float) (Game.height / 2 - y) / (Game.height / 10));
                 distanceX = relativeX - getHeroPositionX();
                 distanceY = relativeY - getHeroPositionY();
                 setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);

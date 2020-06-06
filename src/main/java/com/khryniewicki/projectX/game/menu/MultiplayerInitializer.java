@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.menu;
 
-import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
@@ -38,14 +38,14 @@ public class MultiplayerInitializer {
                 heroStartingPosition.setX(-3f);
                 heroStartingPosition.setY(-3f);
             }
-            HelloWorld.isHeroEstablishedCorrectly =true;
-            HelloWorld.latch.countDown();
+            Game.isHeroEstablishedCorrectly =true;
+            Game.latch.countDown();
 
             handler.sendHeroToStompSocket();
 
         } else {
-            HelloWorld.latch.countDown();
-            HelloWorld.isHeroEstablishedCorrectly =false;
+            Game.latch.countDown();
+            Game.isHeroEstablishedCorrectly =false;
         }
 
     }

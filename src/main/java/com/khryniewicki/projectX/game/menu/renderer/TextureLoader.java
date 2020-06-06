@@ -1,6 +1,5 @@
-package com.khryniewicki.projectX.game.menu;
+package com.khryniewicki.projectX.game.menu.renderer;
 
-import com.khryniewicki.projectX.HelloWorld;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -48,12 +47,12 @@ public class TextureLoader {
     }
 
     public float calculateTextY() {
-        textY = 5.0f - RenderTexture.mapWithTextures.size() * 0.5f;
+        textY = 5.0f - RenderFactory.mapWithTextures.size() * 0.5f;
         return textY;
     }
 
     public void render() {
-        Map<String, TextureLoader> mapWithTextures = RenderTexture.mapWithTextures;
+        Map<String, TextureLoader> mapWithTextures = RenderFactory.mapWithTextures;
 
         mapWithTextures.values().forEach(t -> {
             t.texture.bind();

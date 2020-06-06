@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.config;
 
-import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
@@ -117,8 +117,8 @@ public class Application {
                      exchange=restTemplate.exchange(request, responseType);
                      if (Objects.requireNonNull(exchange.getBody()).size()==2){
                          timer.cancel();
-                         HelloWorld.mapWithHeroes=exchange.getBody();
-                         HelloWorld.latch.countDown();
+                         Game.mapWithHeroes=exchange.getBody();
+                         Game.latch.countDown();
                      }
                 }
             }, 0, 3*1000);

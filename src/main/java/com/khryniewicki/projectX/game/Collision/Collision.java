@@ -1,8 +1,8 @@
 package com.khryniewicki.projectX.game.Collision;
 
+import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.knights.Knight;
-import com.khryniewicki.projectX.game.Map.Level;
-import com.khryniewicki.projectX.game.Map.MapObstacles;
+import com.khryniewicki.projectX.game.board.BoardObjects;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 public class Collision {
-    private Level level;
+    private Board board;
     private SuperHero hero;
     private float hero_standard_offset = 0.2f;
     private float hero_top_offset = 0.5f;
@@ -31,13 +31,13 @@ public class Collision {
     public static Boolean[] ObstacleCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
     public static Boolean[] TerrainCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
     boolean isCollision;
-    HashMap<MapObstacles, List<Boolean>> mapObstaclesListHashMap;
+    HashMap<BoardObjects, List<Boolean>> mapObstaclesListHashMap;
 
-    private List<MapObstacles> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
-    private List<MapObstacles> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
-    private List<MapObstacles> obstacleList_TL = ObstacleStorage.getObstacleList_TL();
-    private List<MapObstacles> obstacleList_TR = ObstacleStorage.getObstacleList_TR();
-    private List<MapObstacles> terrainList = ObstacleStorage.getTerrainList();
+    private List<BoardObjects> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
+    private List<BoardObjects> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
+    private List<BoardObjects> obstacleList_TL = ObstacleStorage.getObstacleList_TL();
+    private List<BoardObjects> obstacleList_TR = ObstacleStorage.getObstacleList_TR();
+    private List<BoardObjects> terrainList = ObstacleStorage.getTerrainList();
 
 
     public void collisionTest(SuperHero hero) {
@@ -106,15 +106,15 @@ public class Collision {
 
 
 
-    public boolean obstacleCollisionInQuarter(List<MapObstacles> mapObstacles) {
+    public boolean obstacleCollisionInQuarter(List<BoardObjects> mapObstacles) {
         return checkConditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
     }
 
-    public boolean terrainCollision(List<MapObstacles> mapObstacles) {
+    public boolean terrainCollision(List<BoardObjects> mapObstacles) {
         return checkConditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
     }
 
-    private boolean checkConditionForObstacleOrTerrain(List<MapObstacles> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
+    private boolean checkConditionForObstacleOrTerrain(List<BoardObjects> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
         Arrays.fill(obstacleOrTerrainCollisions,false);
         if (collision(mapObstacles)) {
             mapObstaclesListHashMap.values().forEach(e -> {
@@ -129,7 +129,7 @@ public class Collision {
         return false;
     }
 
-    public Boolean collision(List<MapObstacles> obstacles) {
+    public Boolean collision(List<BoardObjects> obstacles) {
 
         bx0 = bx - hero.SIZE / 2.0f + hero_standard_offset;
         bx1 = bx + hero.SIZE / 2.0f - hero_standard_offset;
@@ -139,7 +139,7 @@ public class Collision {
         mapObstaclesListHashMap=new HashMap<>();
         float proximtyValue;
 
-        for (MapObstacles obstacle : obstacles) {
+        for (BoardObjects obstacle : obstacles) {
             float tangens = obstacle.getTangens();
 
             if (tangens == 0) {

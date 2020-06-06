@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.attack.attackSuccess;
 
-import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.math.Vector;
@@ -19,7 +19,7 @@ public class ActivatedAttack {
 
     public ActivatedAttack(UltraSpell spell) {
         this.spell=spell;
-        this.hero = Level.hero;
+        this.hero = Board.hero;
     }
 
     public boolean hitsHeroWithSpell() {
@@ -41,10 +41,10 @@ public class ActivatedAttack {
 
     public void heroObjectDimenions() {
 
-        bx0 = Level.myCollision.getBx0();
-        bx1 = Level.myCollision.getBx1();
-        by0 = Level.myCollision.getBy0();
-        by1 = Level.myCollision.getBy1();
+        bx0 = Board.myCollision.getBx0();
+        bx1 = Board.myCollision.getBx1();
+        by0 = Board.myCollision.getBy0();
+        by1 = Board.myCollision.getBy1();
         heroCoordinates = new float[]{bx1, bx0, by1, by0};
     }
 

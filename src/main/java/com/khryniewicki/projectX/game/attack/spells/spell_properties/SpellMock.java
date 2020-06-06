@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
-import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.math.Vector;
@@ -78,12 +78,12 @@ public class SpellMock extends Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionX() {
-        return Level.heroMock.getPosition().x;
+        return Board.heroMock.getPosition().x;
     }
 
     @Override
     public Float getHeroPositionY() {
-        return Level.heroMock.getPosition().y;
+        return Board.heroMock.getPosition().y;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.Map;
+package com.khryniewicki.projectX.game.board;
 
 
 import com.khryniewicki.projectX.graphics.Texture;
@@ -9,7 +9,7 @@ import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 
 @Data
-public class Obstacle implements MapObstacles {
+public class Obstacle implements BoardObjects {
 
     private Vector position = new Vector();
     private Matrix4f ml_matrix;

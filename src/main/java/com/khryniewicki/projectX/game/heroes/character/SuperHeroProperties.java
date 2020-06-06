@@ -1,13 +1,13 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.game.Map.Level;
+import com.khryniewicki.projectX.game.board.Board;
 import lombok.Data;
 
 @Data
 public class SuperHeroProperties {
     private static float hero_standard_offset,hero_top_offset;
     private static float bx, by, bx0, bx1, by0, by1;
-    private static SuperHero hero=Level.hero;
+    private static SuperHero hero= Board.hero;
 
 
 

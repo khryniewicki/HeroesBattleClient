@@ -1,10 +1,9 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.HelloWorld;
+import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
-import com.khryniewicki.projectX.game.Map.Level;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
@@ -64,12 +63,12 @@ public class Pointer {
     }
 
     public void update() {
-        glfwSetMouseButtonCallback(HelloWorld.window, (window, key, action, mods) -> {
+        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE) {
                 System.out.println(position);
             }
         });
-        glfwSetKeyCallback(HelloWorld.window, (window, key, scancode, action, mods) -> {
+        glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
 
                     if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_UP && action != GLFW_RELEASE ) {
                         System.out.println();

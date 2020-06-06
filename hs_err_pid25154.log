@@ -39,7 +39,7 @@ j  com.khryniewicki.projectX.utils.HeroUtil.<clinit>()V+30
 v  ~StubRoutines::call_stub
 j  com.khryniewicki.projectX.game.heroes.wizards.IceWizard.setTexture()V+1
 j  com.khryniewicki.projectX.game.heroes.wizards.IceWizard.<init>()V+9
-j  com.khryniewicki.projectX.game.Map.Level.<init>()V+196
+j  com.khryniewicki.projectX.game.board.Board.<init>()V+196
 j  com.khryniewicki.projectX.HelloWorld.init()V+414
 j  com.khryniewicki.projectX.HelloWorld.run()V+1
 j  java.lang.Thread.run()V+11 java.base@11.0.6
@@ -1146,8 +1146,8 @@ Launcher Type: SUN_STANDARD
 
 Logging:
 Log output configuration:
- #0: stdout all=warning uptime,level,tags
- #1: stderr all=off uptime,level,tags
+ #0: stdout all=warning uptime,board,tags
+ #1: stderr all=off uptime,board,tags
 
 Environment Variables:
 JAVA_HOME=/usr/java/jdk1.8.0_221
