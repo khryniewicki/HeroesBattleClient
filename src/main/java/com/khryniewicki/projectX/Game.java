@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.menu.heroStorage.MapWithHeroes;
 import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 import com.khryniewicki.projectX.game.menu.renderer.RenderFactory;
 import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
@@ -214,7 +215,7 @@ public class Game implements Runnable {
 
         initializeMultiplayerGame();
 
-        createLevel();
+        createBoard();
 
 
 
@@ -278,7 +279,7 @@ public class Game implements Runnable {
             try {
                 websocketInitializer.getMapWithHeroes();
                 latch.await();
-                getMockType();
+
                 renderFactory.createText(TextUtil.GET_READY);
                 Thread.sleep(5000);
 
@@ -301,6 +302,8 @@ public class Game implements Runnable {
     private SuperHero getMockType() {
         SuperHero mock=null;
         String sessionId = websocketInitializer.getSessionId();
+        MapWithHeroes instance = MapWithHeroes.getINSTANCE();
+        Map<String, Message> mapWithHeroes = instance.getMapWithHeroes();
         for (Map.Entry<String, Message> hero : mapWithHeroes.entrySet()) {
             if (!hero.getKey().equals(sessionId)){
                 String heroType = hero.getValue().getContent();
@@ -312,7 +315,7 @@ public class Game implements Runnable {
     }
 
     private boolean isInitialHeroPropertiesLoadedProperly() {
-        websocketInitializer = new WebsocketInitializer();
+        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         SuperHeroInstance instance = SuperHeroInstance.getInstance();
         instance.setHero(getWizardType());
 
@@ -326,13 +329,11 @@ public class Game implements Runnable {
         return isHeroEstablishedCorrectly;
     }
 
-    private void createLevel() {
-        if (running){
+    private void createBoard() {
             SuperHeroInstance instance = SuperHeroInstance.getInstance();
-            instance.setMock(getMockType());
+            instance.setMock();
 
             board = new Board();}
-    }
 
     private void update() {
         glfwPollEvents();

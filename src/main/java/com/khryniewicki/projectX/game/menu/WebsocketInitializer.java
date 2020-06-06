@@ -8,6 +8,13 @@ public class WebsocketInitializer implements Runnable {
     private SuperHero superHero;
     private Application.MyStompSessionHandler handler;
 
+    private WebsocketInitializer(){}
+    private final static WebsocketInitializer WEBSOCKET_INSTANCE=new WebsocketInitializer();
+
+    public static WebsocketInitializer getWebsocketInstance() {
+        return WEBSOCKET_INSTANCE;
+    }
+
     @Override
     public void run() {
         initialize();

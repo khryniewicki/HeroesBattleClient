@@ -5,6 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
+import com.khryniewicki.projectX.game.menu.heroStorage.MapWithHeroes;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.HeroSendDTO;
 import com.khryniewicki.projectX.services.SpellReceiveService;
@@ -117,7 +118,8 @@ public class Application {
                      exchange=restTemplate.exchange(request, responseType);
                      if (Objects.requireNonNull(exchange.getBody()).size()==2){
                          timer.cancel();
-                         Game.mapWithHeroes=exchange.getBody();
+                         MapWithHeroes instance = MapWithHeroes.getINSTANCE();
+                         instance.setMapWithHeroes(exchange.getBody());
                          Game.latch.countDown();
                      }
                 }
