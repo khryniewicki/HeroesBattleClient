@@ -28,6 +28,7 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -111,6 +112,7 @@ public class Application {
 
         private void timeSchudeler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
             Timer timer = new Timer();
+            CountDownLatch latch = new CountDownLatch(1);
 
             timer.schedule( new TimerTask() {
 
@@ -120,10 +122,16 @@ public class Application {
                          timer.cancel();
                          MapWithHeroes instance = MapWithHeroes.getINSTANCE();
                          instance.setMapWithHeroes(exchange.getBody());
-                         Game.latch.countDown();
+                        latch.countDown();
                      }
                 }
             }, 0, 3*1000);
+
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         public void subscribeHero(String topic, StompSession session) {
@@ -169,8 +177,10 @@ public class Application {
                 public void handleFrame(StompHeaders headers, Object payload) {
                     Message message = (Message) payload;
                     MultiplayerInitializer multiplayerInitializer = new MultiplayerInitializer();
+
                     multiplayerInitializer.setMessage(message);
                     multiplayerInitializer.validateMessage();
+
                 }
             });
         }

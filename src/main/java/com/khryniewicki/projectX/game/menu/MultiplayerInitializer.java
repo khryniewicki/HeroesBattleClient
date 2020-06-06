@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
 import com.khryniewicki.projectX.game.menu.renderer.RenderFactory;
 import com.khryniewicki.projectX.utils.TextUtil;
 import lombok.Data;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -38,7 +40,7 @@ public class MultiplayerInitializer {
 
     }
 
-    public void validateMessage() {
+    public boolean validateMessage() {
         heroStartingPosition = HeroStartingPosition.getInstance();
 
         if (message.getContent().equals("1") || message.getContent().equals("2")) {
@@ -47,21 +49,23 @@ public class MultiplayerInitializer {
 
             if (appDTO == 1) {
                 handler.setTopic(2);
-                heroStartingPosition.setX(4f);
-                heroStartingPosition.setY(4f);
+                HeroStartingPosition.setX(4f);
+                HeroStartingPosition.setY(4f);
             } else {
                 handler.setTopic(1);
-                heroStartingPosition.setX(-3f);
-                heroStartingPosition.setY(-3f);
+                HeroStartingPosition.setX(-3f);
+                HeroStartingPosition.setY(-3f);
             }
             Game.isHeroEstablishedCorrectly =true;
             Game.latch.countDown();
-
             handler.sendHeroToStompSocket();
 
+            return true;
+
+
         } else {
-            Game.latch.countDown();
             Game.isHeroEstablishedCorrectly =false;
+            return false;
         }
 
     }
@@ -110,7 +114,7 @@ public class MultiplayerInitializer {
     }
 
 
-    public void getHeroFromPlayer() {
+    public void getHeroTypeFromPlayer() {
         renderFactory.render(TextUtil.WELCOME);
         boolean running = false;
         do {
@@ -123,4 +127,29 @@ public class MultiplayerInitializer {
     }
 
 
+    public void waitingForSecondPlayer() {
+        renderFactory.render(TextUtil.OTHER_PLAYER);
+
+        WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
+        SuperHeroInstance superHeroInstance = SuperHeroInstance.getInstance();
+        try {
+            websocketInitializer.getSecondPlayerMockType();
+            superHeroInstance.setMock();
+
+            renderFactory.render(TextUtil.GET_READY);
+            Thread.sleep(5000);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void occupiedRoom() {
+        renderFactory.render(TextUtil.TRY_LATER);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,9 +2,7 @@ package com.khryniewicki.projectX;
 
 
 import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.config.Message;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.menu.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.menu.WebsocketInitializer;
 import com.khryniewicki.projectX.game.menu.heroStorage.SuperHeroInstance;
@@ -19,7 +17,6 @@ import org.lwjgl.system.MemoryStack;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
-import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 import static com.khryniewicki.projectX.game.menu.MultiplayerInitializer.getWizardType;
@@ -40,16 +37,14 @@ public class Game implements Runnable {
     private Thread thread;
     private boolean running = false;
     public static long window;
-    private String inputText;
+
     public RenderFactory renderFactory;
     private Board board;
     public static CountDownLatch latch;
-    public static SuperHero wizard;
     public static boolean isHeroEstablishedCorrectly;
     private WebsocketInitializer websocketInitializer;
-    public static HashMap<String, Message> mapWithHeroes;
     private SuperHeroInstance superHeroInstance;
-
+    private MultiplayerInitializer multiplayerInitializer;
     public void start() {
         latch = new CountDownLatch(1);
         running = true;
@@ -179,7 +174,6 @@ public class Game implements Runnable {
         int frames = 0;
 
         initializeMultiplayerGame();
-
         createBoard();
 
 
@@ -210,8 +204,8 @@ public class Game implements Runnable {
     }
 
     private void initializeMultiplayerGame() {
-        MultiplayerInitializer multiplayerInitializer = new MultiplayerInitializer();
-        multiplayerInitializer.getHeroFromPlayer();
+        multiplayerInitializer = new MultiplayerInitializer();
+        multiplayerInitializer.getHeroTypeFromPlayer();
         initializeWebsocketConnection();
         setMultiplayerGame();
     }
@@ -225,39 +219,18 @@ public class Game implements Runnable {
 
 
     private void setMultiplayerGame() {
-        if (isInitialHeroPropertiesLoadedProperly()) {
-            renderFactory.render(TextUtil.OTHER_PLAYER);
-            latch = new CountDownLatch(1);
-
-            try {
-                websocketInitializer.getSecondPlayerMockType();
-                latch.await();
-                superHeroInstance.setMock();
-
-                renderFactory.render(TextUtil.GET_READY);
-                Thread.sleep(5000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
+        if (isHeroLoadedProperly()) {
+            multiplayerInitializer.waitingForSecondPlayer();
         } else {
-            renderFactory.render(TextUtil.TRY_LATER);
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            multiplayerInitializer.occupiedRoom();
             running = false;
         }
     }
 
 
-    private boolean isInitialHeroPropertiesLoadedProperly() {
-        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-        superHeroInstance.setHero(getWizardType());
 
+    private boolean isHeroLoadedProperly() {
+        superHeroInstance.setHero(getWizardType());
         Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
         try {
