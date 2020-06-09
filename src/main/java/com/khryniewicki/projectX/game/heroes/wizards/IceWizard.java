@@ -43,6 +43,8 @@ public class IceWizard extends SuperHero {
         setName("IceWizard");
         setHero_standard_offset(0.2f);
         setHero_top_offset(0.5f);
+        setMana(100f);
+        setLife(100f);
     }
 
     @Override

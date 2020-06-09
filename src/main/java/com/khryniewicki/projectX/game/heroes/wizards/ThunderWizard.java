@@ -36,6 +36,8 @@ public class ThunderWizard extends SuperHero {
         HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
         setPositionX(heroStartingPosition.getX());
         setPositionY(heroStartingPosition.getY());
+        setMana(100f);
+        setLife(100f);
     }
 
     @Override
