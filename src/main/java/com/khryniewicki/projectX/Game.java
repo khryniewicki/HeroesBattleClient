@@ -10,7 +10,6 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.graphics.GraphicForGame;
 import com.khryniewicki.projectX.graphics.Shader;
-import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.utils.TextUtil;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Component;
 import java.nio.IntBuffer;
 import java.util.concurrent.CountDownLatch;
 
-import static com.khryniewicki.projectX.graphics.GraphicForGame.loadGraphicForObjects;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
@@ -43,10 +41,10 @@ public class Game implements Runnable {
     private Board board;
     public static CountDownLatch latch;
 
-    public RenderFactory renderFactory;
-    private WebsocketInitializer websocketInitializer;
-    private HeroesInstances heroesInstances;
-    private MultiplayerInitializer multiplayerInitializer;
+    public final RenderFactory renderFactory;
+    private final WebsocketInitializer websocketInitializer;
+    private final HeroesInstances heroesInstances;
+    private final MultiplayerInitializer multiplayerInitializer;
 
     public Game() {
         renderFactory = RenderFactory.getRenderFactory();
@@ -129,14 +127,9 @@ public class Game implements Runnable {
         System.out.println("OpenGL: " + glGetString(GL_VERSION));
         Shader.loadAll();
 
-
-
-        GraphicForGame  graphic= GraphicForGame.getINSTANCE();
-        graphic.loadGraphicForObjects();
-
+        GraphicForGame.loadGraphicForObjects();
 
     }
-
 
 
     public void run() {
@@ -205,7 +198,6 @@ public class Game implements Runnable {
             running = false;
         }
     }
-
 
 
     private boolean isHeroLoadedProperly() {
