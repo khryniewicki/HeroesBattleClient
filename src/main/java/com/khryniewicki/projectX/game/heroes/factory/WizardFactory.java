@@ -1,14 +1,16 @@
-package com.khryniewicki.projectX.game.heroes.Factory;
+package com.khryniewicki.projectX.game.heroes.factory;
 
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
+import org.springframework.stereotype.Component;
 
-public class WizardFactory {
+@Component
+public class WizardFactory implements CharacterFactory{
 
-    public SuperHero createWizard(String s){
-        switch (s){
+    public SuperHero create(String character){
+        switch (character){
             case "FireWizard":
                 return new FireWizard();
             case "IceWizard":

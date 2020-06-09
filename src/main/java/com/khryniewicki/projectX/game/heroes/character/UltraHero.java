@@ -17,4 +17,5 @@ public interface UltraHero {
     default void setPosition(){};
     default void setProperties(){};
     default void setMesh(){};
+
 }

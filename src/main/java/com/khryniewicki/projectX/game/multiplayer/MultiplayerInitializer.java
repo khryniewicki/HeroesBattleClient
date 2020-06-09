@@ -1,8 +1,9 @@
 package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
+import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.utils.TextUtil;
@@ -19,12 +20,12 @@ import static org.lwjgl.glfw.GLFW.*;
 @Slf4j
 public class MultiplayerInitializer {
     private RenderFactory renderFactory;
-    private static String inputText;
-
+    public static String inputText;
 
     public MultiplayerInitializer() {
         renderFactory = RenderFactory.getRenderFactory();
     }
+
 
     public void getHeroTypeFromPlayer() {
         renderFactory.render(TextUtil.WELCOME);
@@ -76,10 +77,6 @@ public class MultiplayerInitializer {
         });
 
 
-    }
-
-    public static SuperHero getWizardType() {
-        return new WizardFactory().createWizard(inputText);
     }
 
     public void waitingForSecondPlayer() {

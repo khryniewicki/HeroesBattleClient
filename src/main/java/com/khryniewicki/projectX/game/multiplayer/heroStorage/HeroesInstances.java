@@ -1,20 +1,25 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 import com.khryniewicki.projectX.config.messageHandler.Message;
-import com.khryniewicki.projectX.game.heroes.Factory.WizardFactory;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
+import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
+import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-import static com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer.getWizardType;
 
-
+@Service
 public class HeroesInstances {
     private SuperHero hero;
     private SuperHero mock;
+    private CharacterFactory characterFactory;
 
     private HeroesInstances() {
+        characterFactory=new WizardFactory();
     }
     public static HeroesInstances getInstance() {
         return HELPER.INSTANCE;
@@ -32,6 +37,10 @@ public class HeroesInstances {
         this.hero = getWizardType();
     }
 
+    public SuperHero getWizardType() {
+        return characterFactory.create(MultiplayerInitializer.inputText);
+    }
+
     public void setMock() {
         WebsocketInitializer websocketInstance = WebsocketInitializer.getWebsocketInstance();
 
@@ -43,7 +52,7 @@ public class HeroesInstances {
         for (Map.Entry<String, Message> hero : mapWithHeroes.entrySet()) {
             if (!hero.getKey().equals(sessionId)) {
                 String heroType = hero.getValue().getContent();
-                this.mock = new WizardFactory().createWizard(heroType);
+                this.mock = characterFactory.create(heroType);
             }
         }
     }

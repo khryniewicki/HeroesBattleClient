@@ -35,7 +35,7 @@ public class MessageHandler {
                 HeroStartingPosition.setX(-3f);
                 HeroStartingPosition.setY(-3f);
             }
-            Game.isHeroEstablishedCorrectly =true;
+            LoadedStatus.INSTANCE().HeroLoadedProperly=true;
             Game.latch.countDown();
             handler.sendHeroToStompSocket();
 
@@ -43,7 +43,7 @@ public class MessageHandler {
 
 
         } else {
-            Game.isHeroEstablishedCorrectly =false;
+            LoadedStatus.INSTANCE().HeroLoadedProperly=false;
             return false;
         }
 

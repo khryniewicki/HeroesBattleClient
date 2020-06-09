@@ -2,11 +2,13 @@ package com.khryniewicki.projectX;
 
 
 import com.khryniewicki.projectX.config.Application;
+import com.khryniewicki.projectX.config.messageHandler.LoadedStatus;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
+import com.khryniewicki.projectX.graphics.GraphicForGame;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.utils.TextUtil;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
 import java.nio.IntBuffer;
 import java.util.concurrent.CountDownLatch;
 
-import static com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer.getWizardType;
+import static com.khryniewicki.projectX.graphics.GraphicForGame.loadGraphicForObjects;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
@@ -38,13 +40,21 @@ public class Game implements Runnable {
     private boolean running = false;
     public static long window;
 
-    public RenderFactory renderFactory;
     private Board board;
     public static CountDownLatch latch;
-    public static boolean isHeroEstablishedCorrectly;
+
+    public RenderFactory renderFactory;
     private WebsocketInitializer websocketInitializer;
     private HeroesInstances heroesInstances;
     private MultiplayerInitializer multiplayerInitializer;
+
+    public Game() {
+        renderFactory = RenderFactory.getRenderFactory();
+        heroesInstances = HeroesInstances.getInstance();
+        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
+        multiplayerInitializer = new MultiplayerInitializer();
+    }
+
     public void start() {
         latch = new CountDownLatch(1);
         running = true;
@@ -119,56 +129,21 @@ public class Game implements Runnable {
         System.out.println("OpenGL: " + glGetString(GL_VERSION));
         Shader.loadAll();
 
-        Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
-        createRenderFactoryInstance();
-        createWebsocketInitializerInstance();
-        createSuperHeroInstance();
 
-        loadGraphicForObjects(pr_matrix);
+
+        GraphicForGame  graphic= GraphicForGame.getINSTANCE();
+        graphic.loadGraphicForObjects();
 
 
     }
 
-    private void createRenderFactoryInstance() {
-        renderFactory = RenderFactory.getRenderFactory();
-    }
 
-    private void createWebsocketInitializerInstance() {
-        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-    }
-
-    private void createSuperHeroInstance() {
-        heroesInstances = HeroesInstances.getInstance();
-    }
-
-
-
-    private void loadGraphicForObjects(Matrix4f pr_matrix) {
-        Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.BG.setUniform1i("tex", 1);
-        Shader.OBSTACLE.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.OBSTACLE.setUniform1i("tex", 1);
-        Shader.TERRAIN.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.TERRAIN.setUniform1i("tex", 1);
-
-
-        Shader.HERO.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.HERO.setUniform1i("tex", 1);
-        Shader.SPELL.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.SPELL.setUniform1i("tex", 1);
-
-        Shader.TEXT.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.TEXT.setUniform1i("tex", 1);
-
-    }
 
     public void run() {
         init();
-
         initializeMultiplayerGame();
         createBoard();
         workingGame();
-
         terminateGame();
     }
 
@@ -209,7 +184,6 @@ public class Game implements Runnable {
     }
 
     private void initializeMultiplayerGame() {
-        multiplayerInitializer = new MultiplayerInitializer();
         multiplayerInitializer.getHeroTypeFromPlayer();
         initializeWebsocketConnection();
         setMultiplayerGame();
@@ -236,7 +210,7 @@ public class Game implements Runnable {
 
     private boolean isHeroLoadedProperly() {
         registerHero();
-        return isHeroEstablishedCorrectly;
+        return LoadedStatus.INSTANCE().HeroLoadedProperly;
     }
 
     private void registerHero() {
