@@ -206,7 +206,6 @@ public class Application {
             showHeaders(connectedHeaders);
 
             subscribeGameInitials("/topic/room", session);
-
             subscribeHero("/topic/hero/" + topic, session);
             subscribeSpell("/topic/spell/" + topic, session);
         }

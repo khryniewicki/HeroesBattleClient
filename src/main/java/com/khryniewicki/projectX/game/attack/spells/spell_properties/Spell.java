@@ -42,6 +42,8 @@ public class Spell implements UltraSpell {
     public float[] tcs;
     private float indexHeight = 1;
     private float indexWidth = 1;
+    private float powerAttack;
+    private float manaConsumed;
 
     private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
 

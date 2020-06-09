@@ -20,6 +20,8 @@ public class Thunder extends Spell {
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
         setSIZE(1.0f);
+        setPowerAttack(10f);
+        setManaConsumed(10f);
     }
 
     @Override

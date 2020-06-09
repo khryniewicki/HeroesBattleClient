@@ -23,20 +23,39 @@ public class ActivatedAttack {
     }
 
     public boolean hitsHeroWithSpell() {
-       if (oz0<0) return false;
+        consumeSpellMana();
+        if (oz0<0) return false;
+
         simpleObjectDimenions();
         heroObjectDimenions();
-        boolean isAttackSucceeded = false;
+
 
 //        System.out.println(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
 
+        return isAttackSucceeded();
+    }
+
+    private void consumeSpellMana() {
+        hero.setMana(hero.getMana()-spell.getManaConsumed());
+    }
+
+    private boolean isAttackSucceeded() {
+        boolean isAttackSucceeded=false;
         if (bx1 > ox0 && bx0 < ox1) {
             if (by1 > oy0 && by0 < oy1) {
                 log.info("Spell reached hero");
                 isAttackSucceeded = true;
             }
         }
+        reduceHeroLife();
+
         return isAttackSucceeded;
+    }
+
+    private void reduceHeroLife() {
+        Float life = hero.getLife();
+        hero.setLife(life-spell.getPowerAttack());
+        System.out.println(life.toString());
     }
 
     public void heroObjectDimenions() {

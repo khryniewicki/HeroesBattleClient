@@ -22,6 +22,8 @@ public class Ice extends Spell {
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
 //        setSIZE(0.8f);
+        setPowerAttack(10f);
+        setManaConsumed(10f);
     }
 
     @Override

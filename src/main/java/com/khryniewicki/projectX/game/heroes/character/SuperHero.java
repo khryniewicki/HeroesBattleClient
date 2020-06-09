@@ -23,6 +23,7 @@ public class SuperHero implements UltraHero {
     private Vector position;
     private Spell spell;
     private String name;
+    private Float life, mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
     private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
@@ -89,7 +90,6 @@ public class SuperHero implements UltraHero {
         texture.bind();
         mesh.render();
         Shader.HERO.disable();
-
     }
 
 

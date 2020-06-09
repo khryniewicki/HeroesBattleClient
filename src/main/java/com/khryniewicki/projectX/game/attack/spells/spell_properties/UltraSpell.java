@@ -26,7 +26,8 @@ public interface UltraSpell {
 
     Float getSize();
     Texture getThrowingSpellTexture();
-
+    float getPowerAttack();
+    float getManaConsumed();
     default void setPosition(){ };
     default void setMesh(){};
     default void setProperties(){};

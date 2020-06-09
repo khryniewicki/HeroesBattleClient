@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
 public class HeroMock implements UltraHero {
-    private UltraHero ultraHero;
+    private final UltraHero ultraHero;
     private Float tmpPositionX;
     private Float tmpPositionY;
 

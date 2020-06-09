@@ -21,6 +21,8 @@ public class Fire extends Spell {
         setName("FireBall");
         setCastingSpeed(0.2f);
         setSpellDuration(4000L);
+        setPowerAttack(10f);
+        setManaConsumed(10f);
     }
 
     @Override
