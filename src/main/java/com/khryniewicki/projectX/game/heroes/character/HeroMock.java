@@ -90,7 +90,10 @@ public class HeroMock implements UltraHero {
     public Spell getSpell() {
         return ultraHero.getSpell();
     }
-
+    @Override
+    public void setSpell() {
+         ultraHero.setSpell();
+    }
     @Override
     public void setMesh() {
         ultraHero.setMesh();

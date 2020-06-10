@@ -19,11 +19,11 @@ import static org.lwjgl.glfw.GLFW.*;
 public class SuperHero implements UltraHero {
     private boolean isMovingLeft;
     private VertexArray mesh;
-    private Texture texture,heroUp, heroDown, heroLeft, heroRight, heroIdle;
+    private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle;
     private Vector position;
     private Spell spell;
     private String name;
-    private Float life, mana;
+    private Integer life, mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
     private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
@@ -77,8 +77,8 @@ public class SuperHero implements UltraHero {
                         setSIZE(0.9f);
                         texture = heroIdle;
                     }
-                    setMesh(createHero());
                     application.sendHeroToStompSocket();
+                    setMesh(createHero());
                 }
         );
     }
@@ -101,10 +101,12 @@ public class SuperHero implements UltraHero {
         this.mesh = mesh;
     }
 
-    public Float getX() { return Optional.ofNullable(position.x).orElse(0f);}
+    public Float getX() {
+        return position.x;
+    }
 
     public Float getY() {
-        return Optional.ofNullable(position.y).orElse(0f);
+        return position.y;
     }
 
     @Override

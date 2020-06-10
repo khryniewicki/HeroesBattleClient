@@ -1,11 +1,16 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage.positions;
 
-public class HeroStartingPosition {
-    private static float X=-4f;
-    private static float Y=-4f;
-    private static final HeroStartingPosition instance = new HeroStartingPosition();
+import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 
-    private HeroStartingPosition(){}
+public class HeroStartingPosition {
+    private static float X;
+    private static float Y;
+    private static final HeroStartingPosition instance = new HeroStartingPosition();
+    private static SuperHero hero;
+    private HeroStartingPosition(){
+
+    }
 
     public static HeroStartingPosition getInstance(){
         return instance;
@@ -31,5 +36,12 @@ public class HeroStartingPosition {
     public static void setX_Y(float x,float y){
         setX(x);
         setY(y);
+        HeroesInstances heroesInstances=HeroesInstances.getInstance();
+        hero=heroesInstances.getHero();
+        hero.setPositionX(getX());
+        hero.setPositionY(getY());
     }
+
+
+
 }

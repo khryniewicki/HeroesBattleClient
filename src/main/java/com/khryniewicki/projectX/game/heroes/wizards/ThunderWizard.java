@@ -33,11 +33,7 @@ public class ThunderWizard extends SuperHero {
     @Override
     public void setPosition() {
         setPosition(new Vector());
-        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
-        setPositionX(heroStartingPosition.getX());
-        setPositionY(heroStartingPosition.getY());
-        setMana(100f);
-        setLife(100f);
+
     }
 
     @Override
@@ -45,6 +41,8 @@ public class ThunderWizard extends SuperHero {
         setName("ThunderWizard");
         setHero_standard_offset(0.2f);
         setHero_top_offset(0.5f);
+        setMana(100);
+        setLife(100);
     }
 
     @Override

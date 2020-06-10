@@ -27,8 +27,6 @@ public class Knight extends SuperHero {
 
     public void setPosition() {
         setPosition(new Vector());
-        setPositionX(HeroStartingPosition.getX());
-        setPositionY(HeroStartingPosition.getY());
     }
 }
 

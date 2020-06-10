@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.attack.attackSuccess;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,11 @@ public class ActivatedAttack {
 
     public ActivatedAttack(UltraSpell spell) {
         this.spell=spell;
-        this.hero = Board.hero;
+        HeroesInstances heroesInstances = HeroesInstances.getInstance();
+        this.hero =heroesInstances.getHero() ;
     }
 
     public boolean hitsHeroWithSpell() {
-        consumeSpellMana();
         if (oz0<0) return false;
 
         simpleObjectDimenions();
@@ -53,9 +54,8 @@ public class ActivatedAttack {
     }
 
     private void reduceHeroLife() {
-        Float life = hero.getLife();
-        hero.setLife(life-spell.getPowerAttack());
-//        System.out.println(life.toString());
+        Integer life = hero.getLife();
+        hero.setLife(life-10);
     }
 
     public void heroObjectDimenions() {

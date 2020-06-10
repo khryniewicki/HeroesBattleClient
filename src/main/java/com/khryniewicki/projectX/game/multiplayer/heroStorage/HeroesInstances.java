@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -17,9 +17,10 @@ public class HeroesInstances {
     private SuperHero hero;
     private SuperHero mock;
     private CharacterFactory characterFactory;
-
+    private HeroStartingPosition heroStartingPosition;
     private HeroesInstances() {
         characterFactory=new WizardFactory();
+        heroStartingPosition=HeroStartingPosition.getInstance();
     }
     public static HeroesInstances getInstance() {
         return HELPER.INSTANCE;

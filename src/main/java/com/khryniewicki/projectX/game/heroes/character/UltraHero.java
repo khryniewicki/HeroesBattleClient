@@ -11,6 +11,7 @@ public interface UltraHero {
     void setMovingLeft(boolean movingLeft);
     Vector getPosition();
     Spell getSpell();
+   default void setSpell(){};
 
     default void setTextureRun(){};
     default void setTexture(){};

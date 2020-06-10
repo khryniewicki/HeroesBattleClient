@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.board;
 
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
@@ -56,6 +57,7 @@ public class Board {
     public static Board getInstance(){
         return HELPER.INSTANCE;
     }
+
     private void initBackgroundTextures() {
         bgTexture = new Texture("res/desertforum.png");
         obstacles = ObstacleStorage.getObstacle();
