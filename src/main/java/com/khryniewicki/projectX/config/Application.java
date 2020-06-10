@@ -51,8 +51,8 @@ public class Application {
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
         private SpellReceiveService spellReceiveService;
-        private HeroSendDTO heroSendDTO;
-        private SpellSendDTO spellSendDTO;
+        private HeroSendDTO heroSendDTO=new HeroSendDTO();
+        private SpellSendDTO spellSendDTO=new SpellSendDTO();
         private final Channels channels;
         private ResponseEntity<HashMap<String, Message>> exchange;
 
@@ -83,12 +83,10 @@ public class Application {
         }
 
         public void sendHeroToStompSocket() {
-            heroSendDTO = new HeroSendDTO();
             session.send("/app/hero/" + channels.getApp(), heroSendDTO.getHeroPositions());
         }
 
         public void sendSpellToStompSocket(SpellDTO spellDTO) {
-            spellSendDTO = new SpellSendDTO();
             session.send("/app/spell/" + channels.getApp(), spellDTO);
         }
 
@@ -216,7 +214,7 @@ public class Application {
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
 
-        List<Transport> transports = new ArrayList<>(2);
+        List<Transport> transports = new ArrayList<>(1);
         transports.add(new WebSocketTransport(simpleWebSocketClient));
 
         SockJsClient sockJsClient = new SockJsClient(transports);

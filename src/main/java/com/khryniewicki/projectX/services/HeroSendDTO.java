@@ -34,6 +34,7 @@ public class HeroSendDTO {
                 return false;
             }
         }
+
         tmpPositionX = getHeroPositionX();
         tmpPositionY = getHeroPositionY();
 
@@ -45,7 +46,7 @@ public class HeroSendDTO {
         Boolean isCoordinatesChanged = checkIfCoordinateChanged();
 
         if (isCoordinatesChanged) {
-            return new HeroDTO(hero.getName(), getHeroPositionX(), getHeroPositionY());
+            return new HeroDTO(hero.getName(),hero.getLife(),hero.getMana(), getHeroPositionX(), getHeroPositionY());
         }
         return tmpHero;
     }

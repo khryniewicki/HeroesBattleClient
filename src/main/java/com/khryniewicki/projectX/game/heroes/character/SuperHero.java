@@ -11,8 +11,6 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
 
-import java.util.Optional;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 @Data
@@ -26,7 +24,7 @@ public class SuperHero implements UltraHero {
     private Integer life, mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
-    private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
+    private Application.MyStompSessionHandler application;
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
@@ -51,7 +49,7 @@ public class SuperHero implements UltraHero {
                 i * 1, 0,
                 i * 1, 1
         };
-
+        application = new Application.MyStompSessionHandler();
         return new VertexArray(vertices, indices, tcs);
     }
 
@@ -77,8 +75,9 @@ public class SuperHero implements UltraHero {
                         setSIZE(0.9f);
                         texture = heroIdle;
                     }
-                    application.sendHeroToStompSocket();
+
                     setMesh(createHero());
+                    application.sendHeroToStompSocket();
                 }
         );
     }

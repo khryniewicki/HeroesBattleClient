@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.board;
 
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
@@ -22,7 +21,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-
 public class Board {
 
     private VertexArray background;
@@ -87,26 +85,23 @@ public class Board {
     }
 
     public void update() {
+
         hero.update();
         heroMock.update();
         spell.update();
         spellMock.update();
-        if (pointerON)
-            pointer.update();
+
     }
 
     public void render() {
         renderBackground();
 
         myCollision.collisionTest(hero);
-
         hero.render();
         heroMock.render();
-        spell.render();
+       spell.render();
         spellMock.render();
 
-        if (pointerON)
-            pointer.render();
 
     }
 
@@ -122,6 +117,7 @@ public class Board {
         background.render();
         Shader.BG.disable();
         bgTexture.unbind();
+
 
         renderObstacles();
         renderTerrains();
