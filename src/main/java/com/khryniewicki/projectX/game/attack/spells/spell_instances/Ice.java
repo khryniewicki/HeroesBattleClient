@@ -1,9 +1,8 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.SpellUtil;
 import lombok.Data;
 

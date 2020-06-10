@@ -217,7 +217,7 @@ public class Game implements Runnable {
     }
 
     private void createBoard() {
-        board = new Board();
+        board = Board.getInstance();
     }
 
     private void update() {

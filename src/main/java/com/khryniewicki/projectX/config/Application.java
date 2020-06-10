@@ -64,7 +64,7 @@ public class Application {
 
 
         public MyStompSessionHandler() {
-            heroReceiveService = new HeroReceiveService();
+            heroReceiveService = HeroReceiveService.getInstance();
             spellReceiveService = new SpellReceiveService();
             channels=Channels.getINSTANCE();
         }
@@ -182,7 +182,8 @@ public class Application {
                     MessageHandler instance = MessageHandler.getINSTANCE();
                     instance.setMessage(message);
                     instance.validateMessage();
-
+                    subscribeHero("/topic/hero/" + channels.getTopic(), session);
+                    subscribeSpell("/topic/spell/" + channels.getTopic(), session);
                 }
             });
         }
@@ -204,10 +205,8 @@ public class Application {
             sessionID = session.getSessionId();
             System.err.println("Connected! Headers:" + "\n" + sessionID);
             showHeaders(connectedHeaders);
-
             subscribeGameInitials("/topic/room", session);
-            subscribeHero("/topic/hero/" + channels.getTopic(), session);
-            subscribeSpell("/topic/spell/" + channels.getTopic(), session);
+
         }
 
 

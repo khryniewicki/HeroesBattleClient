@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.heroes.character.positions;
+package com.khryniewicki.projectX.game.multiplayer.heroStorage.positions;
 
 public class HeroStartingPosition {
     private static float X=-4f;
@@ -26,5 +26,10 @@ public class HeroStartingPosition {
 
     public static float getY() {
         return Y;
+    }
+
+    public static void setX_Y(float x,float y){
+        setX(x);
+        setY(y);
     }
 }

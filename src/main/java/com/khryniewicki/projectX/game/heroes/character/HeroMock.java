@@ -1,30 +1,39 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
 public class HeroMock implements UltraHero {
-    private final UltraHero ultraHero;
     private Float tmpPositionX;
     private Float tmpPositionY;
+    private final UltraHero ultraHero;
+    private HeroReceiveService heroReceiveService;
 
+    private HeroMock() {
+        HeroesInstances heroesInstances = HeroesInstances.getInstance();
+        this.ultraHero = heroesInstances.getMock();
+        heroReceiveService = HeroReceiveService.getInstance();
+    }
 
-    public HeroMock(UltraHero insertedHero) {
-        this.ultraHero = insertedHero;
+    public static HeroMock getInstance() {
+        return HELPER.INSTANCE;
     }
 
     private Boolean changeMockPosition() {
-        if (tmpPositionX != null && tmpPositionX == HeroReceiveService.heroMockPositionX) {
-            if (tmpPositionY != null && tmpPositionY == HeroReceiveService.heroMockPositionY) {
+
+        if (tmpPositionX != null && tmpPositionX == heroReceiveService.getHeroMockPositionX()) {
+            if (tmpPositionY != null && tmpPositionY == heroReceiveService.getHeroMockPositionY()) {
                 return false;
             }
         }
         changeMockSide();
-        tmpPositionX = HeroReceiveService.heroMockPositionX;
-        tmpPositionY = HeroReceiveService.heroMockPositionY;
-        setPositionX(HeroReceiveService.heroMockPositionX);
-        setPositionY(HeroReceiveService.heroMockPositionY);
+        tmpPositionX = heroReceiveService.getHeroMockPositionX();
+        tmpPositionY = heroReceiveService.getHeroMockPositionY();
+
+        setPositionX(heroReceiveService.getHeroMockPositionX());
+        setPositionY(heroReceiveService.getHeroMockPositionY());
         setMesh();
 
         return true;
@@ -32,9 +41,8 @@ public class HeroMock implements UltraHero {
 
     private void changeMockSide() {
         if (tmpPositionX != null) {
-            if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == 1) setMovingLeft(true);
-            else if (Math.signum(tmpPositionX - HeroReceiveService.heroMockPositionX) == -1) setMovingLeft(false);
-            setTextureRun();
+            if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == 1) setMovingLeft(true);
+            else if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == -1) setMovingLeft(false);
         }
     }
 
@@ -80,7 +88,7 @@ public class HeroMock implements UltraHero {
 
     @Override
     public Spell getSpell() {
-       return ultraHero.getSpell();
+        return ultraHero.getSpell();
     }
 
     @Override
@@ -93,10 +101,8 @@ public class HeroMock implements UltraHero {
         ultraHero.setMovingLeft(movingLeft);
     }
 
-    @Override
-    public void setTextureRun() {
-        ultraHero.setTextureRun();
+
+    private static class HELPER {
+        private final static HeroMock INSTANCE = new HeroMock();
     }
-
-
 }

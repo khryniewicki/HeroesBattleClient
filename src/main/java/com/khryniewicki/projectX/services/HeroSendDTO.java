@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.services;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import lombok.Data;
 
 

@@ -41,7 +41,7 @@ public class Board {
 
     private boolean pointerON = false;
 
-    public Board() {
+    private Board() {
         initVertex();
         initBackgroundTextures();
 
@@ -49,13 +49,13 @@ public class Board {
         pointer = new Pointer();
         HeroesInstances instance = HeroesInstances.getInstance();
         hero = instance.getHero();
-        heroMock = new HeroMock(instance.getMock());
+        heroMock = HeroMock.getInstance();
         spell = hero.castingSpell();
         spellMock = new SpellMock(heroMock.getSpell());
-
-
     }
-
+    public static Board getInstance(){
+        return HELPER.INSTANCE;
+    }
     private void initBackgroundTextures() {
         bgTexture = new Texture("res/desertforum.png");
         obstacles = ObstacleStorage.getObstacle();
@@ -151,6 +151,11 @@ public class Board {
 
         Obstacle.getTexture().unbind();
         Shader.OBSTACLE.disable();
+    }
+
+
+    private static final class HELPER{
+        private final static Board INSTANCE=new Board();
     }
 }
 
