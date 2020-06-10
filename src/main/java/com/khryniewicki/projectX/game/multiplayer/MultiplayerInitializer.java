@@ -10,6 +10,7 @@ import com.khryniewicki.projectX.utils.TextUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

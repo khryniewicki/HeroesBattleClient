@@ -55,7 +55,7 @@ public class ActivatedAttack {
     private void reduceHeroLife() {
         Float life = hero.getLife();
         hero.setLife(life-spell.getPowerAttack());
-        System.out.println(life.toString());
+//        System.out.println(life.toString());
     }
 
     public void heroObjectDimenions() {

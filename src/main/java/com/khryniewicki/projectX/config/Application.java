@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.config;
 
+import com.khryniewicki.projectX.config.messageHandler.Channels;
 import com.khryniewicki.projectX.config.messageHandler.ConnectionStatus;
 import com.khryniewicki.projectX.config.messageHandler.Message;
 import com.khryniewicki.projectX.config.messageHandler.MessageHandler;
@@ -52,8 +53,7 @@ public class Application {
         private SpellReceiveService spellReceiveService;
         private HeroSendDTO heroSendDTO;
         private SpellSendDTO spellSendDTO;
-        private Integer app = 2;
-        private Integer topic = 1;
+        private final Channels channels;
         private ResponseEntity<HashMap<String, Message>> exchange;
 
         public String getSessionID() {
@@ -66,6 +66,7 @@ public class Application {
         public MyStompSessionHandler() {
             heroReceiveService = new HeroReceiveService();
             spellReceiveService = new SpellReceiveService();
+            channels=Channels.getINSTANCE();
         }
 
         private void showHeaders(StompHeaders headers) {
@@ -83,12 +84,12 @@ public class Application {
 
         public void sendHeroToStompSocket() {
             heroSendDTO = new HeroSendDTO();
-            session.send("/app/hero/" + app, heroSendDTO.getHeroPositions());
+            session.send("/app/hero/" + channels.getApp(), heroSendDTO.getHeroPositions());
         }
 
         public void sendSpellToStompSocket(SpellDTO spellDTO) {
             spellSendDTO = new SpellSendDTO();
-            session.send("/app/spell/" + app, spellDTO);
+            session.send("/app/spell/" + channels.getApp(), spellDTO);
         }
 
 
@@ -178,10 +179,9 @@ public class Application {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
                     Message message = (Message) payload;
-                    MessageHandler messageHandler = new MessageHandler();
-
-                    messageHandler.setMessage(message);
-                    messageHandler.validateMessage();
+                    MessageHandler instance = MessageHandler.getINSTANCE();
+                    instance.setMessage(message);
+                    instance.validateMessage();
 
                 }
             });
@@ -206,8 +206,8 @@ public class Application {
             showHeaders(connectedHeaders);
 
             subscribeGameInitials("/topic/room", session);
-            subscribeHero("/topic/hero/" + topic, session);
-            subscribeSpell("/topic/spell/" + topic, session);
+            subscribeHero("/topic/hero/" + channels.getTopic(), session);
+            subscribeSpell("/topic/spell/" + channels.getTopic(), session);
         }
 
 
