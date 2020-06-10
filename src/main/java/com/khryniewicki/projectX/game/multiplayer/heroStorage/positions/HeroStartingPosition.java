@@ -7,7 +7,7 @@ public class HeroStartingPosition {
     private static float X;
     private static float Y;
     private static final HeroStartingPosition instance = new HeroStartingPosition();
-    private static SuperHero hero;
+
     private HeroStartingPosition(){
 
     }
@@ -37,7 +37,7 @@ public class HeroStartingPosition {
         setX(x);
         setY(y);
         HeroesInstances heroesInstances=HeroesInstances.getInstance();
-        hero=heroesInstances.getHero();
+        SuperHero hero = heroesInstances.getHero();
         hero.setPositionX(getX());
         hero.setPositionY(getY());
     }
