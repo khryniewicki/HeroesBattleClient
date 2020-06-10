@@ -10,10 +10,14 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 @Data
+@Slf4j
 public class SuperHero implements UltraHero {
     private boolean isMovingLeft;
     private VertexArray mesh;

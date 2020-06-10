@@ -13,6 +13,7 @@ import com.khryniewicki.projectX.services.HeroSendDTO;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 import com.khryniewicki.projectX.services.SpellSendDTO;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -29,6 +30,7 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -45,6 +47,7 @@ public class Application {
 
 
     @Data
+    @Slf4j
     static public class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
         private static String userId = "spring-" +
@@ -82,8 +85,9 @@ public class Application {
             }
         }
 
-        public void sendHeroToStompSocket() {
+        public synchronized void sendHeroToStompSocket() {
             session.send("/app/hero/" + channels.getApp(), heroSendDTO.getHeroPositions());
+
         }
 
         public void sendSpellToStompSocket(SpellDTO spellDTO) {
@@ -135,7 +139,7 @@ public class Application {
             }
         }
 
-        public void subscribeHero(String topic, StompSession session) {
+        public  void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
 
                 @Override
@@ -151,7 +155,7 @@ public class Application {
             });
         }
 
-        public void subscribeSpell(String topic, StompSession session) {
+        public synchronized void subscribeSpell(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
 
                 @Override
@@ -214,7 +218,7 @@ public class Application {
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
 
-        List<Transport> transports = new ArrayList<>(1);
+        List<Transport> transports = new ArrayList<>(5);
         transports.add(new WebSocketTransport(simpleWebSocketClient));
 
         SockJsClient sockJsClient = new SockJsClient(transports);

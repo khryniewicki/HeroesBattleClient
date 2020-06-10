@@ -10,6 +10,7 @@ public class HeroMock implements UltraHero {
     private Float tmpPositionY;
     private final UltraHero ultraHero;
     private HeroReceiveService heroReceiveService;
+    boolean isMovingLeft = false;
 
     private HeroMock() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
@@ -25,6 +26,8 @@ public class HeroMock implements UltraHero {
 
         if (tmpPositionX != null && tmpPositionX == heroReceiveService.getHeroMockPositionX()) {
             if (tmpPositionY != null && tmpPositionY == heroReceiveService.getHeroMockPositionY()) {
+               setHeroIdl();
+               setMesh();
                 return false;
             }
         }
@@ -34,6 +37,7 @@ public class HeroMock implements UltraHero {
 
         setPositionX(heroReceiveService.getHeroMockPositionX());
         setPositionY(heroReceiveService.getHeroMockPositionY());
+        setHeroRun();
         setMesh();
 
         return true;
@@ -41,8 +45,10 @@ public class HeroMock implements UltraHero {
 
     private void changeMockSide() {
         if (tmpPositionX != null) {
-            if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == 1) setMovingLeft(true);
-            else if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == -1) setMovingLeft(false);
+
+            if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == 1) isMovingLeft = true;
+            else if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == -1) isMovingLeft = false;
+            setMovingLeft(isMovingLeft);
         }
     }
 
@@ -90,10 +96,12 @@ public class HeroMock implements UltraHero {
     public Spell getSpell() {
         return ultraHero.getSpell();
     }
+
     @Override
     public void setSpell() {
-         ultraHero.setSpell();
+        ultraHero.setSpell();
     }
+
     @Override
     public void setMesh() {
         ultraHero.setMesh();
@@ -108,4 +116,13 @@ public class HeroMock implements UltraHero {
     private static class HELPER {
         private final static HeroMock INSTANCE = new HeroMock();
     }
+
+    @Override
+    public void setHeroIdl(){
+        ultraHero.setHeroIdl();
+    };
+    @Override
+    public void setHeroRun(){
+        ultraHero.setHeroRun();
+    };
 }

@@ -33,5 +33,4 @@ public interface UltraSpell {
     default void setTexture(){};
 
 
-
 }

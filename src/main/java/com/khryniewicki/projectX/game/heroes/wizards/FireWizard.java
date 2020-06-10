@@ -53,7 +53,12 @@ public class FireWizard extends SuperHero {
     }
 
     @Override
-    public void setTextureRun() {
+    public void setHeroIdl() {
+        setTexture(HeroUtil.FIRE_WIZARD_IDLE);
+    }
+
+    @Override
+    public void setHeroRun() {
         setTexture(HeroUtil.FIRE_WIZARD_RUN);
     }
 }

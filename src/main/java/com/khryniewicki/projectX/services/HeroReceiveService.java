@@ -34,7 +34,7 @@ public class HeroReceiveService {
     public void receivedMockPosition(HeroDTO heroDTO) {
         heroMockPositionX = (heroDTO.getPositionX());
         heroMockPositionY = (heroDTO.getPositionY());
-        log.info("MOCK"+heroMockPositionX+","+heroMockPositionY);
+//        log.info("MOCK"+heroMockPositionX+","+heroMockPositionY);
     }
 
     private static class HELPER {
