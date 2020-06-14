@@ -38,7 +38,6 @@ public class Board {
     private List<BoardObjects> obstacles;
     private List<BoardObjects> terrains;
 
-    private boolean pointerON = false;
     private boolean renderBG = true;
 
     private Board() {
@@ -99,7 +98,6 @@ public class Board {
     public void render() {
 
         renderBackground();
-        renderBG = false;
         myCollision.collisionTest(hero);
 
 

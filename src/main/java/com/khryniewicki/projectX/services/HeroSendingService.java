@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class HeroSendingService {
-    private Float tmpPositionX,tmpPositionY;
+    private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
     private SuperHero hero;
     private HeroesInstances heroesInstances;
@@ -20,22 +20,24 @@ public class HeroSendingService {
         this.hero = heroesInstances.getHero();
     }
 
-    public Float getHeroPositionX() {return hero.getX()!=null ? hero.getX() : heroStartingPosition.getX(); }
+    public Float getHeroPositionX() {
+        return hero.getX() == null ? heroStartingPosition.getX() : hero.getX();
+    }
 
     public Float getHeroPositionY() {
-        return hero.getY()!=null? hero.getY() : heroStartingPosition.getY();
+        return hero.getY() == null ? heroStartingPosition.getY() : hero.getY();
     }
 
     public HeroDTO getHeroPositions() {
         if (verifyIfCoordinatesChanged()) {
-            return new HeroDTO(hero.getName(),hero.getLife(),hero.getMana(), getHeroPositionX(), getHeroPositionY());
+            return new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), getHeroPositionX(), getHeroPositionY());
         }
         return tmpHero;
     }
 
 
     private Boolean verifyIfCoordinatesChanged() {
-        if (tmpPositionX != null && tmpPositionX ==getHeroPositionX()) {
+        if (tmpPositionX != null && tmpPositionX == getHeroPositionX()) {
             if (tmpPositionY != null && tmpPositionY == getHeroPositionY()) {
                 return false;
             }
@@ -44,11 +46,9 @@ public class HeroSendingService {
         tmpPositionX = getHeroPositionX();
         tmpPositionY = getHeroPositionY();
 
-        tmpHero = new HeroDTO(hero.getName(), hero.getLife(),hero.getMana(),tmpPositionX, tmpPositionY);
+        tmpHero = new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), tmpPositionX, tmpPositionY);
         return true;
     }
-
-
 
 
 }
