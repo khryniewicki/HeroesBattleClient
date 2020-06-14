@@ -2,18 +2,18 @@ package com.khryniewicki.projectX.graphics;
 
 import com.khryniewicki.projectX.math.Matrix4f;
 
-public class GraphicForGame {
+public class GameShaders {
 
-    private GraphicForGame() {
+    private GameShaders() {
     }
 
-    private final static GraphicForGame INSTANCE = new GraphicForGame();
+    private final static GameShaders INSTANCE = new GameShaders();
 
-    public static GraphicForGame getINSTANCE() {
+    public static GameShaders getINSTANCE() {
         return INSTANCE;
     }
 
-    public static void loadGraphicForObjects() {
+    public static void loadAll() {
         Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
 
         Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);

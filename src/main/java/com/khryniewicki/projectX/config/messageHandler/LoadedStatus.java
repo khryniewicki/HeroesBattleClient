@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class LoadedStatus {
-    public boolean HeroLoadedProperly;
+    public boolean isHeroLoaded;
 
     private LoadedStatus() {
     }

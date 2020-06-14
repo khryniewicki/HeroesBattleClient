@@ -61,7 +61,9 @@ public class SuperHero implements UltraHero {
     public void update() {
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
                     SIZE = 1f;
-                    if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
+                    float tmpX=getX();
+                    float tmpY=getY();
+            if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
                         position.y += 0.2f;
                         texture = heroUp;
                     } else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
@@ -79,10 +81,13 @@ public class SuperHero implements UltraHero {
                         setSIZE(0.9f);
                         texture = heroIdle;
                     }
+                    if (tmpX != position.x || tmpY != position.y ) {
+                        setMesh(createHero());
+                        application.sendHeroToStompSocket();
+                    }
 
-                    setMesh(createHero());
-                    application.sendHeroToStompSocket();
-                }
+        }
+
         );
     }
 

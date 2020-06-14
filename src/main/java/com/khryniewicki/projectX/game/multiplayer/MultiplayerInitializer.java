@@ -100,7 +100,7 @@ public class MultiplayerInitializer {
     public void occupiedRoom() {
         renderFactory.render(TextUtil.TRY_LATER);
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.board;
 
-import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;
@@ -8,8 +7,9 @@ import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -39,20 +39,23 @@ public class Board {
     private List<BoardObjects> terrains;
 
     private boolean pointerON = false;
+    private boolean renderBG = true;
 
     private Board() {
         initVertex();
         initBackgroundTextures();
 
         myCollision = new Collision();
-        pointer = new Pointer();
-        HeroesInstances instance = HeroesInstances.getInstance();
-        hero = instance.getHero();
+
+        HeroesInstances heroesInstances = HeroesInstances.getInstance();
+        hero = heroesInstances.getHero();
         heroMock = HeroMock.getInstance();
+
         spell = hero.castingSpell();
         spellMock = new SpellMock(heroMock.getSpell());
     }
-    public static Board getInstance(){
+
+    public static Board getInstance() {
         return HELPER.INSTANCE;
     }
 
@@ -94,12 +97,15 @@ public class Board {
     }
 
     public void render() {
-        renderBackground();
 
+        renderBackground();
+        renderBG = false;
         myCollision.collisionTest(hero);
+
+
         hero.render();
         heroMock.render();
-       spell.render();
+        spell.render();
         spellMock.render();
 
 
@@ -119,8 +125,8 @@ public class Board {
         bgTexture.unbind();
 
 
-        renderObstacles();
-        renderTerrains();
+//        renderObstacles();
+//        renderTerrains();
     }
 
     public void renderTerrains() {
@@ -152,8 +158,8 @@ public class Board {
     }
 
 
-    private static final class HELPER{
-        private final static Board INSTANCE=new Board();
+    private static final class HELPER {
+        private final static Board INSTANCE = new Board();
     }
 }
 

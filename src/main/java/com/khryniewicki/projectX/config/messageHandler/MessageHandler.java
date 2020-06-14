@@ -2,18 +2,24 @@ package com.khryniewicki.projectX.config.messageHandler;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.CountDownLatch;
 
 @Data
+@Slf4j
 public class MessageHandler {
     private Message message;
     private static Application.MyStompSessionHandler handler;
     private HeroStartingPosition heroStartingPosition;
+    private MockStartingPosition mockStartingPosition;
     private boolean flag = true;
     private Channels channels;
+    private CountDownLatch latch;
 
     private MessageHandler() {
         handler = new Application.MyStompSessionHandler();
@@ -31,34 +37,61 @@ public class MessageHandler {
         return INSTANCE;
     }
 
-    public boolean validateMessage() {
+    public void latchCountDownMethod() {
         heroStartingPosition = HeroStartingPosition.getInstance();
-        MockStartingPosition mockStartingPosition = MockStartingPosition.getInstance();
+        mockStartingPosition = MockStartingPosition.getInstance();
+        validateMessage();
+    }
 
-        if ((message.getContent().equals("1") || message.getContent().equals("2")) && flag) {
-            int appDTO = Integer.parseInt(message.getContent());
-            channels.setApp(appDTO);
+
+    public void validateMessage() {
+        if (isNumeric(message.getContent())) {
+            setChannelsAndStartingPositions();
+        }
+        Game.latch.countDown();
+    }
+
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private void setChannelsAndStartingPositions() {
+        int appDTO = Integer.parseInt(message.getContent());
+
+        if ((appDTO == 1 || appDTO == 2) && flag) {
+
+            setChannels(appDTO);
+            setHeroesStartingPositions();
             setFlag(false);
-            if (appDTO == 1) {
-                channels.setTopic(2);
-                heroStartingPosition.setX_Y(4f, 4f);
-                mockStartingPosition.setX_Y(-3f, -3f);
-            } else if (appDTO==2){
-                channels.setTopic(1);
-                heroStartingPosition.setX_Y(-3f, -3f);
-                mockStartingPosition.setX_Y(4.2f, 4.2f);
-            }
-            System.out.println("APP:"+channels.getApp()+"TOPIC:"+channels.getTopic());
 
-            LoadedStatus.INSTANCE().HeroLoadedProperly = true;
-            Game.latch.countDown();
-
-            return true;
-
+            LoadedStatus.INSTANCE().isHeroLoaded = true;
+            log.info("APP:" + channels.getApp() + "TOPIC:" + channels.getTopic());
 
         } else {
-            LoadedStatus.INSTANCE().HeroLoadedProperly = false;
-            return false;
+            LoadedStatus.INSTANCE().isHeroLoaded = false;
+        }
+    }
+
+    private void setChannels(int appDTO) {
+        channels.setApp(appDTO);
+        if (appDTO == 1) {
+            channels.setTopic(2);
+        } else if (appDTO == 2) {
+            channels.setTopic(1);
+        }
+    }
+
+    private void setHeroesStartingPositions() {
+        Integer app = channels.getApp();
+        Position A = new Position(4f, 4f);
+        Position B = new Position(-3f, -3f);
+
+        if (app == 1) {
+            heroStartingPosition.setX_Y(A.getPositionX(), A.getPositionY());
+            mockStartingPosition.setX_Y(B.getPositionX(), B.getPositionY());
+        } else {
+            mockStartingPosition.setX_Y(A.getPositionX(), A.getPositionY());
+            heroStartingPosition.setX_Y(B.getPositionX(), B.getPositionY());
         }
     }
 }

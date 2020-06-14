@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -9,24 +8,32 @@ import lombok.Data;
 
 
 @Data
-public class HeroSendDTO {
+public class HeroSendingService {
     private Float tmpPositionX ;
     private Float tmpPositionY ;
     private HeroDTO tmpHero;
     private SuperHero hero;
     private HeroesInstances heroesInstances;
     private HeroStartingPosition heroStartingPosition;
-    public HeroSendDTO() {
+
+    public HeroSendingService() {
         heroesInstances = HeroesInstances.getInstance();
         this.hero = heroesInstances.getHero();
     }
-    public Float getHeroPositionX() {
-        return hero.getX()!=null ? hero.getX() : heroStartingPosition.getX();
-    }
+
+    public Float getHeroPositionX() {return hero.getX()!=null ? hero.getX() : heroStartingPosition.getX(); }
 
     public Float getHeroPositionY() {
         return hero.getY()!=null? hero.getY() : heroStartingPosition.getY();
     }
+
+    public HeroDTO getHeroPositions() {
+        if (checkIfCoordinateChanged()) {
+            return new HeroDTO(hero.getName(),hero.getLife(),hero.getMana(), getHeroPositionX(), getHeroPositionY());
+        }
+        return tmpHero;
+    }
+
 
     private Boolean checkIfCoordinateChanged() {
         if (tmpPositionX != null && tmpPositionX ==getHeroPositionX()) {
@@ -42,14 +49,7 @@ public class HeroSendDTO {
         return true;
     }
 
-    public HeroDTO getHeroPositions() {
-        Boolean isCoordinatesChanged = checkIfCoordinateChanged();
 
-        if (isCoordinatesChanged) {
-            return new HeroDTO(hero.getName(),hero.getLife(),hero.getMana(), getHeroPositionX(), getHeroPositionY());
-        }
-        return tmpHero;
-    }
 
 
 }

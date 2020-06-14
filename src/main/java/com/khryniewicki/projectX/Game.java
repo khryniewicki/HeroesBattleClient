@@ -8,7 +8,7 @@ import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
-import com.khryniewicki.projectX.graphics.GraphicForGame;
+import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.utils.TextUtil;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -35,7 +35,7 @@ public class Game implements Runnable {
     public static int height = 800;
 
     private Thread thread;
-    private boolean running = false;
+    private boolean running;
     public static long window;
 
     private Board board;
@@ -53,11 +53,22 @@ public class Game implements Runnable {
         multiplayerInitializer = new MultiplayerInitializer();
     }
 
+    public static void main(String[] args) {
+        new Game().start();
+    }
+
     public void start() {
         latch = new CountDownLatch(1);
         running = true;
         thread = new Thread(this, "Game");
         thread.start();
+    }
+
+    public void run() {
+        init();
+        initializeMultiplayerGame();
+        gameLoop();
+        terminateGame();
     }
 
     private void init() {
@@ -126,27 +137,56 @@ public class Game implements Runnable {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         System.out.println("OpenGL: " + glGetString(GL_VERSION));
         Shader.loadAll();
-
-        GraphicForGame.loadGraphicForObjects();
+        GameShaders.loadAll();
 
     }
 
-
-    public void run() {
-        init();
-        initializeMultiplayerGame();
-        createBoard();
-        workingGame();
-        terminateGame();
+    private void initializeMultiplayerGame() {
+        multiplayerInitializer.getHeroTypeFromPlayer();
+        initializeWebsocketConnection();
+        setMultiplayerGame();
     }
 
-    private void terminateGame() {
-        websocketInitializer.disconnect();
-        glfwDestroyWindow(window);
-        glfwTerminate();
+
+    private void initializeWebsocketConnection() {
+        renderFactory.render(TextUtil.CONNECTION);
+        new Application().startWebsocket();
+        renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
     }
 
-    private void workingGame() {
+
+    private void setMultiplayerGame() {
+        if (isHeroLoadedProperly()) {
+            multiplayerInitializer.waitingForSecondPlayer();
+            createBoard();
+        } else {
+            multiplayerInitializer.occupiedRoom();
+            running = false;
+        }
+    }
+
+
+    private boolean isHeroLoadedProperly() {
+        registerHero();
+        return LoadedStatus.INSTANCE().isHeroLoaded;
+    }
+
+    private void registerHero() {
+        heroesInstances.setHero();
+        Thread websocket = new Thread(websocketInitializer, "websocket");
+        websocket.start();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createBoard() {
+        board = Board.getInstance();
+    }
+
+    private void gameLoop() {
         long lastTime = System.nanoTime();
         double delta = 0.0;
         double ns = 1000000000.0 / 60.0;
@@ -175,51 +215,6 @@ public class Game implements Runnable {
                 running = false;
         }
     }
-
-    private void initializeMultiplayerGame() {
-        multiplayerInitializer.getHeroTypeFromPlayer();
-        initializeWebsocketConnection();
-        setMultiplayerGame();
-    }
-
-
-    private void initializeWebsocketConnection() {
-        renderFactory.render(TextUtil.CONNECTION);
-        new Application().startWebsocket();
-        renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
-    }
-
-
-    private void setMultiplayerGame() {
-        if (isHeroLoadedProperly()) {
-            multiplayerInitializer.waitingForSecondPlayer();
-        } else {
-            multiplayerInitializer.occupiedRoom();
-            running = false;
-        }
-    }
-
-
-    private boolean isHeroLoadedProperly() {
-        registerHero();
-        return LoadedStatus.INSTANCE().HeroLoadedProperly;
-    }
-
-    private void registerHero() {
-        heroesInstances.setHero();
-        Thread websocket = new Thread(websocketInitializer, "websocket");
-        websocket.start();
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createBoard() {
-        board = Board.getInstance();
-    }
-
     private void update() {
         glfwPollEvents();
         board.update();
@@ -238,8 +233,10 @@ public class Game implements Runnable {
     }
 
 
-    public static void main(String[] args) {
-        new Game().start();
+    private void terminateGame() {
+        websocketInitializer.disconnect();
+        glfwDestroyWindow(window);
+        glfwTerminate();
     }
 
 
