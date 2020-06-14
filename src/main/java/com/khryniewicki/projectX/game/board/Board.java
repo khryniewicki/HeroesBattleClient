@@ -49,7 +49,7 @@ public class Board {
 
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
-        heroMock = HeroMock.getInstance();
+        heroMock = heroesInstances.getMock();
 
         spell = hero.castingSpell();
         spellMock = new SpellMock(heroMock.getSpell());
@@ -123,38 +123,6 @@ public class Board {
         background.render();
         Shader.BG.disable();
         bgTexture.unbind();
-
-
-//        renderObstacles();
-//        renderTerrains();
-    }
-
-    public void renderTerrains() {
-        Shader.TERRAIN.enable();
-        Terrain.getTexture().bind();
-
-        for (BoardObjects terrain : terrains) {
-            terrain.getMesh().bind();
-            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
-            terrain.getMesh().draw();
-            terrain.getMesh().unbind();
-        }
-        Terrain.getTexture().unbind();
-        Shader.TERRAIN.disable();
-    }
-
-    public void renderObstacles() {
-        Shader.OBSTACLE.enable();
-        Obstacle.getTexture().bind();
-        for (BoardObjects obstacle : obstacles) {
-            obstacle.getMesh().bind();
-            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
-            obstacle.getMesh().draw();
-            obstacle.getMesh().unbind();
-        }
-
-        Obstacle.getTexture().unbind();
-        Shader.OBSTACLE.disable();
     }
 
 

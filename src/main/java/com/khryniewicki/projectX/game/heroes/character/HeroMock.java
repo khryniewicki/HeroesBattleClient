@@ -12,15 +12,11 @@ public class HeroMock implements UltraHero {
     private HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
 
-    private HeroMock() {
-        HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        this.ultraHero = heroesInstances.getMock();
+    public HeroMock(SuperHero superHero) {
+        this.ultraHero = superHero;
         heroReceiveService = HeroReceiveService.getInstance();
     }
 
-    public static HeroMock getInstance() {
-        return HELPER.INSTANCE;
-    }
 
     private Boolean changeMockPosition() {
 
@@ -112,10 +108,6 @@ public class HeroMock implements UltraHero {
         ultraHero.setMovingLeft(movingLeft);
     }
 
-
-    private static class HELPER {
-        private final static HeroMock INSTANCE = new HeroMock();
-    }
 
     @Override
     public void setHeroIdl(){

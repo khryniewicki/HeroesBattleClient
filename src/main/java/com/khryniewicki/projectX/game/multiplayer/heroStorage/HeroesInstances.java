@@ -1,7 +1,9 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 import com.khryniewicki.projectX.config.messageHandler.Message;
+import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
@@ -15,7 +17,7 @@ import java.util.Map;
 @Service
 public class HeroesInstances {
     private SuperHero hero;
-    private SuperHero mock;
+    private UltraHero mock;
     private CharacterFactory characterFactory;
     private HeroStartingPosition heroStartingPosition;
     private HeroesInstances() {
@@ -30,7 +32,7 @@ public class HeroesInstances {
     public SuperHero getHero() {
         return hero;
     }
-    public SuperHero getMock() {
+    public UltraHero getMock() {
         return mock;
     }
 
@@ -53,7 +55,8 @@ public class HeroesInstances {
         for (Map.Entry<String, Message> hero : mapWithHeroes.entrySet()) {
             if (!hero.getKey().equals(sessionId)) {
                 String heroType = hero.getValue().getContent();
-                this.mock = characterFactory.create(heroType);
+                SuperHero superHero = characterFactory.create(heroType);
+                this.mock = new HeroMock(superHero);
             }
         }
     }

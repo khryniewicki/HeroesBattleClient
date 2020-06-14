@@ -9,8 +9,7 @@ import lombok.Data;
 
 @Data
 public class HeroSendingService {
-    private Float tmpPositionX ;
-    private Float tmpPositionY ;
+    private Float tmpPositionX,tmpPositionY;
     private HeroDTO tmpHero;
     private SuperHero hero;
     private HeroesInstances heroesInstances;
@@ -28,14 +27,14 @@ public class HeroSendingService {
     }
 
     public HeroDTO getHeroPositions() {
-        if (checkIfCoordinateChanged()) {
+        if (verifyIfCoordinatesChanged()) {
             return new HeroDTO(hero.getName(),hero.getLife(),hero.getMana(), getHeroPositionX(), getHeroPositionY());
         }
         return tmpHero;
     }
 
 
-    private Boolean checkIfCoordinateChanged() {
+    private Boolean verifyIfCoordinatesChanged() {
         if (tmpPositionX != null && tmpPositionX ==getHeroPositionX()) {
             if (tmpPositionY != null && tmpPositionY == getHeroPositionY()) {
                 return false;
