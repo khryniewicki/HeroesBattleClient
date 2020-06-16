@@ -57,6 +57,7 @@ public class Application {
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
         private SpellReceiveService spellReceiveService;
+
         private HeroSendingService heroSendingService =new HeroSendingService();
         private SpellSendingService spellSendingService =new SpellSendingService();
         private final Channels channels;
@@ -71,7 +72,7 @@ public class Application {
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
             spellReceiveService = new SpellReceiveService();
-            channels=Channels.getINSTANCE();
+            channels = Channels.getINSTANCE();
         }
 
         private void showHeaders(StompHeaders headers) {
@@ -144,7 +145,7 @@ public class Application {
             }
         }
 
-        public  void subscribeHero(String topic, StompSession session) {
+        public void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
 
                 @Override
@@ -229,7 +230,7 @@ public class Application {
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
 
-        List<Transport> transports = new ArrayList<>(5);
+        List<Transport> transports = new ArrayList<>(1);
         transports.add(new WebSocketTransport(simpleWebSocketClient));
 
         SockJsClient sockJsClient = new SockJsClient(transports);

@@ -32,6 +32,7 @@ public class SuperHero implements UltraHero {
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
+    private float velocity=0.2f;
 
     public VertexArray createHero() {
         int i = isMovingLeft ? -1 : 1;
@@ -59,23 +60,28 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
+
+        float tmpX=getX();
+        float tmpY=getY();
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
                     SIZE = 1f;
-                    float tmpX=getX();
-                    float tmpY=getY();
+
+                    if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
+                        position.y += velocity;
+
             if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
-                        position.y += 0.2f;
+                        position.y += velocity;
                         texture = heroUp;
                     } else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
-                        position.y -= 0.2f;
+                        position.y -= velocity;
                         texture = heroDown;
                     } else if (key == GLFW_KEY_LEFT && action != GLFW_RELEASE && !Collision.collisions[1]) {
-                        position.x -= 0.2f;
+                        position.x -= velocity;
                         isMovingLeft = true;
                         texture = heroLeft;
                     } else if (key == GLFW_KEY_RIGHT && action != GLFW_RELEASE && !Collision.collisions[0]) {
                         isMovingLeft = false;
-                        position.x += 0.2f;
+                        position.x += velocity;
                         texture = heroRight;
                     } else {
                         setSIZE(0.9f);
@@ -87,6 +93,12 @@ public class SuperHero implements UltraHero {
                     }
 
         }
+
+                    if (tmpX != position.x || tmpY != position.y ) {
+                        setMesh(createHero());
+                        application.sendHeroToStompSocket();
+                    }
+                }
 
         );
     }
