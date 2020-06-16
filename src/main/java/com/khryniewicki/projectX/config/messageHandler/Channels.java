@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Channels {
-    private Integer app=1;
-    private Integer topic=2;
+    private Integer app;
+    private Integer topic;
 
 
     private Channels() {

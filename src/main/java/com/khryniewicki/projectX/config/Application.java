@@ -7,11 +7,12 @@ import com.khryniewicki.projectX.config.messageHandler.MessageHandler;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.MapWithHeroes;
 import com.khryniewicki.projectX.services.HeroReceiveService;
-import com.khryniewicki.projectX.services.HeroSendDTO;
+import com.khryniewicki.projectX.services.HeroSendingService;
 import com.khryniewicki.projectX.services.SpellReceiveService;
-import com.khryniewicki.projectX.services.SpellSendDTO;
+import com.khryniewicki.projectX.services.SpellSendingService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -53,8 +54,9 @@ public class Application {
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
         private SpellReceiveService spellReceiveService;
-        private HeroSendDTO heroSendDTO = new HeroSendDTO();
-        private SpellSendDTO spellSendDTO = new SpellSendDTO();
+
+        private HeroSendingService heroSendingService =new HeroSendingService();
+        private SpellSendingService spellSendingService =new SpellSendingService();
         private final Channels channels;
         private ResponseEntity<HashMap<String, Message>> exchange;
 
@@ -84,8 +86,10 @@ public class Application {
             }
         }
 
-        public synchronized void sendHeroToStompSocket() {
-            session.send("/app/hero/" + channels.getApp(), heroSendDTO.getHeroPositions());
+        public void sendHeroToStompSocket() {
+            log.info("PRE-HeroSENDDTO");
+            session.send("/app/hero/" + channels.getApp(), heroSendingService.getHeroPositions());
+            log.info("AFTER-HeroSENDDTO");
 
         }
 
@@ -94,8 +98,10 @@ public class Application {
         }
 
 
-        public void register(SuperHero superhero) {
-            session.send("/app/room", new Message(superhero.getName(), session.getSessionId(), ConnectionStatus.CONNECTED));
+        public void register() {
+            HeroesInstances heroesInstances = HeroesInstances.getInstance();
+            SuperHero superHero = heroesInstances.getHero();
+            session.send("/app/room", new Message(superHero.getName(), session.getSessionId(), ConnectionStatus.CONNECTED));
         }
 
         public void unregister() {
@@ -111,7 +117,6 @@ public class Application {
                     .accept(MediaType.APPLICATION_JSON).build();
 
             requestSchudeler(restTemplate, responseType, request);
-
         }
 
         private void requestSchudeler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
@@ -149,7 +154,11 @@ public class Application {
                 @Override
                 public void handleFrame(StompHeaders headers,
                                         Object payload) {
+                    log.info("PRE-subscribeHero");
+
                     heroReceiveService.receivedMockPosition(((HeroDTO) payload));
+                    log.info("AFTER-subscribeHero");
+
                 }
             });
         }
@@ -181,8 +190,10 @@ public class Application {
                 public void handleFrame(StompHeaders headers, Object payload) {
                     Message message = (Message) payload;
                     MessageHandler instance = MessageHandler.getINSTANCE();
+
                     instance.setMessage(message);
-                    instance.validateMessage();
+                    instance.latchCountDownMethod();
+
                     subscribeHero("/topic/hero/" + channels.getTopic(), session);
                     subscribeSpell("/topic/spell/" + channels.getTopic(), session);
                 }

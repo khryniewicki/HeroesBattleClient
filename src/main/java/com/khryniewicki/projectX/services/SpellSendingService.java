@@ -2,8 +2,7 @@ package com.khryniewicki.projectX.services;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
 
-public class SpellSendDTO {
-
+public class SpellSendingService {
 
 
     public SpellDTO sendSpell() {

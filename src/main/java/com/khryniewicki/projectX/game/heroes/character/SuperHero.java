@@ -68,6 +68,9 @@ public class SuperHero implements UltraHero {
 
                     if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
                         position.y += velocity;
+
+            if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
+                        position.y += 0.2f;
                         texture = heroUp;
                     } else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
                         position.y -= velocity;
@@ -84,12 +87,19 @@ public class SuperHero implements UltraHero {
                         setSIZE(0.9f);
                         texture = heroIdle;
                     }
+                    if (tmpX != position.x || tmpY != position.y ) {
+                        setMesh(createHero());
+                        application.sendHeroToStompSocket();
+                    }
+
+        }
 
                     if (tmpX != position.x || tmpY != position.y ) {
                         setMesh(createHero());
                         application.sendHeroToStompSocket();
                     }
                 }
+
         );
     }
 

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class HeroReceiveService {
 
     private MockStartingPosition mockStartingPosition;
-    private Float heroMockPositionX;
-    private Float heroMockPositionY;
+    private Float MockPositionX;
+    private Float MockPositionY;
 
     private HeroReceiveService() {
         mockStartingPosition = MockStartingPosition.getInstance();
@@ -23,18 +23,17 @@ public class HeroReceiveService {
         return HELPER.INSTANCE;
     }
 
-    public Float getHeroMockPositionX() {
-        return heroMockPositionX!=null? heroMockPositionX : mockStartingPosition.getX();
+    public Float getMockPositionX() {
+        return MockPositionX ==null? mockStartingPosition.getX(): MockPositionX;
     }
 
-    public Float getHeroMockPositionY() {
-        return heroMockPositionY!=null? heroMockPositionY : mockStartingPosition.getY();
+    public Float getMockPositionY() {
+        return MockPositionY ==null? mockStartingPosition.getY(): MockPositionY;
     }
 
     public void receivedMockPosition(HeroDTO heroDTO) {
-        heroMockPositionX = (heroDTO.getPositionX());
-        heroMockPositionY = (heroDTO.getPositionY());
-//        log.info("MOCK"+heroMockPositionX+","+heroMockPositionY);
+        MockPositionX = (heroDTO.getPositionX());
+        MockPositionY = (heroDTO.getPositionY());
     }
 
     private static class HELPER {

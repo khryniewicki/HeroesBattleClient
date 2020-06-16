@@ -1,11 +1,9 @@
 package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 
 public class WebsocketInitializer implements Runnable {
-    private SuperHero superHero;
+
     private Application.MyStompSessionHandler handler;
     private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
 
@@ -21,15 +19,11 @@ public class WebsocketInitializer implements Runnable {
         initialize();
     }
 
-    public void setSuperHero() {
-        HeroesInstances instance = HeroesInstances.getInstance();
-        this.superHero = instance.getHero();
-    }
 
-    private void initialize() {
+
+    public void initialize() {
         handler = new Application.MyStompSessionHandler();
-        setSuperHero();
-        handler.register(superHero);
+        handler.register();
     }
 
     public void disconnect() {

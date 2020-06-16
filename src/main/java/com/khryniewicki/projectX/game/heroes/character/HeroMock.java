@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
@@ -12,31 +11,27 @@ public class HeroMock implements UltraHero {
     private HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
 
-    private HeroMock() {
-        HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        this.ultraHero = heroesInstances.getMock();
+    public HeroMock(SuperHero superHero) {
+        this.ultraHero = superHero;
         heroReceiveService = HeroReceiveService.getInstance();
     }
 
-    public static HeroMock getInstance() {
-        return HELPER.INSTANCE;
-    }
 
     private Boolean changeMockPosition() {
 
-        if (tmpPositionX != null && tmpPositionX == heroReceiveService.getHeroMockPositionX()) {
-            if (tmpPositionY != null && tmpPositionY == heroReceiveService.getHeroMockPositionY()) {
+        if (tmpPositionX != null && tmpPositionX == heroReceiveService.getMockPositionX()) {
+            if (tmpPositionY != null && tmpPositionY == heroReceiveService.getMockPositionY()) {
                setHeroIdl();
                setMesh();
                 return false;
             }
         }
         changeMockSide();
-        tmpPositionX = heroReceiveService.getHeroMockPositionX();
-        tmpPositionY = heroReceiveService.getHeroMockPositionY();
+        tmpPositionX = heroReceiveService.getMockPositionX();
+        tmpPositionY = heroReceiveService.getMockPositionY();
 
-        setPositionX(heroReceiveService.getHeroMockPositionX());
-        setPositionY(heroReceiveService.getHeroMockPositionY());
+        setPositionX(heroReceiveService.getMockPositionX());
+        setPositionY(heroReceiveService.getMockPositionY());
         setHeroRun();
         setMesh();
 
@@ -46,8 +41,8 @@ public class HeroMock implements UltraHero {
     private void changeMockSide() {
         if (tmpPositionX != null) {
 
-            if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == 1) isMovingLeft = true;
-            else if (Math.signum(tmpPositionX - heroReceiveService.getHeroMockPositionX()) == -1) isMovingLeft = false;
+            if (Math.signum(tmpPositionX - heroReceiveService.getMockPositionX()) == 1) isMovingLeft = true;
+            else if (Math.signum(tmpPositionX - heroReceiveService.getMockPositionX()) == -1) isMovingLeft = false;
             setMovingLeft(isMovingLeft);
         }
     }
@@ -112,10 +107,6 @@ public class HeroMock implements UltraHero {
         ultraHero.setMovingLeft(movingLeft);
     }
 
-
-    private static class HELPER {
-        private final static HeroMock INSTANCE = new HeroMock();
-    }
 
     @Override
     public void setHeroIdl(){
