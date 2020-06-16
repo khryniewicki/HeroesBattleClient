@@ -30,8 +30,8 @@ public class SpellMock extends Spell implements UltraSpell {
         if (SpellReceiveService.spellMockPositionX != null) {
             tmpPositionX = SpellReceiveService.spellMockPositionX;
             tmpPositionY = SpellReceiveService.spellMockPositionY;
-            setRelativeX(SpellReceiveService.spellMockPositionX);
-            setRelativeY(SpellReceiveService.spellMockPositionY);
+            this.setFinalX(SpellReceiveService.spellMockPositionX);
+            this.setFinalY(SpellReceiveService.spellMockPositionY);
             setDistanceX(SpellReceiveService.spellMockPositionX - getHeroPositionX());
             setDistanceY(SpellReceiveService.spellMockPositionY - getHeroPositionY());
             setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
@@ -75,6 +75,10 @@ public class SpellMock extends Spell implements UltraSpell {
     public void setPosition(Vector position) {
         ultraSpell.setPosition(position);
     }
+    @Override
+    public Vector getPosition() {
+       return ultraSpell.getPosition();
+    }
 
     @Override
     public Float getHeroPositionX() {
@@ -87,13 +91,13 @@ public class SpellMock extends Spell implements UltraSpell {
     }
 
     @Override
-    public void setRelativeX(Float relativeX) {
-        ultraSpell.setRelativeX(relativeX);
+    public void setFinalX(Float finalX) {
+        ultraSpell.setFinalX(finalX);
     }
 
     @Override
-    public void setRelativeY(Float relativeY) {
-        ultraSpell.setRelativeY(relativeY);
+    public void setFinalY(Float finalY) {
+        ultraSpell.setFinalY(finalY);
     }
 
     @Override

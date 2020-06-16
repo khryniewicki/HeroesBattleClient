@@ -2,8 +2,8 @@ package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.objectCollision.Collision;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -11,8 +11,6 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDateTime;
 
 import static org.lwjgl.glfw.GLFW.*;
 

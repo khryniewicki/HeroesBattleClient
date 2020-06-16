@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.objectCollision;
+package com.khryniewicki.projectX.game.collision;
 
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.knights.Knight;
@@ -49,16 +49,16 @@ public class Collision {
 
         checkCollisionForSpecificDirection();
     }
-    private MAP_QUARTERS checkInWhichQuerterIsHero() {
-        MAP_QUARTERS quarter;
+    private com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS checkInWhichQuerterIsHero() {
+        com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS quarter;
         if (bx > 0 && by > 0) {
-            quarter = MAP_QUARTERS.TOP_RIGHT;
+            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.TOP_RIGHT;
         } else if (bx > 0 && by < 0) {
-            quarter = MAP_QUARTERS.BOTTOM_RIGHT;
+            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.BOTTOM_RIGHT;
         } else if (bx < 0 && by > 0) {
-            quarter = MAP_QUARTERS.TOP_LEFT;
+            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.TOP_LEFT;
         } else {
-            quarter = MAP_QUARTERS.BOTTOM_LEFT;
+            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.BOTTOM_LEFT;
         }
         return quarter;
     }
@@ -88,7 +88,7 @@ public class Collision {
             return false;
     }
 
-    private boolean obstacleCollision(MAP_QUARTERS map_quarter) {
+    private boolean obstacleCollision(com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS map_quarter) {
         switch (map_quarter) {
             case BOTTOM_LEFT:
                 return obstacleCollisionInQuarter(obstacleList_BL);

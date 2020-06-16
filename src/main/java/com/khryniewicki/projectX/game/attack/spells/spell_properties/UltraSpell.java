@@ -10,8 +10,8 @@ public interface UltraSpell {
     void setPosition(Vector position);
     void getMousePosition();
 
-    void setRelativeX(Float relativeX);
-    void setRelativeY(Float relativeY);
+    void setFinalX(Float finalX);
+    void setFinalY(Float finalY);
     void setDistanceX(Float distanceX);
     void setDistanceY(Float distanceY);
     void setSpell(Float indexHeight, Float indexWidth, Texture texture);

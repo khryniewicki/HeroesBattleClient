@@ -44,11 +44,13 @@ public class HeroesInstances {
         MapWithHeroes mapWithHeroes1 = MapWithHeroes.getINSTANCE();
 
         String sessionId = websocketInstance.getSessionId();
+
         Map<String, Message> heroes = mapWithHeroes1.getMapWithHeroes();
 
         for (Map.Entry<String, Message> hero : heroes.entrySet()) {
+            String key=hero.getKey().substring(2);
 
-            if (!hero.getKey().equals(sessionId)) {
+            if (!key.equals(sessionId)) {
                 String heroType = hero.getValue().getContent();
                 SuperHero superHero = characterFactory.create(heroType);
                 this.mock = new HeroMock(superHero);

@@ -24,8 +24,8 @@ public class Spell implements UltraSpell {
     private Texture texture;
     private static SuperHero superHero;
     private Vector position;
-    private Float relativeX;
-    private Float relativeY;
+    private Float finalX;
+    private Float finalY;
 
     private Float distanceX;
     private Float distanceY;
@@ -38,7 +38,7 @@ public class Spell implements UltraSpell {
     private Long spellDuration;
     private String name;
     private boolean isCastingSpellsActivated = true;
-    public Float SIZE = 1.0f;
+    public Float SIZE = 1f;
     public float[] tcs;
     private float indexHeight = 1;
     private float indexWidth = 1;
@@ -111,7 +111,7 @@ public class Spell implements UltraSpell {
 
     @Override
     public void spellCasting() {
-        if (relativeX != null && relativeY != null) {
+        if (finalX != null && finalY != null) {
             castingSpell();
         }
         spellDuration();
@@ -138,9 +138,9 @@ public class Spell implements UltraSpell {
             position.y += Math.signum(distanceY) * castingSpeed;
         }
 
-        if (Math.abs(position.x - relativeX) <= castingSpeed / 2 && Math.abs(position.y - relativeY) < castingSpeed / 2) {
+        if (Math.abs(position.x - finalX) <= castingSpeed / 2 && Math.abs(position.y - finalY) <= castingSpeed / 2) {
             setSpell(1f, 1f, consumedSpellTexture);
-            setPosition(relativeX, relativeY, 1f);
+            setPosition(finalX, finalY, 1f);
             startingTimeSpell = System.currentTimeMillis();
             makeRelativesPositionsNull();
         }
@@ -148,13 +148,13 @@ public class Spell implements UltraSpell {
 
 
     private void sendSpellDTO() {
-        SpellDTO spellDTO = new SpellDTO(name, relativeX, relativeY);
+        SpellDTO spellDTO = new SpellDTO(name, finalX, finalY);
         application.sendSpellToStompSocket(spellDTO);
     }
 
     private void makeRelativesPositionsNull() {
-        relativeY = null;
-        relativeX = null;
+        finalY = null;
+        finalX = null;
     }
 
     public Vector getPosition() {
@@ -184,13 +184,17 @@ public class Spell implements UltraSpell {
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
-                setRelativeX((float) (x - Game.width / 2) / (Game.width / 20));
-                setRelativeY((float) (Game.height / 2 - y) / (Game.height / 10));
-                distanceX = relativeX - getHeroPositionX();
-                distanceY = relativeY - getHeroPositionY();
+                System.out.println("X:"+x+ " Y:" +y);
+                this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
+                this.setFinalY((float) (Game.height / 2 - y) / (Game.height / 10));
+
+                distanceX = finalX - getHeroPositionX();
+                distanceY = finalY - getHeroPositionY();
+
                 setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
                 setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
                 sendSpellDTO();
+                System.out.println("finalX:"+finalX +" , finalY"+finalY);
             }
         });
     }
@@ -203,7 +207,7 @@ public class Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionY() {
-        return superHero.getY();
+        return superHero.getY()+superHero.getTexture().getHeight()/2000;
     }
 
     @Override
@@ -240,12 +244,12 @@ public class Spell implements UltraSpell {
         this.position = position;
     }
 
-    public void setRelativeX(Float relativeX) {
-        this.relativeX = relativeX;
+    public void setFinalX(Float finalX) {
+        this.finalX = finalX;
     }
 
-    public void setRelativeY(Float relativeY) {
-        this.relativeY = relativeY;
+    public void setFinalY(Float finalY) {
+        this.finalY = finalY;
     }
 
 }

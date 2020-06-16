@@ -8,6 +8,8 @@ import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
+
 @Data
 @Slf4j
 public class ActivatedAttack {
@@ -25,13 +27,13 @@ public class ActivatedAttack {
     }
 
     public boolean hitsHeroWithSpell() {
-        if (oz0<0) return false;
 
         simpleObjectDimenions();
         heroObjectDimenions();
+        System.out.println(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
 
+        if (oz0<=0) return false;
 
-//        System.out.println(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
 
         return isAttackSucceeded();
     }
@@ -44,11 +46,13 @@ public class ActivatedAttack {
         boolean isAttackSucceeded=false;
         if (bx1 > ox0 && bx0 < ox1) {
             if (by1 > oy0 && by0 < oy1) {
-                log.info("Spell reached hero");
+
                 isAttackSucceeded = true;
+                reduceHeroLife();
+                log.info("HERO LIFE:"+hero.getLife());
             }
         }
-        reduceHeroLife();
+
 
         return isAttackSucceeded;
     }
@@ -64,7 +68,7 @@ public class ActivatedAttack {
         bx1 = Board.myCollision.getBx1();
         by0 = Board.myCollision.getBy0();
         by1 = Board.myCollision.getBy1();
-        heroCoordinates = new float[]{bx1, bx0, by1, by0};
+        heroCoordinates = new float[]{bx0,bx1, by0,by1 };
     }
 
     private void simpleObjectDimenions() {
@@ -75,6 +79,6 @@ public class ActivatedAttack {
         oy0 = position.y - spell.getSize() / 2.0f;
         oy1 = position.y + spell.getSize() / 2.0f;
         oz0=position.z;
-        spellCoordiantes = new float[]{ox1, ox0, oy1, oy0};
+        spellCoordiantes = new float[]{ox0,ox1,oy0,oy1,oz0};
     }
 }

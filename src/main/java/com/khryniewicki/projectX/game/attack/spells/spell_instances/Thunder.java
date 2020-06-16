@@ -42,6 +42,6 @@ public class Thunder extends Spell {
         HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
         setPositionX(heroStartingPosition.getX());
         setPositionY(heroStartingPosition.getY());
-        setPositionZ(0.1f);
+        setPositionZ(-0.1f);
     }
 }
