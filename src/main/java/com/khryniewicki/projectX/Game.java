@@ -150,7 +150,8 @@ public class Game implements Runnable {
 
     private void initializeWebsocketConnection() {
         renderFactory.render(TextUtil.CONNECTION);
-        new Application().startWebsocket();
+        Thread websocket = new Thread(websocketInitializer, "websocket");
+        websocket.start();
         renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
     }
 
@@ -173,8 +174,7 @@ public class Game implements Runnable {
 
     private void registerHero() {
         heroesInstances.setHero();
-        Thread websocket = new Thread(websocketInitializer, "websocket");
-        websocket.start();
+        websocketInitializer.initialize();
         try {
             latch.await();
         } catch (InterruptedException e) {

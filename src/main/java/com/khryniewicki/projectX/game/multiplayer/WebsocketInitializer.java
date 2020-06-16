@@ -6,7 +6,7 @@ public class WebsocketInitializer implements Runnable {
 
     private Application.MyStompSessionHandler handler;
     private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
-
+    private Application application;
     private WebsocketInitializer() {
     }
 
@@ -16,13 +16,19 @@ public class WebsocketInitializer implements Runnable {
 
     @Override
     public void run() {
-        initialize();
+        application = new Application();
+        application.startWebsocket();
+
+
     }
-
-
 
     public void initialize() {
         handler = new Application.MyStompSessionHandler();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         handler.register();
     }
 

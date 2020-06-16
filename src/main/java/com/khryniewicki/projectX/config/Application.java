@@ -46,9 +46,12 @@ public class Application {
     public static String path = "https://heroes.khryniewicki.com.pl";
 
 
+
+
+
     @Data
     @Slf4j
-    static public class MyStompSessionHandler
+    public static  class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
@@ -64,7 +67,6 @@ public class Application {
         }
 
         private String sessionID;
-
 
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
