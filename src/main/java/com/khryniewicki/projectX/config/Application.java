@@ -54,8 +54,8 @@ public class Application {
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
         private SpellReceiveService spellReceiveService;
-        private HeroSendingService heroSendingService =new HeroSendingService();
-        private SpellSendingService spellSendingService =new SpellSendingService();
+        private HeroSendingService heroSendingService;
+        private SpellSendingService spellSendingService;
         private final Channels channels;
         private ResponseEntity<HashMap<String, Message>> exchange;
 
@@ -69,6 +69,8 @@ public class Application {
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
             spellReceiveService = new SpellReceiveService();
+            heroSendingService =new HeroSendingService();
+            spellSendingService =new SpellSendingService();
             channels=Channels.getINSTANCE();
         }
 
@@ -133,7 +135,7 @@ public class Application {
                         latch.countDown();
                     }
                 }
-            }, 0, 3 * 1000);
+            }, 0, 1 * 1000);
 
             try {
                 latch.await();
