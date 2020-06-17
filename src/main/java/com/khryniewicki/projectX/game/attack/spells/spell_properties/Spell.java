@@ -43,6 +43,9 @@ public class Spell implements UltraSpell {
     private float indexHeight = 1;
     private float indexWidth = 1;
     private Integer powerAttack;
+
+
+
     private Integer manaConsumed;
 
     private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
@@ -142,7 +145,7 @@ public class Spell implements UltraSpell {
             setSpell(1f, 1f, consumedSpellTexture);
             setPosition(finalX, finalY, 1f);
             startingTimeSpell = System.currentTimeMillis();
-            makeRelativesPositionsNull();
+            makeFinalPositionsNull();
         }
     }
 
@@ -152,7 +155,7 @@ public class Spell implements UltraSpell {
         application.sendSpellToStompSocket(spellDTO);
     }
 
-    private void makeRelativesPositionsNull() {
+    private void makeFinalPositionsNull() {
         finalY = null;
         finalX = null;
     }
@@ -211,6 +214,10 @@ public class Spell implements UltraSpell {
     }
 
     @Override
+    public Integer getManaConsumed() {
+        return manaConsumed;
+    }
+    @Override
     public void render() {
         Shader.SPELL.enable();
         Shader.SPELL.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
@@ -251,5 +258,6 @@ public class Spell implements UltraSpell {
     public void setFinalY(Float finalY) {
         this.finalY = finalY;
     }
+
 
 }

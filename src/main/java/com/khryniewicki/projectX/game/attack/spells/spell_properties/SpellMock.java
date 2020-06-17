@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
-import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
+import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SpellReceiveService;
@@ -15,9 +15,8 @@ public class SpellMock extends Spell implements UltraSpell {
     public SpellMock(UltraSpell ultraSpell) {
         this.ultraSpell = ultraSpell;
         setPosition();
-        activatedAttack=new ActivatedAttack(this);
+        activatedAttack = new ActivatedAttack(this);
     }
-
 
 
     private Boolean changeMockPosition() {
@@ -35,7 +34,7 @@ public class SpellMock extends Spell implements UltraSpell {
             setDistanceX(SpellReceiveService.spellMockPositionX - getHeroPositionX());
             setDistanceY(SpellReceiveService.spellMockPositionY - getHeroPositionY());
             setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
-            setPosition( new Vector(getHeroPositionX(),getHeroPositionY(),1f));
+            setPosition(new Vector(getHeroPositionX(), getHeroPositionY(), 1f));
         }
 
         return true;
@@ -56,10 +55,12 @@ public class SpellMock extends Spell implements UltraSpell {
     public void spellCasting() {
         ultraSpell.spellCasting();
     }
+
     @Override
     public void setDistanceX(Float distanceX) {
         ultraSpell.setDistanceX(distanceX);
     }
+
     @Override
     public void setDistanceY(Float distanceY) {
         ultraSpell.setDistanceY(distanceY);
@@ -75,9 +76,10 @@ public class SpellMock extends Spell implements UltraSpell {
     public void setPosition(Vector position) {
         ultraSpell.setPosition(position);
     }
+
     @Override
     public Vector getPosition() {
-       return ultraSpell.getPosition();
+        return ultraSpell.getPosition();
     }
 
     @Override
@@ -101,8 +103,8 @@ public class SpellMock extends Spell implements UltraSpell {
     }
 
     @Override
-    public void setSpell(Float indexHeight, Float indexWidth, Texture texture){
-        ultraSpell.setSpell(indexHeight,indexWidth,texture);
+    public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
+        ultraSpell.setSpell(indexHeight, indexWidth, texture);
     }
 
     public Float getDistanceX() {
@@ -117,4 +119,8 @@ public class SpellMock extends Spell implements UltraSpell {
         return ultraSpell.getThrowingSpellTexture();
     }
 
+    @Override
+    public Integer getManaConsumed() {
+        return ultraSpell.getManaConsumed();
+    }
 }
