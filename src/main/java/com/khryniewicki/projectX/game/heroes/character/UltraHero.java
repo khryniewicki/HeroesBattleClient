@@ -18,7 +18,7 @@ public interface UltraHero {
     default void setPosition(){};
     default void setProperties(){};
     default void setMesh(){};
-    default void setHeroIdl(){};
+    default void setHeroIdle(){};
     default void  setHeroRun(){};
 
 

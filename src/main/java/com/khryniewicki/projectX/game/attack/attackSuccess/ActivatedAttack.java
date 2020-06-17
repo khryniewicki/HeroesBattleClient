@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 
+
 @Slf4j
 public class ActivatedAttack {
 
@@ -44,7 +45,6 @@ public class ActivatedAttack {
     private void spellActivation() {
         consumeSpellMana();
         isAttackSucceeded();
-        //            log.info(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
     }
 
     private void consumeSpellMana() {
@@ -69,8 +69,11 @@ public class ActivatedAttack {
     private void reduceHeroLife() {
         if (isAttackSucceeded && !isSpellActivated) {
             Integer life = hero.getLife();
-            hero.setLife(life - 10);
-            log.info("HERO LIFE: {} HERO MANA: {}", hero.getLife(), hero.getMana());
+            Integer powerAttack = spell.getPowerAttack();
+            hero.setLife(life - powerAttack);
+
+            log.info(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
+            log.info("HERO LIFE: {} HERO MANA: {} HERO SIZE: {}", hero.getLife(), hero.getMana());
             isSpellActivated = true;
         }
     }

@@ -123,4 +123,9 @@ public class SpellMock extends Spell implements UltraSpell {
     public Integer getManaConsumed() {
         return ultraSpell.getManaConsumed();
     }
+
+    @Override
+    public Integer getPowerAttack() {
+        return ultraSpell.getPowerAttack();
+    }
 }

@@ -21,7 +21,7 @@ public class HeroMock implements UltraHero {
 
         if (tmpPositionX != null && tmpPositionX == heroReceiveService.getMockPositionX()) {
             if (tmpPositionY != null && tmpPositionY == heroReceiveService.getMockPositionY()) {
-               setHeroIdl();
+               setHeroIdle();
                setMesh();
                 return false;
             }
@@ -109,8 +109,8 @@ public class HeroMock implements UltraHero {
 
 
     @Override
-    public void setHeroIdl(){
-        ultraHero.setHeroIdl();
+    public void setHeroIdle(){
+        ultraHero.setHeroIdle();
     };
     @Override
     public void setHeroRun(){

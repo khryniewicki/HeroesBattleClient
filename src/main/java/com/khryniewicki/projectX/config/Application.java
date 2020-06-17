@@ -91,13 +91,11 @@ public class Application {
             log.info("PRE-HeroSENDDTO");
             session.send("/app/hero/" + channels.getApp(), heroSendingService.getHeroPositions());
             log.info("AFTER-HeroSENDDTO");
-
         }
 
         public void sendSpellToStompSocket(SpellDTO spellDTO) {
             session.send("/app/spell/" + channels.getApp(), spellDTO);
         }
-
 
         public void register() {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
@@ -117,10 +115,10 @@ public class Application {
             RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/map"))
                     .accept(MediaType.APPLICATION_JSON).build();
 
-            requestSchudeler(restTemplate, responseType, request);
+            requestScheduler(restTemplate, responseType, request);
         }
 
-        private void requestSchudeler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
+        private void requestScheduler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
             Timer timer = new Timer();
             CountDownLatch latch = new CountDownLatch(1);
 

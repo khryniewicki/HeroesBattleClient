@@ -215,8 +215,13 @@ public class Spell implements UltraSpell {
 
     @Override
     public Integer getManaConsumed() {
-        return manaConsumed;
+        return manaConsumed;   }
+
+    @Override
+    public Integer getPowerAttack() {
+        return powerAttack;
     }
+
     @Override
     public void render() {
         Shader.SPELL.enable();
