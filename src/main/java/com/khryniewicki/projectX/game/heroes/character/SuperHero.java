@@ -31,6 +31,12 @@ public class SuperHero implements UltraHero {
     private float hero_top_offset;
     public float SIZE = 0.9f;
     private float velocity=0.2f;
+
+    public SuperHero() {
+        application = new Application.MyStompSessionHandler();
+
+    }
+
     public VertexArray createHero() {
         int i = isMovingLeft ? -1 : 1;
         float[] vertices = new float[]{
@@ -51,7 +57,6 @@ public class SuperHero implements UltraHero {
                 i * 1, 0,
                 i * 1, 1
         };
-        application = new Application.MyStompSessionHandler();
         return new VertexArray(vertices, indices, tcs);
     }
 
@@ -79,9 +84,10 @@ public class SuperHero implements UltraHero {
                         setSIZE(0.9f);
                         texture = heroIdle;
                     }
-                    setMesh(createHero());
+
                     if (tmpX != position.x || tmpY != position.y ) {
                         application.sendHeroToStompSocket();
+                        setMesh(createHero());
                     }
 
         }
