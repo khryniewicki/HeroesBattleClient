@@ -9,6 +9,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.services.HeroSendingService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,15 +27,14 @@ public class SuperHero implements UltraHero {
     private Integer life, mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
-    private Application.MyStompSessionHandler application;
+    private HeroSendingService heroSendingService;
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
     private float velocity=0.2f;
 
     public SuperHero() {
-        application = new Application.MyStompSessionHandler();
-
+        heroSendingService=new HeroSendingService();
     }
 
     public VertexArray createHero() {
@@ -86,7 +86,7 @@ public class SuperHero implements UltraHero {
                     }
 
                     if (tmpX != position.x || tmpY != position.y ) {
-                        application.sendHeroToStompSocket();
+                        heroSendingService.sendHeroToStompSocket();
                         setMesh(createHero());
                     }
 

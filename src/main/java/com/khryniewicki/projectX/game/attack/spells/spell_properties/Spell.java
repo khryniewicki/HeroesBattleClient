@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -9,6 +8,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.services.SpellSendingService;
 import lombok.Data;
 import org.lwjgl.BufferUtils;
 
@@ -43,41 +43,10 @@ public class Spell implements UltraSpell {
     private float indexHeight = 1;
     private float indexWidth = 1;
     private Integer powerAttack;
-
-
-
+    private SpellSendingService sendSpellToStompSocket;
     private Integer manaConsumed;
 
-    private Application.MyStompSessionHandler application = new Application.MyStompSessionHandler();
 
-    public Float getDistanceX() {
-        return distanceX;
-    }
-
-    public Float getDistanceY() {
-        return distanceY;
-    }
-
-    @Override
-    public Float getSize() {
-        return SIZE;
-    }
-
-    public Texture getThrowingSpellTexture() {
-        return throwingSpellTexture;
-    }
-
-    public void setDistanceX(Float distanceX) {
-        this.distanceX = distanceX;
-    }
-
-    public void setDistanceY(Float distanceY) {
-        this.distanceY = distanceY;
-    }
-
-    public void setThrowingSpellTexture(Texture throwingSpellTexture) {
-        this.throwingSpellTexture = throwingSpellTexture;
-    }
 
     public VertexArray createSpell() {
         float[] vertices = new float[]{
@@ -101,10 +70,10 @@ public class Spell implements UltraSpell {
         texture = throwingSpellTexture;
         HeroesInstances instance = HeroesInstances.getInstance();
         superHero = instance.getHero();
-
+        sendSpellToStompSocket = new SpellSendingService();
         return new VertexArray(vertices, indices, tcs);
-
     }
+
 
     @Override
     public void update() {
@@ -152,7 +121,7 @@ public class Spell implements UltraSpell {
 
     private void sendSpellDTO() {
         SpellDTO spellDTO = new SpellDTO(name, finalX, finalY);
-        application.sendSpellToStompSocket(spellDTO);
+        sendSpellToStompSocket.sendSpellToStompSocket(spellDTO);
     }
 
     private void makeFinalPositionsNull() {
@@ -160,23 +129,8 @@ public class Spell implements UltraSpell {
         finalX = null;
     }
 
-    public Vector getPosition() {
-        return position;
-    }
-    private void setPosition(Float x, Float y, Float z) {
-        setPositionZ(z);
-        setPositionX(x);
-        setPositionY(y);
-    }
 
 
-
-    public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
-        setIndexHeight(indexHeight);
-        setIndexWidth(indexWidth);
-        setMesh(createSpell());
-        setTexture(texture);
-    }
 
     @Override
     public void getMousePosition() {
@@ -187,7 +141,7 @@ public class Spell implements UltraSpell {
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
-                System.out.println("X:"+x+ " Y:" +y);
+                System.out.println("X:" + x + " Y:" + y);
                 this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
                 this.setFinalY((float) (Game.height / 2 - y) / (Game.height / 10));
 
@@ -197,29 +151,9 @@ public class Spell implements UltraSpell {
                 setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
                 setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
                 sendSpellDTO();
-                System.out.println("finalX:"+finalX +" , finalY"+finalY);
+                System.out.println("finalX:" + finalX + " , finalY" + finalY);
             }
         });
-    }
-
-
-    @Override
-    public Float getHeroPositionX() {
-        return superHero.getX();
-    }
-
-    @Override
-    public Float getHeroPositionY() {
-        return superHero.getY()+superHero.getTexture().getHeight()/2000;
-    }
-
-    @Override
-    public Integer getManaConsumed() {
-        return manaConsumed;   }
-
-    @Override
-    public Integer getPowerAttack() {
-        return powerAttack;
     }
 
     @Override
@@ -231,38 +165,93 @@ public class Spell implements UltraSpell {
         Shader.SPELL.disable();
     }
 
+
+    public Vector getPosition() {
+        return position;
+    }
+
+    @Override
+    public Float getHeroPositionX() {
+        return superHero.getX();
+    }
+    @Override
+    public Float getHeroPositionY() {
+        return superHero.getY() + superHero.getTexture().getHeight() / 2000;
+    }
+    @Override
+    public Integer getManaConsumed() {return manaConsumed; }
+    @Override
+    public Integer getPowerAttack() {
+        return powerAttack;
+    }
+    public Float getDistanceX() {
+        return distanceX;
+    }
+
+    public Float getDistanceY() {
+        return distanceY;
+    }
+
+    @Override
+    public Float getSize() {
+        return SIZE;
+    }
+
+    public Texture getThrowingSpellTexture() {
+        return throwingSpellTexture;
+    }
+
+
+
+
+
+
     public void setTexture(Texture texture) {
         this.texture = texture;
     }
-
     public void setMesh(VertexArray mesh) {
         this.mesh = mesh;
     }
-
-
     public void setPositionX(Float positionX) {
         this.position.x = positionX;
     }
-
     public void setPositionY(Float positionY) {
         this.position.y = positionY;
     }
-
     public void setPositionZ(Float positionZ) {
         this.position.z = positionZ;
     }
-
     public void setPosition(Vector position) {
         this.position = position;
     }
-
     public void setFinalX(Float finalX) {
         this.finalX = finalX;
     }
-
     public void setFinalY(Float finalY) {
         this.finalY = finalY;
     }
+    private void setPosition(Float x, Float y, Float z) {
+        setPositionZ(z);
+        setPositionX(x);
+        setPositionY(y);
+    }
 
 
+    public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
+        setIndexHeight(indexHeight);
+        setIndexWidth(indexWidth);
+        setMesh(createSpell());
+        setTexture(texture);
+    }
+    public void setDistanceX(Float distanceX) {
+        this.distanceX = distanceX;
+    }
+
+    public void setDistanceY(Float distanceY) {
+        this.distanceY = distanceY;
+    }
+
+    public void setThrowingSpellTexture(Texture throwingSpellTexture) {
+        this.throwingSpellTexture = throwingSpellTexture;
+    }
 }

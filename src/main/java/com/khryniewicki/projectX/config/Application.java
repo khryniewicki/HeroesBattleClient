@@ -45,10 +45,13 @@ public class Application {
     public static StompSessionHandler sessionHandler;
     public static String path = "https://heroes.khryniewicki.com.pl";
 
+    public static StompSession getSession() {
+        return session;
+    }
 
     @Data
     @Slf4j
-    static public class MyStompSessionHandler
+    public static  class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
@@ -87,15 +90,8 @@ public class Application {
             }
         }
 
-        public void sendHeroToStompSocket() {
-            log.info("PRE-HeroSENDDTO");
-            session.send("/app/hero/" + channels.getApp(), heroSendingService.getHeroPositions());
-            log.info("AFTER-HeroSENDDTO");
-        }
 
-        public void sendSpellToStompSocket(SpellDTO spellDTO) {
-            session.send("/app/spell/" + channels.getApp(), spellDTO);
-        }
+
 
         public void register() {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
