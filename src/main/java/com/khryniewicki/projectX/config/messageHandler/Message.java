@@ -1,15 +1,15 @@
 package com.khryniewicki.projectX.config.messageHandler;
 
-import com.khryniewicki.projectX.config.messageHandler.ConnectionStatus;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
 public class Message implements Serializable {
-   private String content;
-   private String sessionID;
-   private ConnectionStatus status;
+    private String channel;
+    private String content;
+    private String sessionID;
+    private ConnectionStatus status;
 
     public Message() {
     }
@@ -29,5 +29,10 @@ public class Message implements Serializable {
         this.status = status;
     }
 
-
+    public Message(String channel, String content, String sessionID, ConnectionStatus status) {
+        this.channel = channel;
+        this.content = content;
+        this.sessionID = sessionID;
+        this.status = status;
+    }
 }

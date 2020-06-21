@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.utils.HeroMove;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -13,7 +14,8 @@ import org.springframework.messaging.simp.stomp.StompSession;
 
 @Data
 @Slf4j
-public class HeroSendingService {
+
+public class HeroSendingService implements Runnable {
     private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
     private SuperHero hero;
@@ -22,6 +24,7 @@ public class HeroSendingService {
     private final Channels channels;
 
     public HeroSendingService() {
+        heroStartingPosition = HeroStartingPosition.getInstance();
         heroesInstances = HeroesInstances.getInstance();
         this.hero = heroesInstances.getHero();
         channels = Channels.getINSTANCE();
@@ -58,13 +61,21 @@ public class HeroSendingService {
     }
 
 
-    public void sendHeroToStompSocket() {
-        StompSession session = Application.getSession();
-        if (session != null) {
-            log.info("PRE-HeroSENDDTO");
-            session.send("/app/hero/" + channels.getApp(), getHeroPositions());
-            log.info("AFTER-HeroSENDDTO");
+    @Override
+    public void run() {
+        Channels channel = Channels.getINSTANCE();
+        HeroMove heroMove = HeroMove.getInstance();
+
+        while (true) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (heroMove.isHeroMoving()) {
+                StompSession session = Application.getSession();
+                session.send("/app/hero/" + channel.getApp(), getHeroPositions());
+            }
         }
     }
-
 }

@@ -38,16 +38,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 @Data
-public class Application {
+@Slf4j
+public class Application implements Runnable{
     private static StompSession session;
+    private static StompSession copy_session;
     private static boolean client_running;
     private static boolean server_running;
     public static StompSessionHandler sessionHandler;
     public static String path = "https://heroes.khryniewicki.com.pl";
 
     public static StompSession getSession() {
-        return session;
+        return copy_session;
     }
+
 
     @Data
     @Slf4j
@@ -89,9 +92,6 @@ public class Application {
                 System.err.println();
             }
         }
-
-
-
 
         public void register() {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
@@ -149,11 +149,7 @@ public class Application {
                 @Override
                 public void handleFrame(StompHeaders headers,
                                         Object payload) {
-                    log.info("PRE-subscribeHero");
-
                     heroReceiveService.receivedMockPosition(((HeroDTO) payload));
-                    log.info("AFTER-subscribeHero");
-
                 }
             });
         }
@@ -218,18 +214,24 @@ public class Application {
 
 
     }
+    @Override
+    public void run() {
+        startWebsocket();
+    }
 
     public void startWebsocket() {
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
 
-        List<Transport> transports = new ArrayList<>(5);
+        List<Transport> transports = new ArrayList<>(50);
         transports.add(new WebSocketTransport(simpleWebSocketClient));
 
         SockJsClient sockJsClient = new SockJsClient(transports);
+
         WebSocketStompClient stompClient =
                 new WebSocketStompClient(sockJsClient);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+
         String url = path + "/websocket-example";
 
 
@@ -239,7 +241,7 @@ public class Application {
         try {
             session = stompClient.connect(url, sessionHandler)
                     .get();
-
+            copy_session=session;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

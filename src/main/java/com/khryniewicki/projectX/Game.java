@@ -10,6 +10,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
+import com.khryniewicki.projectX.services.HeroSendingService;
 import com.khryniewicki.projectX.utils.TextUtil;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -34,7 +35,8 @@ public class Game implements Runnable {
     public static int width = 1600;
     public static int height = 800;
 
-    private Thread thread;
+    private Thread game;
+    private Thread websocket;
     private boolean running;
     public static long window;
 
@@ -51,6 +53,7 @@ public class Game implements Runnable {
         heroesInstances = HeroesInstances.getInstance();
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         multiplayerInitializer = new MultiplayerInitializer();
+
     }
 
     public static void main(String[] args) {
@@ -60,8 +63,8 @@ public class Game implements Runnable {
     public void start() {
         latch = new CountDownLatch(1);
         running = true;
-        thread = new Thread(this, "Game");
-        thread.start();
+        game = new Thread(this, "Game");
+        game.start();
     }
 
     public void run() {
@@ -159,10 +162,17 @@ public class Game implements Runnable {
         if (isHeroLoadedProperly()) {
             multiplayerInitializer.waitingForSecondPlayer();
             createBoard();
+            createHeroSenderPosition();
         } else {
             multiplayerInitializer.occupiedRoom();
             running = false;
         }
+    }
+
+    private void createHeroSenderPosition() {
+        HeroSendingService heroSending = new HeroSendingService();
+        Thread sender = new Thread(heroSending);
+        sender.start();
     }
 
 

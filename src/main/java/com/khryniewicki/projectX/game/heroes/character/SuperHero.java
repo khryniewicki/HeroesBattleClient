@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -10,13 +9,16 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroSendingService;
+import com.khryniewicki.projectX.utils.HeroMove;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 @Data
 @Slf4j
+@Service
 public class SuperHero implements UltraHero {
     private boolean isMovingLeft;
     private VertexArray mesh;
@@ -31,10 +33,11 @@ public class SuperHero implements UltraHero {
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
-    private float velocity=0.2f;
-
+    private float velocity = 0.2f;
+    private HeroMove heroMove;
     public SuperHero() {
-        heroSendingService=new HeroSendingService();
+        heroSendingService = new HeroSendingService();
+        heroMove=HeroMove.getInstance();
     }
 
     public VertexArray createHero() {
@@ -63,10 +66,11 @@ public class SuperHero implements UltraHero {
 
     public void update() {
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
+
                     SIZE = 1f;
-                    float tmpX=getX();
-                    float tmpY=getY();
-            if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
+                    float tmpX = getX();
+                    float tmpY = getY();
+                    if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
                         position.y += velocity;
                         texture = heroUp;
                     } else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
@@ -85,12 +89,13 @@ public class SuperHero implements UltraHero {
                         texture = heroIdle;
                     }
 
-                    if (tmpX != position.x || tmpY != position.y ) {
-                        heroSendingService.sendHeroToStompSocket();
+                    if (tmpX != position.x || tmpY != position.y) {
+                        heroMove.setHeroMoving(true);
                         setMesh(createHero());
-                    }
+                    }else
+                        heroMove.setHeroMoving(false);
 
-        }
+                }
 
         );
     }
@@ -113,11 +118,11 @@ public class SuperHero implements UltraHero {
         this.mesh = mesh;
     }
 
-    public Float getX() {
+    public synchronized Float getX() {
         return position.x;
     }
 
-    public Float getY() {
+    public synchronized Float getY() {
         return position.y;
     }
 

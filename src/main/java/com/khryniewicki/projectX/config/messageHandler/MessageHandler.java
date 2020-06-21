@@ -65,7 +65,7 @@ public class MessageHandler {
             setFlag(false);
 
             LoadedStatus.INSTANCE().isHeroLoaded = true;
-            log.info("APP:" + channels.getApp() + "TOPIC:" + channels.getTopic());
+            log.info("APP:" + channels.getApp() + " TOPIC:" + channels.getTopic());
 
         } else {
             LoadedStatus.INSTANCE().isHeroLoaded = false;

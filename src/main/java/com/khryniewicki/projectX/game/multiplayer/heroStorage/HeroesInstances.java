@@ -48,8 +48,7 @@ public class HeroesInstances {
         Map<String, Message> heroes = mapWithHeroes1.getMapWithHeroes();
 
         for (Map.Entry<String, Message> hero : heroes.entrySet()) {
-            String key=hero.getKey().substring(2);
-
+            String key=hero.getKey();
             if (!key.equals(sessionId)) {
                 String heroType = hero.getValue().getContent();
                 SuperHero superHero = characterFactory.create(heroType);
