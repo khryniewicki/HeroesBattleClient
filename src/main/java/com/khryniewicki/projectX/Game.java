@@ -36,7 +36,6 @@ public class Game implements Runnable {
     public static int height = 800;
 
     private Thread game;
-    private Thread websocket;
     private boolean running;
     public static long window;
 

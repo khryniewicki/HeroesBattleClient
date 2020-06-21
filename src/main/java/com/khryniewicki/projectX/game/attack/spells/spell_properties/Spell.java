@@ -113,7 +113,6 @@ public class Spell implements UltraSpell {
         if (Math.abs(position.x - finalX) <= castingSpeed / 2 && Math.abs(position.y - finalY) <= castingSpeed / 2) {
             setSpell(1f, 1f, consumedSpellTexture);
             setPosition(finalX, finalY, 1f);
-            startingTimeSpell = System.currentTimeMillis();
             makeFinalPositionsNull();
         }
     }
@@ -141,7 +140,7 @@ public class Spell implements UltraSpell {
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
-                System.out.println("X:" + x + " Y:" + y);
+                startingTimeSpell = System.currentTimeMillis();
                 this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
                 this.setFinalY((float) (Game.height / 2 - y) / (Game.height / 10));
 
@@ -151,7 +150,6 @@ public class Spell implements UltraSpell {
                 setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
                 setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
                 sendSpellDTO();
-                System.out.println("finalX:" + finalX + " , finalY" + finalY);
             }
         });
     }
