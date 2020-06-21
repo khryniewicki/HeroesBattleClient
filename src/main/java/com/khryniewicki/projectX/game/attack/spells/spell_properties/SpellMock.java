@@ -7,11 +7,10 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 
 public class SpellMock extends Spell implements UltraSpell {
-    private UltraSpell ultraSpell;
-    private Float tmpPositionX;
-    private Float tmpPositionY;
-    private ActivatedAttack activatedAttack;
-
+    private final UltraSpell ultraSpell;    
+    private final ActivatedAttack activatedAttack;
+    private Float tmpPositionX,tmpPositionY;
+    
     public SpellMock(UltraSpell ultraSpell) {
         this.ultraSpell = ultraSpell;
         setPosition();
@@ -27,17 +26,22 @@ public class SpellMock extends Spell implements UltraSpell {
             }
         }
         if (SpellReceiveService.spellMockPositionX != null) {
-            tmpPositionX = SpellReceiveService.spellMockPositionX;
-            tmpPositionY = SpellReceiveService.spellMockPositionY;
-            this.setFinalX(SpellReceiveService.spellMockPositionX);
-            this.setFinalY(SpellReceiveService.spellMockPositionY);
-            setDistanceX(SpellReceiveService.spellMockPositionX - getHeroPositionX());
-            setDistanceY(SpellReceiveService.spellMockPositionY - getHeroPositionY());
+            getPositionFromSpellReceiveService();
+            setSpellCountingTime();
             setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
             setPosition(new Vector(getHeroPositionX(), getHeroPositionY(), 1f));
         }
 
         return true;
+    }
+
+    private void getPositionFromSpellReceiveService() {
+        tmpPositionX = SpellReceiveService.spellMockPositionX;
+        tmpPositionY = SpellReceiveService.spellMockPositionY;
+        this.setFinalX(tmpPositionX);
+        this.setFinalY(tmpPositionY);
+        setDistanceX(tmpPositionX - getHeroPositionX());
+        setDistanceY(tmpPositionY - getHeroPositionY());
     }
 
     @Override
@@ -56,15 +60,7 @@ public class SpellMock extends Spell implements UltraSpell {
         ultraSpell.spellCasting();
     }
 
-    @Override
-    public void setDistanceX(Float distanceX) {
-        ultraSpell.setDistanceX(distanceX);
-    }
-
-    @Override
-    public void setDistanceY(Float distanceY) {
-        ultraSpell.setDistanceY(distanceY);
-    }
+    
 
     @Override
     public void render() {
@@ -72,10 +68,6 @@ public class SpellMock extends Spell implements UltraSpell {
         activatedAttack.hitsHeroWithSpell();
     }
 
-    @Override
-    public void setPosition(Vector position) {
-        ultraSpell.setPosition(position);
-    }
 
     @Override
     public Vector getPosition() {
@@ -86,46 +78,56 @@ public class SpellMock extends Spell implements UltraSpell {
     public Float getHeroPositionX() {
         return Board.heroMock.getPosition().x;
     }
-
-    @Override
-    public Float getHeroPositionY() {
-        return Board.heroMock.getPosition().y;
-    }
-
-    @Override
-    public void setFinalX(Float finalX) {
-        ultraSpell.setFinalX(finalX);
-    }
-
-    @Override
-    public void setFinalY(Float finalY) {
-        ultraSpell.setFinalY(finalY);
-    }
-
-    @Override
-    public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
-        ultraSpell.setSpell(indexHeight, indexWidth, texture);
-    }
-
+    
     public Float getDistanceX() {
         return ultraSpell.getDistanceX();
     }
-
+    
     public Float getDistanceY() {
-        return ultraSpell.getDistanceY();
-    }
-
+        return ultraSpell.getDistanceY();    }
+        
     public Texture getThrowingSpellTexture() {
         return ultraSpell.getThrowingSpellTexture();
     }
-
     @Override
     public Integer getManaConsumed() {
         return ultraSpell.getManaConsumed();
     }
-
     @Override
     public Integer getPowerAttack() {
         return ultraSpell.getPowerAttack();
+    }
+    @Override
+    public Float getHeroPositionY() {
+        return Board.heroMock.getPosition().y;
+    }
+    
+    @Override
+    public void setDistanceX(Float distanceX) {
+        ultraSpell.setDistanceX(distanceX);
+    }
+    @Override
+    public void setDistanceY(Float distanceY) {
+        ultraSpell.setDistanceY(distanceY);
+    }
+    @Override
+    public void setFinalX(Float finalX) {
+        ultraSpell.setFinalX(finalX);
+    }
+    @Override
+    public void setFinalY(Float finalY) {
+        ultraSpell.setFinalY(finalY);
+    }
+    @Override
+    public void setSpell(Float indexHeight, Float indexWidth, Texture texture) {
+        ultraSpell.setSpell(indexHeight, indexWidth, texture);
+    }
+    @Override
+    public void setSpellCountingTime(){
+        ultraSpell.setSpellCountingTime();
+    }
+    @Override
+    public void setPosition(Vector position) {
+        ultraSpell.setPosition(position);
     }
 }

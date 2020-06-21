@@ -140,7 +140,7 @@ public class Spell implements UltraSpell {
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
-                startingTimeSpell = System.currentTimeMillis();
+                setSpellCountingTime();
                 this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
                 this.setFinalY((float) (Game.height / 2 - y) / (Game.height / 10));
 
@@ -152,6 +152,10 @@ public class Spell implements UltraSpell {
                 sendSpellDTO();
             }
         });
+    }
+
+    public void setSpellCountingTime() {
+        startingTimeSpell = System.currentTimeMillis();
     }
 
     @Override

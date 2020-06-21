@@ -16,7 +16,7 @@ public interface UltraSpell {
     void setDistanceY(Float distanceY);
     void setSpell(Float indexHeight, Float indexWidth, Texture texture);
     void spellCasting();
-
+    void setSpellCountingTime();
     Float getHeroPositionX();
     Float getHeroPositionY();
     Float getDistanceX();
