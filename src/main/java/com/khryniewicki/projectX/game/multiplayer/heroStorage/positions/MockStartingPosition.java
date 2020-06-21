@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage.positions;
 
-public class MockStartingPosition {
+public class MockStartingPosition implements StartingPosition{
     private  float X;
     private  float Y;
     private static final MockStartingPosition instance = new MockStartingPosition();

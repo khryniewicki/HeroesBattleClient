@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
@@ -14,6 +15,7 @@ public class HeroMock implements UltraHero {
     public HeroMock(SuperHero superHero) {
         this.ultraHero = superHero;
         heroReceiveService = HeroReceiveService.getInstance();
+
     }
 
 
@@ -82,6 +84,10 @@ public class HeroMock implements UltraHero {
         ultraHero.setProperties();
     }
 
+    @Override
+    public void setLifeStripClass(StartingPosition startingPosition) {
+        ultraHero.setLifeStripClass(startingPosition);
+    }
     @Override
     public Vector getPosition() {
         return ultraHero.getPosition();

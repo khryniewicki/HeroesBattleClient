@@ -48,7 +48,6 @@ public class Board {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         heroMock = heroesInstances.getMock();
-
         spell = hero.castingSpell();
         spellMock = new SpellMock(heroMock.getSpell());
     }
@@ -104,7 +103,6 @@ public class Board {
         heroMock.render();
         spell.render();
         spellMock.render();
-
 
     }
 

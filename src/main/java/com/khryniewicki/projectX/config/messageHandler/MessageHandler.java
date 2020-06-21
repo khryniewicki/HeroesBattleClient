@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.config.messageHandler;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.config.Application;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -85,7 +86,6 @@ public class MessageHandler {
         Integer app = channels.getApp();
         Position A = new Position(4f, 4f);
         Position B = new Position(-3f, -3f);
-
         if (app == 1) {
             heroStartingPosition.setX_Y(A.getPositionX(), A.getPositionY());
             mockStartingPosition.setX_Y(B.getPositionX(), B.getPositionY());
@@ -93,5 +93,6 @@ public class MessageHandler {
             mockStartingPosition.setX_Y(A.getPositionX(), A.getPositionY());
             heroStartingPosition.setX_Y(B.getPositionX(), B.getPositionY());
         }
+
     }
 }

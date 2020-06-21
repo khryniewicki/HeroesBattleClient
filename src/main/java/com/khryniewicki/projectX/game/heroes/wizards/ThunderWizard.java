@@ -3,7 +3,6 @@ package com.khryniewicki.projectX.game.heroes.wizards;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.Thunder;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
 import lombok.Data;

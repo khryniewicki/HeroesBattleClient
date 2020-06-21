@@ -8,6 +8,8 @@ import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
 import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -32,11 +34,10 @@ public class HeroesInstances {
     public UltraHero getMock() { return mock;}
 
     public void setHero() {
-        this.hero = getWizardType();
+        this.hero = characterFactory.create(MultiplayerInitializer.inputText);
     }
-
-    public SuperHero getWizardType() {
-        return characterFactory.create(MultiplayerInitializer.inputText);
+    public void setHeroLifeAndManaStrips() {
+        hero.setLifeStripClass(HeroStartingPosition.getInstance());
     }
 
     public void setMock() {
@@ -53,6 +54,7 @@ public class HeroesInstances {
                 String heroType = hero.getValue().getContent();
                 SuperHero superHero = characterFactory.create(heroType);
                 this.mock = new HeroMock(superHero);
+                mock.setLifeStripClass(MockStartingPosition.getInstance());
             }
         }
     }

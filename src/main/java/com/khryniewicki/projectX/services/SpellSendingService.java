@@ -14,7 +14,7 @@ public class SpellSendingService {
     }
 
 
-    public void sendSpellToStompSocket(SpellDTO spellDTO) {
+    public synchronized void sendSpellToStompSocket(SpellDTO spellDTO) {
         StompSession session = Application.getSession();
         if (session != null) {
             session.send("/app/spell/" + channels.getApp(), spellDTO);

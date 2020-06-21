@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface UltraHero {
@@ -12,7 +13,7 @@ public interface UltraHero {
     Vector getPosition();
     Spell getSpell();
    default void setSpell(){};
-
+    default void setLifeStripClass(StartingPosition startingPosition){};
     default void setTextureRun(){};
     default void setTexture(){};
     default void setPosition(){};

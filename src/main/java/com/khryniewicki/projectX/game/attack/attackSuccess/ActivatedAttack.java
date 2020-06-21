@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.attack.attackSuccess;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.board.Board;
+import com.khryniewicki.projectX.game.heroes.character.LifeStrip;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
@@ -20,12 +21,12 @@ public class ActivatedAttack {
     private float bx0, bx1, by0, by1;
     private float[] heroCoordinates, spellCoordiantes;
     private boolean isAttackSucceeded, isSpellActivated, isManaConsumed;
-
+    private LifeStrip lifeStrip;
     public ActivatedAttack(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         this.spell = spell;
         this.hero = heroesInstances.getHero();
-
+        lifeStrip=new LifeStrip();
     }
 
     public void hitsHeroWithSpell() {
@@ -71,6 +72,8 @@ public class ActivatedAttack {
             Integer life = hero.getLife();
             Integer powerAttack = spell.getPowerAttack();
             hero.setLife(life - powerAttack);
+            lifeStrip=hero.getLifeStrip();
+            lifeStrip.createLifeStrip();
 
             log.info(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
             log.info("HERO LIFE: {} HERO MANA: {} HERO SIZE: {}", hero.getLife(), hero.getMana());
