@@ -21,13 +21,13 @@ public class HeroSendingService implements Runnable {
     private SuperHero hero;
     private final HeroesInstances heroesInstances;
     private HeroStartingPosition heroStartingPosition;
-    private final Channels channels;
+    private final Channels channel;
 
     public HeroSendingService() {
         heroStartingPosition = HeroStartingPosition.getInstance();
         heroesInstances = HeroesInstances.getInstance();
         this.hero = heroesInstances.getHero();
-        channels = Channels.getINSTANCE();
+        channel = Channels.getINSTANCE();
     }
 
     public Float getHeroPositionX() {
@@ -62,8 +62,7 @@ public class HeroSendingService implements Runnable {
 
 
     @Override
-    public void run() {
-        Channels channel = Channels.getINSTANCE();
+    public  void run() {
         HeroMove heroMove = HeroMove.getInstance();
 
         while (true) {
@@ -73,9 +72,13 @@ public class HeroSendingService implements Runnable {
                 e.printStackTrace();
             }
             if (heroMove.isHeroMoving()) {
-                StompSession session = Application.getSession();
-                session.send("/app/hero/" + channel.getApp(), getHeroPositions());
+                send();
             }
         }
+    }
+
+    public synchronized void send() {
+        StompSession session = Application.getSession();
+        session.send("/app/hero/" + channel.getApp(), getHeroPositions());
     }
 }

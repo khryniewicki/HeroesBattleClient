@@ -47,7 +47,7 @@ public class Application implements Runnable{
     public static StompSessionHandler sessionHandler;
     public static String path = "https://heroes.khryniewicki.com.pl";
 
-    public static StompSession getSession() {
+    public synchronized static StompSession getSession() {
         return copy_session;
     }
 

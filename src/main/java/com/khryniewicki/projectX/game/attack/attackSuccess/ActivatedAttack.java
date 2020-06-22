@@ -7,6 +7,8 @@ import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 
+import com.khryniewicki.projectX.services.HeroSendingService;
+import com.khryniewicki.projectX.utils.HeroMove;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -18,13 +20,14 @@ public class ActivatedAttack {
     private float ox0, ox1, oy0, oy1, oz0;
     private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated, isManaConsumed;
-    private LifeBar lifeBar;
-
+    private final LifeBar lifeBar;
+    private final HeroSendingService heroSendingService;
     public ActivatedAttack(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
+        heroSendingService=new HeroSendingService();
         this.spell = spell;
         this.hero = heroesInstances.getHero();
-        lifeBar =new LifeBar();
+        lifeBar =hero.getLifeBar();;
     }
 
     public void hitsHeroWithSpell() {
@@ -70,7 +73,6 @@ public class ActivatedAttack {
             Integer life = hero.getLife();
             Integer powerAttack = spell.getPowerAttack();
             hero.setLife(life - powerAttack);
-
             updateLifeBar();
 
             isSpellActivated = true;
@@ -78,8 +80,8 @@ public class ActivatedAttack {
     }
 
     private void updateLifeBar() {
-        lifeBar =hero.getLifeBar();
         lifeBar.updateLifeBar();
+        heroSendingService.send();
     }
 
     private void heroObjectDimenions() {

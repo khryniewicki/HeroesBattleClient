@@ -8,6 +8,7 @@ import com.khryniewicki.projectX.services.HeroReceiveService;
 public class HeroMock implements UltraHero {
     private Float tmpPositionX;
     private Float tmpPositionY;
+    private Integer tmpLife;
     private final UltraHero ultraHero;
     private HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
@@ -60,6 +61,20 @@ public class HeroMock implements UltraHero {
     @Override
     public void update() {
         changeMockPosition();
+        checkLifeAndMana();
+    }
+
+    private void checkLifeAndMana() {
+        Integer life = getLife();
+        if (life != null && tmpLife != null) {
+            if (!tmpLife.equals(life)) {
+                updateLifeBar();
+                tmpLife = life;
+            }
+
+        } else
+            tmpLife = life;
+
     }
 
     @Override
