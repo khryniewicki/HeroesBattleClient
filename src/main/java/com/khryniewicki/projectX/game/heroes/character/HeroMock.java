@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
@@ -19,25 +19,33 @@ public class HeroMock implements UltraHero {
     }
 
 
-    private Boolean changeMockPosition() {
+    private void changeMockPosition() {
 
         if (tmpPositionX != null && tmpPositionX == heroReceiveService.getMockPositionX()) {
             if (tmpPositionY != null && tmpPositionY == heroReceiveService.getMockPositionY()) {
-               setHeroIdle();
-               setMesh();
-                return false;
+                setHeroIdle();
+                setMesh();
+                return;
             }
         }
         changeMockSide();
+        changePosition();
+        setHeroRun();
+        setMesh();
+        updateLifeBar();
+    }
+
+    private void updateLifeBar() {
+        LifeBar lifeBar = getLifeBar();
+        lifeBar.updateLifeBar();
+    }
+
+    private void changePosition() {
         tmpPositionX = heroReceiveService.getMockPositionX();
         tmpPositionY = heroReceiveService.getMockPositionY();
 
         setPositionX(heroReceiveService.getMockPositionX());
         setPositionY(heroReceiveService.getMockPositionY());
-        setHeroRun();
-        setMesh();
-
-        return true;
     }
 
     private void changeMockSide() {
@@ -60,9 +68,25 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
-    public void setTexture() {
-        ultraHero.setTexture();
+    public Vector getPosition() {
+        return ultraHero.getPosition();
     }
+
+    @Override
+    public Spell getSpell() {
+        return ultraHero.getSpell();
+    }
+
+    @Override
+    public LifeBar getLifeBar() {
+        return ultraHero.getLifeBar();
+    }
+
+    @Override
+    public Integer getLife() {
+        return heroReceiveService.getMockLife();
+    }
+
 
     @Override
     public void setPosition() {
@@ -85,22 +109,28 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
-    public void setLifeStripClass(StartingPosition startingPosition) {
-        ultraHero.setLifeStripClass(startingPosition);
-    }
-    @Override
-    public Vector getPosition() {
-        return ultraHero.getPosition();
+    public void setTexture() {
+        ultraHero.setTexture();
     }
 
     @Override
-    public Spell getSpell() {
-        return ultraHero.getSpell();
+    public void setHeroIdle() {
+        ultraHero.setHeroIdle();
+    }
+
+    @Override
+    public void setHeroRun() {
+        ultraHero.setHeroRun();
     }
 
     @Override
     public void setSpell() {
         ultraHero.setSpell();
+    }
+
+    @Override
+    public void setLifeBar(LifeBar lifeBar) {
+        ultraHero.setLifeBar(lifeBar);
     }
 
     @Override
@@ -114,12 +144,4 @@ public class HeroMock implements UltraHero {
     }
 
 
-    @Override
-    public void setHeroIdle(){
-        ultraHero.setHeroIdle();
-    };
-    @Override
-    public void setHeroRun(){
-        ultraHero.setHeroRun();
-    };
 }

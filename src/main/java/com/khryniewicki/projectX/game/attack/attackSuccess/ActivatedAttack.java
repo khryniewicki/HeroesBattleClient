@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.attackSuccess;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
@@ -19,6 +19,7 @@ public class ActivatedAttack {
     private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated, isManaConsumed;
     private LifeBar lifeBar;
+
     public ActivatedAttack(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         this.spell = spell;
@@ -78,7 +79,7 @@ public class ActivatedAttack {
 
     private void updateLifeBar() {
         lifeBar =hero.getLifeBar();
-        lifeBar.createLifeStrip();
+        lifeBar.updateLifeBar();
     }
 
     private void heroObjectDimenions() {

@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.collision.Collision;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -77,22 +77,18 @@ public class SuperHero implements UltraHero {
                     float tmpY = getY();
                     if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
                         this.position.y += velocity;
-                        lifeStripPosition.y+=velocity;
                         texture = heroUp;
                     } else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
                         this.position.y -= velocity;
-                        lifeStripPosition.y-=velocity;
                         texture = heroDown;
                     } else if (key == GLFW_KEY_LEFT && action != GLFW_RELEASE && !Collision.collisions[1]) {
                         this.position.x -= velocity;
-                        lifeStripPosition.x-=velocity;
 
                         isMovingLeft = true;
                         texture = heroLeft;
                     } else if (key == GLFW_KEY_RIGHT && action != GLFW_RELEASE && !Collision.collisions[0]) {
                         isMovingLeft = false;
                         this.position.x += velocity;
-                        lifeStripPosition.x+=velocity;
                         texture = heroRight;
                     } else {
                         setSIZE(0.9f);
@@ -102,7 +98,7 @@ public class SuperHero implements UltraHero {
                     if (tmpX != this.position.x || tmpY != this.position.y) {
                         heroMove.setHeroMoving(true);
                         setMesh(createHero());
-                        lifeBar.createLifeStrip();
+                        lifeBar.updateLifeBar();
                     }else
                         heroMove.setHeroMoving(false);
 
@@ -148,9 +144,8 @@ public class SuperHero implements UltraHero {
         this.position.y = positionY;
     }
 
-    @Override
-    public void setLifeStripClass(StartingPosition startingPosition) {
-        lifeBar =new LifeBar(startingPosition);
+    public void setLifeBar(LifeBar lifeBar) {
+        this.lifeBar = lifeBar;
     }
 
     @Override

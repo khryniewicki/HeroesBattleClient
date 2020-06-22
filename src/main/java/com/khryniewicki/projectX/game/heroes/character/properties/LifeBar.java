@@ -1,5 +1,6 @@
-package com.khryniewicki.projectX.game.heroes.character;
+package com.khryniewicki.projectX.game.heroes.character.properties;
 
+import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -17,26 +18,21 @@ public class LifeBar {
 
     private Vector position = new Vector();
 
-    private static Texture greenTexture;
-    private static Texture blackTexture;
-    private VertexArray greenMesh;
-    private VertexArray blackMesh;
+    private static Texture greenTexture,blackTexture;
+    private VertexArray greenMesh,blackMesh;
+    private float width,height;
 
-    private float width;
-    private float height;
-
-    private SuperHero hero;
+    private UltraHero hero;
     private StartingPosition startingPosition;
 
     public LifeBar() {
     }
 
-    public LifeBar(StartingPosition startingPosition2) {
+    public LifeBar(UltraHero ultraHero) {
         height = 0.07f;
         width = 0.65f;
-        hero = HeroesInstances.getInstance().getHero();
-        startingPosition = startingPosition2;
-        createLifeStrip();
+        hero = ultraHero;
+        updateLifeBar();
     }
 
 
@@ -54,7 +50,7 @@ public class LifeBar {
         return LifeFactor;
     }
 
-    public void createLifeStrip() {
+    public void updateLifeBar() {
 
         setGreenMesh(createVertexArray("green"));
         setBlackMesh(createVertexArray("black"));
@@ -67,8 +63,8 @@ public class LifeBar {
 
         float offsetPositionY = 0.5f;
         float offsetPositionX = -0.3f;
-        float heroPositionX = startingPosition.getX();
-        float heroPositionY = startingPosition.getY();
+        float heroPositionX = hero.getPosition().x;
+        float heroPositionY = hero.getPosition().y;
 
         float[] vertices = new float[]{
                 offsetPositionX + heroPositionX + 0.0f, offsetPositionY + heroPositionY + 0.0f, 1f,

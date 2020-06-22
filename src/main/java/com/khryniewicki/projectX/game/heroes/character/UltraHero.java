@@ -1,19 +1,24 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface UltraHero {
     void update();
     void render();
+
     void setPositionX(Float positionX);
     void setPositionY(Float positionY);
     void setMovingLeft(boolean movingLeft);
+
+
     Vector getPosition();
     Spell getSpell();
-   default void setSpell(){};
-    default void setLifeStripClass(StartingPosition startingPosition){};
+    LifeBar getLifeBar();
+    Integer getLife();
+    default void setSpell(){};
+    void setLifeBar(LifeBar lifeBar);
     default void setTextureRun(){};
     default void setTexture(){};
     default void setPosition(){};

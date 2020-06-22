@@ -14,6 +14,10 @@ public class HeroReceiveService {
     private MockStartingPosition mockStartingPosition;
     private Float MockPositionX;
     private Float MockPositionY;
+    private Integer MockLife;
+    private Integer MockMana;
+
+
 
     private HeroReceiveService() {
         mockStartingPosition = MockStartingPosition.getInstance();
@@ -24,16 +28,22 @@ public class HeroReceiveService {
     }
 
     public Float getMockPositionX() {
-        return MockPositionX ==null? mockStartingPosition.getX(): MockPositionX;
+        return MockPositionX == null ? mockStartingPosition.getX() : MockPositionX;
     }
 
     public Float getMockPositionY() {
-        return MockPositionY ==null? mockStartingPosition.getY(): MockPositionY;
+        return MockPositionY == null ? mockStartingPosition.getY() : MockPositionY;
     }
+
+    public Integer getMockLife() { return MockLife; }
+
+    public Integer getMockMana() { return MockMana; }
 
     public void receivedMockPosition(HeroDTO heroDTO) {
         MockPositionX = (heroDTO.getPositionX());
         MockPositionY = (heroDTO.getPositionY());
+        MockLife = heroDTO.getLife();
+        MockMana = heroDTO.getMana();
     }
 
     private static class HELPER {
