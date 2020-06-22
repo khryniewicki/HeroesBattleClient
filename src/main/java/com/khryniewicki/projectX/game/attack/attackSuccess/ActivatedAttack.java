@@ -2,14 +2,12 @@ package com.khryniewicki.projectX.game.attack.attackSuccess;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.LifeStrip;
+import com.khryniewicki.projectX.game.heroes.character.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Arrays;
 
 
 @Slf4j
@@ -19,14 +17,13 @@ public class ActivatedAttack {
     private final SuperHero hero;
     private float ox0, ox1, oy0, oy1, oz0;
     private float bx0, bx1, by0, by1;
-    private float[] heroCoordinates, spellCoordiantes;
     private boolean isAttackSucceeded, isSpellActivated, isManaConsumed;
-    private LifeStrip lifeStrip;
+    private LifeBar lifeBar;
     public ActivatedAttack(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         this.spell = spell;
         this.hero = heroesInstances.getHero();
-        lifeStrip=new LifeStrip();
+        lifeBar =new LifeBar();
     }
 
     public void hitsHeroWithSpell() {
@@ -72,13 +69,16 @@ public class ActivatedAttack {
             Integer life = hero.getLife();
             Integer powerAttack = spell.getPowerAttack();
             hero.setLife(life - powerAttack);
-            lifeStrip=hero.getLifeStrip();
-            lifeStrip.createLifeStrip();
 
-            log.info(Arrays.toString(heroCoordinates) + "   " + Arrays.toString(spellCoordiantes));
-            log.info("HERO LIFE: {} HERO MANA: {} HERO SIZE: {}", hero.getLife(), hero.getMana());
+            updateLifeBar();
+
             isSpellActivated = true;
         }
+    }
+
+    private void updateLifeBar() {
+        lifeBar =hero.getLifeBar();
+        lifeBar.createLifeStrip();
     }
 
     private void heroObjectDimenions() {
@@ -87,7 +87,7 @@ public class ActivatedAttack {
         bx1 = Board.myCollision.getBx1();
         by0 = Board.myCollision.getBy0();
         by1 = Board.myCollision.getBy1();
-        heroCoordinates = new float[]{bx0, bx1, by0, by1};
+
     }
 
     private void spellObjectDimensions() {
@@ -98,6 +98,6 @@ public class ActivatedAttack {
         oy0 = position.y - spell.getSize() / 2.0f;
         oy1 = position.y + spell.getSize() / 2.0f;
         oz0 = position.z;
-        spellCoordiantes = new float[]{ox0, ox1, oy0, oy1, oz0};
+
     }
 }

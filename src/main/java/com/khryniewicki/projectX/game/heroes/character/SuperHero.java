@@ -36,7 +36,7 @@ public class SuperHero implements UltraHero {
     public float SIZE = 0.9f;
     private float velocity = 0.2f;
     private HeroMove heroMove;
-    private LifeStrip lifeStrip;
+    private LifeBar lifeBar;
 
     public SuperHero() {
         heroSendingService = new HeroSendingService();
@@ -71,7 +71,7 @@ public class SuperHero implements UltraHero {
 
     public void update() {
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
-            Vector lifeStripPosition = lifeStrip.getPosition();
+            Vector lifeStripPosition = lifeBar.getPosition();
             SIZE = 1f;
                     float tmpX = getX();
                     float tmpY = getY();
@@ -102,7 +102,7 @@ public class SuperHero implements UltraHero {
                     if (tmpX != this.position.x || tmpY != this.position.y) {
                         heroMove.setHeroMoving(true);
                         setMesh(createHero());
-                        lifeStrip.createLifeStrip();
+                        lifeBar.createLifeStrip();
                     }else
                         heroMove.setHeroMoving(false);
 
@@ -118,7 +118,7 @@ public class SuperHero implements UltraHero {
         texture.bind();
         mesh.render();
         Shader.HERO.disable();
-        lifeStrip.render();
+        lifeBar.render();
     }
 
 
@@ -150,7 +150,7 @@ public class SuperHero implements UltraHero {
 
     @Override
     public void setLifeStripClass(StartingPosition startingPosition) {
-        lifeStrip=new LifeStrip(startingPosition);
+        lifeBar =new LifeBar(startingPosition);
     }
 
     @Override

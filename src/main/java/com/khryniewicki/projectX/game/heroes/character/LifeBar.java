@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class LifeStrip {
+public class LifeBar {
 
     private Vector position = new Vector();
 
@@ -28,10 +28,10 @@ public class LifeStrip {
     private SuperHero hero;
     private StartingPosition startingPosition;
 
-    public LifeStrip() {
+    public LifeBar() {
     }
 
-    public LifeStrip(StartingPosition startingPosition2) {
+    public LifeBar(StartingPosition startingPosition2) {
         height = 0.07f;
         width = 0.65f;
         hero = HeroesInstances.getInstance().getHero();
