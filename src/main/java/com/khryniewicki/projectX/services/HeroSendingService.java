@@ -66,17 +66,14 @@ public class HeroSendingService implements Runnable {
             tmpHero = heroDTO;
             counter = 0;
         }
-
         if (counter < 4) {
             heroDTOS.offerLast(heroDTO);
-            log.info("SIZE:" + heroDTOS.size());
         }
     }
 
-    public synchronized void addMessage2() {
+    public synchronized void updateLife() {
         getHeroInstance();
-        HeroDTO heroDTO = getHeroDTO();
-        heroDTOS.offerLast(heroDTO);
+        heroDTOS.offerLast(getHeroDTO());
     }
 
     @Override

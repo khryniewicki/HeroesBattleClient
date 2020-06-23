@@ -21,7 +21,6 @@ public class ActivatedAttack {
     private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated;
     private final LifeBar lifeBar;
-
     private final HeroSendingService heroSendingService;
 
     public ActivatedAttack(UltraSpell spell) {
@@ -73,7 +72,7 @@ public class ActivatedAttack {
 
     private void updateLifeBar() {
         lifeBar.updateLifeBar();
-        heroSendingService.addMessage2();
+        heroSendingService.updateLife();
     }
 
 
