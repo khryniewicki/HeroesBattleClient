@@ -82,11 +82,9 @@ public class HeroSendingService implements Runnable {
         stackEvent.setHeroDTOS(new ConcurrentLinkedDeque<>());
 
         while (true) {
-
             if (heroMove.isHeroMoving()) {
                 addMessage();
             }
-
             if (heroDTOS != null && heroDTOS.size() != 0) {
                 send();
             }
