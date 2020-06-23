@@ -47,9 +47,4 @@ public class IceWizard extends SuperHero {
         setMesh(createHero());
     }
 
-
-    @Override
-    public void setTextureRun() {
-        setTexture(HeroUtil.ICE_WIZARD_RUN);
-    }
 }

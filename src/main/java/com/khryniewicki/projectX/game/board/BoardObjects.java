@@ -1,8 +1,5 @@
 package com.khryniewicki.projectX.game.board;
 
-import com.khryniewicki.projectX.graphics.VertexArray;
-import com.khryniewicki.projectX.math.Matrix4f;
-
 public interface BoardObjects {
     float getX();
     float getY();
@@ -13,6 +10,5 @@ public interface BoardObjects {
     float getWidth();
     float getHeight();
     float getTangens();
-    Matrix4f getModelMatrix();
-    VertexArray getMesh();
+
 }

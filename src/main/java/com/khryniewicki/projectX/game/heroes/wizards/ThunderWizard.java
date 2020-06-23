@@ -49,8 +49,5 @@ public class ThunderWizard extends SuperHero {
         setMesh(createHero());
     }
 
-    @Override
-    public void setTextureRun() {
-        setTexture(HeroUtil.THUNDER_WIZARD_RUN);
-    }
+
 }

@@ -5,29 +5,22 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.math.Vector;
 
-public interface UltraHero {
-    void update();
-    void render();
+public interface UltraHero extends Ultra {
 
     void setPositionX(Float positionX);
     void setPositionY(Float positionY);
     void setMovingLeft(boolean movingLeft);
+    void setLifeBar(LifeBar lifeBar);
+    void setManaBar(ManaBar manaBar);
 
-
-    Vector getPosition();
     Spell getSpell();
     LifeBar getLifeBar();
     ManaBar getManaBar();
     Integer getLife();
     Integer getMana();
+
+
     default void setSpell(){};
-    void setLifeBar(LifeBar lifeBar);
-    void setManaBar(ManaBar manaBar);
-    default void setTextureRun(){};
-    default void setTexture(){};
-    default void setPosition(){};
-    default void setProperties(){};
-    default void setMesh(){};
     default void setHeroIdle(){};
     default void  setHeroRun(){};
     default void updateManaBar(){};
