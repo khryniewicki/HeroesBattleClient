@@ -2,13 +2,13 @@ package com.khryniewicki.projectX.game.attack.attackSuccess;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
-
 import com.khryniewicki.projectX.services.HeroSendingService;
-import com.khryniewicki.projectX.utils.HeroMove;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -17,17 +17,22 @@ public class ActivatedAttack {
 
     private final UltraSpell spell;
     private final SuperHero hero;
+    private final UltraHero mock;
     private float ox0, ox1, oy0, oy1, oz0;
     private float bx0, bx1, by0, by1;
-    private boolean isAttackSucceeded, isSpellActivated, isManaConsumed;
+    private boolean isAttackSucceeded, isSpellActivated;
     private final LifeBar lifeBar;
+
     private final HeroSendingService heroSendingService;
+
     public ActivatedAttack(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        heroSendingService=new HeroSendingService();
+        heroSendingService = new HeroSendingService();
         this.spell = spell;
         this.hero = heroesInstances.getHero();
-        lifeBar =hero.getLifeBar();;
+        this.mock = heroesInstances.getMock();
+        lifeBar = hero.getLifeBar();
+
     }
 
     public void hitsHeroWithSpell() {
@@ -38,26 +43,15 @@ public class ActivatedAttack {
         if (oz0 <= 0) {
             isSpellActivated = false;
             isAttackSucceeded = false;
-            isManaConsumed = false;
         } else {
             spellActivation();
         }
     }
 
     private void spellActivation() {
-        consumeSpellMana();
+        mock.updateManaBar();
         isAttackSucceeded();
     }
-
-    private void consumeSpellMana() {
-        if (!isManaConsumed) {
-            Integer heroMana = hero.getMana();
-            Integer manaConsumed = spell.getManaConsumed();
-            hero.setMana(heroMana - manaConsumed);
-            isManaConsumed = true;
-        }
-    }
-
 
     private void isAttackSucceeded() {
         if (bx1 > ox0 && bx0 < ox1) {
@@ -73,8 +67,8 @@ public class ActivatedAttack {
             Integer life = hero.getLife();
             Integer powerAttack = spell.getPowerAttack();
             hero.setLife(life - powerAttack);
-            updateLifeBar();
 
+            updateLifeBar();
             isSpellActivated = true;
         }
     }
@@ -83,6 +77,8 @@ public class ActivatedAttack {
         lifeBar.updateLifeBar();
         heroSendingService.send();
     }
+
+
 
     private void heroObjectDimenions() {
 

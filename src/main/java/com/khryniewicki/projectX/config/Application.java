@@ -149,7 +149,7 @@ public class Application implements Runnable{
                 @Override
                 public void handleFrame(StompHeaders headers,
                                         Object payload) {
-                    heroReceiveService.receivedMockPosition(((HeroDTO) payload));
+                    heroReceiveService.receivedMockDTO(((HeroDTO) payload));
                 }
             });
         }

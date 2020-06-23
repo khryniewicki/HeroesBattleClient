@@ -39,7 +39,7 @@ public class HeroReceiveService {
 
     public Integer getMockMana() { return MockMana; }
 
-    public void receivedMockPosition(HeroDTO heroDTO) {
+    public void receivedMockDTO(HeroDTO heroDTO) {
         MockPositionX = (heroDTO.getPositionX());
         MockPositionY = (heroDTO.getPositionY());
         MockLife = heroDTO.getLife();

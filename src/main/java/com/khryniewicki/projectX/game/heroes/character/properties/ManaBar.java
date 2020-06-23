@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -14,52 +13,52 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class LifeBar {
+public class ManaBar {
 
     private Vector position = new Vector();
 
-    private static Texture greenTexture,blackTexture;
-    private VertexArray greenMesh,blackMesh;
+    private static Texture blueTexture,blackTexture;
+    private VertexArray blueMesh,blackMesh;
     private float width,height;
 
     private UltraHero hero;
     private StartingPosition startingPosition;
 
-
-    public LifeBar(UltraHero ultraHero) {
+    
+    public ManaBar(UltraHero ultraHero) {
         height = 0.07f;
         width = 0.65f;
         hero = ultraHero;
-        updateLifeBar();
+        updateManaBar();
     }
 
 
-    public float getLifeFactor() {
-        float LifeFactor;
-        if (hero.getLife() == null) {
-            LifeFactor = 1f;
+    public float getManaFactor() {
+        float ManaFactor;
+        if (hero.getMana() == null) {
+            ManaFactor = 1f;
         } else {
-            LifeFactor = hero.getLife() / 100f;
-            if (LifeFactor < 0) {
-                LifeFactor = 0;
+            ManaFactor = hero.getMana() / 100f;
+            if (ManaFactor < 0) {
+                ManaFactor = 0;
             }
         }
 
-        return LifeFactor;
+        return ManaFactor;
     }
 
-    public void updateLifeBar() {
+    public void updateManaBar() {
 
-        setGreenMesh(createVertexArray("green"));
+        setBlueMesh(createVertexArray("blue"));
         setBlackMesh(createVertexArray("black"));
         blackTexture = GameUtill.empty;
-        greenTexture = GameUtill.life;
+        blueTexture = GameUtill.mana;
     }
 
     public VertexArray createVertexArray(String textureType) {
-        float lifeFactor = getLifeFactor(textureType);
+        float manaFactor = getManaFactor(textureType);
 
-        float offsetPositionY = 0.5f;
+        float offsetPositionY = 0.6f;
         float offsetPositionX = -0.3f;
         float heroPositionX = hero.getPosition().x;
         float heroPositionY = hero.getPosition().y;
@@ -67,8 +66,8 @@ public class LifeBar {
         float[] vertices = new float[]{
                 offsetPositionX + heroPositionX + 0.0f, offsetPositionY + heroPositionY + 0.0f, 1f,
                 offsetPositionX + heroPositionX + 0.0f, offsetPositionY + heroPositionY + height, 1f,
-                offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + height, 1f,
-                offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + 0.0f, 1f
+                offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY + height, 1f,
+                offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY + 0.0f, 1f
         };
 
         byte[] indices = new byte[]{
@@ -86,14 +85,14 @@ public class LifeBar {
         return new VertexArray(vertices, indices, tcs);
     }
 
-    private float getLifeFactor(String textureType) {
-        float lifeFactor;
-        if (textureType.equals("green")) {
-            lifeFactor = getLifeFactor();
+    private float getManaFactor(String textureType) {
+        float manaFactor;
+        if (textureType.equals("blue")) {
+            manaFactor = getManaFactor();
         } else {
-            lifeFactor = 1f;
+            manaFactor = 1f;
         }
-        return lifeFactor;
+        return manaFactor;
     }
 
 
@@ -108,8 +107,8 @@ public class LifeBar {
     public void render() {
         Shader.STRIP.enable();
         Shader.STRIP.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
-        greenTexture.bind();
-        greenMesh.render();
+        blueTexture.bind();
+        blueMesh.render();
 
         blackTexture.bind();
         blackMesh.render();

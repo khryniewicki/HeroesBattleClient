@@ -4,6 +4,7 @@ import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -27,7 +28,8 @@ public class SuperHero implements UltraHero {
     private Vector position;
     private Spell spell;
     private String name;
-    private Integer life, mana;
+    private Integer life;
+    private Integer mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
     private HeroSendingService heroSendingService;
@@ -37,6 +39,7 @@ public class SuperHero implements UltraHero {
     private float velocity = 0.2f;
     private HeroMove heroMove;
     private LifeBar lifeBar;
+    private ManaBar manaBar;
 
     public SuperHero() {
         heroSendingService = new HeroSendingService();
@@ -71,7 +74,7 @@ public class SuperHero implements UltraHero {
 
     public void update() {
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
-            Vector lifeStripPosition = lifeBar.getPosition();
+
             SIZE = 1f;
                     float tmpX = getX();
                     float tmpY = getY();
@@ -99,6 +102,7 @@ public class SuperHero implements UltraHero {
                         heroMove.setHeroMoving(true);
                         setMesh(createHero());
                         lifeBar.updateLifeBar();
+                        manaBar.updateManaBar();
                     }else
                         heroMove.setHeroMoving(false);
 
@@ -115,6 +119,7 @@ public class SuperHero implements UltraHero {
         mesh.render();
         Shader.HERO.disable();
         lifeBar.render();
+        manaBar.render();
     }
 
 
@@ -148,10 +153,18 @@ public class SuperHero implements UltraHero {
         this.lifeBar = lifeBar;
     }
 
+    public Integer getMana() {
+        return mana;
+    }
+
+    public void setMana(Integer mana) {
+        this.mana = mana;
+    }
     @Override
     public Spell getSpell() {
         return spell;
     }
+
 
     public Spell castingSpell() {
         return spell;

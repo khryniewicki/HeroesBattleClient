@@ -5,6 +5,7 @@ import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
@@ -43,6 +44,7 @@ public class HeroesInstances {
 
     public void setHeroLifeAndManaBar() {
         hero.setLifeBar(new LifeBar(hero));
+        hero.setManaBar(new ManaBar(hero));
     }
 
 
@@ -61,6 +63,8 @@ public class HeroesInstances {
                 SuperHero superHero = characterFactory.create(heroType);
                 this.mock = new HeroMock(superHero);
                 mock.setLifeBar(new LifeBar(mock));
+                mock.setManaBar(new ManaBar(mock));
+
             }
         }
     }

@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface UltraHero {
@@ -16,9 +17,12 @@ public interface UltraHero {
     Vector getPosition();
     Spell getSpell();
     LifeBar getLifeBar();
+    ManaBar getManaBar();
     Integer getLife();
+    Integer getMana();
     default void setSpell(){};
     void setLifeBar(LifeBar lifeBar);
+    void setManaBar(ManaBar manaBar);
     default void setTextureRun(){};
     default void setTexture(){};
     default void setPosition(){};
@@ -26,6 +30,6 @@ public interface UltraHero {
     default void setMesh(){};
     default void setHeroIdle(){};
     default void  setHeroRun(){};
-
+    default void updateManaBar(){};
 
 }

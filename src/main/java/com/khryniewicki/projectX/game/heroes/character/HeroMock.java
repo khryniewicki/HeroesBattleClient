@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
@@ -9,6 +10,7 @@ public class HeroMock implements UltraHero {
     private Float tmpPositionX;
     private Float tmpPositionY;
     private Integer tmpLife;
+    private Integer tmpMana;
     private final UltraHero ultraHero;
     private HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
@@ -34,11 +36,18 @@ public class HeroMock implements UltraHero {
         setHeroRun();
         setMesh();
         updateLifeBar();
+        updateManaBar();
     }
 
     private void updateLifeBar() {
         LifeBar lifeBar = getLifeBar();
         lifeBar.updateLifeBar();
+    }
+
+    @Override
+    public void updateManaBar() {
+        ManaBar manaBar = getManaBar();
+        manaBar.updateManaBar();
     }
 
     private void changePosition() {
@@ -65,6 +74,11 @@ public class HeroMock implements UltraHero {
     }
 
     private void checkLifeAndMana() {
+        checkLife();
+        checkMana();
+    }
+
+    private void checkLife() {
         Integer life = getLife();
         if (life != null && tmpLife != null) {
             if (!tmpLife.equals(life)) {
@@ -74,7 +88,18 @@ public class HeroMock implements UltraHero {
 
         } else
             tmpLife = life;
+    }
 
+    private void checkMana() {
+        Integer mana = getMana();
+        if (mana != null && tmpMana != null) {
+            if (!tmpMana.equals(mana)) {
+                updateManaBar();
+                tmpMana = mana;
+            }
+
+        } else
+            tmpMana = mana;
     }
 
     @Override
@@ -98,8 +123,18 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
+    public ManaBar getManaBar() {
+        return ultraHero.getManaBar();
+    }
+
+    @Override
     public Integer getLife() {
         return heroReceiveService.getMockLife();
+    }
+
+    @Override
+    public Integer getMana() {
+        return heroReceiveService.getMockMana();
     }
 
 
@@ -146,6 +181,11 @@ public class HeroMock implements UltraHero {
     @Override
     public void setLifeBar(LifeBar lifeBar) {
         ultraHero.setLifeBar(lifeBar);
+    }
+
+    @Override
+    public void setManaBar(ManaBar manaBar) {
+        ultraHero.setManaBar(manaBar);
     }
 
     @Override
