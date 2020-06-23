@@ -166,7 +166,7 @@ public class Spell implements UltraSpell {
         hero.setMana(heroMana - manaConsumed);
         ManaBar manaBar = hero.getManaBar();
         manaBar.updateManaBar();
-        heroSendingService.send();
+        heroSendingService.addMessage();
     }
 
     public void setSpellCountingTime() {

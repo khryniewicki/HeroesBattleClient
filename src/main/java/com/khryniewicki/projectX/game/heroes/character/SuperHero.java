@@ -12,6 +12,7 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroSendingService;
 import com.khryniewicki.projectX.utils.HeroMove;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,13 +38,15 @@ public class SuperHero implements UltraHero {
     private float hero_top_offset;
     public float SIZE = 0.9f;
     private float velocity = 0.2f;
-    private HeroMove heroMove;
+    private StackEvent stackEvent;
     private LifeBar lifeBar;
     private ManaBar manaBar;
-
+    private HeroMove heroMove;
     public SuperHero() {
         heroSendingService = new HeroSendingService();
+        stackEvent = StackEvent.getInstance();
         heroMove=HeroMove.getInstance();
+
     }
 
 
@@ -99,6 +102,7 @@ public class SuperHero implements UltraHero {
                     }
 
                     if (tmpX != this.position.x || tmpY != this.position.y) {
+
                         heroMove.setHeroMoving(true);
                         setMesh(createHero());
                         lifeBar.updateLifeBar();

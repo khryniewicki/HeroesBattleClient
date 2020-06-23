@@ -5,7 +5,6 @@ import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroSendingService;
@@ -32,7 +31,6 @@ public class ActivatedAttack {
         this.hero = heroesInstances.getHero();
         this.mock = heroesInstances.getMock();
         lifeBar = hero.getLifeBar();
-
     }
 
     public void hitsHeroWithSpell() {
@@ -75,7 +73,7 @@ public class ActivatedAttack {
 
     private void updateLifeBar() {
         lifeBar.updateLifeBar();
-        heroSendingService.send();
+        heroSendingService.addMessage2();
     }
 
 

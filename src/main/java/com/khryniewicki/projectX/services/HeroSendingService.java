@@ -7,9 +7,12 @@ import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.utils.HeroMove;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.stomp.StompSession;
+
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 @Data
@@ -22,11 +25,13 @@ public class HeroSendingService implements Runnable {
     private HeroesInstances heroesInstances;
     private HeroStartingPosition heroStartingPosition;
     private final Channels channel;
-    private final HeroMove heroMove;
+    private final StackEvent stackEvent;
+    private ConcurrentLinkedDeque<HeroDTO> heroDTOS;
+    private int counter;
 
     public HeroSendingService() {
         channel = Channels.getINSTANCE();
-        heroMove = HeroMove.getInstance();
+        stackEvent = StackEvent.getInstance();
     }
 
     private void getHeroInstance() {
@@ -34,6 +39,7 @@ public class HeroSendingService implements Runnable {
             heroStartingPosition = HeroStartingPosition.getInstance();
             heroesInstances = HeroesInstances.getInstance();
             this.hero = heroesInstances.getHero();
+            heroDTOS = stackEvent.getHeroDTOS();
         }
     }
 
@@ -45,54 +51,67 @@ public class HeroSendingService implements Runnable {
         return hero.getY() == null ? heroStartingPosition.getY() : hero.getY();
     }
 
-    public HeroDTO getHeroPositions() {
-        if (verifyIfCoordinatesChanged()) {
-            return new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), getHeroPositionX(), getHeroPositionY());
-        }
-        return tmpHero;
+    public HeroDTO getHeroDTO() {
+
+        return new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), getHeroPositionX(), getHeroPositionY());
     }
 
-
-    private Boolean verifyIfCoordinatesChanged() {
+    public synchronized void addMessage() {
         getHeroInstance();
-        if (tmpPositionX != null && tmpPositionX == getHeroPositionX()) {
-            if (tmpPositionY != null && tmpPositionY == getHeroPositionY()) {
-                return false;
-            }
+        HeroDTO heroDTO = getHeroDTO();
+
+        if (heroDTO.equals(tmpHero)) {
+            counter++;
+        } else {
+            tmpHero = heroDTO;
+            counter = 0;
         }
 
-        tmpPositionX = getHeroPositionX();
-        tmpPositionY = getHeroPositionY();
-        tmpHero = new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), tmpPositionX, tmpPositionY);
-        return true;
+        if (counter < 4) {
+            heroDTOS.offerLast(heroDTO);
+            log.info("SIZE:" + heroDTOS.size());
+        }
     }
 
+    public synchronized void addMessage2() {
+        getHeroInstance();
+        HeroDTO heroDTO = getHeroDTO();
+        heroDTOS.offerLast(heroDTO);
+    }
 
     @Override
     public void run() {
-
+        HeroMove heroMove = HeroMove.getInstance();
+        stackEvent.setHeroDTOS(new ConcurrentLinkedDeque<>());
 
         while (true) {
+
+            if (heroMove.isHeroMoving()) {
+                addMessage();
+            }
+
+            if (heroDTOS != null && heroDTOS.size() != 0) {
+                send();
+            }
+
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (heroMove.isHeroMoving()) {
-                send2();
-            }
+        }
+
+    }
+
+    private synchronized void send() {
+        StompSession session = Application.getSession();
+        try {
+            session.send("/app/hero/" + channel.getApp(), heroDTOS.pop());
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            send();
         }
     }
 
-    private synchronized void send2() {
-        StompSession session = Application.getSession();
-        session.send("/app/hero/" + channel.getApp(), getHeroPositions());
-        heroMove.setHeroMoving(false);
-    }
-
-    public synchronized void send() {
-        StompSession session = Application.getSession();
-        session.send("/app/hero/" + channel.getApp(), getHeroPositions());
-    }
 
 }
