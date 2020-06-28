@@ -17,7 +17,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Data
 @Slf4j
-
 public class HeroSendingService implements Runnable {
     private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
@@ -56,7 +55,7 @@ public class HeroSendingService implements Runnable {
         return new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), getHeroPositionX(), getHeroPositionY());
     }
 
-    public synchronized void addMessage() {
+    public synchronized void updatePosition() {
         getHeroInstance();
         HeroDTO heroDTO = getHeroDTO();
 
@@ -83,7 +82,7 @@ public class HeroSendingService implements Runnable {
 
         while (true) {
             if (heroMove.isHeroMoving()) {
-                addMessage();
+                updatePosition();
             }
             if (heroDTOS != null && heroDTOS.size() != 0) {
                 send();
