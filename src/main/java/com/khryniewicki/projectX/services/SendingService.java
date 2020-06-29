@@ -41,7 +41,9 @@ public class SendingService implements Runnable {
             heroStartingPosition = HeroStartingPosition.getInstance();
             heroesInstances = HeroesInstances.getInstance();
             this.hero = heroesInstances.getHero();
-            heroDTOS = stackEvent.getHeroDTOS();
+            heroDTOS=stackEvent.getHeroDTOS();
+            heroAction = HeroAction.getInstance();
+
         }
     }
 
@@ -75,12 +77,20 @@ public class SendingService implements Runnable {
 
     public synchronized void updateLife() {
         getHeroInstance();
+        heroAction.setHeroMoving(true);
+
         heroDTOS.offerLast(getHeroDTO());
+        log.info("LIFE heroDTOS SIZE: {},DTO: {}",heroDTOS.size(),getHeroDTO());
+
     }
 
     public synchronized void sendSpell(SpellDTO spellDTO) {
+
         getHeroInstance();
+        heroAction.setHeroMoving(true);
         heroDTOS.offerLast(spellDTO);
+        log.info("SPELL heroDTOS SIZE: {},DTO: {}",heroDTOS.size(),spellDTO.toString());
+
     }
 
     @Override
@@ -90,6 +100,7 @@ public class SendingService implements Runnable {
 
         while (true) {
             move();
+            send();
         }
     }
 
@@ -99,7 +110,6 @@ public class SendingService implements Runnable {
             updatePosition();
         }
 
-        send();
     }
 
 
@@ -107,20 +117,20 @@ public class SendingService implements Runnable {
         if (heroDTOS != null && heroDTOS.size() != 0) {
             StompSession session = Application.getSession();
             DTO dto = heroDTOS.pop();
-
+            log.info("DTO:{}",dto.toString());
             try {
                 session.send(path(dto), dto);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
-            sleep();
         }
+        sleep();
     }
 
     private String path(DTO pop) {
         String path = "/app/hero/";
         if (pop.isSpellDTO()) {
-            path = "/app/hero/";
+            path = "/app/spell/";
         }
         return path+channel.getApp();
     }

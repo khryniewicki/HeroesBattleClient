@@ -41,6 +41,7 @@ public class SuperHero implements UltraHero {
     private LifeBar lifeBar;
     private ManaBar manaBar;
     private HeroAction heroAction;
+
     public SuperHero() {
         sendingService = new SendingService();
         heroAction = HeroAction.getInstance();
