@@ -4,13 +4,13 @@ import com.khryniewicki.projectX.config.messageHandler.Channels;
 import com.khryniewicki.projectX.config.messageHandler.ConnectionStatus;
 import com.khryniewicki.projectX.config.messageHandler.Message;
 import com.khryniewicki.projectX.config.messageHandler.MessageHandler;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
-import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
+import com.khryniewicki.projectX.services.DTO.SpellDTO;
+import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.MapWithHeroes;
 import com.khryniewicki.projectX.services.HeroReceiveService;
-import com.khryniewicki.projectX.services.HeroSendingService;
+import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 import com.khryniewicki.projectX.services.SpellSendingService;
 import lombok.Data;
@@ -60,7 +60,7 @@ public class Application implements Runnable{
                 ThreadLocalRandom.current().nextInt(1, 99);
         private HeroReceiveService heroReceiveService;
         private SpellReceiveService spellReceiveService;
-        private HeroSendingService heroSendingService;
+        private SendingService sendingService;
         private SpellSendingService spellSendingService;
         private final Channels channels;
         private ResponseEntity<HashMap<String, Message>> exchange;
@@ -75,7 +75,7 @@ public class Application implements Runnable{
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
             spellReceiveService = new SpellReceiveService();
-            heroSendingService =new HeroSendingService();
+            sendingService =new SendingService();
             spellSendingService =new SpellSendingService();
             channels=Channels.getINSTANCE();
         }

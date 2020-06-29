@@ -9,8 +9,11 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.HeroSendingService;
+import com.khryniewicki.projectX.services.DTO.SpellDTO;
+import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.services.SpellSendingService;
+import com.khryniewicki.projectX.utils.HeroAction;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import org.lwjgl.BufferUtils;
 
@@ -44,7 +47,7 @@ public class Spell implements UltraSpell {
     private float indexWidth = 1;
     private Integer powerAttack;
     private SpellSendingService sendSpellToStompSocket;
-    private HeroSendingService heroSendingService;
+    private SendingService sendingService;
     private Integer manaConsumed;
 
 
@@ -69,7 +72,7 @@ public class Spell implements UltraSpell {
         };
         texture = throwingSpellTexture;
         getHero();
-        sendSpellToStompSocket = new SpellSendingService();
+        sendingService=new SendingService();
         return new VertexArray(vertices, indices, tcs);
     }
 
@@ -77,7 +80,7 @@ public class Spell implements UltraSpell {
         if (hero == null) {
             HeroesInstances instance = HeroesInstances.getInstance();
             hero = instance.getHero();
-            heroSendingService=new HeroSendingService();
+            sendingService = new SendingService();
         }
     }
 
@@ -126,8 +129,7 @@ public class Spell implements UltraSpell {
 
 
     private void sendSpellDTO() {
-        SpellDTO spellDTO = new SpellDTO(name, finalX, finalY);
-        sendSpellToStompSocket.sendSpellToStompSocket(spellDTO);
+        sendingService.sendSpell(new SpellDTO(name, finalX, finalY));
     }
 
     private void makeFinalPositionsNull() {
@@ -166,7 +168,7 @@ public class Spell implements UltraSpell {
         hero.setMana(heroMana - manaConsumed);
         ManaBar manaBar = hero.getManaBar();
         manaBar.updateManaBar();
-        heroSendingService.updatePosition();
+        sendingService.updatePosition();
     }
 
     public void setSpellCountingTime() {

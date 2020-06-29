@@ -1,11 +1,11 @@
-package com.khryniewicki.projectX.game.heroes.character;
+package com.khryniewicki.projectX.services.DTO;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class HeroDTO implements Serializable {
+public class HeroDTO implements Serializable,DTO {
     private String name;
     private Integer life;
     private Integer mana;
@@ -32,5 +32,10 @@ public class HeroDTO implements Serializable {
     }
 
     public HeroDTO() {
+    }
+
+    @Override
+    public Boolean isSpellDTO() {
+        return false;
     }
 }

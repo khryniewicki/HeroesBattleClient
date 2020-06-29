@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.services;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.config.messageHandler.Channels;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
+import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 public class SpellSendingService {

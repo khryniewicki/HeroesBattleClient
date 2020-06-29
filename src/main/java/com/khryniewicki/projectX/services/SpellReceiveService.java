@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellDTO;
+import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

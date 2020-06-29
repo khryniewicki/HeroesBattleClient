@@ -10,7 +10,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
-import com.khryniewicki.projectX.services.HeroSendingService;
+import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.TextUtil;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -169,7 +169,7 @@ public class Game implements Runnable {
     }
 
     private void createHeroSenderPosition() {
-        HeroSendingService heroSending = new HeroSendingService();
+        SendingService heroSending = new SendingService();
         Thread sender = new Thread(heroSending);
         sender.start();
     }

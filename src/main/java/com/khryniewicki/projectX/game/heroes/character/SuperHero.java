@@ -10,8 +10,8 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.HeroSendingService;
-import com.khryniewicki.projectX.utils.HeroMove;
+import com.khryniewicki.projectX.services.SendingService;
+import com.khryniewicki.projectX.utils.HeroAction;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -33,20 +33,17 @@ public class SuperHero implements UltraHero {
     private Integer mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
-    private HeroSendingService heroSendingService;
+    private SendingService sendingService;
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
     private float velocity = 0.2f;
-    private StackEvent stackEvent;
     private LifeBar lifeBar;
     private ManaBar manaBar;
-    private HeroMove heroMove;
+    private HeroAction heroAction;
     public SuperHero() {
-        heroSendingService = new HeroSendingService();
-        stackEvent = StackEvent.getInstance();
-        heroMove=HeroMove.getInstance();
-
+        sendingService = new SendingService();
+        heroAction = HeroAction.getInstance();
     }
 
 
@@ -103,12 +100,12 @@ public class SuperHero implements UltraHero {
 
                     if (tmpX != this.position.x || tmpY != this.position.y) {
 
-                        heroMove.setHeroMoving(true);
+                        heroAction.setHeroMoving(true);
                         setMesh(createHero());
                         lifeBar.updateLifeBar();
                         manaBar.updateManaBar();
                     }else
-                        heroMove.setHeroMoving(false);
+                        heroAction.setHeroMoving(false);
 
                 }
 

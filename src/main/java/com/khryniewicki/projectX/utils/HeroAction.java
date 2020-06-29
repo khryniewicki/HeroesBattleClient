@@ -3,21 +3,22 @@ package com.khryniewicki.projectX.utils;
 import lombok.Data;
 
 @Data
-public class HeroMove {
+public class HeroAction {
 
     private boolean isHeroMoving;
-    private static HeroMove INSTANCE;
+    private boolean isHeroCastingSpell;
+    private static HeroAction INSTANCE;
 
-    private HeroMove() {
+    private HeroAction() {
         if (INSTANCE == null) {
             INSTANCE = this;
         } else
             throw new IllegalArgumentException();
     }
 
-    public static synchronized HeroMove getInstance() {
+    public static synchronized HeroAction getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new HeroMove();
+            INSTANCE = new HeroAction();
         }
         return INSTANCE;
     }

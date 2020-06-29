@@ -1,11 +1,11 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_properties;
+package com.khryniewicki.projectX.services.DTO;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class SpellDTO implements Serializable {
+public class SpellDTO implements Serializable,DTO {
     private String name;
     private Float targetSpellX;
     private Float targetSpellY;
@@ -26,5 +26,20 @@ public class SpellDTO implements Serializable {
                 ", targetSpellX=" + targetSpellX +
                 ", targetSpellY=" + targetSpellY +
                 '}';
+    }
+
+    @Override
+    public Float getPositionX() {
+        return targetSpellX;
+    }
+
+    @Override
+    public Float getPositionY() {
+        return targetSpellY;
+    }
+
+    @Override
+    public Boolean isSpellDTO() {
+        return true;
     }
 }

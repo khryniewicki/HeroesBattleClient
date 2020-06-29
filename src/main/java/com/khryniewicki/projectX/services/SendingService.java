@@ -2,11 +2,13 @@ package com.khryniewicki.projectX.services;
 
 import com.khryniewicki.projectX.config.Application;
 import com.khryniewicki.projectX.config.messageHandler.Channels;
-import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
-import com.khryniewicki.projectX.utils.HeroMove;
+import com.khryniewicki.projectX.services.DTO.DTO;
+import com.khryniewicki.projectX.services.DTO.HeroDTO;
+import com.khryniewicki.projectX.services.DTO.SpellDTO;
+import com.khryniewicki.projectX.utils.HeroAction;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Data
 @Slf4j
-public class HeroSendingService implements Runnable {
+public class SendingService implements Runnable {
     private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
     private SuperHero hero;
@@ -25,10 +27,11 @@ public class HeroSendingService implements Runnable {
     private HeroStartingPosition heroStartingPosition;
     private final Channels channel;
     private final StackEvent stackEvent;
-    private ConcurrentLinkedDeque<HeroDTO> heroDTOS;
+    private ConcurrentLinkedDeque<DTO> heroDTOS;
     private int counter;
+    private HeroAction heroAction;
 
-    public HeroSendingService() {
+    public SendingService() {
         channel = Channels.getINSTANCE();
         stackEvent = StackEvent.getInstance();
     }
@@ -75,37 +78,58 @@ public class HeroSendingService implements Runnable {
         heroDTOS.offerLast(getHeroDTO());
     }
 
+    public synchronized void sendSpell(SpellDTO spellDTO) {
+        getHeroInstance();
+        heroDTOS.offerLast(spellDTO);
+    }
+
     @Override
     public void run() {
-        HeroMove heroMove = HeroMove.getInstance();
+        heroAction = HeroAction.getInstance();
         stackEvent.setHeroDTOS(new ConcurrentLinkedDeque<>());
 
         while (true) {
-            if (heroMove.isHeroMoving()) {
-                updatePosition();
-            }
-            if (heroDTOS != null && heroDTOS.size() != 0) {
-                send();
-            }
+            move();
+        }
+    }
 
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+    private void move() {
+        if (heroAction.isHeroMoving()) {
+            updatePosition();
         }
 
+        send();
     }
+
 
     private synchronized void send() {
-        StompSession session = Application.getSession();
-        try {
-            session.send("/app/hero/" + channel.getApp(), heroDTOS.pop());
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            send();
+        if (heroDTOS != null && heroDTOS.size() != 0) {
+            StompSession session = Application.getSession();
+            DTO dto = heroDTOS.pop();
+
+            try {
+                session.send(path(dto), dto);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            sleep();
         }
     }
 
+    private String path(DTO pop) {
+        String path = "/app/hero/";
+        if (pop.isSpellDTO()) {
+            path = "/app/hero/";
+        }
+        return path+channel.getApp();
+    }
 
+    private void sleep() {
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

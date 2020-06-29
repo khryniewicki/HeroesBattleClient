@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
+import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

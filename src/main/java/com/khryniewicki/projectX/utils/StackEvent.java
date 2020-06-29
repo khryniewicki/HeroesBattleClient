@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.utils;
 
-import com.khryniewicki.projectX.game.heroes.character.HeroDTO;
+import com.khryniewicki.projectX.services.DTO.DTO;
 import lombok.Data;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Data
 public class StackEvent {
-    private ConcurrentLinkedDeque<HeroDTO> heroDTOS;
+    private ConcurrentLinkedDeque<DTO> heroDTOS;
     private static StackEvent INSTANCE;
 
     private StackEvent() {
