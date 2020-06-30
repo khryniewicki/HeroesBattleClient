@@ -8,8 +8,17 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Data
 public class StackEvent {
-    private ConcurrentLinkedDeque<DTO> heroDTOS;
+    private ConcurrentLinkedDeque<DTO> events;
     private static StackEvent INSTANCE;
+    private boolean hasAction;
+
+    public boolean hasAction() {
+        return hasAction;
+    }
+
+    public void setHasAction(boolean hasAction) {
+        this.hasAction = hasAction;
+    }
 
     private StackEvent() {
         if (INSTANCE == null) {

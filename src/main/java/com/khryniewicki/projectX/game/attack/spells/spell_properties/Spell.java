@@ -9,15 +9,16 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.services.DTO.DTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.services.SpellSendingService;
-import com.khryniewicki.projectX.utils.HeroAction;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import org.lwjgl.BufferUtils;
 
 import java.nio.DoubleBuffer;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -49,7 +50,7 @@ public class Spell implements UltraSpell {
     private SpellSendingService sendSpellToStompSocket;
     private SendingService sendingService;
     private Integer manaConsumed;
-
+    private StackEvent stackEvent;
 
     public VertexArray createSpell() {
         float[] vertices = new float[]{
@@ -72,7 +73,8 @@ public class Spell implements UltraSpell {
         };
         texture = throwingSpellTexture;
         getHero();
-        sendingService=new SendingService();
+        sendingService = new SendingService();
+        stackEvent=StackEvent.getInstance();
         return new VertexArray(vertices, indices, tcs);
     }
 
@@ -129,7 +131,8 @@ public class Spell implements UltraSpell {
 
 
     private void sendSpellDTO() {
-        sendingService.sendSpell(new SpellDTO(name, finalX, finalY));
+        ConcurrentLinkedDeque<DTO> heroDTOS = stackEvent.getEvents();
+        heroDTOS.offerLast(new SpellDTO(name, finalX, finalY));
     }
 
     private void makeFinalPositionsNull() {
@@ -146,17 +149,22 @@ public class Spell implements UltraSpell {
             glfwGetCursorPos(Game.window, xBuffer, yBuffer);
             double x = xBuffer.get(0);
             double y = yBuffer.get(0);
+
             if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
                 setSpellCountingTime();
                 consumeSpellMana();
                 this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
-                this.setFinalY((float) (Game.height / 2 - y) / (Game.height / 10));
+                float factor=1.1f;
 
-                distanceX = finalX - getHeroPositionX();
-                distanceY = finalY - getHeroPositionY();
+                this.setFinalY((float) ((Game.height / 2 -  y)*factor )/ (Game.height / 10));
+                float X = getHeroPositionX();
+                float Y = getHeroPositionY();
+
+                distanceX = finalX - X;
+                distanceY = finalY - Y;
 
                 setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
-                setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
+                setPosition(X, Y, 1f);
                 sendSpellDTO();
             }
         });
@@ -166,8 +174,10 @@ public class Spell implements UltraSpell {
         getHero();
         Integer heroMana = hero.getMana();
         hero.setMana(heroMana - manaConsumed);
+
         ManaBar manaBar = hero.getManaBar();
         manaBar.updateManaBar();
+
         sendingService.updatePosition();
     }
 

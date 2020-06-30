@@ -11,7 +11,6 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
-import com.khryniewicki.projectX.utils.HeroAction;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -40,11 +39,11 @@ public class SuperHero implements UltraHero {
     private float velocity = 0.2f;
     private LifeBar lifeBar;
     private ManaBar manaBar;
-    private HeroAction heroAction;
+    private StackEvent stackEvent;
 
     public SuperHero() {
         sendingService = new SendingService();
-        heroAction = HeroAction.getInstance();
+        stackEvent = StackEvent.getInstance();
     }
 
 
@@ -101,12 +100,12 @@ public class SuperHero implements UltraHero {
 
                     if (tmpX != this.position.x || tmpY != this.position.y) {
 
-                        heroAction.setHeroMoving(true);
+                        stackEvent.setHasAction(true);
                         setMesh(createHero());
                         lifeBar.updateLifeBar();
                         manaBar.updateManaBar();
                     }else
-                        heroAction.setHeroMoving(false);
+                        stackEvent.setHasAction(false);
 
                 }
 
