@@ -57,7 +57,6 @@ public class ManaBar {
 
     public VertexArray createVertexArray(String textureType) {
         float manaFactor = getManaFactor(textureType);
-
         float offsetPositionY = 0.6f;
         float offsetPositionX = -0.3f;
         float heroPositionX = hero.getPosition().x;
