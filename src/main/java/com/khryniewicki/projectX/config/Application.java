@@ -75,8 +75,8 @@ public class Application implements Runnable{
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
             spellReceiveService = new SpellReceiveService();
-            sendingService =new SendingService();
             spellSendingService =new SpellSendingService();
+            sendingService =new SendingService();
             channels=Channels.getINSTANCE();
         }
 
@@ -108,7 +108,7 @@ public class Application implements Runnable{
             ParameterizedTypeReference<HashMap<String, Message>> responseType =
                     new ParameterizedTypeReference<>() {
                     };
-            RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/map"))
+            RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/controller/"+channels.getApp()))
                     .accept(MediaType.APPLICATION_JSON).build();
 
             requestScheduler(restTemplate, responseType, request);
@@ -129,7 +129,7 @@ public class Application implements Runnable{
                         latch.countDown();
                     }
                 }
-            }, 0, 1 * 1000);
+            }, 0, 1 * 500);
 
             try {
                 latch.await();

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class WizardFactory implements CharacterFactory{
 
     public SuperHero create(String character){
+
         switch (character){
             case "FireWizard":
                 return new FireWizard();

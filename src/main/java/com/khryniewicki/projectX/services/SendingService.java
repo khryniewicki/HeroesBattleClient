@@ -27,7 +27,7 @@ public class SendingService implements Runnable {
     private final StackEvent stackEvent;
     private ConcurrentLinkedDeque<DTO> events;
     private int counter;
-
+    private StompSession session;
 
     public SendingService() {
         channel = Channels.getINSTANCE();
@@ -36,10 +36,10 @@ public class SendingService implements Runnable {
 
     private void getHeroInstance() {
         if (hero == null) {
-            heroStartingPosition = HeroStartingPosition.getInstance();
-            heroesInstances = HeroesInstances.getInstance();
+            this.heroStartingPosition = HeroStartingPosition.getInstance();
+            this.heroesInstances = HeroesInstances.getInstance();
             this.hero = heroesInstances.getHero();
-            events = stackEvent.getEvents();
+            this.events = stackEvent.getEvents();
         }
     }
 
@@ -79,6 +79,7 @@ public class SendingService implements Runnable {
     @Override
     public void run() {
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
+        session = Application.getSession();
 
         while (true) {
             action();
@@ -97,7 +98,6 @@ public class SendingService implements Runnable {
 
     private synchronized void send() {
         if (events != null && events.size() != 0) {
-            StompSession session = Application.getSession();
             DTO dto = events.pop();
             try {
                 session.send(path(dto), dto);
@@ -118,7 +118,7 @@ public class SendingService implements Runnable {
 
     private void sleep() {
         try {
-            Thread.sleep(5);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

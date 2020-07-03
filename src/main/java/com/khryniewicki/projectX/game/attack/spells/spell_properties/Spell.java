@@ -155,16 +155,14 @@ public class Spell implements UltraSpell {
                 consumeSpellMana();
                 this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
                 float factor=1.1f;
-
                 this.setFinalY((float) ((Game.height / 2 -  y)*factor )/ (Game.height / 10));
-                float X = getHeroPositionX();
-                float Y = getHeroPositionY();
 
-                distanceX = finalX - X;
-                distanceY = finalY - Y;
+
+                distanceX = finalX - getHeroPositionX();
+                distanceY = finalY - getHeroPositionY();
 
                 setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
-                setPosition(X, Y, 1f);
+                setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
                 sendSpellDTO();
             }
         });

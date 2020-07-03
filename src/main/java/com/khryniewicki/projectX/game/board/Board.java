@@ -16,10 +16,12 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 @Data
+@Slf4j
 public class Board {
 
     private VertexArray background;
@@ -85,7 +87,6 @@ public class Board {
     }
 
     public void update() {
-
         hero.update();
         heroMock.update();
         spell.update();
@@ -97,13 +98,10 @@ public class Board {
 
         renderBackground();
         myCollision.collisionTest(hero);
-
-
         hero.render();
         heroMock.render();
         spell.render();
         spellMock.render();
-
     }
 
     private void renderBackground() {
