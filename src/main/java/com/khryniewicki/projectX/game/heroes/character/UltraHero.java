@@ -19,7 +19,7 @@ public interface UltraHero extends Ultra {
     Integer getLife();
     Integer getMana();
 
-
+    default void setMana(Integer mana){};
     default void setSpell(){};
     default void setHeroIdle(){};
     default void  setHeroRun(){};

@@ -17,14 +17,14 @@ public class ManaBar {
 
     private Vector position = new Vector();
 
-    private static Texture blueTexture,blackTexture;
-    private VertexArray blueMesh,blackMesh;
-    private float width,height;
+    private static Texture blueTexture, blackTexture;
+    private VertexArray blueMesh, blackMesh;
+    private float width, height;
 
     private UltraHero hero;
     private StartingPosition startingPosition;
+    private Long start;
 
-    
     public ManaBar(UltraHero ultraHero) {
         height = 0.07f;
         width = 0.65f;
@@ -95,6 +95,23 @@ public class ManaBar {
         return manaFactor;
     }
 
+    public void renegerateMana() {
+
+        if (start == null) {
+            start = System.currentTimeMillis();
+        }
+
+        if (System.currentTimeMillis() - start > 3000) {
+
+            Integer mana = hero.getMana();
+
+            if (mana <= 98) {
+                hero.setMana(mana + 2);
+            }
+            updateManaBar();
+            start = null;
+        }
+    }
 
     public Vector getPosition() {
         return position;

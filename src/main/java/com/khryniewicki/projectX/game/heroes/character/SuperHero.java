@@ -110,6 +110,7 @@ public class SuperHero implements UltraHero {
                 }
 
         );
+        manaBar.renegerateMana();
     }
 
 
