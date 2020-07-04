@@ -22,7 +22,7 @@ public class HeroMock implements UltraHero {
     }
 
 
-    private void changeMockPosition() {
+    private void mockMove() {
 
         if (tmpPositionX != null && tmpPositionX == heroReceiveService.getMockPositionX()) {
             if (tmpPositionY != null && tmpPositionY == heroReceiveService.getMockPositionY()) {
@@ -69,7 +69,7 @@ public class HeroMock implements UltraHero {
 
     @Override
     public void update() {
-        changeMockPosition();
+        mockMove();
         checkLifeAndMana();
     }
 

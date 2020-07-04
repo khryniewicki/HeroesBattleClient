@@ -28,7 +28,7 @@ public class SendingService implements Runnable {
     private ConcurrentLinkedDeque<DTO> events;
     private int counter;
     private StompSession session;
-
+    private int counter2;
     public SendingService() {
         channel = Channels.getINSTANCE();
         stackEvent = StackEvent.getInstance();
@@ -58,7 +58,8 @@ public class SendingService implements Runnable {
     public synchronized void updatePosition() {
         getHeroInstance();
         HeroDTO heroDTO = getHeroDTO();
-
+        counter2++;
+        log.info("LOOPS {}",counter2);
         if (heroDTO.equals(tmpHero)) {
             counter++;
         } else {
@@ -80,8 +81,10 @@ public class SendingService implements Runnable {
     public void run() {
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
         session = Application.getSession();
-
+        int local=0;
         while (true) {
+            local++;
+            log.info("LOOPS_SENDING: "+local);
             action();
             send();
         }

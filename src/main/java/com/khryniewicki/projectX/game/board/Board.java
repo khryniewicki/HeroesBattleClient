@@ -97,7 +97,7 @@ public class Board {
     public void render() {
 
         renderBackground();
-        myCollision.collisionTest(hero);
+        myCollision.collisionTest();
         hero.render();
         heroMock.render();
         spell.render();

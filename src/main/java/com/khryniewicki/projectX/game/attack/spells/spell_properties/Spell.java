@@ -74,7 +74,7 @@ public class Spell implements UltraSpell {
         texture = throwingSpellTexture;
         getHero();
         sendingService = new SendingService();
-        stackEvent=StackEvent.getInstance();
+        stackEvent = StackEvent.getInstance();
         return new VertexArray(vertices, indices, tcs);
     }
 
@@ -143,29 +143,32 @@ public class Spell implements UltraSpell {
 
     @Override
     public void getMousePosition() {
-        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
-            DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
-            DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
-            glfwGetCursorPos(Game.window, xBuffer, yBuffer);
-            double x = xBuffer.get(0);
-            double y = yBuffer.get(0);
+        if (isCastingSpellsActivated) {
+            glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
+                DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
+                DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+                glfwGetCursorPos(Game.window, xBuffer, yBuffer);
+                double x = xBuffer.get(0);
+                double y = yBuffer.get(0);
 
-            if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && isCastingSpellsActivated) {
-                setSpellCountingTime();
-                consumeSpellMana();
-                this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
-                float factor=1.1f;
-                this.setFinalY((float) ((Game.height / 2 -  y)*factor )/ (Game.height / 10));
+                if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE) {
+                    setSpellCountingTime();
+                    consumeSpellMana();
+                    float factor = 1.1f;
 
+                    this.setFinalX((float) (x - Game.width / 2) / (Game.width / 20));
+                    this.setFinalY((float) ((Game.height / 2 - y) * factor) / (Game.height / 10));
 
-                distanceX = finalX - getHeroPositionX();
-                distanceY = finalY - getHeroPositionY();
+                    distanceX = finalX - getHeroPositionX();
+                    distanceY = finalY - getHeroPositionY();
 
-                setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
-                setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
-                sendSpellDTO();
-            }
-        });
+                    setSpell(-Math.signum(distanceY), -Math.signum(distanceX), throwingSpellTexture);
+                    setPosition(getHeroPositionX(), getHeroPositionY(), 1f);
+                    sendSpellDTO();
+
+                }
+            });
+        }
     }
 
     public void consumeSpellMana() {

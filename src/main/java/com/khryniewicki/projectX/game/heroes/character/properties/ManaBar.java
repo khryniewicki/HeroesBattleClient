@@ -8,6 +8,7 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.GameUtill;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,11 +25,12 @@ public class ManaBar {
     private UltraHero hero;
     private StartingPosition startingPosition;
     private Long start;
-
+    private StackEvent stackEvent;
     public ManaBar(UltraHero ultraHero) {
         height = 0.07f;
         width = 0.65f;
         hero = ultraHero;
+        stackEvent=StackEvent.getInstance();
         updateManaBar();
     }
 
@@ -53,6 +55,7 @@ public class ManaBar {
         setBlackMesh(createVertexArray("black"));
         blackTexture = GameUtill.empty;
         blueTexture = GameUtill.mana;
+        stackEvent.setHasAction(true);
     }
 
     public VertexArray createVertexArray(String textureType) {

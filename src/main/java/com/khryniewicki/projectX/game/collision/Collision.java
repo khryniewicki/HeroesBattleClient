@@ -4,6 +4,7 @@ import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.knights.Knight;
 import com.khryniewicki.projectX.game.board.BoardObjects;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 
@@ -40,8 +41,12 @@ public class Collision {
     private List<BoardObjects> terrainList = ObstacleStorage.getTerrainList();
 
 
-    public void collisionTest(SuperHero hero) {
-        setHero(hero); bx = hero.getX();by = hero.getY();
+    public void collisionTest() {
+        if (hero==null){
+            HeroesInstances heroesInstances = HeroesInstances.getInstance();
+            setHero(heroesInstances.getHero());
+        }
+        bx = hero.getX();by = hero.getY();
 
         obstacleCollision(checkInWhichQuerterIsHero());
         terrainCollision(terrainList);

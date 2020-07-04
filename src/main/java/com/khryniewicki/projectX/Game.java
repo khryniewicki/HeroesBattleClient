@@ -12,6 +12,7 @@ import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.TextUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -29,6 +30,7 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Component
+@Slf4j
 public class Game implements Runnable {
 
 
@@ -204,6 +206,7 @@ public class Game implements Runnable {
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
+        int local=0;
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -213,6 +216,8 @@ public class Game implements Runnable {
                 updates++;
                 delta--;
             }
+            local++;
+            log.info("LOOPS_GAME: "+local);
 
             render();
             frames++;

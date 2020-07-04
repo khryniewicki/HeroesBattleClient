@@ -1,22 +1,18 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.Move;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 @Data
 @Slf4j
@@ -32,18 +28,14 @@ public class SuperHero implements UltraHero {
     private Integer mana;
     public static float hero_positionX0;
     public static float hero_positionY0;
-    private SendingService sendingService;
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
-    private float velocity = 0.2f;
     private LifeBar lifeBar;
     private ManaBar manaBar;
-    private StackEvent stackEvent;
+    private Move move;
 
     public SuperHero() {
-        sendingService = new SendingService();
-        stackEvent = StackEvent.getInstance();
     }
 
 
@@ -73,43 +65,10 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
-        glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
+        if (move == null) {
+            move = Move.getInstance();        }
 
-            SIZE = 1f;
-                    float tmpX = getX();
-                    float tmpY = getY();
-                    if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
-                        this.position.y += velocity;
-                        texture = heroUp;
-                    } else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE && !Collision.collisions[3]) {
-                        this.position.y -= velocity;
-                        texture = heroDown;
-                    } else if (key == GLFW_KEY_LEFT && action != GLFW_RELEASE && !Collision.collisions[1]) {
-                        this.position.x -= velocity;
-
-                        isMovingLeft = true;
-                        texture = heroLeft;
-                    } else if (key == GLFW_KEY_RIGHT && action != GLFW_RELEASE && !Collision.collisions[0]) {
-                        isMovingLeft = false;
-                        this.position.x += velocity;
-                        texture = heroRight;
-                    } else {
-                        setSIZE(0.9f);
-                        texture = heroIdle;
-                    }
-
-                    if (tmpX != this.position.x || tmpY != this.position.y) {
-
-                        stackEvent.setHasAction(true);
-                        setMesh(createHero());
-                        lifeBar.updateLifeBar();
-                        manaBar.updateManaBar();
-                    }else
-                        stackEvent.setHasAction(false);
-
-                }
-
-        );
+        move.move();
         manaBar.renegerateMana();
     }
 
@@ -162,6 +121,7 @@ public class SuperHero implements UltraHero {
     public void setMana(Integer mana) {
         this.mana = mana;
     }
+
     @Override
     public Spell getSpell() {
         return spell;
