@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.Move;
 import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
@@ -42,9 +43,10 @@ public class HeroesInstances {
         this.hero = characterFactory.create(MultiplayerInitializer.inputText);
     }
 
-    public void setHeroLifeAndManaBar() {
+    public void setHeroLifeManaMove() {
         hero.setLifeBar(new LifeBar(hero));
         hero.setManaBar(new ManaBar(hero));
+        hero.setMove(Move.getInstance());
     }
 
 

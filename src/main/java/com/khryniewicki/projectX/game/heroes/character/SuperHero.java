@@ -65,9 +65,6 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
-        if (move == null) {
-            move = Move.getInstance();        }
-
         move.move();
         manaBar.renegerateMana();
     }

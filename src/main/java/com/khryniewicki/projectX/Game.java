@@ -191,7 +191,7 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        heroesInstances.setHeroLifeAndManaBar();
+        heroesInstances.setHeroLifeManaMove();
 
     }
 
