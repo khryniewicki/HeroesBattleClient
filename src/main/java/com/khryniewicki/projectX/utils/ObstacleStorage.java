@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ObstacleStorage {
-    public static Texture pipe = new Texture("res/pipe.png");
+    public static Texture pipe = new Texture("pipe.png");
 
     // bottom-left quarter
     static Obstacle palm = new Obstacle(0.11f, 1.0f, -5.2f, -3.2f);

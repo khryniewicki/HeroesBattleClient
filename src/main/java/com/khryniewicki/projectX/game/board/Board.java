@@ -59,7 +59,7 @@ public class Board {
     }
 
     private void initBackgroundTextures() {
-        bgTexture = new Texture("res/desertforum.png");
+        bgTexture = new Texture("desertBackground.png");
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
     }

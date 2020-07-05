@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.collision;
 
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.knights.Knight;
+
 import com.khryniewicki.projectX.game.board.BoardObjects;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -148,16 +148,16 @@ public class Collision {
             float tangens = obstacle.getTangens();
 
             if (tangens == 0) {
-                px0 = (obstacle.getObstacle_positionX0() - Knight.hero_positionX0) + delta_x;
-                py0 = (obstacle.getObstacle_positionY0() - Knight.hero_positionY0) + delta_y;
+                px0 = (obstacle.getObstacle_positionX0() - hero.hero_positionX0) + delta_x;
+                py0 = (obstacle.getObstacle_positionY0() - hero.hero_positionY0) + delta_y;
                 px1 = px0 + obstacle.getWidth();
                 py1 = py0 + obstacle.getHeight();
                 proximtyValue = 0.21f;
             } else {
-                float px = (obstacle.getObstacle_positionX0() - Knight.hero_positionX0);
-                float py = (obstacle.getObstacle_positionY0() - Knight.hero_positionY0);
-                float pX = (obstacle.getObstacle_positionX1() - Knight.hero_positionX0);
-                float pY = (obstacle.getObstacle_positionY1() - Knight.hero_positionY0);
+                float px = (obstacle.getObstacle_positionX0() - hero.hero_positionX0);
+                float py = (obstacle.getObstacle_positionY0() - hero.hero_positionY0);
+                float pX = (obstacle.getObstacle_positionX1() - hero.hero_positionX0);
+                float pY = (obstacle.getObstacle_positionY1() - hero.hero_positionY0);
                 float X = 1.0f;
                 if (by1 < py) X = 0;
                 if (bx1 < px) X = 0;

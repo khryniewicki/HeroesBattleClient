@@ -206,7 +206,6 @@ public class Game implements Runnable {
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
-        int local=0;
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -216,8 +215,6 @@ public class Game implements Runnable {
                 updates++;
                 delta--;
             }
-            local++;
-            log.info("LOOPS_GAME: "+local);
 
             render();
             frames++;

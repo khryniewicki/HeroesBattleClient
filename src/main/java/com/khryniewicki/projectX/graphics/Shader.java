@@ -27,14 +27,14 @@ public class Shader {
 
     public static void loadAll() {
 
-        BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
-        HERO = new Shader("shaders/hero.vert", "shaders/hero.frag");
-        OBSTACLE = new Shader("shaders/object.vert", "shaders/object.frag");
-        TERRAIN = new Shader("shaders/terrain.vert", "shaders/terrain.frag");
-        MOCKHERO = new Shader("shaders/hero.vert", "shaders/hero.frag");
-        SPELL = new Shader("shaders/spell.vert", "shaders/spell.frag");
-        TEXT= new Shader("shaders/object.vert", "shaders/object.frag");
-        STRIP=  new Shader("shaders/hero.vert", "shaders/hero.frag");
+        BG = new Shader("bg.vert", "bg.frag");
+        HERO = new Shader("hero.vert", "hero.frag");
+        OBSTACLE = new Shader("object.vert", "object.frag");
+        TERRAIN = new Shader("terrain.vert", "terrain.frag");
+        MOCKHERO = new Shader("hero.vert", "hero.frag");
+        SPELL = new Shader("spell.vert", "spell.frag");
+        TEXT= new Shader("object.vert", "object.frag");
+        STRIP=  new Shader("hero.vert", "hero.frag");
 
     }
 
