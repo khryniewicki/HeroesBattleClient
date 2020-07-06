@@ -47,6 +47,7 @@ public class HeroesInstances {
         hero.setLifeBar(new LifeBar(hero));
         hero.setManaBar(new ManaBar(hero));
         hero.setMove(Move.getInstance());
+
     }
 
 

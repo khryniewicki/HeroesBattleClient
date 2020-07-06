@@ -163,14 +163,14 @@ public class Game implements Runnable {
         if (isHeroLoadedProperly()) {
             multiplayerController.waitingForSecondPlayer();
             createBoard();
-            createHeroSenderPosition();
+            createSendingService();
         } else {
             multiplayerController.occupiedRoom();
             running = false;
         }
     }
 
-    private void createHeroSenderPosition() {
+    private void createSendingService() {
         SendingService heroSending = new SendingService();
         Thread sender = new Thread(heroSending);
         sender.start();

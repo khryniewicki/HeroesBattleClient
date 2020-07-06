@@ -11,6 +11,7 @@ public class StackEvent {
     private ConcurrentLinkedDeque<DTO> events;
     private static StackEvent INSTANCE;
     private boolean hasAction;
+    private boolean isCastingSpellsActivated = true;
 
     public boolean hasAction() {
         return hasAction;

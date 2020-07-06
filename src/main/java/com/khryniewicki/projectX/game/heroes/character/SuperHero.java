@@ -1,5 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class SuperHero implements UltraHero {
+
     private boolean isMovingLeft;
     private VertexArray mesh;
     private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle;
@@ -34,6 +37,10 @@ public class SuperHero implements UltraHero {
     private LifeBar lifeBar;
     private ManaBar manaBar;
     private Move move;
+    private BasicSpell basicSpell;
+    private UltimateSpell ultimateSpell;
+
+
 
     public SuperHero() {
     }
@@ -126,7 +133,7 @@ public class SuperHero implements UltraHero {
 
 
     public Spell castingSpell() {
-        return spell;
+        return basicSpell.getSpell();
     }
 
     @Override

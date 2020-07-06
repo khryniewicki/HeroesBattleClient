@@ -1,6 +1,9 @@
 package com.khryniewicki.projectX.game.heroes.wizards;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.Fire;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
@@ -19,7 +22,9 @@ public class FireWizard extends SuperHero {
 
     @Override
     public void setSpell() {
-        setSpell(new Fire());
+        setBasicSpell(new BasicSpell(new Fire()));
+        setUltimateSpell(new UltimateSpell(new Ice()));
+
     }
 
     @Override

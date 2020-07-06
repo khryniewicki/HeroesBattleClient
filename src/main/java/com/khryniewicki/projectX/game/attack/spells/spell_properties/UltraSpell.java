@@ -15,7 +15,7 @@ public interface UltraSpell extends Ultra {
 
     void getMousePosition();
     void spellCasting();
-    void setSpellCountingTime();
+    void startSpellCountingTime();
 
 
     Float getHeroPositionX();

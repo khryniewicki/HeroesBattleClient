@@ -27,7 +27,7 @@ public class SpellMock extends Spell implements UltraSpell {
         }
         if (SpellReceiveService.spellMockPositionX != null) {
             getPositionFromSpellReceiveService();
-            setSpellCountingTime();
+            startSpellCountingTime();
             setSpell(-Math.signum(getDistanceY()), -Math.signum(getDistanceX()), getThrowingSpellTexture());
             setPosition(new Vector(getHeroPositionX(), getHeroPositionY(), 1f));
         }
@@ -123,8 +123,8 @@ public class SpellMock extends Spell implements UltraSpell {
         ultraSpell.setSpell(indexHeight, indexWidth, texture);
     }
     @Override
-    public void setSpellCountingTime(){
-        ultraSpell.setSpellCountingTime();
+    public void startSpellCountingTime(){
+        ultraSpell.startSpellCountingTime();
     }
     @Override
     public void setPosition(Vector position) {

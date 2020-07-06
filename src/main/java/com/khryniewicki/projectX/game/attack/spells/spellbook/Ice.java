@@ -1,13 +1,16 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_instances;
+package com.khryniewicki.projectX.game.attack.spells.spellbook;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.SpellUtil;
 import lombok.Data;
 
 @Data
 public class Ice extends Spell {
+
+
     public Ice() {
         setPosition();
         setProperties();

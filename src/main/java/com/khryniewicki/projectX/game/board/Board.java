@@ -4,6 +4,7 @@ import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
@@ -51,7 +52,7 @@ public class Board {
         hero = heroesInstances.getHero();
         heroMock = heroesInstances.getMock();
         spell = hero.castingSpell();
-        spellMock = new SpellMock(heroMock.getSpell());
+        spellMock = new SpellMock(new Fire());
     }
 
     public static Board getInstance() {
