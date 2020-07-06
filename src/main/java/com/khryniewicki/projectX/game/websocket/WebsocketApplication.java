@@ -1,27 +1,22 @@
-package com.khryniewicki.projectX.config;
+package com.khryniewicki.projectX.game.websocket;
 
-import com.khryniewicki.projectX.config.messageHandler.Channels;
-import com.khryniewicki.projectX.config.messageHandler.ConnectionStatus;
-import com.khryniewicki.projectX.config.messageHandler.Message;
-import com.khryniewicki.projectX.config.messageHandler.MessageHandler;
-import com.khryniewicki.projectX.services.DTO.SpellDTO;
-import com.khryniewicki.projectX.services.DTO.HeroDTO;
+
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.MapWithHeroes;
+import com.khryniewicki.projectX.game.websocket.messages.Channels;
+import com.khryniewicki.projectX.game.websocket.messages.ConnectionStatus;
+import com.khryniewicki.projectX.game.websocket.messages.Message;
+import com.khryniewicki.projectX.game.websocket.messages.MessageHandler;
+import com.khryniewicki.projectX.services.DTO.HeroDTO;
+import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 import com.khryniewicki.projectX.services.SpellSendingService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
@@ -30,16 +25,16 @@ import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.lang.reflect.Type;
-import java.net.URI;
-import java.util.*;
-import java.util.concurrent.CountDownLatch;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 @Data
 @Slf4j
-public class Application implements Runnable{
+public class WebsocketApplication implements Runnable{
     private static StompSession session;
     private static StompSession copy_session;
     private static boolean client_running;
@@ -58,19 +53,12 @@ public class Application implements Runnable{
             extends StompSessionHandlerAdapter {
         private static String userId = "spring-" +
                 ThreadLocalRandom.current().nextInt(1, 99);
-        private HeroReceiveService heroReceiveService;
-        private SpellReceiveService spellReceiveService;
-        private SendingService sendingService;
-        private SpellSendingService spellSendingService;
+        private final HeroReceiveService heroReceiveService;
+        private final SpellReceiveService spellReceiveService;
+        private final SendingService sendingService;
+        private final SpellSendingService spellSendingService;
         private final Channels channels;
-        private ResponseEntity<HashMap<String, Message>> exchange;
-
-        public String getSessionID() {
-            return session.getSessionId();
-        }
-
         private String sessionID;
-
 
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
@@ -78,6 +66,9 @@ public class Application implements Runnable{
             spellSendingService =new SpellSendingService();
             sendingService =new SendingService();
             channels=Channels.getINSTANCE();
+        }
+        public String getSessionID() {
+            return session.getSessionId();
         }
 
         private void showHeaders(StompHeaders headers) {
@@ -103,40 +94,12 @@ public class Application implements Runnable{
             session.send("/app/room", new Message(session.getSessionId(), ConnectionStatus.DISCONNECTED));
         }
 
-        public void getMapWithHeroesFromServer() {
-            RestTemplate restTemplate = new RestTemplate();
-            ParameterizedTypeReference<HashMap<String, Message>> responseType =
-                    new ParameterizedTypeReference<>() {
-                    };
-            RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/controller/"+channels.getApp()))
-                    .accept(MediaType.APPLICATION_JSON).build();
-
-            requestScheduler(restTemplate, responseType, request);
+        public void getHeroesRegistry() {
+            WebsocketScheduler websocketScheduler = new WebsocketScheduler();
+            websocketScheduler.getHeroesRegistryFromServer(path);
         }
 
-        private void requestScheduler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
-            Timer timer = new Timer();
-            CountDownLatch latch = new CountDownLatch(1);
 
-            timer.schedule(new TimerTask() {
-
-                public void run() {
-                    exchange = restTemplate.exchange(request, responseType);
-                    if (Objects.requireNonNull(exchange.getBody()).size() == 2) {
-                        timer.cancel();
-                        MapWithHeroes instance = MapWithHeroes.getINSTANCE();
-                        instance.setMapWithHeroes(exchange.getBody());
-                        latch.countDown();
-                    }
-                }
-            }, 0, 1 * 500);
-
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
         public  void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {

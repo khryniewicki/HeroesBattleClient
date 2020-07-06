@@ -1,16 +1,13 @@
 package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
-import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
+import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.utils.TextUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,11 +16,11 @@ import static org.lwjgl.glfw.GLFW.*;
 
 @Data
 @Slf4j
-public class MultiplayerInitializer {
+public class MultiplayerController {
     private RenderFactory renderFactory;
     public static String inputText;
 
-    public MultiplayerInitializer() {
+    public MultiplayerController() {
         renderFactory = RenderFactory.getRenderFactory();
     }
 

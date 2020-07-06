@@ -1,11 +1,11 @@
 package com.khryniewicki.projectX;
 
 
-import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.config.messageHandler.LoadedStatus;
+import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
-import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
+import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.graphics.GameShaders;
@@ -47,13 +47,13 @@ public class Game implements Runnable {
     public final RenderFactory renderFactory;
     private final WebsocketInitializer websocketInitializer;
     private final HeroesInstances heroesInstances;
-    private final MultiplayerInitializer multiplayerInitializer;
+    private final MultiplayerController multiplayerController;
 
     public Game() {
         renderFactory = RenderFactory.getRenderFactory();
         heroesInstances = HeroesInstances.getInstance();
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-        multiplayerInitializer = new MultiplayerInitializer();
+        multiplayerController = new MultiplayerController();
 
     }
 
@@ -146,7 +146,7 @@ public class Game implements Runnable {
     }
 
     private void initializeMultiplayerGame() {
-        multiplayerInitializer.getHeroTypeFromPlayer();
+        multiplayerController.getHeroTypeFromPlayer();
         initializeWebsocketConnection();
         setMultiplayerGame();
     }
@@ -154,18 +154,18 @@ public class Game implements Runnable {
 
     private void initializeWebsocketConnection() {
         renderFactory.render(TextUtil.CONNECTION);
-        new Application().startWebsocket();
+        new WebsocketApplication().startWebsocket();
         renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
     }
 
 
     private void setMultiplayerGame() {
         if (isHeroLoadedProperly()) {
-            multiplayerInitializer.waitingForSecondPlayer();
+            multiplayerController.waitingForSecondPlayer();
             createBoard();
             createHeroSenderPosition();
         } else {
-            multiplayerInitializer.occupiedRoom();
+            multiplayerController.occupiedRoom();
             running = false;
         }
     }

@@ -1,8 +1,7 @@
-package com.khryniewicki.projectX.config.messageHandler;
+package com.khryniewicki.projectX.game.websocket.messages;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -15,7 +14,7 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class MessageHandler {
     private Message message;
-    private static Application.MyStompSessionHandler handler;
+    private static WebsocketApplication.MyStompSessionHandler handler;
     private HeroStartingPosition heroStartingPosition;
     private MockStartingPosition mockStartingPosition;
     private boolean flag = true;
@@ -23,7 +22,7 @@ public class MessageHandler {
     private CountDownLatch latch;
 
     private MessageHandler() {
-        handler = new Application.MyStompSessionHandler();
+        handler = new WebsocketApplication.MyStompSessionHandler();
         channels = Channels.getINSTANCE();
     }
 

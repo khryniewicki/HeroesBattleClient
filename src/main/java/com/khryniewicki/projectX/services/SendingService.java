@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.config.Application;
-import com.khryniewicki.projectX.config.messageHandler.Channels;
+import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
@@ -18,13 +18,13 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 @Data
 @Slf4j
 public class SendingService implements Runnable {
+    private final Channels channel;
+    private final StackEvent stackEvent;
     private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
     private SuperHero hero;
     private HeroesInstances heroesInstances;
     private HeroStartingPosition heroStartingPosition;
-    private final Channels channel;
-    private final StackEvent stackEvent;
     private ConcurrentLinkedDeque<DTO> events;
     private int counter;
     private StompSession session;
@@ -79,7 +79,7 @@ public class SendingService implements Runnable {
     @Override
     public void run() {
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
-        session = Application.getSession();
+        session = WebsocketApplication.getSession();
         while (true) {
             action();
             send();

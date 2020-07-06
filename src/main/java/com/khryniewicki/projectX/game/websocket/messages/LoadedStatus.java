@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.config.messageHandler;
+package com.khryniewicki.projectX.game.websocket.messages;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
-import com.khryniewicki.projectX.config.messageHandler.Message;
+import com.khryniewicki.projectX.game.websocket.messages.Message;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
@@ -9,8 +9,8 @@ import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.Move;
 import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
-import com.khryniewicki.projectX.game.multiplayer.MultiplayerInitializer;
-import com.khryniewicki.projectX.game.multiplayer.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
+import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -40,7 +40,7 @@ public class HeroesInstances {
     }
 
     public void setHero() {
-        this.hero = characterFactory.create(MultiplayerInitializer.inputText);
+        this.hero = characterFactory.create(MultiplayerController.inputText);
     }
 
     public void setHeroLifeManaMove() {
@@ -52,11 +52,11 @@ public class HeroesInstances {
 
     public void setMock() {
         WebsocketInitializer websocketInstance = WebsocketInitializer.getWebsocketInstance();
-        MapWithHeroes mapWithHeroes1 = MapWithHeroes.getINSTANCE();
+        HeroesRegistry heroesRegistry1 = HeroesRegistry.getINSTANCE();
 
         String sessionId = websocketInstance.getSessionId();
 
-        Map<String, Message> heroes = mapWithHeroes1.getMapWithHeroes();
+        Map<String, Message> heroes = heroesRegistry1.getMapWithHeroes();
 
         for (Map.Entry<String, Message> hero : heroes.entrySet()) {
             String key = hero.getKey();

@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.graphics;
 
 import com.khryniewicki.projectX.utils.BufferUtilsOwn;
+import com.khryniewicki.projectX.utils.FileUtils;
 import lombok.Data;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -9,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +31,8 @@ public class Texture {
         int[] pixels = null;
 
         try {
-            BufferedImage image = ImageIO.read(new FileInputStream(pathTransformer(path)));
+            InputStream inputStream = FileUtils.pathTransformer("png", "img", path);
+            BufferedImage image = ImageIO.read(inputStream);
             width = image.getWidth();
             height = image.getHeight();
             pixels = new int[width * height];
@@ -56,21 +59,7 @@ public class Texture {
         return result;
     }
 
-    public static String pathTransformer(String path) throws IOException {
-        String result = null;
 
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath*:/img/**/*.png");
-
-        for (Resource resource : resources) {
-            if (path.equals(resource.getFilename())) {
-                result = resource.getFile().getAbsolutePath();
-                return  result;
-            }
-
-        }
-        return result;
-    }
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, texture);

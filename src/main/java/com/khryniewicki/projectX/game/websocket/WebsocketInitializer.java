@@ -1,10 +1,8 @@
-package com.khryniewicki.projectX.game.multiplayer;
-
-import com.khryniewicki.projectX.config.Application;
+package com.khryniewicki.projectX.game.websocket;
 
 public class WebsocketInitializer implements Runnable {
 
-    private Application.MyStompSessionHandler handler;
+    private WebsocketApplication.MyStompSessionHandler handler;
     private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
 
     private WebsocketInitializer() {
@@ -16,13 +14,11 @@ public class WebsocketInitializer implements Runnable {
 
     @Override
     public void run() {
-        initialize();
+        register();
     }
 
-
-
-    public void initialize() {
-        handler = new Application.MyStompSessionHandler();
+    public void register() {
+        handler = new WebsocketApplication.MyStompSessionHandler();
         handler.register();
     }
 
@@ -31,10 +27,11 @@ public class WebsocketInitializer implements Runnable {
     }
 
     public void getSecondPlayerMockType() {
-        handler.getMapWithHeroesFromServer();
+        handler.getHeroesRegistry();
     }
 
     public String getSessionId() {
         return handler.getSessionID();
     }
+
 }
