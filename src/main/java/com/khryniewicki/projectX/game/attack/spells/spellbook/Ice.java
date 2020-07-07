@@ -12,7 +12,7 @@ public class Ice extends Spell {
     public Ice() {
         setProperties();
         setTexture();
-        setMesh();
+
     }
 
     @Override
@@ -29,11 +29,6 @@ public class Ice extends Spell {
     public void setTexture() {
         setThrowingSpellTexture(SpellUtil.ICEBALL);
         setConsumedSpellTexture(SpellUtil.ICE);
-    }
-
-    @Override
-    public void setMesh() {
-        setMesh(createMesh());
     }
 
 

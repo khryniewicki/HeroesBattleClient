@@ -11,7 +11,6 @@ public class Thunder extends Spell {
     public Thunder() {
         setProperties();
         setTexture();
-        setMesh();
     }
 
     @Override
@@ -29,11 +28,6 @@ public class Thunder extends Spell {
     public void setTexture() {
         setThrowingSpellTexture(SpellUtil.THUNDERBALL);
         setConsumedSpellTexture(SpellUtil.THUNDER);
-    }
-
-    @Override
-    public void setMesh() {
-        setMesh(createMesh());
     }
 
 

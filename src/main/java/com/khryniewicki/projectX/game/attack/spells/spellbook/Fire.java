@@ -13,7 +13,7 @@ public class Fire extends Spell {
     public Fire() {
         setProperties();
         setTexture();
-        setMesh();
+
     }
 
     @Override
@@ -31,12 +31,6 @@ public class Fire extends Spell {
         setThrowingSpellTexture(SpellUtil.FIREBALL);
         setConsumedSpellTexture(SpellUtil.FIRE);
     }
-
-    @Override
-    public void setMesh() {
-        setMesh(createMesh());
-    }
-
 
 
 

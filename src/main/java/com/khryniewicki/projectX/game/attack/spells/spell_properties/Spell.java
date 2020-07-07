@@ -175,5 +175,7 @@ public class Spell implements UltraSpell {
         setTexture(texture);
     }
 
-
+    public void setMesh() {
+        this.mesh = createMesh();
+    }
 }
