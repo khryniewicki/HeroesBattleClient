@@ -2,10 +2,10 @@ package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.DoublePosition;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.DTO.DTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.SendingService;
@@ -20,7 +20,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class MouseSetting {
 
     private final StackEvent stackEvent;
-    private DoublePosition cursorPosition;
+    private Position cursorPosition;
     private SpellInstance spellInstance;
     private SuperHero hero;
     private final SendingService sendingService;
@@ -59,10 +59,10 @@ public class MouseSetting {
     }
 
 
-    private void setFinalSpellPosition(DoublePosition doublePosition) {
+    private void setFinalSpellPosition(Position position) {
         float factor = 1.1f;
-        ultraSpell.setFinalX((float) (doublePosition.getX() - Game.width / 2) / (Game.width / 20));
-        ultraSpell.setFinalY((float) ((Game.height / 2 - doublePosition.getY()) * factor) / (Game.height / 10));
+        ultraSpell.setFinalX((float) (position.getPositionXD() - Game.width / 2) / (Game.width / 20));
+        ultraSpell.setFinalY((float) ((Game.height / 2 - position.getPositionYD()) * factor) / (Game.height / 10));
     }
 
     private void consumeSpellMana() {
@@ -90,13 +90,13 @@ public class MouseSetting {
         return hero.getMana() >= spellInstance.getManaConsumed();
     }
 
-    private DoublePosition getCursorPosition() {
+    private Position getCursorPosition() {
         DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
         DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
         glfwGetCursorPos(Game.window, xBuffer, yBuffer);
         double x = xBuffer.get(0);
         double y = yBuffer.get(0);
-        return new DoublePosition(x, y);
+        return new Position(x, y);
     }
     private void getHeroInstance() {
         if (hero == null) {

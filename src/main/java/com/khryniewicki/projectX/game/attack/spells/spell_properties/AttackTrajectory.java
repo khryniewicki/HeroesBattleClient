@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
