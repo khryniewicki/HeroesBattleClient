@@ -1,11 +1,7 @@
 package com.khryniewicki.projectX.game.board;
 
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
@@ -31,7 +27,7 @@ public class Board {
     private Vector position = new Vector();
 
     public static SuperHero hero;
-    public static UltraHero heroMock;
+    public static UltraHero mock;
     private UltraSpell spell;
     private UltraSpell spellMock;
     private ActivatedAttack activatedAttack;
@@ -51,9 +47,9 @@ public class Board {
 
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
-        heroMock = heroesInstances.getMock();
+        mock = heroesInstances.getMock();
         spell = hero.getUltraSpell();
-//        spellMock = new SpellMock(new Fire());
+        spellMock =mock.getUltraSpell() ;
     }
 
     public static Board getInstance() {
@@ -90,9 +86,9 @@ public class Board {
 
     public void update() {
         hero.update();
-        heroMock.update();
+        mock.update();
         spell.update();
-//        spellMock.update();
+        spellMock.update();
 
     }
 
@@ -101,9 +97,9 @@ public class Board {
         renderBackground();
         myCollision.collisionTest();
         hero.render();
-        heroMock.render();
+        mock.render();
         spell.render();
-//        spellMock.render();
+        spellMock.render();
     }
 
     private void renderBackground() {

@@ -184,6 +184,12 @@ public class Game implements Runnable {
 
     private void registerHero() {
         heroesInstances.setHero();
+        setHeroesInitialPositions();
+        heroesInstances.setHeroBasicProperties();
+
+    }
+
+    private void setHeroesInitialPositions() {
         Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
         try {
@@ -191,8 +197,6 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        heroesInstances.setHeroLifeManaMove();
-
     }
 
     private void createBoard() {

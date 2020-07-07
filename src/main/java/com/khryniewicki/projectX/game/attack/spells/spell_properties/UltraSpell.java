@@ -9,27 +9,23 @@ public interface UltraSpell extends Ultra {
 
     void setFinalX(Float finalX);
     void setFinalY(Float finalY);
-    void setDistanceX(Float distanceX);
-    void setDistanceY(Float distanceY);
-    void setImage(Float indexHeight, Float indexWidth, Texture texture);
     void setPosition(Vector position);
+    void setImage(Float indexHeight, Float indexWidth, Texture texture);
     void spellCasting();
     void setPositionZ(Float positionZ);
+    void setSpellInstance(SpellInstance spellInstance);
+    void createHero();
 
     String getName();
-    Float getHeroPositionX();
-    Float getHeroPositionY();
     Float getFinalX();
     Float getFinalY();
-    Float getDistanceX();
-    Float getDistanceY();
+    Float getHeroPositionX();
+    Float getHeroPositionY();
     Float getSize();
 
-    Texture getThrowingSpellTexture();
+
     Integer getManaConsumed();
     Integer getPowerAttack();
 
     SpellInstance getSpellInstance();
-    void setSpellInstance(SpellInstance spellInstance);
-
 }

@@ -1,8 +1,9 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -28,6 +29,7 @@ public class Spell implements UltraSpell {
 
     private Long startingTimeSpell = null;
     private Long spellDuration;
+    private boolean isBasic;
 
     private float indexHeight = 1;
     private float indexWidth = 1;
@@ -38,13 +40,14 @@ public class Spell implements UltraSpell {
 
     private StackEvent stackEvent;
     private SpellInstance spellInstance;
-    private SuperHero hero;
-    private final AttackTrajectory attackTrajectory;
-
+    private UltraHero ultraHero;
+    private final SpellTrajectory spellTrajectory;
+    private StartingPosition startingPosition;
 
 
     public Spell() {
-        this.attackTrajectory = new AttackTrajectory(this);
+        this.spellTrajectory = new SpellTrajectory(this);
+        createHero();
     }
 
     public VertexArray createMesh() {
@@ -72,10 +75,11 @@ public class Spell implements UltraSpell {
         return new VertexArray(vertices, indices, tcs);
     }
 
-    private void createHero() {
-        if (hero == null) {
+    @Override
+    public void createHero() {
+        if (ultraHero == null) {
             HeroesInstances instance = HeroesInstances.getInstance();
-            hero = instance.getHero();
+            ultraHero = instance.getHero();
         }
     }
 
@@ -85,9 +89,8 @@ public class Spell implements UltraSpell {
         spellCasting();
     }
 
-    @Override
     public void spellCasting() {
-        attackTrajectory.spellCasting();
+        spellTrajectory.spellCasting();
     }
 
     @Override
@@ -102,7 +105,12 @@ public class Spell implements UltraSpell {
     @Override
     public void setSpellInstance(SpellInstance spellInstance) {
         this.spellInstance = spellInstance;
+        setSpellDetails();
+    }
+
+    public void setSpellDetails(){
         createProperties();
+        setPosition();
         setMesh(createMesh());
     }
 
@@ -116,14 +124,22 @@ public class Spell implements UltraSpell {
         manaConsumed = spellInstance.getManaConsumed();
     }
 
+
+    public void setPosition() {
+        startingPosition = ultraHero.getStartingPosition();
+        setPositionX(startingPosition.getX());
+        setPositionY(startingPosition.getY());
+        setPositionZ(-0.1f);
+    }
+
     @Override
     public Float getHeroPositionX() {
-        return hero.getX();
+     return ultraHero.getX();
     }
 
     @Override
     public Float getHeroPositionY() {
-        return hero.getY() + hero.getTexture().getHeight() / 2000;
+        return ultraHero.getY() ;
     }
 
     @Override

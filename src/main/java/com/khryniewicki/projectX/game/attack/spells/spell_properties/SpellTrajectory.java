@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Data
-public class AttackTrajectory {
+public class SpellTrajectory {
 
 
     private UltraHero hero;
@@ -21,7 +21,8 @@ public class AttackTrajectory {
     private final SendingService sendingService;
     private final StackEvent stackEvent;
     private boolean isTrajectoryFixed;
-    public AttackTrajectory(UltraSpell spell) {
+
+    public SpellTrajectory(UltraSpell spell) {
         this.stackEvent = StackEvent.getInstance();
         this.sendingService = new SendingService();
         this.spell = spell;
@@ -53,6 +54,7 @@ public class AttackTrajectory {
             spell.setImage(1f, 1f, spellInstance.getConsumedSpellTexture());
             spell.setPosition(new Vector(spell.getFinalX(), spell.getFinalY(), 1f));
             makeFinalPositionsNull();
+            setTrajectoryFixed(false);
         }
     }
 
@@ -71,7 +73,7 @@ public class AttackTrajectory {
 
     public void fixTrajectory(){
         if (!isTrajectoryFixed){
-        startSpellCountingTime();
+            startingTimeSpell = System.currentTimeMillis();
 
         distanceX = spell.getFinalX() - spell.getHeroPositionX();
         distanceY = spell.getFinalY() - spell.getHeroPositionY();
@@ -86,24 +88,17 @@ public class AttackTrajectory {
     }
 
 
-
-
-    public void startSpellCountingTime() {
-        startingTimeSpell = System.currentTimeMillis();
-    }
-
-
     private void makeFinalPositionsNull() {
         spell.setFinalX(null);
         spell.setFinalY(null);
-        setTrajectoryFixed(false);
+
     }
 
 
     public void createSpellInstance() {
-        if (spellInstance == null) {
             spellInstance = spell.getSpellInstance();
-        }
+            log.info(spellInstance.getName());
+
     }
 
 

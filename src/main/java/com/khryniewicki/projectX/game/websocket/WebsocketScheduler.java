@@ -45,7 +45,7 @@ public class WebsocketScheduler {
                 if (Objects.requireNonNull(exchange.getBody()).size() == 2) {
                     timer.cancel();
                     HeroesRegistry instance = HeroesRegistry.getINSTANCE();
-                    instance.setMapWithHeroes(exchange.getBody());
+                    instance.setHeroesRegistryBook(exchange.getBody());
                     latch.countDown();
                 }
             }

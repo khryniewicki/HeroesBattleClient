@@ -10,7 +10,6 @@ public class Ice extends Spell {
 
 
     public Ice() {
-        setPosition();
         setProperties();
         setTexture();
         setMesh();
@@ -19,6 +18,7 @@ public class Ice extends Spell {
     @Override
     public void setProperties() {
         setName("IceBolt");
+        setBasic(false);
         setCastingSpeed(0.3f);
         setSpellDuration(3000L);
         setPowerAttack(10);
@@ -37,12 +37,5 @@ public class Ice extends Spell {
     }
 
 
-    @Override
-    public void setPosition() {
 
-        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
-        setPositionX(heroStartingPosition.getX());
-        setPositionY(heroStartingPosition.getY());
-        setPositionZ(-0.1f);
-    }
 }

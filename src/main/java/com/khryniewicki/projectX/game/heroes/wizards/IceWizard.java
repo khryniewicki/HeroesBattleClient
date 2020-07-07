@@ -49,7 +49,6 @@ public class IceWizard extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setUltraSpell(new Spell());
         setBasicSpell(new BasicSpell(new Fire()));
         setUltimateSpell(new UltimateSpell(new Ice()));
     }

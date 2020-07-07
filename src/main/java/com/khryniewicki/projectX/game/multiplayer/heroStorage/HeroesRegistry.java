@@ -5,17 +5,17 @@ import com.khryniewicki.projectX.game.websocket.messages.Message;
 import java.util.Map;
 
 public class HeroesRegistry {
-    private Map<String, Message> mapWithHeroes;
+    private Map<String, Message> heroesRegistryBook;
 
     private HeroesRegistry() {
     }
 
-    public Map<String, Message> getMapWithHeroes() {
-        return mapWithHeroes;
+    public Map<String, Message> getHeroesRegistryBook() {
+        return heroesRegistryBook;
     }
 
-    public void setMapWithHeroes(Map<String, Message> mapWithHeroes) {
-        this.mapWithHeroes = mapWithHeroes;
+    public void setHeroesRegistryBook(Map<String, Message> heroesRegistryBook) {
+        this.heroesRegistryBook = heroesRegistryBook;
     }
 
 

@@ -42,7 +42,6 @@ public class ThunderWizard extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setUltraSpell(new Spell());
         setBasicSpell(new BasicSpell(new Thunder()));
         setUltimateSpell(new UltimateSpell(new Ice()));
     }

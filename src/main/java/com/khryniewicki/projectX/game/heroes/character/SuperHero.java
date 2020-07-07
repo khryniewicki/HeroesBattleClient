@@ -3,12 +3,11 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.MouseSetting;
 import com.khryniewicki.projectX.game.heroes.character.properties.Move;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -41,6 +40,7 @@ public class SuperHero implements UltraHero {
     private LifeBar lifeBar;
     private ManaBar manaBar;
     private Move move;
+    private StartingPosition startingPosition;
 
     private SpellInstance spellInstance;
     private UltraSpell ultraSpell;

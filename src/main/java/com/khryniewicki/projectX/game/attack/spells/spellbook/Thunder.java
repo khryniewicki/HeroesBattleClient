@@ -8,9 +8,7 @@ import lombok.Data;
 @Data
 public class Thunder extends Spell {
 
-
     public Thunder() {
-        setPosition();
         setProperties();
         setTexture();
         setMesh();
@@ -19,6 +17,7 @@ public class Thunder extends Spell {
     @Override
     public void setProperties() {
         setName("ThunderBolt");
+        setBasic(true);
         setCastingSpeed(0.3f);
         setSpellDuration(3000L);
         setSIZE(1.0f);
@@ -38,11 +37,4 @@ public class Thunder extends Spell {
     }
 
 
-    @Override
-    public void setPosition() {
-        HeroStartingPosition heroStartingPosition = HeroStartingPosition.getInstance();
-        setPositionX(heroStartingPosition.getX());
-        setPositionY(heroStartingPosition.getY());
-        setPositionZ(-0.1f);
-    }
 }

@@ -7,6 +7,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
@@ -159,6 +160,26 @@ public class HeroMock implements UltraHero {
     @Override
     public UltraSpell getUltraSpell() {
         return ultraHero.getUltraSpell();
+    }
+
+    @Override
+    public Float getX() {
+        return ultraHero.getX();
+    }
+
+    @Override
+    public Float getY() {
+        return ultraHero.getY();
+    }
+
+    @Override
+    public StartingPosition getStartingPosition() {
+        return ultraHero.getStartingPosition();
+    }
+
+    @Override
+    public void setStartingPosition(StartingPosition startingPosition) {
+        ultraHero.setStartingPosition(startingPosition);
     }
 
 
