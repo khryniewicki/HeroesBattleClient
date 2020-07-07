@@ -16,6 +16,7 @@ public class Move {
     private final StackEvent stackEvent;
     private final LifeBar lifeBar;
     private final ManaBar manaBar;
+    private final MouseSetting mouseSetting;
 
     private Move() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
@@ -23,6 +24,8 @@ public class Move {
         stackEvent = StackEvent.getInstance();
         lifeBar = hero.getLifeBar();
         manaBar = hero.getManaBar();
+        mouseSetting=MouseSetting.getInstance();
+        mouseSetting.setMouseCallBack();
     }
 
     public void move() {

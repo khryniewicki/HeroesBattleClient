@@ -8,6 +8,7 @@ import lombok.Data;
 
 public class BasicSpell implements SpellInstance {
 
+    private String name;
     private Integer powerAttack;
     private Integer manaConsumed;
     private Float castingSpeed;
@@ -19,6 +20,7 @@ public class BasicSpell implements SpellInstance {
 
     public BasicSpell(Spell spell) {
         this.spell = spell;
+        this.name=spell.getName();
         this.powerAttack = spell.getPowerAttack();
         this.manaConsumed = spell.getManaConsumed();
         this.castingSpeed = spell.getCastingSpeed();

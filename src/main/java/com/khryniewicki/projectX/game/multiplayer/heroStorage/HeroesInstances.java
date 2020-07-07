@@ -1,16 +1,18 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
-import com.khryniewicki.projectX.game.websocket.messages.Message;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
-import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.Move;
 import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
 import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.websocket.messages.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -46,7 +48,13 @@ public class HeroesInstances {
     public void setHeroLifeManaMove() {
         hero.setLifeBar(new LifeBar(hero));
         hero.setManaBar(new ManaBar(hero));
+        hero.setUltraSpell(new Spell());
         hero.setMove(Move.getInstance());
+
+        UltraSpell ultraSpell = hero.getUltraSpell();
+        ultraSpell.setSpellInstance(hero.getBasicSpell());
+
+
 
     }
 
@@ -67,7 +75,9 @@ public class HeroesInstances {
                 this.mock = new HeroMock(superHero);
                 mock.setLifeBar(new LifeBar(mock));
                 mock.setManaBar(new ManaBar(mock));
-
+                mock.setUltraSpell(new Spell());
+                UltraSpell ultraSpell = mock.getUltraSpell();
+                ultraSpell.setSpellInstance(mock.getBasicSpell());
             }
         }
     }

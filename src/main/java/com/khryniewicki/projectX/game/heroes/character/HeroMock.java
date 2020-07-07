@@ -1,6 +1,10 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.math.Vector;
@@ -113,8 +117,8 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
-    public Spell getSpell() {
-        return ultraHero.getSpell();
+    public SpellInstance getSpellInstance() {
+        return ultraHero.getSpellInstance();
     }
 
     @Override
@@ -135,6 +139,26 @@ public class HeroMock implements UltraHero {
     @Override
     public Integer getMana() {
         return heroReceiveService.getMockMana();
+    }
+
+    @Override
+    public BasicSpell getBasicSpell() {
+        return ultraHero.getBasicSpell();
+    }
+
+    @Override
+    public UltimateSpell getUltimateSpell() {
+        return ultraHero.getUltimateSpell();
+    }
+
+    @Override
+    public void setUltraSpell(UltraSpell ultraSpell) {
+        ultraHero.setUltraSpell(ultraSpell);
+    }
+
+    @Override
+    public UltraSpell getUltraSpell() {
+        return ultraHero.getUltraSpell();
     }
 
 
@@ -174,8 +198,8 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
-    public void setSpell() {
-        ultraHero.setSpell();
+    public void setSpellBasis() {
+        ultraHero.setSpellBasis();
     }
 
     @Override

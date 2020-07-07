@@ -1,5 +1,10 @@
 package com.khryniewicki.projectX.game.heroes.wizards;
 
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
@@ -11,7 +16,7 @@ public class IceWizard extends SuperHero {
     public IceWizard() {
         setPosition();
         setTexture();
-
+        setSpellBasis();
         setMesh();
         setProperties();
     }
@@ -40,6 +45,13 @@ public class IceWizard extends SuperHero {
         setMana(100);
         setLife(100);
 
+    }
+
+    @Override
+    public void setSpellBasis() {
+        setUltraSpell(new Spell());
+        setBasicSpell(new BasicSpell(new Fire()));
+        setUltimateSpell(new UltimateSpell(new Ice()));
     }
 
     @Override

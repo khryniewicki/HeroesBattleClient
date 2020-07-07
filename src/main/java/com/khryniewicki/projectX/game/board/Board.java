@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.board;
 
 import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.SpellMock;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
@@ -31,7 +32,7 @@ public class Board {
 
     public static SuperHero hero;
     public static UltraHero heroMock;
-    private Spell spell;
+    private UltraSpell spell;
     private UltraSpell spellMock;
     private ActivatedAttack activatedAttack;
 
@@ -51,8 +52,8 @@ public class Board {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         heroMock = heroesInstances.getMock();
-        spell = hero.castingSpell();
-        spellMock = new SpellMock(new Fire());
+        spell = hero.getUltraSpell();
+//        spellMock = new SpellMock(new Fire());
     }
 
     public static Board getInstance() {
@@ -91,7 +92,7 @@ public class Board {
         hero.update();
         heroMock.update();
         spell.update();
-        spellMock.update();
+//        spellMock.update();
 
     }
 
@@ -102,7 +103,7 @@ public class Board {
         hero.render();
         heroMock.render();
         spell.render();
-        spellMock.render();
+//        spellMock.render();
     }
 
     private void renderBackground() {

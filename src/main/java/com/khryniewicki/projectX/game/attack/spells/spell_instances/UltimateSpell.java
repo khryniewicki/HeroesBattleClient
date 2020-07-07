@@ -14,10 +14,11 @@ public class UltimateSpell  implements SpellInstance{
     private Texture throwingSpellTexture;
     private Spell spell;
     private Long spellDuration;
-
+    private String name;
 
     public UltimateSpell(Spell spell) {
         this.spell = spell;
+        this.name=spell.getName();
         this.powerAttack = spell.getPowerAttack();
         this.manaConsumed = spell.getManaConsumed();
         this.castingSpeed = spell.getCastingSpeed();

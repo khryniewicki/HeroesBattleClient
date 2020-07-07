@@ -1,17 +1,19 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.MouseSetting;
 import com.khryniewicki.projectX.game.heroes.character.properties.Move;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,18 +27,23 @@ public class SuperHero implements UltraHero {
     private VertexArray mesh;
     private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle;
     private Vector position;
-    private Spell spell;
+
     private String name;
     private Integer life;
     private Integer mana;
+
     public static float hero_positionX0;
     public static float hero_positionY0;
     private float hero_standard_offset;
     private float hero_top_offset;
     public float SIZE = 0.9f;
+
     private LifeBar lifeBar;
     private ManaBar manaBar;
     private Move move;
+
+    private SpellInstance spellInstance;
+    private UltraSpell ultraSpell;
     private BasicSpell basicSpell;
     private UltimateSpell ultimateSpell;
 
@@ -114,6 +121,8 @@ public class SuperHero implements UltraHero {
         this.position.y = positionY;
     }
 
+
+
     public void setLifeBar(LifeBar lifeBar) {
         this.lifeBar = lifeBar;
     }
@@ -127,13 +136,8 @@ public class SuperHero implements UltraHero {
     }
 
     @Override
-    public Spell getSpell() {
-        return spell;
-    }
-
-
-    public Spell castingSpell() {
-        return basicSpell.getSpell();
+    public SpellInstance getSpellInstance() {
+        return ultraSpell.getSpellInstance();
     }
 
     @Override
