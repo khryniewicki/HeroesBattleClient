@@ -15,7 +15,7 @@ public class HeroReceiveService {
     private Position MockPosition;
     private Integer MockLife;
     private Integer MockMana;
-
+    private int counter;
 
     private HeroReceiveService() {
         mockStartingPosition = MockStartingPosition.getInstance();
@@ -31,9 +31,27 @@ public class HeroReceiveService {
     }
 
     public void receivedMockDTO(HeroDTO heroDTO) {
-        MockPosition = new Position(heroDTO.getPositionX(), heroDTO.getPositionY());
+        createMockPosition(heroDTO);
         MockLife = heroDTO.getLife();
         MockMana = heroDTO.getMana();
+    }
+
+    private void createMockPosition(HeroDTO heroDTO) {
+        Position tmp = new Position(heroDTO.getPositionX(), heroDTO.getPositionY());
+
+        if (MockPosition==null){
+            MockPosition = tmp;
+        }
+
+        if (tmp.equals(MockPosition)) {
+            counter++;
+        } else {
+            counter = 0;
+        }
+
+        if (counter < 3) {
+            MockPosition=tmp;
+        }
     }
 
     private static class HELPER {

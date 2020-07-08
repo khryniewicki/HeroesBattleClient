@@ -21,7 +21,8 @@ public class HeroMock implements UltraHero {
     private final UltraHero ultraHero;
     private final HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
-    boolean isIdle=true;
+    boolean isIdle = false;
+    private Long now;
 
     public HeroMock(SuperHero superHero) {
         this.ultraHero = superHero;
@@ -30,31 +31,50 @@ public class HeroMock implements UltraHero {
 
 
     private void mockMove() {
-        finalPosition = heroReceiveService.getMockPosition();
-        if (tmp == null) {
-            tmp = finalPosition;
-        }
 
-        if (tmp == finalPosition) {
+        if (tmp != null && tmp.equals(heroReceiveService.getMockPosition())) {
+            if (now != null && System.currentTimeMillis() - now > 300) {
+                isIdle = true;
+                now = null;
+            }
+
             if (isIdle) {
                 setHeroIdle();
                 setMesh();
-                isIdle=false;
+                isIdle = false;
                 log.info("IDLE");
-
             }
             return;
         }
         changeMockSide();
-        changePosition();
+
         setHeroRun();
         setMesh();
+        changePosition();
         log.info("RUN");
 
         updateLifeBar();
         updateManaBar();
     }
 
+
+    private void changePosition() {
+        tmp = heroReceiveService.getMockPosition();
+        now = System.currentTimeMillis();
+        setPositionX(finalPosition.getX());
+        setPositionY(finalPosition.getY());
+    }
+
+    private void changeMockSide() {
+        if (tmp == null) {
+            tmp = heroReceiveService.getMockPosition();
+        }
+        finalPosition = heroReceiveService.getMockPosition();
+        if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) isMovingLeft = true;
+        else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) isMovingLeft = false;
+        setMovingLeft(isMovingLeft);
+
+    }
 
     private void updateLifeBar() {
         LifeBar lifeBar = getLifeBar();
@@ -66,23 +86,6 @@ public class HeroMock implements UltraHero {
         ManaBar manaBar = getManaBar();
         manaBar.updateManaBar();
     }
-
-    private void changePosition() {
-        tmp = heroReceiveService.getMockPosition();
-        setPositionX(finalPosition.getX());
-        setPositionY(finalPosition.getY());
-        isIdle=true;
-    }
-
-    private void changeMockSide() {
-        if (tmp != null) {
-            if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) isMovingLeft = true;
-            else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) isMovingLeft = false;
-            setMovingLeft(isMovingLeft);
-        }
-    }
-
-
     @Override
     public void update() {
         mockMove();

@@ -13,6 +13,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.utils.HeroUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -120,5 +121,15 @@ public class SuperHero implements UltraHero {
     @Override
     public void setPosition() {
         setPosition(new Vector());
+    }
+
+    @Override
+    public void setHeroIdle() {
+        setTexture(heroIdle);
+    }
+
+    @Override
+    public void setHeroRun() {
+        setTexture(heroRight);
     }
 }
