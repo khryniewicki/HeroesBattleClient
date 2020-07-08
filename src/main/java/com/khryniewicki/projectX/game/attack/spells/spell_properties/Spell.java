@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.attack.spells.spell_properties;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -20,9 +21,8 @@ public class Spell implements UltraSpell {
     private Vector position=new Vector();
     public Float SIZE = 1f;
 
-
+    private Position target;
     private Float finalX,finalY;
-    private Float distanceX,distanceY;
     private Texture throwingSpellTexture,consumedSpellTexture;
     private Float castingSpeed;
 

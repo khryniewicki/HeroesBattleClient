@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class Position {
-    private Float positionX;
-    private Float positionY;
+    private Float X;
+    private Float Y;
     private Double positionXD;
     private Double positionYD;
 
-    public Position(Float positionX, Float positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+    public Position(Float X, Float Y) {
+        this.X = X;
+        this.Y = Y;
     }
 
     public Position(Double positionXD, Double positionYD) {

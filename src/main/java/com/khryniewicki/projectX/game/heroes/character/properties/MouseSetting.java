@@ -61,8 +61,9 @@ public class MouseSetting {
 
     private void setFinalSpellPosition(Position position) {
         float factor = 1.1f;
-        ultraSpell.setFinalX((float) (position.getPositionXD() - Game.width / 2) / (Game.width / 20));
-        ultraSpell.setFinalY((float) ((Game.height / 2 - position.getPositionYD()) * factor) / (Game.height / 10));
+        float finalX= (float) (position.getPositionXD() - Game.width / 2) / (Game.width / 20);
+        float finalY= (float) ((Game.height / 2 - position.getPositionYD()) * factor) / (Game.height / 10);
+        ultraSpell.setTarget(new Position(finalX,finalY));
     }
 
     private void consumeSpellMana() {
@@ -106,7 +107,8 @@ public class MouseSetting {
     }
     private void sendSpellDTO() {
         ConcurrentLinkedDeque<DTO> heroDTOS = stackEvent.getEvents();
-        heroDTOS.offerLast(new SpellDTO(ultraSpell.getName(), ultraSpell.getFinalX(), ultraSpell.getFinalY()));
+        Position target=ultraSpell.getTarget();
+        heroDTOS.offerLast(new SpellDTO(ultraSpell.getName(), target.getX(), target.getY()));
     }
 
     public static MouseSetting getInstance() {

@@ -86,11 +86,11 @@ public class MessageHandler {
         Position A = new Position(4f, 4f);
         Position B = new Position(-3f, -3f);
         if (app == 1) {
-            heroStartingPosition.setX_Y(A.getPositionX(), A.getPositionY());
-            mockStartingPosition.setX_Y(B.getPositionX(), B.getPositionY());
+            heroStartingPosition.setX_Y(A.getX(), A.getY());
+            mockStartingPosition.setX_Y(B.getX(), B.getY());
         } else {
-            mockStartingPosition.setX_Y(A.getPositionX(), A.getPositionY());
-            heroStartingPosition.setX_Y(B.getPositionX(), B.getPositionY());
+            mockStartingPosition.setX_Y(A.getX(), A.getY());
+            heroStartingPosition.setX_Y(B.getX(), B.getY());
         }
 
     }

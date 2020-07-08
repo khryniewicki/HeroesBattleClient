@@ -1,18 +1,15 @@
 package com.khryniewicki.projectX.game.attack.spells.spellbook;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.utils.SpellUtil;
 import lombok.Data;
 
 @Data
 public class Ice extends Spell {
 
-
     public Ice() {
         setProperties();
         setTexture();
-
     }
 
     @Override
@@ -30,7 +27,5 @@ public class Ice extends Spell {
         setThrowingSpellTexture(SpellUtil.ICEBALL);
         setConsumedSpellTexture(SpellUtil.ICE);
     }
-
-
 
 }

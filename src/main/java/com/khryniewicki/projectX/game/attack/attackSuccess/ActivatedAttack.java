@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.attack.attackSuccess;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -15,8 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ActivatedAttack {
 
     private final UltraSpell spell;
-    private final SuperHero hero;
-    private final UltraHero mock;
+    private final UltraHero hero,mock;
     private float ox0, ox1, oy0, oy1, oz0;
     private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated;
@@ -74,7 +72,6 @@ public class ActivatedAttack {
         lifeBar.updateLifeBar();
         sendingService.updateLife();
     }
-
 
 
     private void heroObjectDimenions() {

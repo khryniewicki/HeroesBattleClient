@@ -1,19 +1,15 @@
 package com.khryniewicki.projectX.game.attack.spells.spellbook;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.utils.SpellUtil;
 import lombok.Data;
 
 @Data
 public class Fire extends Spell {
 
-
-
     public Fire() {
         setProperties();
         setTexture();
-
     }
 
     @Override
@@ -31,8 +27,6 @@ public class Fire extends Spell {
         setThrowingSpellTexture(SpellUtil.FIREBALL);
         setConsumedSpellTexture(SpellUtil.FIRE);
     }
-
-
 
 }
 

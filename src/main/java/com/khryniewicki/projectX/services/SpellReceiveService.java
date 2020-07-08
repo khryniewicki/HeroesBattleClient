@@ -5,6 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstanc
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.SpellBook;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,7 @@ import java.util.List;
 @Data
 @Slf4j
 public class SpellReceiveService {
-    public static Float spellMockPositionX;
-    public static Float spellMockPositionY;
+    public static Position spellTarget;
     public static SpellInstance spellInstance;
     private static List<Spell> spellBook;
 
@@ -24,14 +24,13 @@ public class SpellReceiveService {
     }
 
     public static void receiveSpellMock(SpellDTO spellDTO) {
-       if (spellBook==null) {
-           SpellBook book = SpellBook.getInstance();
-           spellBook = book.getSpellbook();
-       }
-        spellMockPositionX = spellDTO.getTargetSpellX();
-        spellMockPositionY = spellDTO.getTargetSpellY();
+        if (spellBook == null) {
+            SpellBook book = SpellBook.getInstance();
+            spellBook = book.getSpellbook();
+        }
+        spellTarget = new Position(spellDTO.getTargetSpellX(), spellDTO.getTargetSpellY());
         spellInstance = spellAdapter(spellDTO.getName());
-        log.info("X: {} Y: {}", spellMockPositionX, spellMockPositionY);
+        log.info("Name: {} , X: {} Y: {}",spellDTO.getName(), spellTarget.getX(), spellTarget.getY());
     }
 
     private static SpellInstance spellAdapter(String name) {
