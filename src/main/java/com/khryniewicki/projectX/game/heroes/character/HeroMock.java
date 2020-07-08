@@ -3,19 +3,19 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 
 public class HeroMock implements UltraHero {
-    private Float tmpPositionX;
-    private Float tmpPositionY;
+    private Position tmp, finalPosition;
     private Integer tmpLife;
     private Integer tmpMana;
+
     private final UltraHero ultraHero;
     private HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
@@ -29,13 +29,12 @@ public class HeroMock implements UltraHero {
 
     private void mockMove() {
 
-        if (tmpPositionX != null && tmpPositionX == heroReceiveService.getMockPositionX()) {
-            if (tmpPositionY != null && tmpPositionY == heroReceiveService.getMockPositionY()) {
-                setHeroIdle();
-                setMesh();
-                return;
-            }
+        if (tmp != null && tmp == heroReceiveService.getMockPosition()) {
+            setHeroIdle();
+            setMesh();
+            return;
         }
+        finalPosition = heroReceiveService.getMockPosition();
         changeMockSide();
         changePosition();
         setHeroRun();
@@ -43,6 +42,7 @@ public class HeroMock implements UltraHero {
         updateLifeBar();
         updateManaBar();
     }
+
 
     private void updateLifeBar() {
         LifeBar lifeBar = getLifeBar();
@@ -56,21 +56,19 @@ public class HeroMock implements UltraHero {
     }
 
     private void changePosition() {
-        tmpPositionX = heroReceiveService.getMockPositionX();
-        tmpPositionY = heroReceiveService.getMockPositionY();
-
-        setPositionX(heroReceiveService.getMockPositionX());
-        setPositionY(heroReceiveService.getMockPositionY());
+        tmp = finalPosition;
+        setPositionX(finalPosition.getX());
+        setPositionY(finalPosition.getY());
     }
 
     private void changeMockSide() {
-        if (tmpPositionX != null) {
-
-            if (Math.signum(tmpPositionX - heroReceiveService.getMockPositionX()) == 1) isMovingLeft = true;
-            else if (Math.signum(tmpPositionX - heroReceiveService.getMockPositionX()) == -1) isMovingLeft = false;
+        if (tmp != null) {
+            if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) isMovingLeft = true;
+            else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) isMovingLeft = false;
             setMovingLeft(isMovingLeft);
         }
     }
+
 
     @Override
     public void update() {

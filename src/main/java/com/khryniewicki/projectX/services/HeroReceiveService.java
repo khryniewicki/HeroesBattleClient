@@ -1,7 +1,8 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
+import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,10 @@ import org.springframework.stereotype.Service;
 @Data
 @Slf4j
 public class HeroReceiveService {
-
     private MockStartingPosition mockStartingPosition;
-    private Float MockPositionX;
-    private Float MockPositionY;
+    private Position MockPosition;
     private Integer MockLife;
     private Integer MockMana;
-
 
 
     private HeroReceiveService() {
@@ -27,21 +25,13 @@ public class HeroReceiveService {
         return HELPER.INSTANCE;
     }
 
-    public Float getMockPositionX() {
-        return MockPositionX == null ? mockStartingPosition.getX() : MockPositionX;
+
+    public Position getMockPosition() {
+        return MockPosition == null ? new Position(mockStartingPosition.getX(), mockStartingPosition.getY()) : MockPosition;
     }
-
-    public Float getMockPositionY() {
-        return MockPositionY == null ? mockStartingPosition.getY() : MockPositionY;
-    }
-
-    public Integer getMockLife() { return MockLife; }
-
-    public Integer getMockMana() { return MockMana; }
 
     public void receivedMockDTO(HeroDTO heroDTO) {
-        MockPositionX = (heroDTO.getPositionX());
-        MockPositionY = (heroDTO.getPositionY());
+        MockPosition = new Position(heroDTO.getPositionX(), heroDTO.getPositionY());
         MockLife = heroDTO.getLife();
         MockMana = heroDTO.getMana();
     }
