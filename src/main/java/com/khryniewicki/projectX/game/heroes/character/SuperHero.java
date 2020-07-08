@@ -79,7 +79,7 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
-        move.move();
+
         manaBar.renegerateMana();
     }
 

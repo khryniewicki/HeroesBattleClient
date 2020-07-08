@@ -16,7 +16,6 @@ public class Move {
     private final StackEvent stackEvent;
     private final LifeBar lifeBar;
     private final ManaBar manaBar;
-    private final MouseSetting mouseSetting;
 
     private Move() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
@@ -24,13 +23,15 @@ public class Move {
         stackEvent = StackEvent.getInstance();
         lifeBar = hero.getLifeBar();
         manaBar = hero.getManaBar();
-        mouseSetting=MouseSetting.getInstance();
+        MouseSetting mouseSetting=MouseSetting.getInstance();
         mouseSetting.setMouseCallBack();
+        move();
     }
 
     public void move() {
 
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
+
 
             float tmpX = hero.getX();
             float tmpY = hero.getY();
