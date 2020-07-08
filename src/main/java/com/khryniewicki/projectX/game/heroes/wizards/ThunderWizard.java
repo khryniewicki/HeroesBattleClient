@@ -11,7 +11,6 @@ import com.khryniewicki.projectX.utils.HeroUtil;
 
 public class ThunderWizard extends SuperHero {
 
-
     public ThunderWizard() {
         setPosition();
         setSpellBasis();

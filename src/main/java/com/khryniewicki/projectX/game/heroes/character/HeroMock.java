@@ -10,15 +10,18 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class HeroMock implements UltraHero {
     private Position tmp, finalPosition;
     private Integer tmpLife;
     private Integer tmpMana;
 
     private final UltraHero ultraHero;
-    private HeroReceiveService heroReceiveService;
+    private final HeroReceiveService heroReceiveService;
     boolean isMovingLeft = false;
+    boolean isIdle=true;
 
     public HeroMock(SuperHero superHero) {
         this.ultraHero = superHero;
@@ -27,17 +30,27 @@ public class HeroMock implements UltraHero {
 
 
     private void mockMove() {
+        finalPosition = heroReceiveService.getMockPosition();
+        if (tmp == null) {
+            tmp = finalPosition;
+        }
 
-        if (tmp != null && tmp == heroReceiveService.getMockPosition()) {
-            setHeroIdle();
-            setMesh();
+        if (tmp == finalPosition) {
+            if (isIdle) {
+                setHeroIdle();
+                setMesh();
+                isIdle=false;
+                log.info("IDLE");
+
+            }
             return;
         }
-        finalPosition = heroReceiveService.getMockPosition();
         changeMockSide();
         changePosition();
         setHeroRun();
         setMesh();
+        log.info("RUN");
+
         updateLifeBar();
         updateManaBar();
     }
@@ -55,9 +68,10 @@ public class HeroMock implements UltraHero {
     }
 
     private void changePosition() {
-        tmp = finalPosition;
+        tmp = heroReceiveService.getMockPosition();
         setPositionX(finalPosition.getX());
         setPositionY(finalPosition.getY());
+        isIdle=true;
     }
 
     private void changeMockSide() {
