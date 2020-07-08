@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_properties;
+package com.khryniewicki.projectX.game.attack.spells.spell_settings;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.heroes.character.Ultra;

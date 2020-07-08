@@ -9,7 +9,7 @@ import com.khryniewicki.projectX.utils.StackEvent;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class Move {
+public class MoveSettings {
 
     private Vector position;
     private final SuperHero hero;
@@ -17,14 +17,14 @@ public class Move {
     private final LifeBar lifeBar;
     private final ManaBar manaBar;
 
-    private Move() {
+    private MoveSettings() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         stackEvent = StackEvent.getInstance();
         lifeBar = hero.getLifeBar();
         manaBar = hero.getManaBar();
-        MouseSetting mouseSetting=MouseSetting.getInstance();
-        mouseSetting.setMouseCallBack();
+        MouseSettings mouseSettings = MouseSettings.getInstance();
+        mouseSettings.setMouseCallBack();
         move();
     }
 
@@ -72,11 +72,11 @@ public class Move {
     }
 
 
-    public static Move getInstance() {
+    public static MoveSettings getInstance() {
         return HELPER.INSTANCE;
     }
 
     private static class HELPER {
-        private final static Move INSTANCE = new Move();
+        private final static MoveSettings INSTANCE = new MoveSettings();
     }
 }

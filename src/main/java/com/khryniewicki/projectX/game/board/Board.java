@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.board;
 
-import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
+import com.khryniewicki.projectX.game.attack.attackActivation.AttackExecution;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
@@ -30,7 +30,7 @@ public class Board {
     public static UltraHero mock;
     private UltraSpell spell;
     private UltraSpell spellMock;
-    private ActivatedAttack activatedAttack;
+    private AttackExecution attackExecution;
 
     private Pointer pointer;
     public static Collision myCollision;

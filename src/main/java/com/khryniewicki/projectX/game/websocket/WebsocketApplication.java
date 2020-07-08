@@ -10,9 +10,7 @@ import com.khryniewicki.projectX.game.websocket.messages.MessageHandler;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
-import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.services.SpellReceiveService;
-import com.khryniewicki.projectX.services.SpellSendingService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -29,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 @Data
@@ -47,24 +44,16 @@ public class WebsocketApplication implements Runnable{
     }
 
 
-    @Data
+
     @Slf4j
     public static  class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
-        private static String userId = "spring-" +
-                ThreadLocalRandom.current().nextInt(1, 99);
+
         private final HeroReceiveService heroReceiveService;
-        private final SpellReceiveService spellReceiveService;
-        private final SendingService sendingService;
-        private final SpellSendingService spellSendingService;
         private final Channels channels;
-        private String sessionID;
 
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
-            spellReceiveService = new SpellReceiveService();
-            spellSendingService =new SpellSendingService();
-            sendingService =new SendingService();
             channels=Channels.getINSTANCE();
         }
         public String getSessionID() {
@@ -168,7 +157,7 @@ public class WebsocketApplication implements Runnable{
         @Override
         public void afterConnected(StompSession session,
                                    StompHeaders connectedHeaders) {
-            sessionID = session.getSessionId();
+            String sessionID = session.getSessionId();
             System.err.println("Connected! Headers:" + "\n" + sessionID);
             showHeaders(connectedHeaders);
             subscribeGameInitials("/topic/room", session);

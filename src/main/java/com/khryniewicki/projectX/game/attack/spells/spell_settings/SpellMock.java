@@ -1,32 +1,38 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_properties;
+package com.khryniewicki.projectX.game.attack.spells.spell_settings;
 
-import com.khryniewicki.projectX.game.attack.attackSuccess.ActivatedAttack;
+import com.khryniewicki.projectX.game.attack.attackActivation.AttackExecution;
+import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 
-public class SpellMock2 extends Spell {
+public class SpellMock extends Spell {
 
     private Position tmp;
     private UltraHero mock;
-    private final ActivatedAttack activatedAttack;
-    private final SpellTrajectory spellTrajectory;
+    private final AttackExecution attackExecution;
+    private final AttackTrajectory attackTrajectory;
 
 
-    public SpellMock2() {
+    public SpellMock() {
         super();
         createHero();
-        activatedAttack = new ActivatedAttack(this);
-        spellTrajectory = new SpellTrajectory(this);
+        attackExecution = new AttackExecution(this);
+        attackTrajectory = new AttackTrajectory(this);
     }
 
+    @Override
+    public void createHero() {
+        mock = HeroesInstances.getInstance().getMock();
+        setUltraHero(mock);
+    }
 
     @Override
     public void update() {
         getSpellMock();
-        spellTrajectory.spellCasting();
-        activatedAttack.hitsHeroWithSpell();
+        attackTrajectory.spellCasting();
+        attackExecution.hitsHeroWithSpell();
     }
 
     public void getSpellMock() {
@@ -44,13 +50,5 @@ public class SpellMock2 extends Spell {
         setSpellInstance(SpellReceiveService.spellInstance);
         setTarget(tmp);
     }
-
-    @Override
-    public void createHero() {
-        mock = HeroesInstances.getInstance().getMock();
-        setUltraHero(mock);
-    }
-
-
 
 }

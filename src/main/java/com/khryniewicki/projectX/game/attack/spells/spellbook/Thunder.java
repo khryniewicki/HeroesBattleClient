@@ -1,10 +1,9 @@
 package com.khryniewicki.projectX.game.attack.spells.spellbook;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.utils.SpellUtil;
-import lombok.Data;
 
-@Data
+
 public class Thunder extends Spell {
 
     public Thunder() {

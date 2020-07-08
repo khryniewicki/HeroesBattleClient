@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -23,7 +23,6 @@ public class HeroMock implements UltraHero {
     public HeroMock(SuperHero superHero) {
         this.ultraHero = superHero;
         heroReceiveService = HeroReceiveService.getInstance();
-
     }
 
 

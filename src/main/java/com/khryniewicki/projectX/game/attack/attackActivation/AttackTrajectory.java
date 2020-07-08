@@ -1,6 +1,7 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_properties;
+package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.math.Vector;
@@ -11,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Data
-public class SpellTrajectory {
+public class AttackTrajectory {
 
 
     private UltraHero hero;
@@ -23,7 +24,7 @@ public class SpellTrajectory {
     private final StackEvent stackEvent;
     private boolean isSpellPrepared;
 
-    public SpellTrajectory(UltraSpell spell) {
+    public AttackTrajectory(UltraSpell spell) {
         this.stackEvent = StackEvent.getInstance();
         this.sendingService = new SendingService();
         this.spell = spell;

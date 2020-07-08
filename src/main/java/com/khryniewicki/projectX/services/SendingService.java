@@ -1,10 +1,10 @@
 package com.khryniewicki.projectX.services;
 
-import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
-import com.khryniewicki.projectX.game.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
+import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.websocket.messages.Channels;
 import com.khryniewicki.projectX.services.DTO.DTO;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.utils.StackEvent;
@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class SendingService implements Runnable {
     private final Channels channel;
     private final StackEvent stackEvent;
-    private Float tmpPositionX, tmpPositionY;
     private HeroDTO tmpHero;
     private SuperHero hero;
     private HeroesInstances heroesInstances;

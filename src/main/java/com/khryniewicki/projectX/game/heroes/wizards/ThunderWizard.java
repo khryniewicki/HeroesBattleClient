@@ -3,16 +3,13 @@ package com.khryniewicki.projectX.game.heroes.wizards;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Thunder;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
-import lombok.Data;
 
-@Data
+
 public class ThunderWizard extends SuperHero {
 
 
@@ -37,7 +34,6 @@ public class ThunderWizard extends SuperHero {
     @Override
     public void setPosition() {
         setPosition(new Vector());
-
     }
 
     @Override
@@ -59,6 +55,5 @@ public class ThunderWizard extends SuperHero {
     public void setMesh() {
         setMesh(createHero());
     }
-
 
 }

@@ -3,10 +3,10 @@ package com.khryniewicki.projectX.game.heroes.character;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.Move;
+import com.khryniewicki.projectX.game.heroes.character.properties.MoveSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -39,18 +39,13 @@ public class SuperHero implements UltraHero {
 
     private LifeBar lifeBar;
     private ManaBar manaBar;
-    private Move move;
+    private MoveSettings moveSettings;
     private StartingPosition startingPosition;
 
     private SpellInstance spellInstance;
     private UltraSpell ultraSpell;
     private BasicSpell basicSpell;
     private UltimateSpell ultimateSpell;
-
-
-
-    public SuperHero() {
-    }
 
 
     public VertexArray createHero() {
@@ -70,8 +65,8 @@ public class SuperHero implements UltraHero {
         float[] tcs = new float[]{
                 0, 1,
                 0, 0,
-                i * 1, 0,
-                i * 1, 1
+                i, 0,
+                i, 1
         };
 
         return new VertexArray(vertices, indices, tcs);
@@ -79,7 +74,6 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
-
         manaBar.renegerateMana();
     }
 
@@ -94,14 +88,6 @@ public class SuperHero implements UltraHero {
         manaBar.render();
     }
 
-
-    public void setTexture(Texture texture) {
-        this.texture = texture;
-    }
-
-    public void setMesh(VertexArray mesh) {
-        this.mesh = mesh;
-    }
 
     public synchronized Float getX() {
         return position.x;
@@ -121,28 +107,9 @@ public class SuperHero implements UltraHero {
         this.position.y = positionY;
     }
 
-
-
-    public void setLifeBar(LifeBar lifeBar) {
-        this.lifeBar = lifeBar;
-    }
-
-    public Integer getMana() {
-        return mana;
-    }
-
-    public void setMana(Integer mana) {
-        this.mana = mana;
-    }
-
     @Override
     public SpellInstance getSpellInstance() {
         return ultraSpell.getSpellInstance();
-    }
-
-    @Override
-    public void setMovingLeft(boolean movingLeft) {
-        isMovingLeft = movingLeft;
     }
 
 

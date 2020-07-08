@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Data;
 

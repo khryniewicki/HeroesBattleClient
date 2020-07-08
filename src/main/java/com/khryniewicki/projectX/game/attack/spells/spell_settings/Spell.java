@@ -1,5 +1,6 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_properties;
+package com.khryniewicki.projectX.game.attack.spells.spell_settings;
 
+import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -41,12 +42,12 @@ public class Spell implements UltraSpell {
     private StackEvent stackEvent;
     private SpellInstance spellInstance;
     private UltraHero ultraHero;
-    private final SpellTrajectory spellTrajectory;
+    private final AttackTrajectory attackTrajectory;
     private StartingPosition startingPosition;
 
 
     public Spell() {
-        this.spellTrajectory = new SpellTrajectory(this);
+        this.attackTrajectory = new AttackTrajectory(this);
         createHero();
     }
 
@@ -90,7 +91,7 @@ public class Spell implements UltraSpell {
     }
 
     public void spellCasting() {
-        spellTrajectory.spellCasting();
+        attackTrajectory.spellCasting();
     }
 
     @Override

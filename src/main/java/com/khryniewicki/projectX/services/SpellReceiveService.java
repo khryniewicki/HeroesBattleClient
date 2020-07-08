@@ -3,8 +3,8 @@ package com.khryniewicki.projectX.services;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.SpellBook;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellRegistry;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class SpellReceiveService {
 
     public static void receiveSpellMock(SpellDTO spellDTO) {
         if (spellBook == null) {
-            SpellBook book = SpellBook.getInstance();
+            SpellRegistry book = SpellRegistry.getInstance();
             spellBook = book.getSpellbook();
         }
         spellTarget = new Position(spellDTO.getTargetSpellX(), spellDTO.getTargetSpellY());

@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class MouseSetting {
+public class MouseSettings {
 
     private final StackEvent stackEvent;
     private Position cursorPosition;
@@ -26,7 +26,7 @@ public class MouseSetting {
     private final SendingService sendingService;
     private UltraSpell ultraSpell;
 
-    private MouseSetting() {
+    private MouseSettings() {
         this.stackEvent = StackEvent.getInstance();
         this.hero = HeroesInstances.getInstance().getHero();
         this.sendingService = new SendingService();
@@ -111,11 +111,11 @@ public class MouseSetting {
         heroDTOS.offerLast(new SpellDTO(ultraSpell.getName(), target.getX(), target.getY()));
     }
 
-    public static MouseSetting getInstance() {
-        return MouseSetting.HELPER.INSTANCE;
+    public static MouseSettings getInstance() {
+        return MouseSettings.HELPER.INSTANCE;
     }
 
     private static class HELPER {
-        private final static MouseSetting INSTANCE = new MouseSetting();
+        private final static MouseSettings INSTANCE = new MouseSettings();
     }
 }

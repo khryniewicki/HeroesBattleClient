@@ -1,6 +1,6 @@
-package com.khryniewicki.projectX.game.attack.attackSuccess;
+package com.khryniewicki.projectX.game.attack.attackActivation;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_properties.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-public class ActivatedAttack {
+public class AttackExecution {
 
     private final UltraSpell spell;
     private final UltraHero hero,mock;
@@ -21,7 +21,7 @@ public class ActivatedAttack {
     private final LifeBar lifeBar;
     private final SendingService sendingService;
 
-    public ActivatedAttack(UltraSpell spell) {
+    public AttackExecution(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         sendingService = new SendingService();
         this.spell = spell;
