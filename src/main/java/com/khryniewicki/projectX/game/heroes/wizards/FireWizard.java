@@ -5,7 +5,6 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 
@@ -35,10 +34,6 @@ public class FireWizard extends SuperHero {
         setHeroDown(HeroUtil.FIRE_WIZARD_RUN);
     }
 
-    @Override
-    public void setPosition() {
-        setPosition(new Vector());
-    }
 
     @Override
     public void setProperties() {
@@ -48,11 +43,6 @@ public class FireWizard extends SuperHero {
         setMana(100);
         setLife(100);
 
-    }
-
-    @Override
-    public void setMesh() {
-        setMesh(createHero());
     }
 
     @Override

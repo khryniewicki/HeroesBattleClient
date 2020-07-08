@@ -6,7 +6,6 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Thunder;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 
@@ -31,10 +30,7 @@ public class ThunderWizard extends SuperHero {
         setHeroDown(HeroUtil.THUNDER_WIZARD_RUN);
     }
 
-    @Override
-    public void setPosition() {
-        setPosition(new Vector());
-    }
+
 
     @Override
     public void setSpellBasis() {
@@ -49,11 +45,6 @@ public class ThunderWizard extends SuperHero {
         setHero_top_offset(0.5f);
         setMana(100);
         setLife(100);
-    }
-
-    @Override
-    public void setMesh() {
-        setMesh(createHero());
     }
 
 }

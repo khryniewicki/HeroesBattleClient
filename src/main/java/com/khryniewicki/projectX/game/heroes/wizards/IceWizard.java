@@ -5,7 +5,6 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 
@@ -31,11 +30,6 @@ public class IceWizard extends SuperHero {
 
 
     @Override
-    public void setPosition() {
-        setPosition(new Vector());
-    }
-
-    @Override
     public void setProperties() {
         setName("IceWizard");
         setHero_standard_offset(0.2f);
@@ -51,9 +45,5 @@ public class IceWizard extends SuperHero {
         setUltimateSpell(new UltimateSpell(new Ice()));
     }
 
-    @Override
-    public void setMesh() {
-        setMesh(createHero());
-    }
 
 }

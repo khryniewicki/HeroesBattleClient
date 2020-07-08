@@ -112,5 +112,13 @@ public class SuperHero implements UltraHero {
         return ultraSpell.getSpellInstance();
     }
 
+    @Override
+    public void setMesh() {
+        setMesh(createHero());
+    }
 
+    @Override
+    public void setPosition() {
+        setPosition(new Vector());
+    }
 }
