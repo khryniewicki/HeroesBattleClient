@@ -16,7 +16,7 @@ public class SpellTrajectory {
 
     private UltraHero hero;
     private UltraSpell spell;
-    private Position distance,target;
+    private Position distance, target;
     private Long startingTimeSpell;
     private SpellInstance spellInstance;
     private final SendingService sendingService;
@@ -30,8 +30,8 @@ public class SpellTrajectory {
     }
 
     public void spellCasting() {
-        if (spell.getTarget()!=null) {
-            target=spell.getTarget();
+        if (spell.getTarget() != null) {
+            target = spell.getTarget();
             createSpellInstance();
             prepareSpell();
             castingSpell();
@@ -41,23 +41,32 @@ public class SpellTrajectory {
 
     private void castingSpell() {
         Vector position = spell.getPosition();
+        Float velocity = spellInstance.getCastingSpeed();
+        float half_velocity = velocity / 2;
 
-
-        if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
-            spell.setPositionX(position.x + Math.signum(distance.getX()) * spellInstance.getCastingSpeed());
-            spell.setPositionY(position.y + (distance.getY()) / Math.abs(distance.getX()) * spellInstance.getCastingSpeed());
+        if (Math.abs(distance.getX()) > velocity && Math.abs(distance.getY()) > velocity) {
+            if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
+                spell.setPositionX(position.x + Math.signum(distance.getX()) * velocity);
+                spell.setPositionY(position.y + (distance.getY()) / Math.abs(distance.getX()) * velocity);
+            } else {
+                spell.setPositionX(position.x + (distance.getX()) / Math.abs(distance.getY()) * velocity);
+                spell.setPositionY(position.y + Math.signum(distance.getY()) * velocity);
+            }
+            if (Math.abs(position.x - target.getX()) <= half_velocity && Math.abs(position.y - target.getY()) <= half_velocity) {
+                targetReached();
+            }
         } else {
-            spell.setPositionX(position.x + (distance.getX()) / Math.abs(distance.getY()) * spellInstance.getCastingSpeed());
-            spell.setPositionY(position.y + Math.signum(distance.getY()) * spellInstance.getCastingSpeed());
+            targetReached();
         }
-
         log.info("Position[{}],[{}]", position.x, position.y);
-        if (Math.abs(position.x - target.getX()) <= spellInstance.getCastingSpeed() / 2 && Math.abs(position.y - target.getY()) <= spellInstance.getCastingSpeed() / 2) {
-            spell.setImage(1f, 1f, spellInstance.getConsumedSpellTexture());
-            spell.setPosition(new Vector(target.getX(), target.getY(), 1f));
-            makeTargetNull();
-            setSpellPrepared(false);
-        }
+
+    }
+
+    private void targetReached() {
+        spell.setImage(1f, 1f, spellInstance.getConsumedSpellTexture());
+        spell.setPosition(new Vector(target.getX(), target.getY(), 1f));
+        makeTargetNull();
+        setSpellPrepared(false);
     }
 
     private void spellDuration() {
@@ -88,7 +97,7 @@ public class SpellTrajectory {
 
     private void makeTargetNull() {
         spell.setTarget(null);
-        target=null;
+        target = null;
     }
 
 
