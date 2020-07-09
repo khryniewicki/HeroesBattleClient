@@ -33,7 +33,7 @@ public class HeroMock implements UltraHero {
     private void mockMove() {
 
         if (tmp != null && tmp.equals(heroReceiveService.getMockPosition())) {
-            if (now != null && System.currentTimeMillis() - now > 300) {
+            if (now != null && System.currentTimeMillis() - now > 500) {
                 isIdle = true;
                 now = null;
             }
@@ -46,6 +46,7 @@ public class HeroMock implements UltraHero {
             }
             return;
         }
+
         changeMockSide();
 
         setHeroRun();

@@ -91,7 +91,7 @@ public class Spell implements UltraSpell {
     }
 
     public void spellCasting() {
-        attackTrajectory.spellCasting();
+        attackTrajectory.castingSpell();
     }
 
     @Override

@@ -31,7 +31,7 @@ public class SpellMock extends Spell {
     @Override
     public void update() {
         getSpellMock();
-        attackTrajectory.spellCasting();
+        attackTrajectory.castingSpell();
         attackExecution.hitsHeroWithSpell();
     }
 
