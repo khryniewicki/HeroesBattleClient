@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spell_settings;
 
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackExecution;
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -13,13 +14,27 @@ public class SpellMock extends Spell {
     private UltraHero mock;
     private final AttackExecution attackExecution;
     private final AttackTrajectory attackTrajectory;
+    private SpellInstance spellInstance;
 
+    private Position spellTarget;
 
-    public SpellMock() {
-        super();
+    public SpellMock(SpellInstance spellInstance) {
+        super(spellInstance);
+        this.spellInstance = spellInstance;
+        getSpellType();
         createHero();
         attackExecution = new AttackExecution(this);
         attackTrajectory = new AttackTrajectory(this);
+    }
+
+    private void getSpellType() {
+        boolean isBasic = spellInstance.isBasic();
+        if (isBasic) {
+            spellTarget = SpellReceiveService.basicSpellTarget;
+        } else {
+            spellTarget = SpellReceiveService.ultimateSpellTarget;
+
+        }
     }
 
     @Override
@@ -36,18 +51,18 @@ public class SpellMock extends Spell {
     }
 
     public void getSpellMock() {
-        if (tmp != null && tmp == SpellReceiveService.spellTarget) {
-                return;
+        spellTarget = SpellReceiveService.basicSpellTarget;
+        if (tmp != null && tmp == spellTarget) {
+            return;
         }
 
-        if (SpellReceiveService.spellTarget != null) {
+        if (spellTarget != null) {
             getPositionFromSpellReceiveService();
         }
     }
 
     private void getPositionFromSpellReceiveService() {
-        tmp = SpellReceiveService.spellTarget;
-        setSpellInstance(SpellReceiveService.spellInstance);
+        tmp = SpellReceiveService.basicSpellTarget;
         setTarget(tmp);
     }
 

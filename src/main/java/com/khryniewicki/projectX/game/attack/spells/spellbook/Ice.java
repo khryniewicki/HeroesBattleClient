@@ -16,9 +16,9 @@ public class Ice extends Spell {
         setName("IceBolt");
         setBasic(false);
         setCastingSpeed(0.3f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
-        setManaConsumed(10);
+        setSpellDuration(6000L);
+        setPowerAttack(20);
+        setManaConsumed(15);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Data;
 
 @Data
-public class UltimateSpell  implements SpellInstance{
+public class UltimateSpellInstance implements SpellInstance{
 
     private Integer powerAttack;
     private Integer manaConsumed;
@@ -15,8 +15,9 @@ public class UltimateSpell  implements SpellInstance{
     private Spell spell;
     private Long spellDuration;
     private String name;
+    private boolean isBasic;
 
-    public UltimateSpell(Spell spell) {
+    public UltimateSpellInstance(Spell spell) {
         this.spell = spell;
         this.name=spell.getName();
         this.powerAttack = spell.getPowerAttack();
@@ -25,5 +26,6 @@ public class UltimateSpell  implements SpellInstance{
         this.throwingSpellTexture = spell.getThrowingSpellTexture();
         this.consumedSpellTexture = spell.getConsumedSpellTexture();
         this.spellDuration = spell.getSpellDuration();
+        this.isBasic=spell.isBasic();
     }
 }

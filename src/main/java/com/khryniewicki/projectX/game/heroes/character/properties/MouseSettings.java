@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -10,21 +9,24 @@ import com.khryniewicki.projectX.services.DTO.DTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.BufferUtils;
 
 import java.nio.DoubleBuffer;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import static org.lwjgl.glfw.GLFW.*;
-
+@Data
+@Slf4j
 public class MouseSettings {
 
     private final StackEvent stackEvent;
     private Position cursorPosition;
-    private SpellInstance spellInstance;
+
     private SuperHero hero;
     private final SendingService sendingService;
-    private UltraSpell ultraSpell;
+    private UltraSpell spell;
 
     private MouseSettings() {
         this.stackEvent = StackEvent.getInstance();
@@ -35,60 +37,53 @@ public class MouseSettings {
     public void setMouseCallBack() {
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
             cursorPosition = getCursorPosition();
+            log.info("SpellActivated[Basic {}],[Ultimate {}]", stackEvent.isBasicSpellActivated(), stackEvent.isUltimateSpellActivated());
 
-            if (stackEvent.isCastingSpellsActivated()) {
-
-                if ((key == 0 || key == 1)) {
+            if ((key == 0 || key == 1)) {
                     getHeroInstance();
-                    getUltraSpellInstance();
-                    if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE) {
-                        ultraSpell.setSpellInstance(hero.getBasicSpell());
-                    } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE) {
-                        ultraSpell.setSpellInstance(hero.getUltimateSpell());
-                    }
-                    if (isEnoughManaToCast()) {
-                        setFinalSpellPosition(cursorPosition);
-                        consumeSpellMana();
-                        stackEvent.setCastingSpellsActivated(false);
-                        sendSpellDTO();
-                    }
-                }
-
+                        if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && stackEvent.isBasicSpellActivated()) {
+                            setSpell(hero.getBasicSpell());
+                            stackEvent.setBasicSpellActivated(false);
+                            send();
+                        } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && stackEvent.isUltimateSpellActivated()) {
+                            setSpell(hero.getUltimateSpell());
+                            stackEvent.setUltimateSpellActivated(false);
+                            send();
+                        }
             }
         });
     }
 
+    private void send() {
+        spell.setStartingTimeSpell(System.currentTimeMillis());
 
-    private void setFinalSpellPosition(Position position) {
+        if (isEnoughManaToCast()) {
+            setSpellTarget(spell);
+            consumeSpellMana();
+            sendSpellDTO();
+        }
+    }
+
+
+    private void setSpellTarget(UltraSpell ultraSpell ) {
         float factor = 1.1f;
-        float finalX= (float) (position.getPositionXD() - Game.width / 2) / (Game.width / 20);
-        float finalY= (float) ((Game.height / 2 - position.getPositionYD()) * factor) / (Game.height / 10);
-        ultraSpell.setTarget(new Position(finalX,finalY));
+        float finalX = (float) (cursorPosition.getPositionXD() - Game.width / 2) / (Game.width / 20);
+        float finalY = (float) ((Game.height / 2 - cursorPosition.getPositionYD()) * factor) / (Game.height / 10);
+        ultraSpell.setTarget(new Position(finalX, finalY));
     }
 
     private void consumeSpellMana() {
         Integer heroMana = hero.getMana();
-        hero.setMana(heroMana - spellInstance.getManaConsumed());
+        hero.setMana(heroMana - spell.getManaConsumed());
 
         ManaBar manaBar = hero.getManaBar();
         manaBar.updateManaBar();
 
         sendingService.updatePosition();
     }
-    private void getUltraSpellInstance() {
-        if (ultraSpell==null){
-            ultraSpell=hero.getUltraSpell();
-        }
-    }
-    private void getSpellInstance() {
-        if (spellInstance==null){
-            spellInstance=ultraSpell.getSpellInstance();
-        }
-    }
 
     private boolean isEnoughManaToCast() {
-        getSpellInstance();
-        return hero.getMana() >= spellInstance.getManaConsumed();
+        return hero.getMana() >= spell.getManaConsumed();
     }
 
     private Position getCursorPosition() {
@@ -99,16 +94,18 @@ public class MouseSettings {
         double y = yBuffer.get(0);
         return new Position(x, y);
     }
+
     private void getHeroInstance() {
         if (hero == null) {
             HeroesInstances instance = HeroesInstances.getInstance();
             hero = instance.getHero();
         }
     }
+
     private void sendSpellDTO() {
         ConcurrentLinkedDeque<DTO> heroDTOS = stackEvent.getEvents();
-        Position target=ultraSpell.getTarget();
-        heroDTOS.offerLast(new SpellDTO(ultraSpell.getName(), target.getX(), target.getY()));
+        Position target = spell.getTarget();
+        heroDTOS.offerLast(new SpellDTO(spell.getName(), target.getX(), target.getY()));
     }
 
     public static MouseSettings getInstance() {

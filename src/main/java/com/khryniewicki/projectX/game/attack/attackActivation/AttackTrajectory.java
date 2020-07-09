@@ -16,10 +16,10 @@ public class AttackTrajectory {
 
 
     private UltraHero hero;
-    private UltraSpell spell;
     private Position distance, target;
-    private Long startingTimeSpell;
     private SpellInstance spellInstance;
+
+    private final UltraSpell spell;
     private final SendingService sendingService;
     private final StackEvent stackEvent;
     private boolean isSpellPrepared;
@@ -45,7 +45,6 @@ public class AttackTrajectory {
         Float velocity = spellInstance.getCastingSpeed();
         float half_velocity = velocity / 2;
 //        log.info("Distance[{}],[{}]", distance.getX(), distance.getY());
-
         if (Math.abs(distance.getX()) > half_velocity || Math.abs(distance.getY()) > half_velocity) {
             if (Math.abs(distance.getX()) > half_velocity && Math.abs(distance.getY()) <= half_velocity) {
 //                log.info("CASE 1");
@@ -84,24 +83,31 @@ public class AttackTrajectory {
     }
 
     private void spellDuration() {
-        if (startingTimeSpell != null) {
-            if (System.currentTimeMillis() - startingTimeSpell > spellInstance.getSpellDuration()) {
+
+        if (spell.getStartingTimeSpell() != null) {
+            if (System.currentTimeMillis() - spell.getStartingTimeSpell() > spellInstance.getSpellDuration()) {
                 spell.setPositionZ(-1f);
-                startingTimeSpell = null;
-                stackEvent.setCastingSpellsActivated(true);
+                spell.setStartingTimeSpell(null);
+                activateSpell();
             }
+        }
+
+    }
+
+    private void activateSpell() {
+        if (spellInstance.isBasic()) {
+            stackEvent.setBasicSpellActivated(true);
+        } else {
+            stackEvent.setUltimateSpellActivated(true);
         }
     }
 
 
     public void prepareSpell() {
         if (!isSpellPrepared) {
-            startingTimeSpell = System.currentTimeMillis();
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
-
             spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));
-
             setSpellPrepared(true);
             log.info("Target[{}],[{}]", target.getX(), target.getY());
 
@@ -118,6 +124,5 @@ public class AttackTrajectory {
     public void createSpellInstance() {
         spellInstance = spell.getSpellInstance();
     }
-
 
 }

@@ -13,4 +13,5 @@ public interface SpellInstance  {
     Spell getSpell();
     Long getSpellDuration();
     String getName();
+    boolean isBasic();
 }

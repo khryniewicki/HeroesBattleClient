@@ -28,9 +28,10 @@ public class Spell implements UltraSpell {
     private Float castingSpeed;
 
 
-    private Long startingTimeSpell = null;
+    private Long startingTimeSpell;
     private Long spellDuration;
     private boolean isBasic;
+
 
     private float indexHeight = 1;
     private float indexWidth = 1;
@@ -42,13 +43,17 @@ public class Spell implements UltraSpell {
     private StackEvent stackEvent;
     private SpellInstance spellInstance;
     private UltraHero ultraHero;
-    private final AttackTrajectory attackTrajectory;
+    private AttackTrajectory attackTrajectory;
     private StartingPosition startingPosition;
 
-
     public Spell() {
+    }
+
+    public Spell(SpellInstance spellInstance) {
         this.attackTrajectory = new AttackTrajectory(this);
+        this.spellInstance=spellInstance;
         createHero();
+        setSpellDetails();
     }
 
     public VertexArray createMesh() {
@@ -103,11 +108,7 @@ public class Spell implements UltraSpell {
         Shader.SPELL.disable();
     }
 
-    @Override
-    public void setSpellInstance(SpellInstance spellInstance) {
-        this.spellInstance = spellInstance;
-        setSpellDetails();
-    }
+
 
     public void setSpellDetails(){
         createProperties();

@@ -1,8 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
@@ -11,8 +10,9 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Starting
 public interface UltraHero extends Ultra {
     Float getX();
     Float getY();
-    SpellInstance getSpellInstance();
-    UltimateSpell getUltimateSpell();
+
+    BasicSpellInstance getBasicSpellInstance();
+    UltimateSpellInstance getUltimateSpellInstance();
     void setMovingLeft(boolean movingLeft);
 
     LifeBar getLifeBar();
@@ -27,16 +27,16 @@ public interface UltraHero extends Ultra {
     Integer getMana();
     default void setMana(Integer mana){};
 
-    UltraSpell getUltraSpell();
-    void setUltraSpell(UltraSpell ultraSpell);
+    UltraSpell getBasicSpell();
+    void setBasicSpell(UltraSpell ultraSpell);
+
+    UltraSpell getUltimateSpell();
+    void setUltimateSpell(UltraSpell ultraSpell);
 
     StartingPosition getStartingPosition();
     void setStartingPosition(StartingPosition startingPosition);
 
-    BasicSpell getBasicSpell();
     default void setSpellBasis(){};
-
-
     default void setHeroIdle(){};
     default void setHeroRun(){};
     default void updateManaBar(){};

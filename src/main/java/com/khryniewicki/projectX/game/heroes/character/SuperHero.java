@@ -1,8 +1,8 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
@@ -13,7 +13,6 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.HeroUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,9 +43,10 @@ public class SuperHero implements UltraHero {
     private StartingPosition startingPosition;
 
     private SpellInstance spellInstance;
-    private UltraSpell ultraSpell;
-    private BasicSpell basicSpell;
-    private UltimateSpell ultimateSpell;
+    private UltraSpell basicSpell;
+    private UltraSpell ultimateSpell;
+    private BasicSpellInstance basicSpellInstance;
+    private UltimateSpellInstance ultimateSpellInstance;
 
 
     public VertexArray createHero() {
@@ -106,11 +106,6 @@ public class SuperHero implements UltraHero {
     @Override
     public void setPositionY(Float positionY) {
         this.position.y = positionY;
-    }
-
-    @Override
-    public SpellInstance getSpellInstance() {
-        return ultraSpell.getSpellInstance();
     }
 
     @Override

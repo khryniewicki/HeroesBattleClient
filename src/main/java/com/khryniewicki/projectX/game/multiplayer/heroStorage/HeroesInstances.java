@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellMock;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
@@ -48,15 +47,15 @@ public class HeroesInstances {
         ultraHero.setManaBar(new ManaBar(ultraHero));
 
         if (ultraHero.equals(hero)){
-            ultraHero.setUltraSpell(new Spell());
             ultraHero.setStartingPosition(HeroStartingPosition.getInstance());
+            ultraHero.setBasicSpell(new Spell(ultraHero.getBasicSpellInstance()));
+            ultraHero.setUltimateSpell(new Spell(ultraHero.getUltimateSpellInstance()));
         } else{
-            ultraHero.setUltraSpell(new SpellMock());
             ultraHero.setStartingPosition(MockStartingPosition.getInstance());
+            ultraHero.setBasicSpell(new SpellMock(ultraHero.getBasicSpellInstance()));
+            ultraHero.setUltimateSpell(new SpellMock(ultraHero.getUltimateSpellInstance()));
         }
 
-        UltraSpell ultraSpell = ultraHero.getUltraSpell();
-        ultraSpell.setSpellInstance(ultraHero.getBasicSpell());
     }
 
     public void setHeroMoveSetting(){

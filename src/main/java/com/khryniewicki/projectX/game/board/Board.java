@@ -13,6 +13,7 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +29,13 @@ public class Board {
 
     public static SuperHero hero;
     public static UltraHero mock;
-    private UltraSpell spell;
-    private UltraSpell spellMock;
-    private AttackExecution attackExecution;
+    private UltraSpell basicSpell;
+    private UltraSpell ultimateSpell;
 
+    private UltraSpell basicSpellMock;
+    private UltraSpell ultimateSpellMock;
+    private AttackExecution attackExecution;
+    private StackEvent stackEvent;
     private Pointer pointer;
     public static Collision myCollision;
     private List<BoardObjects> obstacles;
@@ -44,12 +48,15 @@ public class Board {
         initBackgroundTextures();
 
         myCollision = new Collision();
-
+        stackEvent = StackEvent.getInstance();
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         mock = heroesInstances.getMock();
-        spell = hero.getUltraSpell();
-        spellMock =mock.getUltraSpell() ;
+        basicSpell = hero.getBasicSpell();
+        ultimateSpell = hero.getUltimateSpell();
+
+        basicSpellMock = mock.getBasicSpell();
+        ultimateSpellMock = mock.getUltimateSpell();
     }
 
     public static Board getInstance() {
@@ -87,19 +94,28 @@ public class Board {
     public void update() {
         hero.update();
         mock.update();
-        spell.update();
-        spellMock.update();
+        basicSpell.update();
+        ultimateSpell.update();
 
+        basicSpellMock.update();
+        ultimateSpellMock.update();
     }
 
     public void render() {
 
         renderBackground();
         myCollision.collisionTest();
+
         hero.render();
+        if (!stackEvent.isBasicSpellActivated())
+            basicSpell.render();
+
+        if (!stackEvent.isUltimateSpellActivated())
+            ultimateSpell.render();
+
         mock.render();
-        spell.render();
-        spellMock.render();
+        basicSpellMock.render();
+        ultimateSpellMock.render();
     }
 
     private void renderBackground() {

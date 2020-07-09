@@ -1,8 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpell;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpell;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
@@ -132,10 +131,7 @@ public class HeroMock implements UltraHero {
         return ultraHero.getPosition();
     }
 
-    @Override
-    public SpellInstance getSpellInstance() {
-        return ultraHero.getSpellInstance();
-    }
+
 
     @Override
     public LifeBar getLifeBar() {
@@ -157,24 +153,30 @@ public class HeroMock implements UltraHero {
         return heroReceiveService.getMockMana();
     }
 
+
+
     @Override
-    public BasicSpell getBasicSpell() {
+    public UltimateSpellInstance getUltimateSpellInstance() {
+        return ultraHero.getUltimateSpellInstance();
+    }
+
+    @Override
+    public void setBasicSpell(UltraSpell ultraSpell) {
+        ultraHero.setBasicSpell(ultraSpell);
+    }
+
+    @Override
+    public UltraSpell getUltimateSpell() {
+        return ultraHero.getUltimateSpell();    }
+
+    @Override
+    public void setUltimateSpell(UltraSpell ultraSpell) {
+            ultraHero.setUltimateSpell(ultraSpell);
+    }
+
+    @Override
+    public UltraSpell getBasicSpell() {
         return ultraHero.getBasicSpell();
-    }
-
-    @Override
-    public UltimateSpell getUltimateSpell() {
-        return ultraHero.getUltimateSpell();
-    }
-
-    @Override
-    public void setUltraSpell(UltraSpell ultraSpell) {
-        ultraHero.setUltraSpell(ultraSpell);
-    }
-
-    @Override
-    public UltraSpell getUltraSpell() {
-        return ultraHero.getUltraSpell();
     }
 
     @Override
@@ -187,6 +189,7 @@ public class HeroMock implements UltraHero {
         return ultraHero.getY();
     }
 
+
     @Override
     public StartingPosition getStartingPosition() {
         return ultraHero.getStartingPosition();
@@ -195,6 +198,11 @@ public class HeroMock implements UltraHero {
     @Override
     public void setStartingPosition(StartingPosition startingPosition) {
         ultraHero.setStartingPosition(startingPosition);
+    }
+
+    @Override
+    public BasicSpellInstance getBasicSpellInstance() {
+        return ultraHero.getBasicSpellInstance();
     }
 
 

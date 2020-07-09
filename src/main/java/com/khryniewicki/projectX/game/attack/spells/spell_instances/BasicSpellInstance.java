@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 
-public class BasicSpell implements SpellInstance {
+public class BasicSpellInstance implements SpellInstance {
 
     private String name;
     private Integer powerAttack;
@@ -15,10 +15,10 @@ public class BasicSpell implements SpellInstance {
     private Texture consumedSpellTexture;
     private Texture throwingSpellTexture;
     private Long spellDuration;
-
+    private boolean isBasic;
     private Spell spell;
 
-    public BasicSpell(Spell spell) {
+    public BasicSpellInstance(Spell spell) {
         this.spell = spell;
         this.name=spell.getName();
         this.powerAttack = spell.getPowerAttack();
@@ -27,6 +27,8 @@ public class BasicSpell implements SpellInstance {
         this.throwingSpellTexture = spell.getThrowingSpellTexture();
         this.consumedSpellTexture = spell.getConsumedSpellTexture();
         this.spellDuration = spell.getSpellDuration();
+        this.isBasic=spell.isBasic();
     }
+
 
 }
