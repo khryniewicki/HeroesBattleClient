@@ -18,6 +18,7 @@ public class BasicSpellInstance implements SpellInstance {
     private boolean isBasic;
     private Spell spell;
 
+
     public BasicSpellInstance(Spell spell) {
         this.spell = spell;
         this.name=spell.getName();

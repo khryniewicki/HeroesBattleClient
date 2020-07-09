@@ -23,7 +23,6 @@ public class Spell implements UltraSpell {
     public Float SIZE = 1f;
 
     private Position target;
-    private Float finalX,finalY;
     private Texture throwingSpellTexture,consumedSpellTexture;
     private Float castingSpeed;
 
@@ -31,7 +30,7 @@ public class Spell implements UltraSpell {
     private Long startingTimeSpell;
     private Long spellDuration;
     private boolean isBasic;
-
+    private boolean isSpellActivated;
 
     private float indexHeight = 1;
     private float indexWidth = 1;
@@ -50,8 +49,8 @@ public class Spell implements UltraSpell {
     }
 
     public Spell(SpellInstance spellInstance) {
-        this.attackTrajectory = new AttackTrajectory(this);
         this.spellInstance=spellInstance;
+        this.attackTrajectory = new AttackTrajectory(this);
         createHero();
         setSpellDetails();
     }
@@ -124,6 +123,7 @@ public class Spell implements UltraSpell {
         texture = throwingSpellTexture;
         powerAttack = spellInstance.getPowerAttack();
         manaConsumed = spellInstance.getManaConsumed();
+
     }
 
 

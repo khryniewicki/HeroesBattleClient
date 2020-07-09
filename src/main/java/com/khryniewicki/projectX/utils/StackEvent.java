@@ -11,8 +11,7 @@ public class StackEvent {
     private ConcurrentLinkedDeque<DTO> events;
     private static StackEvent INSTANCE;
     private boolean hasAction;
-    private boolean isBasicSpellActivated = true;
-    private boolean isUltimateSpellActivated = true;
+
 
     public boolean hasAction() {
         return hasAction;

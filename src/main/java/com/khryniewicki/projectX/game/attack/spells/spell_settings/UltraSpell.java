@@ -30,4 +30,9 @@ public interface UltraSpell extends Ultra {
     SpellInstance getSpellInstance();
     Long getStartingTimeSpell();
     void setStartingTimeSpell(Long startingTimeSpell);
+
+    boolean isSpellActivated();
+    void setSpellActivated(boolean isActivated);
+
+    void setSpellInstance(SpellInstance spellInstance);
 }

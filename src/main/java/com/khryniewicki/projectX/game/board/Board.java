@@ -107,11 +107,12 @@ public class Board {
         myCollision.collisionTest();
 
         hero.render();
-        if (!stackEvent.isBasicSpellActivated())
-            basicSpell.render();
+        if (basicSpell.isSpellActivated()){
+            basicSpell.render();}
 
-        if (!stackEvent.isUltimateSpellActivated())
+        if (ultimateSpell.isSpellActivated()) {
             ultimateSpell.render();
+        }
 
         mock.render();
         basicSpellMock.render();

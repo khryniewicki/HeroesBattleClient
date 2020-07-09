@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -23,31 +24,35 @@ public class MouseSettings {
 
     private final StackEvent stackEvent;
     private Position cursorPosition;
-
+    private SpellInstance spellInstance;
     private SuperHero hero;
     private final SendingService sendingService;
     private UltraSpell spell;
+    private UltraSpell basicSpell;
+    private UltraSpell ultimateSpell;
 
     private MouseSettings() {
         this.stackEvent = StackEvent.getInstance();
         this.hero = HeroesInstances.getInstance().getHero();
         this.sendingService = new SendingService();
+        this.basicSpell=hero.getBasicSpell();
+        this.ultimateSpell=hero.getUltimateSpell();
     }
 
     public void setMouseCallBack() {
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
             cursorPosition = getCursorPosition();
-            log.info("SpellActivated[Basic {}],[Ultimate {}]", stackEvent.isBasicSpellActivated(), stackEvent.isUltimateSpellActivated());
+            log.info("SpellActivated[Basic {}],[Ultimate {}]", basicSpell.isSpellActivated(), ultimateSpell.isSpellActivated());
 
             if ((key == 0 || key == 1)) {
                     getHeroInstance();
-                        if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && stackEvent.isBasicSpellActivated()) {
+                        if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && !basicSpell.isSpellActivated()) {
                             setSpell(hero.getBasicSpell());
-                            stackEvent.setBasicSpellActivated(false);
+                            basicSpell.setSpellActivated(true);
                             send();
-                        } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && stackEvent.isUltimateSpellActivated()) {
+                        } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && !ultimateSpell.isSpellActivated()) {
                             setSpell(hero.getUltimateSpell());
-                            stackEvent.setUltimateSpellActivated(false);
+                            ultimateSpell.setSpellActivated(true);
                             send();
                         }
             }

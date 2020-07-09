@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.attack.attackActivation;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
@@ -14,26 +15,27 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 public class AttackTrajectory {
 
-
     private UltraHero hero;
     private Position distance, target;
-    private SpellInstance spellInstance;
+    private boolean isSpellNotPrepared;
 
+    private SpellInstance spellInstance;
     private final UltraSpell spell;
     private final SendingService sendingService;
     private final StackEvent stackEvent;
-    private boolean isSpellPrepared;
 
     public AttackTrajectory(UltraSpell spell) {
+        this.hero = HeroesInstances.getInstance().getHero();
         this.stackEvent = StackEvent.getInstance();
         this.sendingService = new SendingService();
         this.spell = spell;
+        this.spellInstance = spell.getSpellInstance();
+        this.isSpellNotPrepared = true;
     }
 
     public void castingSpell() {
         if (spell.getTarget() != null) {
             target = spell.getTarget();
-            createSpellInstance();
             prepareSpell();
             calculateTrajectory();
         }
@@ -79,7 +81,7 @@ public class AttackTrajectory {
         spell.setImage(1f, 1f, spellInstance.getConsumedSpellTexture());
         spell.setPosition(new Vector(target.getX(), target.getY(), 1f));
         makeTargetNull();
-        setSpellPrepared(false);
+        setSpellNotPrepared(true);
     }
 
     private void spellDuration() {
@@ -96,21 +98,23 @@ public class AttackTrajectory {
 
     private void activateSpell() {
         if (spellInstance.isBasic()) {
-            stackEvent.setBasicSpellActivated(true);
+            UltraSpell basicSpell = hero.getBasicSpell();
+            basicSpell.setSpellActivated(false);
         } else {
-            stackEvent.setUltimateSpellActivated(true);
+            UltraSpell ultimateSpell = hero.getUltimateSpell();
+            ultimateSpell.setSpellActivated(false);
         }
+
     }
 
 
     public void prepareSpell() {
-        if (!isSpellPrepared) {
+        if (isSpellNotPrepared) {
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
             spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));
-            setSpellPrepared(true);
+            setSpellNotPrepared(false);
             log.info("Target[{}],[{}]", target.getX(), target.getY());
-
         }
     }
 
@@ -118,11 +122,6 @@ public class AttackTrajectory {
     private void makeTargetNull() {
         spell.setTarget(null);
         target = null;
-    }
-
-
-    public void createSpellInstance() {
-        spellInstance = spell.getSpellInstance();
     }
 
 }

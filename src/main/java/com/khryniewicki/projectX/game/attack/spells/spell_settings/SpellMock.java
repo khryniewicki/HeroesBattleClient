@@ -15,25 +15,22 @@ public class SpellMock extends Spell {
     private final AttackExecution attackExecution;
     private final AttackTrajectory attackTrajectory;
     private SpellInstance spellInstance;
-
     private Position spellTarget;
 
     public SpellMock(SpellInstance spellInstance) {
         super(spellInstance);
         this.spellInstance = spellInstance;
-        getSpellType();
+
         createHero();
         attackExecution = new AttackExecution(this);
         attackTrajectory = new AttackTrajectory(this);
     }
 
     private void getSpellType() {
-        boolean isBasic = spellInstance.isBasic();
-        if (isBasic) {
+        if (spellInstance.isBasic()) {
             spellTarget = SpellReceiveService.basicSpellTarget;
         } else {
             spellTarget = SpellReceiveService.ultimateSpellTarget;
-
         }
     }
 
@@ -45,13 +42,14 @@ public class SpellMock extends Spell {
 
     @Override
     public void update() {
+        getSpellType();
         getSpellMock();
         attackTrajectory.castingSpell();
         attackExecution.hitsHeroWithSpell();
     }
 
     public void getSpellMock() {
-        spellTarget = SpellReceiveService.basicSpellTarget;
+
         if (tmp != null && tmp == spellTarget) {
             return;
         }
@@ -62,7 +60,8 @@ public class SpellMock extends Spell {
     }
 
     private void getPositionFromSpellReceiveService() {
-        tmp = SpellReceiveService.basicSpellTarget;
+        tmp = spellTarget;
+        setStartingTimeSpell(System.currentTimeMillis());
         setTarget(tmp);
     }
 

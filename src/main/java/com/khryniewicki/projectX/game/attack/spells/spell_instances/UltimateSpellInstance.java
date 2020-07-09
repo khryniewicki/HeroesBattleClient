@@ -17,6 +17,7 @@ public class UltimateSpellInstance implements SpellInstance{
     private String name;
     private boolean isBasic;
 
+
     public UltimateSpellInstance(Spell spell) {
         this.spell = spell;
         this.name=spell.getName();
