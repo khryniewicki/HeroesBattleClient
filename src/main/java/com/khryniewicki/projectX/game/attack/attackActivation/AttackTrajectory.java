@@ -3,7 +3,6 @@ package com.khryniewicki.projectX.game.attack.attackActivation;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
@@ -24,8 +23,8 @@ public class AttackTrajectory {
     private final SendingService sendingService;
     private final StackEvent stackEvent;
 
-    public AttackTrajectory(UltraSpell spell) {
-        this.hero = HeroesInstances.getInstance().getHero();
+    public AttackTrajectory(UltraSpell spell, UltraHero hero) {
+        this.hero = hero;
         this.stackEvent = StackEvent.getInstance();
         this.sendingService = new SendingService();
         this.spell = spell;
@@ -86,17 +85,17 @@ public class AttackTrajectory {
 
     private void spellDuration() {
 
-        if (spell.getStartingTimeSpell() != null) {
+        if (spell.getStartingTimeSpell() != 0L) {
             if (System.currentTimeMillis() - spell.getStartingTimeSpell() > spellInstance.getSpellDuration()) {
                 spell.setPositionZ(-1f);
-                spell.setStartingTimeSpell(null);
-                activateSpell();
+                spell.setStartingTimeSpell(0L);
+                deactivateSpell();
             }
         }
 
     }
 
-    private void activateSpell() {
+    private void deactivateSpell() {
         if (spellInstance.isBasic()) {
             UltraSpell basicSpell = hero.getBasicSpell();
             basicSpell.setSpellActivated(false);

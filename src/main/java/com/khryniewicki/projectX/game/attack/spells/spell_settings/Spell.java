@@ -27,7 +27,7 @@ public class Spell implements UltraSpell {
     private Float castingSpeed;
 
 
-    private Long startingTimeSpell;
+    private Long startingTimeSpell=0L;
     private Long spellDuration;
     private boolean isBasic;
     private boolean isSpellActivated;
@@ -49,9 +49,10 @@ public class Spell implements UltraSpell {
     }
 
     public Spell(SpellInstance spellInstance) {
-        this.spellInstance=spellInstance;
-        this.attackTrajectory = new AttackTrajectory(this);
         createHero();
+        this.spellInstance=spellInstance;
+        this.attackTrajectory = new AttackTrajectory(this,ultraHero);
+
         setSpellDetails();
     }
 

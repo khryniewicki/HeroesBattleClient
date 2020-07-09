@@ -10,20 +10,18 @@ import com.khryniewicki.projectX.services.SpellReceiveService;
 
 public class SpellMock extends Spell {
 
-    private Position tmp;
-    private UltraHero mock;
+    private Position tmp,spellTarget;
     private final AttackExecution attackExecution;
     private final AttackTrajectory attackTrajectory;
-    private SpellInstance spellInstance;
-    private Position spellTarget;
+    private final SpellInstance spellInstance;
+    private UltraHero mock;
 
     public SpellMock(SpellInstance spellInstance) {
         super(spellInstance);
         this.spellInstance = spellInstance;
-
         createHero();
         attackExecution = new AttackExecution(this);
-        attackTrajectory = new AttackTrajectory(this);
+        attackTrajectory = new AttackTrajectory(this,mock);
     }
 
     private void getSpellType() {
@@ -63,6 +61,15 @@ public class SpellMock extends Spell {
         tmp = spellTarget;
         setStartingTimeSpell(System.currentTimeMillis());
         setTarget(tmp);
+        activateSpell();
     }
-
+    private void activateSpell() {
+        if (spellInstance.isBasic()) {
+            UltraSpell basicSpell = mock.getBasicSpell();
+            basicSpell.setSpellActivated(true);
+        } else {
+            UltraSpell ultimateSpell = mock.getUltimateSpell();
+            ultimateSpell.setSpellActivated(true);
+        }
+    }
 }

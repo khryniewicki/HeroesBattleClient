@@ -107,16 +107,16 @@ public class Board {
         myCollision.collisionTest();
 
         hero.render();
-        if (basicSpell.isSpellActivated()){
-            basicSpell.render();}
-
-        if (ultimateSpell.isSpellActivated()) {
-            ultimateSpell.render();
-        }
-
         mock.render();
-        basicSpellMock.render();
-        ultimateSpellMock.render();
+
+        if (basicSpell.isSpellActivated()) {
+            basicSpell.render(); }
+        if (ultimateSpell.isSpellActivated()) {
+            ultimateSpell.render();}
+        if (basicSpellMock.isSpellActivated()) {
+            basicSpellMock.render();}
+        if (ultimateSpellMock.isSpellActivated()) {
+            ultimateSpellMock.render();}
     }
 
     private void renderBackground() {

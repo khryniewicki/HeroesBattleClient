@@ -48,12 +48,12 @@ public class MouseSettings {
                     getHeroInstance();
                         if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && !basicSpell.isSpellActivated()) {
                             setSpell(hero.getBasicSpell());
-                            basicSpell.setSpellActivated(true);
                             send();
+
                         } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && !ultimateSpell.isSpellActivated()) {
                             setSpell(hero.getUltimateSpell());
-                            ultimateSpell.setSpellActivated(true);
                             send();
+
                         }
             }
         });
@@ -64,6 +64,7 @@ public class MouseSettings {
 
         if (isEnoughManaToCast()) {
             setSpellTarget(spell);
+            spell.setSpellActivated(true);
             consumeSpellMana();
             sendSpellDTO();
         }
