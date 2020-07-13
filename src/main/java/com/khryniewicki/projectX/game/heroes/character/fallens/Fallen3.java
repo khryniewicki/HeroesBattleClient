@@ -37,12 +37,12 @@ public class Fallen3 extends SuperHero {
 
     @Override
     public void setProperties() {
-        setName("Fallen1");
+        setName("Fallen3");
         setHero_standard_offset(0.2f);
         setHero_top_offset(0.5f);
         setMana(100);
         setLife(100);
-
+        setSIZE(1.2F);
     }
 
 

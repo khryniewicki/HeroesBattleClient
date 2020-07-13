@@ -42,7 +42,7 @@ public class Fallen1 extends SuperHero {
         setHero_top_offset(0.5f);
         setMana(100);
         setLife(100);
-
+        setSIZE(1.2F);
     }
 
 
