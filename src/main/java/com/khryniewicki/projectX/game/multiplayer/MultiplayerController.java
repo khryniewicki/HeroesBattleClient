@@ -42,7 +42,7 @@ public class MultiplayerController {
         getInput();
 
         if (inputText != null) {
-            Set<String> characters = new HashSet<>(Arrays.asList("FireWizard", "IceWizard", "ThunderWizard"));
+            Set<String> characters = new HashSet<>(Arrays.asList("FireWizard", "IceWizard", "ThunderWizard","Fallen1","Fallen2","Fallen3"));
             boolean contains = characters.contains(inputText);
 
             if (!contains) {
