@@ -30,7 +30,7 @@ public class AttackExecution {
         this.lifeBar = hero.getLifeBar();
     }
 
-    public void hitsHeroWithSpell() {
+    public void executeSpell() {
 
         spellObjectDimensions();
         heroObjectDimenions();

@@ -24,6 +24,7 @@ import java.util.Map;
 @Service
 @Data
 public class HeroesInstances {
+
     private SuperHero hero;
     private UltraHero mock;
     private final CharacterFactory characterFactory;
@@ -64,10 +65,9 @@ public class HeroesInstances {
 
     public void setMock() {
         WebsocketInitializer websocketInstance = WebsocketInitializer.getWebsocketInstance();
-        HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
-
         String sessionId = websocketInstance.getSessionId();
 
+        HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
         Map<String, Message> heroes = heroesRegistry.getHeroesRegistryBook();
 
         for (Map.Entry<String, Message> hero : heroes.entrySet()) {

@@ -68,7 +68,15 @@ public class MultiplayerController {
             } else if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
                 inputText = "ThunderWizard";
                 renderFactory.render(TextUtil.CHOSE_THUNDERWIZARD);
-
+            } else if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
+                inputText = "Fallen1";
+                renderFactory.render(TextUtil.CHOSE_WITCHER);
+            } else if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
+                inputText = "Fallen2";
+                renderFactory.render(TextUtil.CHOSE_MONK);
+            } else if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
+                inputText = "Fallen3";
+                renderFactory.render(TextUtil.CHOSE_FALLEN_KING);
             } else
                 inputText = "else";
 

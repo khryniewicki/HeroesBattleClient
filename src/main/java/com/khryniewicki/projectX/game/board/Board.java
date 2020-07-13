@@ -14,6 +14,7 @@ import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class Board {
         mock = heroesInstances.getMock();
 
         UltraHero[] ultraHeroes = {hero, mock};
+        heroes=new ArrayList<>();
         heroes.addAll(Arrays.asList(ultraHeroes));
 
     }
@@ -88,6 +90,7 @@ public class Board {
         ultimateSpellMock = mock.getUltimateSpell();
 
         UltraSpell[] ultraSpells = {basicSpell, basicSpellMock, ultimateSpell, ultimateSpellMock};
+        spells=new ArrayList<>();
         spells.addAll(Arrays.asList(ultraSpells));
     }
 

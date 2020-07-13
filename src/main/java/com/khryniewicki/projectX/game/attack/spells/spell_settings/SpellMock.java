@@ -24,13 +24,7 @@ public class SpellMock extends Spell {
         attackTrajectory = new AttackTrajectory(this,mock);
     }
 
-    private void getSpellType() {
-        if (spellInstance.isBasic()) {
-            spellTarget = SpellReceiveService.basicSpellTarget;
-        } else {
-            spellTarget = SpellReceiveService.ultimateSpellTarget;
-        }
-    }
+
 
     @Override
     public void createHero() {
@@ -42,16 +36,24 @@ public class SpellMock extends Spell {
     public void update() {
         getSpellType();
         getSpellMock();
-        attackTrajectory.castingSpell();
-        attackExecution.hitsHeroWithSpell();
+        castingSpell();
+        executeSpell();
+    }
+
+
+
+    private void getSpellType() {
+        if (spellInstance.isBasic()) {
+            spellTarget = SpellReceiveService.basicSpellTarget;
+        } else {
+            spellTarget = SpellReceiveService.ultimateSpellTarget;
+        }
     }
 
     public void getSpellMock() {
-
         if (tmp != null && tmp == spellTarget) {
             return;
         }
-
         if (spellTarget != null) {
             getPositionFromSpellReceiveService();
         }
@@ -59,10 +61,11 @@ public class SpellMock extends Spell {
 
     private void getPositionFromSpellReceiveService() {
         tmp = spellTarget;
-        setStartingTimeSpell(System.currentTimeMillis());
         setTarget(tmp);
+        setStartingTimeSpell(System.currentTimeMillis());
         activateSpell();
     }
+
     private void activateSpell() {
         if (spellInstance.isBasic()) {
             UltraSpell basicSpell = mock.getBasicSpell();
@@ -72,4 +75,14 @@ public class SpellMock extends Spell {
             ultimateSpell.setSpellActivated(true);
         }
     }
+
+    private void castingSpell() {
+        attackTrajectory.castingSpell();
+    }
+
+    private void executeSpell() {
+        attackExecution.executeSpell();
+    }
+
+
 }

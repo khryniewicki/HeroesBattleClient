@@ -117,7 +117,6 @@ public class AttackTrajectory {
         }
     }
 
-
     private void makeTargetNull() {
         spell.setTarget(null);
         target = null;
