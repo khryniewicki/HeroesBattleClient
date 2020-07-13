@@ -39,6 +39,7 @@ public interface UltraHero extends Ultra {
     default void setSpellBasis(){};
     default void setHeroIdle(){};
     default void setHeroRun(){};
+    default void setHeroAttack(){};
     default void updateManaBar(){};
 
 }

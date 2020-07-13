@@ -24,7 +24,7 @@ public class SuperHero implements UltraHero {
 
     private boolean isMovingLeft;
     private VertexArray mesh;
-    private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle;
+    private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle,heroAttack;
     private Vector position;
 
     private String name;
@@ -126,5 +126,10 @@ public class SuperHero implements UltraHero {
     @Override
     public void setHeroRun() {
         setTexture(heroRight);
+    }
+
+    @Override
+    public void setHeroAttack() {
+        setTexture(heroAttack);
     }
 }

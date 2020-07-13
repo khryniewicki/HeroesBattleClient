@@ -242,6 +242,12 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
+    public void setHeroAttack() {
+        ultraHero.setHeroAttack();
+    }
+
+
+    @Override
     public void setSpellBasis() {
         ultraHero.setSpellBasis();
     }

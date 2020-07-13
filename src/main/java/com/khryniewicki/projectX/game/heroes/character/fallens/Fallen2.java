@@ -32,6 +32,7 @@ public class Fallen2 extends SuperHero {
         setHeroLeft(HeroUtil.FALLENRUN2);
         setHeroUp(HeroUtil.FALLENRUN2);
         setHeroDown(HeroUtil.FALLENRUN2);
+        setHeroAttack(HeroUtil.FALLENATTACK2);
     }
 
 

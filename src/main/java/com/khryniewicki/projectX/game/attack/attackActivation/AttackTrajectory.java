@@ -35,6 +35,7 @@ public class AttackTrajectory {
     public void castingSpell() {
         if (spell.getTarget() != null) {
             target = spell.getTarget();
+
             prepareSpell();
             calculateTrajectory();
         }
@@ -103,12 +104,14 @@ public class AttackTrajectory {
             UltraSpell ultimateSpell = hero.getUltimateSpell();
             ultimateSpell.setSpellActivated(false);
         }
+        hero.setHeroIdle();
 
     }
 
 
     public void prepareSpell() {
         if (isSpellNotPrepared) {
+            hero.setHeroAttack();
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
             spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));

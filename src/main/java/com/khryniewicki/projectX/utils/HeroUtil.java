@@ -16,10 +16,12 @@ public class HeroUtil {
 
     public static final Texture FALLENIDLE1 = new Texture("FallenIdle1.png");
     public static final Texture FALLENRUN1 = new Texture("FallenRun1.png");
+    public static final Texture FALLENATTACK1 = new Texture("FallenAttack1.png");
 
     public static final Texture FALLENIDLE2 = new Texture("FallenIdle2.png");
     public static final Texture FALLENRUN2 = new Texture("FallenRun2.png");
-
+    public static final Texture FALLENATTACK2 = new Texture("FallenAttack2.png");
     public static final Texture FALLENIDLE3= new Texture("FallenIdle3.png");
     public static final Texture FALLENRUN3 = new Texture("FallenRun3.png");
+    public static final Texture FALLENATTACK3 = new Texture("FallenAttack3.png");
 }

@@ -32,6 +32,7 @@ public class Fallen3 extends SuperHero {
         setHeroLeft(HeroUtil.FALLENRUN3);
         setHeroUp(HeroUtil.FALLENRUN3);
         setHeroDown(HeroUtil.FALLENRUN3);
+        setHeroAttack(HeroUtil.FALLENATTACK3);
     }
 
 
