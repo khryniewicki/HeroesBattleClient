@@ -5,6 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.heroes.character.Pointer;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.Ultra;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -17,6 +18,7 @@ import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -34,6 +36,7 @@ public class Board {
 
     private UltraSpell basicSpellMock;
     private UltraSpell ultimateSpellMock;
+    private List<UltraSpell> spells;
     private AttackExecution attackExecution;
     private StackEvent stackEvent;
     private Pointer pointer;
@@ -52,11 +55,18 @@ public class Board {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         mock = heroesInstances.getMock();
+
+        createSpells();
+    }
+
+    private void createSpells() {
         basicSpell = hero.getBasicSpell();
         ultimateSpell = hero.getUltimateSpell();
-
         basicSpellMock = mock.getBasicSpell();
         ultimateSpellMock = mock.getUltimateSpell();
+
+        UltraSpell[] ultraSpells = {basicSpell, basicSpellMock, ultimateSpell, ultimateSpellMock};
+        spells.addAll(Arrays.asList(ultraSpells));
     }
 
     public static Board getInstance() {
@@ -94,11 +104,7 @@ public class Board {
     public void update() {
         hero.update();
         mock.update();
-        basicSpell.update();
-        ultimateSpell.update();
-
-        basicSpellMock.update();
-        ultimateSpellMock.update();
+        spells.forEach(Ultra::update);
     }
 
     public void render() {
@@ -109,14 +115,12 @@ public class Board {
         hero.render();
         mock.render();
 
-        if (basicSpell.isSpellActivated()) {
-            basicSpell.render(); }
-        if (ultimateSpell.isSpellActivated()) {
-            ultimateSpell.render();}
-        if (basicSpellMock.isSpellActivated()) {
-            basicSpellMock.render();}
-        if (ultimateSpellMock.isSpellActivated()) {
-            ultimateSpellMock.render();}
+        spells.forEach(spell -> {
+            if (spell.isSpellActivated()) {
+                spell.render();
+            }
+        });
+
     }
 
     private void renderBackground() {
