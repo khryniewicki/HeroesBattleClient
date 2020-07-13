@@ -23,11 +23,11 @@ public class AttackExecution {
 
     public AttackExecution(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        sendingService = new SendingService();
+        this.sendingService = new SendingService();
         this.spell = spell;
         this.hero = heroesInstances.getHero();
         this.mock = heroesInstances.getMock();
-        lifeBar = hero.getLifeBar();
+        this.lifeBar = hero.getLifeBar();
     }
 
     public void hitsHeroWithSpell() {
@@ -76,10 +76,10 @@ public class AttackExecution {
 
     private void heroObjectDimenions() {
 
-        bx0 = Board.myCollision.getBx0();
-        bx1 = Board.myCollision.getBx1();
-        by0 = Board.myCollision.getBy0();
-        by1 = Board.myCollision.getBy1();
+        bx0 = Board.collision.getBx0();
+        bx1 = Board.collision.getBx1();
+        by0 = Board.collision.getBy0();
+        by1 = Board.collision.getBy1();
 
     }
 

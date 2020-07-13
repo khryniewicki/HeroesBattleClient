@@ -41,7 +41,7 @@ public class Collision {
     private List<BoardObjects> terrainList = ObstacleStorage.getTerrainList();
 
 
-    public void collisionTest() {
+    public void test() {
         if (hero==null){
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             setHero(heroesInstances.getHero());
