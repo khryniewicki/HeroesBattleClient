@@ -56,7 +56,7 @@ public class HeroesInstances {
             ultraHero.setBasicSpell(new SpellMock(ultraHero.getBasicSpellInstance()));
             ultraHero.setUltimateSpell(new SpellMock(ultraHero.getUltimateSpellInstance()));
         }
-
+            ultraHero.setMesh();
     }
 
     public void setHeroMoveSetting(){

@@ -35,7 +35,7 @@ public class SuperHero implements UltraHero {
     public static float hero_positionY0;
     private float hero_standard_offset;
     private float hero_top_offset;
-    public float SIZE;
+    public float SIZE=1f;
 
     private LifeBar lifeBar;
     private ManaBar manaBar;
