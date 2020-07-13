@@ -35,7 +35,7 @@ public class SuperHero implements UltraHero {
     public static float hero_positionY0;
     private float hero_standard_offset;
     private float hero_top_offset;
-    public float SIZE = 0.9f;
+    public float SIZE;
 
     private LifeBar lifeBar;
     private ManaBar manaBar;
@@ -51,6 +51,7 @@ public class SuperHero implements UltraHero {
 
     public VertexArray createHero() {
         int i = isMovingLeft ? -1 : 1;
+
         float[] vertices = new float[]{
                 hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 0.8f,
                 hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + SIZE / 2.0f, 0.8f,

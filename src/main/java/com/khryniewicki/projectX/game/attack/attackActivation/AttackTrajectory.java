@@ -82,6 +82,7 @@ public class AttackTrajectory {
         spell.setPosition(new Vector(target.getX(), target.getY(), 1f));
         makeTargetNull();
         setSpellNotPrepared(true);
+        hero.setHeroIdle();
     }
 
     private void spellDuration() {
@@ -104,7 +105,6 @@ public class AttackTrajectory {
             UltraSpell ultimateSpell = hero.getUltimateSpell();
             ultimateSpell.setSpellActivated(false);
         }
-        hero.setHeroIdle();
 
     }
 
