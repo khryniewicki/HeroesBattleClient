@@ -7,6 +7,8 @@ public interface SpellInstance  {
 
     Texture getThrowingSpellTexture();
     Texture getConsumedSpellTexture();
+    Texture getIcon();
+    Texture getFadedIcon();
     Integer getPowerAttack();
     Integer getManaConsumed();
     Float getCastingSpeed();

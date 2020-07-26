@@ -7,6 +7,7 @@ import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,11 +16,12 @@ import java.util.List;
 
 
 @Data
+@Slf4j
 public class Collision {
     private Board board;
     private SuperHero hero;
-    private float hero_standard_offset = 0.2f;
-    private float hero_top_offset = 0.5f;
+    private float hero_left_offset;
+    private float hero_top_offset;
     private float delta_x = 0.1f;
     private float delta_y = 0.1f;
 
@@ -45,6 +47,8 @@ public class Collision {
         if (hero==null){
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             setHero(heroesInstances.getHero());
+            hero_top_offset=hero.getHero_top_offset();
+            hero_left_offset =hero.getHero_left_offset();
         }
         bx = hero.getX();by = hero.getY();
 
@@ -72,7 +76,9 @@ public class Collision {
         Arrays.fill(collisions, false);
         for (int i = 0; i <4 ; i++) {
         if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
-            collisions[i] = true;}
+            collisions[i] = true;
+//            log.info(Arrays.toString(collisions));
+        }
     }
 
     private boolean boundaryCollision() {
@@ -136,9 +142,9 @@ public class Collision {
 
     public Boolean collision(List<BoardObjects> obstacles) {
 
-        bx0 = bx - hero.SIZE / 2.0f + hero_standard_offset;
-        bx1 = bx + hero.SIZE / 2.0f - hero_standard_offset;
-        by0 = by - hero.SIZE / 2.0f + hero_standard_offset;
+        bx0 = bx - hero.SIZE / 2.0f + hero_left_offset;
+        bx1 = bx + hero.SIZE / 2.0f - hero_left_offset;
+        by0 = by - hero.SIZE / 2.0f + hero_left_offset;
         by1 = by + hero.SIZE / 2.0f - hero_top_offset;
         isCollision = false;
         mapObstaclesListHashMap=new HashMap<>();

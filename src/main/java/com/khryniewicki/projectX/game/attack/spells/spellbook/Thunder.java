@@ -26,6 +26,8 @@ public class Thunder extends Spell {
     public void setTexture() {
         setThrowingSpellTexture(SpellUtil.THUNDERBALL);
         setConsumedSpellTexture(SpellUtil.THUNDER);
+        setIcon(SpellUtil.THUNDERICON);
+        setFadedIcon(SpellUtil.THUNDERICONFADED);
     }
 
 }

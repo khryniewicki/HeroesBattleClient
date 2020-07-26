@@ -2,15 +2,16 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.BlackFire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 
-public class Fallen2 extends SuperHero {
+public class FallenMonk extends SuperHero {
 
-    public Fallen2() {
+    public FallenMonk() {
         setPosition();
         setSpellBasis();
         setMesh();
@@ -20,7 +21,7 @@ public class Fallen2 extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Fire()));
+        setBasicSpellInstance(new BasicSpellInstance(new BlackFire()));
         setUltimateSpellInstance(new UltimateSpellInstance(new Ice()));
     }
 
@@ -39,11 +40,13 @@ public class Fallen2 extends SuperHero {
     @Override
     public void setProperties() {
         setName("Fallen2");
-        setHero_standard_offset(0.2f);
+        setHero_left_offset(0.4f);
         setHero_top_offset(0.5f);
+        setHero_right_offset(0.2f);
+        setHero_bottom_offset(0.2f);
         setMana(100);
         setLife(100);
-        setSIZE(1.2F);
+        setSIZE(1.1F);
     }
 
 

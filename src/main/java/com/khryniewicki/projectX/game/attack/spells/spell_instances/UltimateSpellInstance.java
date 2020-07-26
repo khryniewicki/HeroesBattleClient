@@ -12,6 +12,9 @@ public class UltimateSpellInstance implements SpellInstance{
     private Float castingSpeed;
     private Texture consumedSpellTexture;
     private Texture throwingSpellTexture;
+    private Texture icon;
+    private Texture fadedIcon;
+
     private Spell spell;
     private Long spellDuration;
     private String name;
@@ -24,9 +27,12 @@ public class UltimateSpellInstance implements SpellInstance{
         this.powerAttack = spell.getPowerAttack();
         this.manaConsumed = spell.getManaConsumed();
         this.castingSpeed = spell.getCastingSpeed();
+        this.icon=spell.getIcon();
         this.throwingSpellTexture = spell.getThrowingSpellTexture();
         this.consumedSpellTexture = spell.getConsumedSpellTexture();
+        this.fadedIcon=spell.getFadedIcon();
         this.spellDuration = spell.getSpellDuration();
         this.isBasic=spell.isBasic();
+
     }
 }

@@ -23,8 +23,11 @@ public class Fire extends Spell {
 
     @Override
     public void setTexture() {
-        setThrowingSpellTexture(SpellUtil.FIREBALL);
-        setConsumedSpellTexture(SpellUtil.FIRE);
+        setThrowingSpellTexture(SpellUtil.FIRE);
+        setConsumedSpellTexture(SpellUtil.FIREBALL);
+        setIcon(SpellUtil.FIREICON);
+        setFadedIcon(SpellUtil.FIREICONFADED);
+
     }
 
 }

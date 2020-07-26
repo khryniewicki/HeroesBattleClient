@@ -15,11 +15,12 @@ public class AttackExecution {
 
     private final UltraSpell spell;
     private final UltraHero hero,mock;
+    private final LifeBar lifeBar;
+    private final SendingService sendingService;
     private float ox0, ox1, oy0, oy1, oz0;
     private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated;
-    private final LifeBar lifeBar;
-    private final SendingService sendingService;
+
 
     public AttackExecution(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();

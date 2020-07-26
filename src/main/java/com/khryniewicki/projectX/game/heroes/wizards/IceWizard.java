@@ -32,7 +32,7 @@ public class IceWizard extends SuperHero {
     @Override
     public void setProperties() {
         setName("IceWizard");
-        setHero_standard_offset(0.2f);
+        setHero_left_offset(0.2f);
         setHero_top_offset(0.5f);
         setMana(100);
         setLife(100);

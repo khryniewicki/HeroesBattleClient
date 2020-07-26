@@ -14,7 +14,10 @@ public class BasicSpellInstance implements SpellInstance {
     private Float castingSpeed;
     private Texture consumedSpellTexture;
     private Texture throwingSpellTexture;
+    private Texture icon;
+    private Texture fadedIcon;
     private Long spellDuration;
+
     private boolean isBasic;
     private Spell spell;
 
@@ -27,6 +30,8 @@ public class BasicSpellInstance implements SpellInstance {
         this.castingSpeed = spell.getCastingSpeed();
         this.throwingSpellTexture = spell.getThrowingSpellTexture();
         this.consumedSpellTexture = spell.getConsumedSpellTexture();
+        this.icon=spell.getIcon();
+        this.fadedIcon=spell.getFadedIcon();
         this.spellDuration = spell.getSpellDuration();
         this.isBasic=spell.isBasic();
     }

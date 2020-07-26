@@ -26,12 +26,14 @@ public class ManaBar {
     private StartingPosition startingPosition;
     private Long start;
     private StackEvent stackEvent;
+
     public ManaBar(UltraHero ultraHero) {
         height = 0.07f;
         width = 0.65f;
         hero = ultraHero;
         stackEvent=StackEvent.getInstance();
         updateManaBar();
+
     }
 
 
@@ -104,14 +106,19 @@ public class ManaBar {
         }
 
         if (System.currentTimeMillis() - start > 3000) {
-
-            Integer mana = hero.getMana();
-
-            if (mana <= 98) {
-                hero.setMana(mana + 2);
-            }
+            addMana();
             updateManaBar();
             start = null;
+        }
+    }
+
+    private void addMana() {
+        Integer mana = hero.getMana();
+
+        if (mana <= 98) {
+            hero.setMana(mana + 2);
+        }else if (mana==99){
+            hero.setMana(mana + 1);
         }
     }
 
@@ -126,6 +133,7 @@ public class ManaBar {
     public void render() {
         Shader.STRIP.enable();
         Shader.STRIP.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
+
         blueTexture.bind();
         blueMesh.render();
 
@@ -133,6 +141,7 @@ public class ManaBar {
         blackMesh.render();
 
         Shader.STRIP.disable();
+
     }
 
 

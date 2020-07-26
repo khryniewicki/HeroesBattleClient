@@ -47,7 +47,7 @@ public class FileUtils {
         return null;
     }
 
-    private static List<Resource> resourcesFinder(String ending, String inside) {
+    public static List<Resource> resourcesFinder(String ending, String inside) {
         if (resourcesRegistry == null) {
             resourcesRegistry = new HashMap<>();
         }

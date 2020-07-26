@@ -25,6 +25,8 @@ public class Ice extends Spell {
     public void setTexture() {
         setThrowingSpellTexture(SpellUtil.ICEBALL);
         setConsumedSpellTexture(SpellUtil.ICE);
+        setIcon(SpellUtil.ICEICON);
+        setFadedIcon(SpellUtil.ICEICONFADED);
     }
 
 }

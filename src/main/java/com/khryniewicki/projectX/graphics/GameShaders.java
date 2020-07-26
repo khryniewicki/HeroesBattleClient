@@ -34,5 +34,8 @@ public class GameShaders {
 
         Shader.STRIP.setUniformMat4f("pr_matrix", pr_matrix);
         Shader.STRIP.setUniform1i("tex", 1);
+
+        Shader.SYMBOL.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.SYMBOL.setUniform1i("tex", 1);
     }
 }

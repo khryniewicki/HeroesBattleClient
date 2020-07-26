@@ -171,9 +171,9 @@ public class ObstacleStorage {
     static Terrain mountain_line2_7A = new Terrain( 6.5f,-2.7f,0.2f);
     static Terrain mountain_line2_7B = new Terrain( 6.2f,-2.35f,0.2f);
 
-    static Terrain mountain_line2_8 = new Terrain(6.7f, -2.7f, 0.2f);
-    static Terrain mountain_line2_8A = new Terrain(7.0f, -2.7f, 0.2f);
-    static Terrain mountain_line2_9 = new Terrain(7.15f, -2.7f, -0.8f);
+    static Terrain mountain_line2_8 = new Terrain(6.6f, -3.2f, 0.6f);
+    static Terrain mountain_line2_8A = new Terrain(7.0f, -3.2f, 0.6f);
+    static Terrain mountain_line2_9 = new Terrain(7.1f, -3.5f, 0.8f);
     static Terrain mountain_line2_10 = new Terrain(7.95f, -3.75f, 0.8f);
     static Terrain mountain_line2_11 = new Terrain(7.95f, -3.75f, 0.8f);
     static Terrain mountain_line2_12 = new Terrain(8.0f, -2.9f, 0.9);

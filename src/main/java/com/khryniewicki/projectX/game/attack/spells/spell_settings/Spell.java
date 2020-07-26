@@ -23,9 +23,9 @@ public class Spell implements UltraSpell {
     public Float SIZE = 1f;
 
     private Position target;
-    private Texture throwingSpellTexture,consumedSpellTexture;
+    private Texture throwingSpellTexture,consumedSpellTexture,icon,fadedIcon;
     private Float castingSpeed;
-
+    private SpellTexture spellTexture;
 
     private Long startingTimeSpell=0L;
     private Long spellDuration;
@@ -57,6 +57,7 @@ public class Spell implements UltraSpell {
     }
 
     public VertexArray createMesh() {
+        SIZE=spellTexture.getSize();
         float[] vertices = new float[]{
                 0f + -SIZE / 2.0f, 0f + -SIZE / 2.0f, -0.1f,
                 0f + -SIZE / 2.0f, 0f + SIZE / 2.0f, -0.1f,
@@ -119,6 +120,7 @@ public class Spell implements UltraSpell {
     public void createProperties() {
         name=spellInstance.getName();
         castingSpeed = spellInstance.getCastingSpeed();
+
         consumedSpellTexture = spellInstance.getConsumedSpellTexture();
         throwingSpellTexture = spellInstance.getThrowingSpellTexture();
         texture = throwingSpellTexture;

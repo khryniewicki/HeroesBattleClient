@@ -36,7 +36,7 @@ public class Game implements Runnable {
 
     public static int width = 1600;
     public static int height = 800;
-
+    public static int bar=40;
     private Thread game;
     private boolean running;
     public static long window;
@@ -66,6 +66,7 @@ public class Game implements Runnable {
         running = true;
         game = new Thread(this, "Game");
         game.start();
+
     }
 
     public void run() {
@@ -93,7 +94,7 @@ public class Game implements Runnable {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         // Create the window
-        window = glfwCreateWindow(width, height, "Project X", NULL, NULL);
+        window = glfwCreateWindow(width, height+bar, "Project X", NULL, NULL);
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 
@@ -118,7 +119,7 @@ public class Game implements Runnable {
             glfwSetWindowPos(
                     window,
                     (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height() - pHeight.get(0)) / 2
+                    (vidmode.height()+bar - pHeight.get(0)) / 2
             );
         } // the stack frame is popped automatically
 
