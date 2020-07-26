@@ -38,7 +38,6 @@ public class SpellUtil {
     public static final Texture REDORB = new Texture("redOrb.png");
     public static final Texture REDORBICON= new Texture("redOrbIcon.png");
     public static final Texture REDORBICONFADED = new Texture("redOrbIconFaded.png");
-
     public static final Texture VIOLET = new Texture("violet.png");
     public static final Texture PLASMAORB= new Texture("plasmaOrb.png");
     public static final Texture FIREORB= new Texture("fireOrb.png");
