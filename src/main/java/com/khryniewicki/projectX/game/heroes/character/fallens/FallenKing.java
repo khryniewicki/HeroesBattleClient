@@ -8,9 +8,9 @@ import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 
-public class Fallen3 extends SuperHero {
+public class FallenKing extends SuperHero {
 
-    public Fallen3() {
+    public FallenKing() {
         setPosition();
         setSpellBasis();
         setMesh();

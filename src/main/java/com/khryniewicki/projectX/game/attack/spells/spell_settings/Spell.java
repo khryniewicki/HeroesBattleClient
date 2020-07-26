@@ -23,7 +23,8 @@ public class Spell implements UltraSpell {
     public Float SIZE = 1f;
 
     private Position target;
-    private Texture throwingSpellTexture,consumedSpellTexture,icon,fadedIcon;
+    private SpellTexture missleSpell, executedSpell;
+    private Texture icon,fadedIcon;
     private Float castingSpeed;
     private SpellTexture spellTexture;
 
@@ -52,12 +53,10 @@ public class Spell implements UltraSpell {
         createHero();
         this.spellInstance=spellInstance;
         this.attackTrajectory = new AttackTrajectory(this,ultraHero);
-
         setSpellDetails();
     }
 
     public VertexArray createMesh() {
-        SIZE=spellTexture.getSize();
         float[] vertices = new float[]{
                 0f + -SIZE / 2.0f, 0f + -SIZE / 2.0f, -0.1f,
                 0f + -SIZE / 2.0f, 0f + SIZE / 2.0f, -0.1f,
@@ -109,8 +108,6 @@ public class Spell implements UltraSpell {
         Shader.SPELL.disable();
     }
 
-
-
     public void setSpellDetails(){
         createProperties();
         setPosition();
@@ -118,14 +115,14 @@ public class Spell implements UltraSpell {
     }
 
     public void createProperties() {
-        name=spellInstance.getName();
-        castingSpeed = spellInstance.getCastingSpeed();
-
-        consumedSpellTexture = spellInstance.getConsumedSpellTexture();
-        throwingSpellTexture = spellInstance.getThrowingSpellTexture();
-        texture = throwingSpellTexture;
-        powerAttack = spellInstance.getPowerAttack();
-        manaConsumed = spellInstance.getManaConsumed();
+        this.name=spellInstance.getName();
+        this.castingSpeed = spellInstance.getCastingSpeed();
+        this.executedSpell = spellInstance.getConsumedSpellTexture();
+        this.missleSpell = spellInstance.getThrowingSpellTexture();
+        this.texture = missleSpell.getTexture();
+        this.SIZE= missleSpell.getSize();
+        this.powerAttack = spellInstance.getPowerAttack();
+        this.manaConsumed = spellInstance.getManaConsumed();
 
     }
 
@@ -173,11 +170,12 @@ public class Spell implements UltraSpell {
         setPositionY(y);
     }
 
-    public void setImage(Float indexHeight, Float indexWidth, Texture texture) {
+    public void setImage(Float indexHeight, Float indexWidth, SpellTexture spellTexture) {
         setIndexHeight(indexHeight);
         setIndexWidth(indexWidth);
+        setSIZE(spellTexture.getSize());
         setMesh(createMesh());
-        setTexture(texture);
+        setTexture(spellTexture.getTexture());
     }
 
     public void setMesh() {

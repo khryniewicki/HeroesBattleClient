@@ -3,8 +3,7 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.BlackFire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.BlueOrb;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
@@ -21,8 +20,8 @@ public class FallenMonk extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new BlackFire()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new Ice()));
+        setBasicSpellInstance(new BasicSpellInstance(new BlueOrb()));
+        setUltimateSpellInstance(new UltimateSpellInstance(new BlackFire()));
     }
 
     @Override

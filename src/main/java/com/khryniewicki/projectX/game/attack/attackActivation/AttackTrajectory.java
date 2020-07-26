@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -46,16 +47,12 @@ public class AttackTrajectory {
         Vector position = spell.getPosition();
         Float velocity = spellInstance.getCastingSpeed();
         float half_velocity = velocity / 2;
-//        log.info("Distance[{}],[{}]", distance.getX(), distance.getY());
         if (Math.abs(distance.getX()) > half_velocity || Math.abs(distance.getY()) > half_velocity) {
             if (Math.abs(distance.getX()) > half_velocity && Math.abs(distance.getY()) <= half_velocity) {
-//                log.info("CASE 1");
                 spell.setPositionX(position.x + Math.signum(distance.getX()) * velocity);
             } else if (Math.abs(distance.getX()) <= half_velocity && Math.abs(distance.getY()) > half_velocity) {
-//                log.info("CASE 2");
                 spell.setPositionY(position.y + Math.signum(distance.getY()) * velocity);
             } else if (Math.abs(distance.getX()) > half_velocity && Math.abs(distance.getY()) > half_velocity) {
-//                log.info("CASE 3");
                 if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
                     spell.setPositionX(position.x + Math.signum(distance.getX()) * velocity);
                     spell.setPositionY(position.y + (distance.getY()) / Math.abs(distance.getX()) * velocity);
@@ -73,7 +70,6 @@ public class AttackTrajectory {
             targetReached();
         }
 
-//        log.info("Position[{}],[{}]", position.x, position.y);
 
     }
 

@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.spells.spellbook;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
@@ -23,8 +24,8 @@ public class Ice extends Spell {
 
     @Override
     public void setTexture() {
-        setThrowingSpellTexture(SpellUtil.ICEBALL);
-        setConsumedSpellTexture(SpellUtil.ICE);
+        setMissleSpell(new SpellTexture(SpellUtil.ICEBALL, 1.0f));
+        setExecutedSpell(new SpellTexture(SpellUtil.ICE, 1.0f));
         setIcon(SpellUtil.ICEICON);
         setFadedIcon(SpellUtil.ICEICONFADED);
     }

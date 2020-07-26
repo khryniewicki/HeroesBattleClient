@@ -5,18 +5,18 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
-public class Fire extends Spell {
+public class Wind extends Spell {
 
-    public Fire() {
+    public Wind() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("FireBall");
+        setName("WindBall");
         setBasic(true);
-        setCastingSpeed(0.3f);
+        setCastingSpeed(0.15f);
         setSpellDuration(3000L);
         setPowerAttack(10);
         setManaConsumed(10);
@@ -24,11 +24,10 @@ public class Fire extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.FIRE, 1.0f));
-        setExecutedSpell(new SpellTexture(SpellUtil.FIREBALL, 1.0f));
-        setIcon(SpellUtil.FIREICON);
-        setFadedIcon(SpellUtil.FIREICONFADED);
-
+        setMissleSpell(new SpellTexture(SpellUtil.WINDORB2, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellUtil.WINDATTACK, 1f));
+        setIcon(SpellUtil.WINDICON);
+        setFadedIcon(SpellUtil.WINDICONFADED);
     }
 
 }

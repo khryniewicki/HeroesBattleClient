@@ -2,15 +2,14 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.*;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 
-public class Fallen1 extends SuperHero {
+public class FallenWitcher extends SuperHero {
 
-    public Fallen1() {
+    public FallenWitcher() {
         setPosition();
         setSpellBasis();
         setMesh();
@@ -20,8 +19,8 @@ public class Fallen1 extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Fire()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new Ice()));
+        setBasicSpellInstance(new BasicSpellInstance(new Wind()));
+        setUltimateSpellInstance(new UltimateSpellInstance(new RedOrb()));
     }
 
     @Override

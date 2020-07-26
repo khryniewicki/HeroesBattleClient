@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Data;
 
@@ -12,8 +13,8 @@ public class BasicSpellInstance implements SpellInstance {
     private Integer powerAttack;
     private Integer manaConsumed;
     private Float castingSpeed;
-    private Texture consumedSpellTexture;
-    private Texture throwingSpellTexture;
+    private SpellTexture consumedSpellTexture;
+    private SpellTexture throwingSpellTexture;
     private Texture icon;
     private Texture fadedIcon;
     private Long spellDuration;
@@ -28,8 +29,8 @@ public class BasicSpellInstance implements SpellInstance {
         this.powerAttack = spell.getPowerAttack();
         this.manaConsumed = spell.getManaConsumed();
         this.castingSpeed = spell.getCastingSpeed();
-        this.throwingSpellTexture = spell.getThrowingSpellTexture();
-        this.consumedSpellTexture = spell.getConsumedSpellTexture();
+        this.throwingSpellTexture = spell.getMissleSpell();
+        this.consumedSpellTexture = spell.getExecutedSpell();
         this.icon=spell.getIcon();
         this.fadedIcon=spell.getFadedIcon();
         this.spellDuration = spell.getSpellDuration();

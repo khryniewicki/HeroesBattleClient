@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.spells.spellbook;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
@@ -24,8 +25,8 @@ public class Thunder extends Spell {
 
     @Override
     public void setTexture() {
-        setThrowingSpellTexture(SpellUtil.THUNDERBALL);
-        setConsumedSpellTexture(SpellUtil.THUNDER);
+        setMissleSpell(new SpellTexture(SpellUtil.THUNDERBALL, 1.0f));
+        setExecutedSpell(new SpellTexture(SpellUtil.THUNDER, 1.0f));
         setIcon(SpellUtil.THUNDERICON);
         setFadedIcon(SpellUtil.THUNDERICONFADED);
     }

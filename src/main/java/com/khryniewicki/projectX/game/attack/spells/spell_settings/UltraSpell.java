@@ -10,7 +10,7 @@ public interface UltraSpell extends Ultra {
 
     void setTarget(Position target);
     void setPosition(Vector position);
-    void setImage(Float indexHeight, Float indexWidth, Texture texture);
+    void setImage(Float indexHeight, Float indexWidth, SpellTexture texture);
     void spellCasting();
     void setPositionZ(Float positionZ);
 
