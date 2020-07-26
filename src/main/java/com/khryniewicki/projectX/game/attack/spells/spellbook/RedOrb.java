@@ -16,7 +16,7 @@ public class RedOrb extends Spell {
     public void setProperties() {
         setName("RedOrbBall");
         setBasic(false);
-        setCastingSpeed(0.3f);
+        setCastingSpeed(0.25f);
         setSpellDuration(3000L);
         setPowerAttack(10);
         setManaConsumed(10);

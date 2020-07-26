@@ -25,7 +25,7 @@ public class BlackFire extends Spell {
     @Override
     public void setTexture() {
         setMissleSpell(new SpellTexture(SpellUtil.BLACKORB, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.BLACKFIRE, 1.0f));
+        setExecutedSpell(new SpellTexture(SpellUtil.VIOLET, 1.2f));
         setIcon(SpellUtil.BLACKFIREICON);
         setFadedIcon(SpellUtil.BLACKFIREICONFADED);
     }

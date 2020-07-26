@@ -26,8 +26,8 @@ public class SpellSymbol {
                 .withVisibility(0f)
                 .build();
 
-        this.spellTexture = new SymbolImp.Builder(spellInstance.getIcon(), 0.1f + spellPositionPlayerBar.getX(), 0.03f + spellPositionPlayerBar.getY())
-                .withWidth(0.45f)
+        this.spellTexture = new SymbolImp.Builder(spellInstance.getIcon(), 0.03f + spellPositionPlayerBar.getX(), 0.03f + spellPositionPlayerBar.getY())
+                .withWidth(0.56f)
                 .withHeight(0.40f)
                 .withVisibility(1f)
                 .build();

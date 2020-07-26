@@ -16,7 +16,7 @@ public class Wind extends Spell {
     public void setProperties() {
         setName("WindBall");
         setBasic(true);
-        setCastingSpeed(0.15f);
+        setCastingSpeed(0.25f);
         setSpellDuration(3000L);
         setPowerAttack(10);
         setManaConsumed(10);
