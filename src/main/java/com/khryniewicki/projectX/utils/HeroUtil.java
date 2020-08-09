@@ -6,12 +6,16 @@ public class HeroUtil {
 
     public static final Texture FIRE_WIZARD_IDLE = new Texture("FirewizardWalk.png");
     public static final Texture FIRE_WIZARD_RUN = new Texture("FirewizardRun.png");
+    public static final Texture FIRE_WIZARD_ATTACK = new Texture("FireWizardAttack.png");
 
     public static final Texture ICE_WIZARD_IDLE = new Texture("IcewizardWalk.png");
     public static final Texture ICE_WIZARD_RUN = new Texture("IcewizardRun.png");
+    public static final Texture ICE_WIZARD_ATTACK = new Texture("IceWizardAttack.png");
 
     public static final Texture THUNDER_WIZARD_IDLE = new Texture("ThunderWalk.png");
     public static final Texture THUNDER_WIZARD_RUN = new Texture("ThunderRun.png");
+    public static final Texture THUNDER_WIZARD_ATTACK = new Texture("ThunderWizardAttack.png");
+
     public static final Texture DOT= new Texture("dot.png");
 
     public static final Texture FALLENIDLE1 = new Texture("FallenIdle1.png");

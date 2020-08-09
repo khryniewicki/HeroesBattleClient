@@ -1,13 +1,13 @@
 package com.khryniewicki.projectX;
 
 
-import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
-import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
 import com.khryniewicki.projectX.game.board.Board;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
-import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
+import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.services.SendingService;
@@ -36,10 +36,11 @@ public class Game implements Runnable {
 
     public static int width = 1600;
     public static int height = 800;
-    public static int bar=40;
+    public static int bar = 40;
     private Thread game;
     private boolean running;
     public static long window;
+
 
     private Board board;
     public static CountDownLatch latch;
@@ -94,7 +95,7 @@ public class Game implements Runnable {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         // Create the window
-        window = glfwCreateWindow(width, height+bar, "Project X", NULL, NULL);
+        window = glfwCreateWindow(width, height + bar, "Project X Screen:" + 1, NULL, NULL);
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 
@@ -119,7 +120,7 @@ public class Game implements Runnable {
             glfwSetWindowPos(
                     window,
                     (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height()+bar - pHeight.get(0)) / 2
+                    (vidmode.height() + bar - pHeight.get(0)) / 2
             );
         } // the stack frame is popped automatically
 
@@ -187,7 +188,6 @@ public class Game implements Runnable {
         heroesInstances.setHero();
         setHeroesInitialPositions();
         heroesInstances.setHeroBasicProperties();
-
     }
 
     private void setHeroesInitialPositions() {
@@ -225,7 +225,7 @@ public class Game implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                glfwSetWindowTitle(window, "Project X | " + updates + " ups, " + frames + " fps");
+                glfwSetWindowTitle(window, "Project X  | " + updates + " ups, " + frames + " fps ");
                 updates = 0;
                 frames = 0;
             }
@@ -233,6 +233,7 @@ public class Game implements Runnable {
                 running = false;
         }
     }
+
     private void update() {
         glfwPollEvents();
         board.update();

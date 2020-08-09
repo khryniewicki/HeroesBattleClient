@@ -1,21 +1,21 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.orbs;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
-public class BlackFire extends Spell {
+public class BlueOrb extends Spell {
 
-    public BlackFire() {
+    public BlueOrb() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("BlackFireBall");
-        setBasic(false);
+        setName("BlueOrbBall");
+        setBasic(true);
         setCastingSpeed(0.3f);
         setSpellDuration(3000L);
         setPowerAttack(10);
@@ -24,10 +24,10 @@ public class BlackFire extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.BLACKORB, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.VIOLET, 1.2f));
-        setIcon(SpellUtil.BLACKFIREICON);
-        setFadedIcon(SpellUtil.BLACKFIREICONFADED);
+        setMissleSpell(new SpellTexture(SpellUtil.BLUEORB, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellUtil.BLUE, 2.5f));
+        setIcon(SpellUtil.BLUEICON);
+        setFadedIcon(SpellUtil.BLUEICONFADED);
     }
 
 }

@@ -2,7 +2,8 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.*;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.wind.Storm;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.wind.Wind;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
@@ -19,8 +20,8 @@ public class FallenWitcher extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Wind()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new RedOrb()));
+        setBasicSpellInstance(new BasicSpellInstance(new Storm()));
+        setUltimateSpellInstance(new UltimateSpellInstance(new Wind()));
     }
 
     @Override

@@ -1,20 +1,20 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.thunder;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
-public class Thunder extends Spell {
+public class VioletMissle extends Spell {
 
-    public Thunder() {
+    public VioletMissle() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("ThunderBolt");
+        setName("VioletMissle");
         setBasic(true);
         setCastingSpeed(0.3f);
         setSpellDuration(3000L);
@@ -25,8 +25,8 @@ public class Thunder extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.THUNDERBALL, 1.0f));
-        setExecutedSpell(new SpellTexture(SpellUtil.THUNDER, 1.0f));
+        setMissleSpell(new SpellTexture(SpellUtil.THUNDERORB, 0.8f));
+        setExecutedSpell(new SpellTexture(SpellUtil.VIOLETMISSLE, 2.5f));
         setIcon(SpellUtil.THUNDERICON);
         setFadedIcon(SpellUtil.THUNDERICONFADED);
     }

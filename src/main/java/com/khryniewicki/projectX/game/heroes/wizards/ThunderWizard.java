@@ -3,8 +3,8 @@ package com.khryniewicki.projectX.game.heroes.wizards;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Thunder;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.Thunder;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.VioletMissle;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
@@ -27,14 +27,15 @@ public class ThunderWizard extends SuperHero {
         setHeroLeft(HeroUtil.THUNDER_WIZARD_RUN);
         setHeroUp(HeroUtil.THUNDER_WIZARD_RUN);
         setHeroDown(HeroUtil.THUNDER_WIZARD_RUN);
+        setHeroAttack(HeroUtil.THUNDER_WIZARD_ATTACK);
     }
 
 
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Thunder()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new Ice()));
+        setBasicSpellInstance(new BasicSpellInstance(new VioletMissle()));
+        setUltimateSpellInstance(new UltimateSpellInstance(new Thunder()));
     }
 
     @Override

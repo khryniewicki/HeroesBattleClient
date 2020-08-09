@@ -1,22 +1,22 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.black;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
-public class Wind extends Spell {
+public class BlackFire extends Spell {
 
-    public Wind() {
+    public BlackFire() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("WindBall");
+        setName("BlackFireBall");
         setBasic(true);
-        setCastingSpeed(0.25f);
+        setCastingSpeed(0.3f);
         setSpellDuration(3000L);
         setPowerAttack(10);
         setManaConsumed(10);
@@ -24,10 +24,10 @@ public class Wind extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.WINDORB2, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.WINDATTACK, 1f));
-        setIcon(SpellUtil.WINDICON);
-        setFadedIcon(SpellUtil.WINDICONFADED);
+        setMissleSpell(new SpellTexture(SpellUtil.BLACKORB, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellUtil.BLACKFIRE, 1.2f));
+        setIcon(SpellUtil.BLACKFIREICON);
+        setFadedIcon(SpellUtil.BLACKFIREICONFADED);
     }
 
 }

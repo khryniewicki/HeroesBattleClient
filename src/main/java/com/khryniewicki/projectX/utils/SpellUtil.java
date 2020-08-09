@@ -11,11 +11,21 @@ public class SpellUtil {
 
     public static final Texture ICE= new Texture("ice6.png");
     public static final Texture ICEBALL= new Texture("iceball.png");
+    public static final Texture ICEBERG= new Texture("iceberg.png");
     public static final Texture ICEICON= new Texture("iceIcon.png");
     public static final Texture ICEICONFADED= new Texture("iceIconFaded.png");
 
+
+    public static final Texture BLUEFIRE1= new Texture("blueFire1.png");
+    public static final Texture STORM = new Texture("blueFire2.png");
+
+
     public static final Texture THUNDER= new Texture("thunder.png");
     public static final Texture THUNDERBALL= new Texture("thunderBall.png");
+    public static final Texture THUNDERBALL2= new Texture("thunderBall2.png");
+
+    public static final Texture VIOLETMISSLE = new Texture("violetMissle.png");
+
     public static final Texture THUNDERICON= new Texture("thunderIcon.png");
     public static final Texture THUNDERICONFADED= new Texture("thunderIconFaded.png");
 
@@ -38,11 +48,16 @@ public class SpellUtil {
     public static final Texture REDORB = new Texture("redOrb.png");
     public static final Texture REDORBICON= new Texture("redOrbIcon.png");
     public static final Texture REDORBICONFADED = new Texture("redOrbIconFaded.png");
-    public static final Texture VIOLET = new Texture("violet.png");
+    public static final Texture BLACKBALL = new Texture("blackBall.png");
+
     public static final Texture PLASMAORB= new Texture("plasmaOrb.png");
     public static final Texture FIREORB= new Texture("fireOrb.png");
     public static final Texture THUNDERORB= new Texture("thunderOrb.png");
 
+    public static final Texture SKULL1= new Texture("skull1.png");
+    public static final Texture SKULL2= new Texture("skull2.png");
+    public static final Texture SKULL3= new Texture("skull3.png");
+    public static final Texture SKULL4= new Texture("skull4.png");
 
 
 }

@@ -1,9 +1,9 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Fire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Ice;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.Thunder;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.ice.IceBolt;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.Thunder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class SpellRegistry {
     }
 
     private void fill() {
-        Spell[] spellist = new Spell[]{new Fire(), new Ice(), new Thunder()};
+        Spell[] spellist = new Spell[]{new Fire(), new IceBolt(), new Thunder()};
         spellbook = Arrays.asList(spellist);
     }
 

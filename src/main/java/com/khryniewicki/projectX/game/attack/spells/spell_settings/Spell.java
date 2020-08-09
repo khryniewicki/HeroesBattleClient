@@ -123,7 +123,6 @@ public class Spell implements UltraSpell {
         this.SIZE= missleSpell.getSize();
         this.powerAttack = spellInstance.getPowerAttack();
         this.manaConsumed = spellInstance.getManaConsumed();
-
     }
 
 

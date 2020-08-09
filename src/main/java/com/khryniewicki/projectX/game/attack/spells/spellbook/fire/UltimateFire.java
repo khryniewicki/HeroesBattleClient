@@ -1,22 +1,22 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.fire;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
-public class BlueOrb extends Spell {
+public class UltimateFire extends Spell {
 
-    public BlueOrb() {
+    public UltimateFire() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("BlueOrbBall");
-        setBasic(true);
-        setCastingSpeed(0.3f);
+        setName("FireBall");
+        setBasic(false);
+        setCastingSpeed(0.2f);
         setSpellDuration(3000L);
         setPowerAttack(10);
         setManaConsumed(10);
@@ -24,10 +24,11 @@ public class BlueOrb extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.BLUEORB, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.BLUE, 2.5f));
-        setIcon(SpellUtil.BLUEICON);
-        setFadedIcon(SpellUtil.BLUEICONFADED);
+        setMissleSpell(new SpellTexture(SpellUtil.FIREORB, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellUtil.FIREBALL, 1.7f));
+        setIcon(SpellUtil.FIREICON);
+        setFadedIcon(SpellUtil.FIREICONFADED);
+
     }
 
 }
