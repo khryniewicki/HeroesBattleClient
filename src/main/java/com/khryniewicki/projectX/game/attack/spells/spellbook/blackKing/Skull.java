@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook.black;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;

@@ -2,10 +2,8 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.black.BlackFire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.black.Skull;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.Thunder;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing.BlackFire;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing.Skull;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 

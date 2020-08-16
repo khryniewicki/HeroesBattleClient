@@ -2,9 +2,8 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.black.BlackFire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.orbs.BlueOrb;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.orbs.RedOrb;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.BlueOrb;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.RedOrb;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 

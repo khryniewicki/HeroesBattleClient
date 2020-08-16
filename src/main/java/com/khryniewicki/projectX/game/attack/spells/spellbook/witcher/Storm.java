@@ -1,21 +1,21 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook.wind;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.witcher;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.utils.SpellUtil;
 
 
-public class Wind extends Spell {
+public class Storm extends Spell {
 
-    public Wind() {
+    public Storm() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("WindBall");
-        setBasic(false);
+        setName("Storm");
+        setBasic(true);
         setCastingSpeed(0.20f);
         setSpellDuration(3000L);
         setPowerAttack(10);
@@ -24,10 +24,10 @@ public class Wind extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.WINDORB2, 0.7f));
-        setExecutedSpell(new SpellTexture(SpellUtil.WINDATTACK, 1.6f));
-        setIcon(SpellUtil.WINDICON);
-        setFadedIcon(SpellUtil.WINDICONFADED);
+        setMissleSpell(new SpellTexture(SpellUtil.WINDORB2, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellUtil.STORM, 2.0f));
+        setIcon(SpellUtil.STORMICON);
+        setFadedIcon(SpellUtil.STORMICONFADED);
     }
 
 }
