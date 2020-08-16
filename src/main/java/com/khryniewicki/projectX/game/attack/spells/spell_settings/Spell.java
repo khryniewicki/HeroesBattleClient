@@ -70,10 +70,10 @@ public class Spell implements UltraSpell {
         };
 
         float[] tcs = new float[]{
-                0, indexHeight * 1,
+                0, indexHeight,
                 0, 0,
-                indexWidth * 1, 0,
-                indexWidth * 1, indexHeight * 1
+                indexWidth , 0,
+                indexWidth, indexHeight
         };
 
         createHero();

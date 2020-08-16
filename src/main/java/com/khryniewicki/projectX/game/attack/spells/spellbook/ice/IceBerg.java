@@ -26,8 +26,8 @@ public class IceBerg extends Spell {
     public void setTexture() {
         setMissleSpell(new SpellTexture(SpellUtil.ICEBALL, 1.2f));
         setExecutedSpell(new SpellTexture(SpellUtil.ICEBERG, 1.2f));
-        setIcon(SpellUtil.ICEICON);
-        setFadedIcon(SpellUtil.ICEICONFADED);
+        setIcon(SpellUtil.ICEBERGICON);
+        setFadedIcon(SpellUtil.ICEBERGFADED);
     }
 
 }

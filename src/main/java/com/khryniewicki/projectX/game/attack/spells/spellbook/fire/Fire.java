@@ -26,8 +26,8 @@ public class Fire extends Spell {
     public void setTexture() {
         setMissleSpell(new SpellTexture(SpellUtil.FIREORB, 0.3f));
         setExecutedSpell(new SpellTexture(SpellUtil.FIRE, 1.2f));
-        setIcon(SpellUtil.FIREICON);
-        setFadedIcon(SpellUtil.FIREICONFADED);
+        setIcon(SpellUtil.ULTIMATEFIREICON);
+        setFadedIcon(SpellUtil.ULTIMATEFIREICONFADED);
 
     }
 

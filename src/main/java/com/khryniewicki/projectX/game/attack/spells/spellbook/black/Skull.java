@@ -16,18 +16,18 @@ public class Skull extends Spell {
     public void setProperties() {
         setName("Skull");
         setBasic(false);
-        setCastingSpeed(0.15f);
+        setCastingSpeed(0.25f);
         setSpellDuration(3000L);
         setPowerAttack(10);
-        setManaConsumed(10);
+        setManaConsumed(15);
     }
 
     @Override
     public void setTexture() {
         setMissleSpell(new SpellTexture(SpellUtil.SKULL4, 0.7f));
-        setExecutedSpell(new SpellTexture(SpellUtil.SKULL3, 1.0f));
-        setIcon(SpellUtil.BLACKFIREICON);
-        setFadedIcon(SpellUtil.BLACKFIREICONFADED);
+        setExecutedSpell(new SpellTexture(SpellUtil.SKULL3, 1.2f));
+        setIcon(SpellUtil.SKULLICON);
+        setFadedIcon(SpellUtil.SKULLICONFADED);
     }
 
 }

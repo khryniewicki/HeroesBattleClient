@@ -27,8 +27,8 @@ public class VioletMissle extends Spell {
     public void setTexture() {
         setMissleSpell(new SpellTexture(SpellUtil.THUNDERORB, 0.8f));
         setExecutedSpell(new SpellTexture(SpellUtil.VIOLETMISSLE, 2.5f));
-        setIcon(SpellUtil.THUNDERICON);
-        setFadedIcon(SpellUtil.THUNDERICONFADED);
+        setIcon(SpellUtil.VIOLETICON);
+        setFadedIcon(SpellUtil.VIOLETICONFADED);
     }
 
 }

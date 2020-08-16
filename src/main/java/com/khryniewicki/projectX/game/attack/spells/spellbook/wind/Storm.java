@@ -26,8 +26,8 @@ public class Storm extends Spell {
     public void setTexture() {
         setMissleSpell(new SpellTexture(SpellUtil.WINDORB2, 0.5f));
         setExecutedSpell(new SpellTexture(SpellUtil.STORM, 2.0f));
-        setIcon(SpellUtil.WINDICON);
-        setFadedIcon(SpellUtil.WINDICONFADED);
+        setIcon(SpellUtil.STORMICON);
+        setFadedIcon(SpellUtil.STORMICONFADED);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -109,7 +108,11 @@ public class AttackTrajectory {
         if (isSpellNotPrepared) {
             hero.setHeroAttack();
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
-            spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
+            if (spellInstance.getName().equals("Skull")) {
+                spell.setImage(Math.signum(1), (-Math.signum(distance.getX())) * (-Math.signum(distance.getY())), spellInstance.getThrowingSpellTexture());
+            } else {
+                spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
+            }
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));
             setSpellNotPrepared(false);
             log.info("Target[{}],[{}]", target.getX(), target.getY());
