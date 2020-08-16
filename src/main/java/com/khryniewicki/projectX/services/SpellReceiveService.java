@@ -53,7 +53,6 @@ public class SpellReceiveService {
                 } else
                     spellInstance = new UltimateSpellInstance(spell);
             }
-
         }
         return spellInstance;
     }
