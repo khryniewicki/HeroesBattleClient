@@ -64,10 +64,10 @@ public class LifeBar {
         float heroPositionY = hero.getPosition().y;
 
         float[] vertices = new float[]{
-                offsetPositionX + heroPositionX + 0.0f, offsetPositionY + heroPositionY + 0.0f, 1f,
-                offsetPositionX + heroPositionX + 0.0f, offsetPositionY + heroPositionY + height, 1f,
-                offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + height, 1f,
-                offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + 0.0f, 1f
+                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + 0.0f, 0.8f,
+                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + height, 0.8f,
+                offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + height, 0.8f,
+                offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + 0.0f, 0.8f
         };
 
         byte[] indices = new byte[]{
@@ -93,15 +93,6 @@ public class LifeBar {
             lifeFactor = 1f;
         }
         return lifeFactor;
-    }
-
-
-    public Vector getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector position) {
-        this.position = position;
     }
 
     public void render() {

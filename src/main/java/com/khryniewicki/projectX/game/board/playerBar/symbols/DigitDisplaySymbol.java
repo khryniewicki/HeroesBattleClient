@@ -30,24 +30,24 @@ public class DigitDisplaySymbol {
             Digits.fillDigitsRegistry();
         }
         this.hundred = new SymbolImp.Builder(getHundredDigitTexture(), position.getX(), position.getY())
+                .withVisibility(1.0f)
                 .build();
         this.dozen = new SymbolImp.Builder(getDozenDigitTexture(), position.getX() + 0.3f, position.getY())
+                .withVisibility(1.0f)
                 .build();
         this.unit = new SymbolImp.Builder(getUnitDigitTexture(), position.getX() + 0.6f, position.getY())
+                .withVisibility(1.0f)
                 .build();
 
 
     }
 
     private Position getPosition(String name) {
-
         float positionX = -5.95f;
         float positionY = 5.2f;
-
         if (name.equals("life")) {
             positionX = -7.45f;
         }
-
         return new Position(positionX, positionY);
     }
 

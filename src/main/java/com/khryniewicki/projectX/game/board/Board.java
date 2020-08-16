@@ -24,8 +24,8 @@ import java.util.List;
 @Slf4j
 public class Board {
 
-    private VertexArray background;
-    private Texture bgTexture;
+    private VertexArray background, bar;
+    private Texture bgTexture,barTexture;
     private Vector position = new Vector();
     public static Collision collision;
     private PlayerBar playerBar;
@@ -44,6 +44,7 @@ public class Board {
 
     private Board() {
         initBackgroundTexture();
+        initBarTexture();
         playerBar=new PlayerBar();
         obstacles= ObstacleStorage.getObstacle();
         terrains=ObstacleStorage.getTerrainList();
@@ -71,7 +72,30 @@ public class Board {
                 1, 1
         };
         bgTexture = new Texture("desertBackground.png");
+
         background = new VertexArray(vertices, indices, tcs);
+    }
+    private void initBarTexture() {
+        float[] vertices = new float[]{
+                -10.0f, 9.0f * 9.0f / 16.0f, 0.0f,
+                -10.0f, 10.0f * 9.0f / 16.0f, 0.0f,
+                10.0f, 10.0f * 9.0f / 16.0f, 0.0f,
+                10.0f, 9.0f * 9.0f / 16.0f, 0.0f
+        };
+
+        byte[] indices = new byte[]{
+                0, 1, 2,
+                2, 3, 0
+        };
+
+        float[] tcs = new float[]{
+                0, 1,
+                0, 0,
+                1, 0,
+                1, 1
+        };
+        barTexture = new Texture("bar.png");
+        bar = new VertexArray(vertices, indices, tcs);
     }
 
     private void createCollsion() {
@@ -130,6 +154,14 @@ public class Board {
         background.render();
         Shader.BG.disable();
         bgTexture.unbind();
+        barTexture.bind();
+        Shader.BG.enable();
+        bar.bind();
+        Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector(0f, 0f, 0.9f)));
+        bar.draw();
+        bar.render();
+        Shader.BG.disable();
+        barTexture.unbind();
 //        renderTerrains();
 //        renderObstacles();
     }

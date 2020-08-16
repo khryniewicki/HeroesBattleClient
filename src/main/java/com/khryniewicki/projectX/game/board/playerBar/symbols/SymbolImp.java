@@ -77,7 +77,6 @@ public class SymbolImp implements Symbol {
             this.y = y;
             this.width = 0.3f;
             this.height = 0.3f;
-            this.visibility = 0f;
         }
 
         public Builder withWidth(Float width) {

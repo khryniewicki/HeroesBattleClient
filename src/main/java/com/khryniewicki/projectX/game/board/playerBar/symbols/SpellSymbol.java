@@ -18,18 +18,19 @@ public class SpellSymbol {
     public SpellSymbol(UltraSpell spell) {
         this.ultraSpell = spell;
         this.spellInstance = spell.getSpellInstance();
+        float offset= 0.03f;
         getPositionPlayerBar(spellInstance.isBasic());
 
         this.frame = new SymbolImp.Builder(GameUtill.frame, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
                 .withWidth(0.62f)
                 .withHeight(0.465f)
-                .withVisibility(0f)
+                .withVisibility(0.95f)
                 .build();
 
-        this.spellTexture = new SymbolImp.Builder(spellInstance.getIcon(), 0.03f + spellPositionPlayerBar.getX(), 0.03f + spellPositionPlayerBar.getY())
+        this.spellTexture = new SymbolImp.Builder(spellInstance.getIcon(), offset + spellPositionPlayerBar.getX(), offset + spellPositionPlayerBar.getY())
                 .withWidth(0.56f)
                 .withHeight(0.40f)
-                .withVisibility(1f)
+                .withVisibility(1.0f)
                 .build();
     }
 
@@ -44,7 +45,6 @@ public class SpellSymbol {
             spellTexture.setTexture(spellInstance.getFadedIcon());
         } else
             spellTexture.setTexture(spellInstance.getIcon());
-
     }
 
 

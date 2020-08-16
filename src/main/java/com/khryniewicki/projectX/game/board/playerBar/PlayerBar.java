@@ -21,8 +21,10 @@ public class PlayerBar {
 
         hero= HeroesInstances.getInstance().getHero();
         manaSymbol = new SymbolImp.Builder(GameUtill.manaSymbol, -6.3f, 5.2f)
+                .withVisibility(1.0f)
                 .build();
         lifeSymbol = new SymbolImp.Builder(GameUtill.lifeSymbol, -7.8f, 5.2f)
+                .withVisibility(1.0f)
                 .build();
 
         lifeAsNumber = new DigitDisplaySymbol("life");

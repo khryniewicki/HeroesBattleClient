@@ -18,6 +18,7 @@ import java.nio.DoubleBuffer;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import static org.lwjgl.glfw.GLFW.*;
+
 @Data
 @Slf4j
 public class MouseSettings {
@@ -35,34 +36,30 @@ public class MouseSettings {
         this.stackEvent = StackEvent.getInstance();
         this.hero = HeroesInstances.getInstance().getHero();
         this.sendingService = new SendingService();
-        this.basicSpell=hero.getBasicSpell();
-        this.ultimateSpell=hero.getUltimateSpell();
+        this.basicSpell = hero.getBasicSpell();
+        this.ultimateSpell = hero.getUltimateSpell();
     }
 
     public void setMouseCallBack() {
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
             cursorPosition = getCursorPosition();
-            log.info("SpellActivated[Basic {}],[Ultimate {}]", basicSpell.isSpellActivated(), ultimateSpell.isSpellActivated());
-
             if ((key == 0 || key == 1)) {
-                    getHeroInstance();
-                        if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && !basicSpell.isSpellActivated()) {
-                            setSpell(hero.getBasicSpell());
-                            send();
+                getHeroInstance();
+                if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && !basicSpell.isSpellActivated()) {
+                    setSpell(hero.getBasicSpell());
+                    send();
 
-                        } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && !ultimateSpell.isSpellActivated()) {
-                            setSpell(hero.getUltimateSpell());
-                            send();
-
-                        }
+                } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && !ultimateSpell.isSpellActivated()) {
+                    setSpell(hero.getUltimateSpell());
+                    send();
+                }
             }
         });
     }
 
     private void send() {
         spell.setStartingTimeSpell(System.currentTimeMillis());
-
-        if (isEnoughManaToCast()) {
+        if (isSpellCursorInView()&&isEnoughManaToCast()) {
             setSpellTarget(spell);
             spell.setSpellActivated(true);
             consumeSpellMana();
@@ -70,12 +67,17 @@ public class MouseSettings {
         }
     }
 
+    private boolean isSpellCursorInView() {
+      return cursorPosition.getPositionYD() > 40f;
+    }
 
-    private void setSpellTarget(UltraSpell ultraSpell ) {
-        float factor = 1.1f;
-        float finalX = (float) (cursorPosition.getPositionXD() - Game.width / 2) / (Game.width / 20);
-        float finalY = (float) ((Game.height / 2 - cursorPosition.getPositionYD()) * factor) / (Game.height / 10);
-        ultraSpell.setTarget(new Position(finalX, finalY));
+
+    private void setSpellTarget(UltraSpell ultraSpell) {
+            float factor = 1.1f;
+            float finalX = (float) (cursorPosition.getPositionXD() - Game.width / 2) / (Game.width / 20);
+            float finalY = (float) ((Game.height / 2 - cursorPosition.getPositionYD()) * factor) / (Game.height / 10);
+            ultraSpell.setTarget(new Position(finalX, finalY));
+            log.info("Y:{}",cursorPosition.getPositionYD());
     }
 
     private void consumeSpellMana() {
