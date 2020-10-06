@@ -35,9 +35,10 @@ public class LifeBar {
 
 
     public float getLifeFactor() {
-        float factor = hero.getLife() / 100f;
-        return Objects.isNull(hero.getLife()) ? 1f : (factor > 0 ? factor : 0);
+        float life = hero.getLife() ;
+        return life > 0 ? life / 100f : 0;
     }
+
 
     private float getLifeFactor(String textureType) {
         return textureType.equals("green") ? getLifeFactor() : 1f;

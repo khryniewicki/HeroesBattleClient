@@ -42,7 +42,7 @@ public class MultiplayerController {
         getInput();
 
         if (inputText != null) {
-            Set<String> characters = new HashSet<>(Arrays.asList("FireWizard", "IceWizard", "ThunderWizard","Fallen1","Fallen2","Fallen3"));
+            Set<String> characters = new HashSet<>(Arrays.asList("FireWizard", "IceWizard", "ThunderWizard","FallenWitcher","FallenMonk","FallenKing"));
             boolean contains = characters.contains(inputText);
 
             if (!contains) {
@@ -69,13 +69,13 @@ public class MultiplayerController {
                 inputText = "ThunderWizard";
                 renderFactory.render(TextUtil.CHOSE_THUNDERWIZARD);
             } else if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
-                inputText = "Fallen1";
+                inputText = "FallenWitcher";
                 renderFactory.render(TextUtil.CHOSE_WITCHER);
             } else if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
-                inputText = "Fallen2";
+                inputText = "FallenMonk";
                 renderFactory.render(TextUtil.CHOSE_MONK);
             } else if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
-                inputText = "Fallen3";
+                inputText = "FallenKing";
                 renderFactory.render(TextUtil.CHOSE_FALLEN_KING);
             } else
                 inputText = "else";

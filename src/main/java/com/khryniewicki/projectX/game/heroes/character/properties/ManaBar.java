@@ -38,8 +38,8 @@ public class ManaBar {
     }
 
     public float getManaFactor() {
-        float factor = hero.getMana() / 100f;
-        return Objects.isNull(hero.getMana()) ? 1f : (factor > 0 ? factor : 0);
+        float mana = hero.getMana() ;
+        return mana > 0 ? mana / 100f : 0;
     }
 
     private float getManaFactor(String textureType) {

@@ -55,7 +55,6 @@ public class Game implements Runnable {
         heroesInstances = HeroesInstances.getInstance();
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         multiplayerController = new MultiplayerController();
-
     }
 
     public static void main(String[] args) {

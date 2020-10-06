@@ -42,7 +42,6 @@ public class HeroReceiveService {
         if (MockPosition==null){
             MockPosition = tmp;
         }
-
         if (tmp.equals(MockPosition)) {
             counter++;
         } else {
