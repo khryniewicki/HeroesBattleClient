@@ -34,6 +34,5 @@ public class UltimateSpellInstance implements SpellInstance{
         this.fadedIcon=spell.getFadedIcon();
         this.spellDuration = spell.getSpellDuration();
         this.isBasic=spell.isBasic();
-
     }
 }

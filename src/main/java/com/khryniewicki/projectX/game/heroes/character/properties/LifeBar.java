@@ -11,16 +11,17 @@ import com.khryniewicki.projectX.utils.GameUtill;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Data
 @Slf4j
 public class LifeBar {
 
+
+    private static Texture greenTexture, blackTexture;
+    private float width, height;
     private Vector position = new Vector();
-
-    private static Texture greenTexture,blackTexture;
-    private VertexArray greenMesh,blackMesh;
-    private float width,height;
-
+    private VertexArray greenMesh, blackMesh;
     private UltraHero hero;
     private StartingPosition startingPosition;
 
@@ -34,25 +35,19 @@ public class LifeBar {
 
 
     public float getLifeFactor() {
-        float LifeFactor;
-        if (hero.getLife() == null) {
-            LifeFactor = 1f;
-        } else {
-            LifeFactor = hero.getLife() / 100f;
-            if (LifeFactor < 0) {
-                LifeFactor = 0;
-            }
-        }
+        float factor = hero.getLife() / 100f;
+        return Objects.isNull(hero.getLife()) ? 1f : (factor > 0 ? factor : 0);
+    }
 
-        return LifeFactor;
+    private float getLifeFactor(String textureType) {
+        return textureType.equals("green") ? getLifeFactor() : 1f;
     }
 
     public void updateLifeBar() {
-
         setGreenMesh(createVertexArray("green"));
         setBlackMesh(createVertexArray("black"));
-        blackTexture = GameUtill.empty;
-        greenTexture = GameUtill.life;
+        blackTexture = GameUtill.EMPTY;
+        greenTexture = GameUtill.LIFE;
     }
 
     public VertexArray createVertexArray(String textureType) {
@@ -64,8 +59,8 @@ public class LifeBar {
         float heroPositionY = hero.getPosition().y;
 
         float[] vertices = new float[]{
-                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + 0.0f, 0.8f,
-                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + height, 0.8f,
+                offsetPositionX + heroPositionX, offsetPositionY + heroPositionY + 0.0f, 0.8f,
+                offsetPositionX + heroPositionX, offsetPositionY + heroPositionY + height, 0.8f,
                 offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + height, 0.8f,
                 offsetPositionX + heroPositionX + lifeFactor * width, offsetPositionY + heroPositionY + 0.0f, 0.8f
         };
@@ -85,16 +80,6 @@ public class LifeBar {
         return new VertexArray(vertices, indices, tcs);
     }
 
-    private float getLifeFactor(String textureType) {
-        float lifeFactor;
-        if (textureType.equals("green")) {
-            lifeFactor = getLifeFactor();
-        } else {
-            lifeFactor = 1f;
-        }
-        return lifeFactor;
-    }
-
     public void render() {
         Shader.STRIP.enable();
         Shader.STRIP.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
@@ -106,7 +91,6 @@ public class LifeBar {
 
         Shader.STRIP.disable();
     }
-
 
 }
 

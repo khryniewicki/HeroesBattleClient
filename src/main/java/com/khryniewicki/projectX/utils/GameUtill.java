@@ -3,13 +3,15 @@ package com.khryniewicki.projectX.utils;
 import com.khryniewicki.projectX.graphics.Texture;
 
 public class GameUtill {
+    public static Texture BACKGROUND = new Texture("desertBackground.png");
+    public static Texture BAR = new Texture("bar.png");
 
-    public static Texture life = new Texture("lifeBar.png");
-    public static Texture mana = new Texture("manaBar.png");
-    public static Texture empty = new Texture("emptyBar.png");
+    public static Texture LIFE = new Texture("lifeBar.png");
+    public static Texture MANA = new Texture("manaBar.png");
+    public static Texture EMPTY = new Texture("emptyBar.png");
 
-    public static Texture manaSymbol = new Texture("manaSymbol.png");
-    public static Texture lifeSymbol = new Texture("lifeSymbol.png");
+    public static Texture MANASYMBOL = new Texture("manaSymbol.png");
+    public static Texture LIFESYMBOL = new Texture("lifeSymbol.png");
 
-    public static Texture frame = new Texture("frame.png");
+    public static Texture FRAME = new Texture("frame.png");
 }

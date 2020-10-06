@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX;
 
 
-import com.khryniewicki.projectX.game.board.Board;
+import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
@@ -247,7 +247,6 @@ public class Game implements Runnable {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         board.render();
-
         RenderFactory.swapBuffers();
     }
 

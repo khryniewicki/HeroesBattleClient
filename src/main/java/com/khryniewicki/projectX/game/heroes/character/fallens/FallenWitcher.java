@@ -38,7 +38,7 @@ public class FallenWitcher extends SuperHero {
 
     @Override
     public void setProperties() {
-        setName("Fallen1");
+        setName("FallenWitcher");
         setHero_left_offset(0.4f);
         setHero_right_offset(0.2f);
         setHero_bottom_offset(0.2f);

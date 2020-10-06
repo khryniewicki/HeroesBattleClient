@@ -9,7 +9,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.MoveSettings;
 import com.khryniewicki.projectX.game.heroes.factory.CharacterFactory;
-import com.khryniewicki.projectX.game.heroes.factory.WizardFactory;
+import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
@@ -27,15 +27,15 @@ public class HeroesInstances {
 
     private SuperHero hero;
     private UltraHero mock;
-    private final CharacterFactory characterFactory;
+    private final HeroFactory heroFactory;
 
     private HeroesInstances() {
-        characterFactory = new WizardFactory();
+        heroFactory = new HeroFactory();
     }
 
 
     public void setHero() {
-        this.hero = characterFactory.create(MultiplayerController.inputText);
+        this.hero = heroFactory.create(MultiplayerController.inputText);
     }
 
     public void setHeroBasicProperties() {
@@ -74,7 +74,7 @@ public class HeroesInstances {
             String key = hero.getKey();
             if (!key.equals(sessionId)) {
                 String heroType = hero.getValue().getContent();
-                SuperHero superHero = characterFactory.create(heroType);
+                SuperHero superHero = heroFactory.create(heroType);
                 this.mock = new HeroMock(superHero);
                 setBasicProperties(mock);
             }

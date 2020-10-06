@@ -93,14 +93,13 @@ public class AttackTrajectory {
     }
 
     private void deactivateSpell() {
+        UltraSpell spell;
         if (spellInstance.isBasic()) {
-            UltraSpell basicSpell = hero.getBasicSpell();
-            basicSpell.setSpellActivated(false);
+            spell = hero.getBasicSpell();
         } else {
-            UltraSpell ultimateSpell = hero.getUltimateSpell();
-            ultimateSpell.setSpellActivated(false);
+            spell = hero.getUltimateSpell();
         }
-
+        spell.setSpellActivated(false);
     }
 
 

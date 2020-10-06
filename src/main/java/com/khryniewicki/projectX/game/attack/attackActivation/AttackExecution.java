@@ -1,13 +1,15 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
-import com.khryniewicki.projectX.game.board.Board;
+import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
 
 
 @Slf4j
@@ -86,7 +88,7 @@ public class AttackExecution {
 
     private void spellObjectDimensions() {
         Vector position = spell.getPosition();
-        if (position == null) return;
+        if (Objects.isNull(position)) return;
         ox0 = position.x - spell.getSize() / 2.0f;
         ox1 = position.x + spell.getSize() / 2.0f;
         oy0 = position.y - spell.getSize() / 2.0f;

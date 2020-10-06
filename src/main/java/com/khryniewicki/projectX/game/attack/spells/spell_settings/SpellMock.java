@@ -10,7 +10,7 @@ import com.khryniewicki.projectX.services.SpellReceiveService;
 
 public class SpellMock extends Spell {
 
-    private Position tmp,spellTarget;
+    private Position tmp, spellTarget;
     private final AttackExecution attackExecution;
     private final AttackTrajectory attackTrajectory;
     private final SpellInstance spellInstance;
@@ -21,9 +21,8 @@ public class SpellMock extends Spell {
         this.spellInstance = spellInstance;
         createHero();
         attackExecution = new AttackExecution(this);
-        attackTrajectory = new AttackTrajectory(this,mock);
+        attackTrajectory = new AttackTrajectory(this, mock);
     }
-
 
 
     @Override
@@ -39,7 +38,6 @@ public class SpellMock extends Spell {
         castingSpell();
         executeSpell();
     }
-
 
 
     private void getSpellType() {
@@ -67,13 +65,13 @@ public class SpellMock extends Spell {
     }
 
     private void activateSpell() {
+        UltraSpell spell;
         if (spellInstance.isBasic()) {
-            UltraSpell basicSpell = mock.getBasicSpell();
-            basicSpell.setSpellActivated(true);
+            spell = mock.getBasicSpell();
         } else {
-            UltraSpell ultimateSpell = mock.getUltimateSpell();
-            ultimateSpell.setSpellActivated(true);
+            spell = mock.getUltimateSpell();
         }
+        spell.setSpellActivated(true);
     }
 
     private void castingSpell() {

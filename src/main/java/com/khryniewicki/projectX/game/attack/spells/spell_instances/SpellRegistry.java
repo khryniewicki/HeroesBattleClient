@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SpellRegistry {
-    private List<Spell> spellbook;
 
+    private List<Spell> spellbook;
     public List<Spell> getSpellbook() {
         return spellbook;
     }

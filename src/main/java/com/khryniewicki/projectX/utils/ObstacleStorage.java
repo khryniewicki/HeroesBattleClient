@@ -1,9 +1,9 @@
 package com.khryniewicki.projectX.utils;
 
 import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.game.board.BoardObjects;
-import com.khryniewicki.projectX.game.board.Obstacle;
-import com.khryniewicki.projectX.game.board.Terrain;
+import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
+import com.khryniewicki.projectX.game.user_interface.board.Obstacle;
+import com.khryniewicki.projectX.game.user_interface.board.Terrain;
 
 import java.util.ArrayList;
 import java.util.Arrays;

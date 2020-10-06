@@ -12,6 +12,8 @@ import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Data
 @Slf4j
 public class ManaBar {
@@ -35,27 +37,21 @@ public class ManaBar {
 
     }
 
-
     public float getManaFactor() {
-        float ManaFactor;
-        if (hero.getMana() == null) {
-            ManaFactor = 1f;
-        } else {
-            ManaFactor = hero.getMana() / 100f;
-            if (ManaFactor < 0) {
-                ManaFactor = 0;
-            }
-        }
-
-        return ManaFactor;
+        float factor = hero.getMana() / 100f;
+        return Objects.isNull(hero.getMana()) ? 1f : (factor > 0 ? factor : 0);
     }
 
-    public void updateManaBar() {
+    private float getManaFactor(String textureType) {
+        return textureType.equals("blue") ? getManaFactor() : 1f;
+    }
 
+
+    public void updateManaBar() {
         setBlueMesh(createVertexArray("blue"));
         setBlackMesh(createVertexArray("black"));
-        blackTexture = GameUtill.empty;
-        blueTexture = GameUtill.mana;
+        blackTexture = GameUtill.EMPTY;
+        blueTexture = GameUtill.MANA;
         stackEvent.setHasAction(true);
     }
 
@@ -65,12 +61,12 @@ public class ManaBar {
         float offsetPositionX = -0.3f;
         float heroPositionX = hero.getPosition().x;
         float heroPositionY = hero.getPosition().y;
-
+        float visibility= 0.8f;
         float[] vertices = new float[]{
-                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY , 0.8f,
-                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + height,0.8f,
-                offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY + height, 0.8f,
-                offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY + 0.0f, 0.8f
+                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY , visibility,
+                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + height,visibility,
+                offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY + height, visibility,
+                offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY, visibility
         };
 
         byte[] indices = new byte[]{
@@ -88,15 +84,6 @@ public class ManaBar {
         return new VertexArray(vertices, indices, tcs);
     }
 
-    private float getManaFactor(String textureType) {
-        float manaFactor;
-        if (textureType.equals("blue")) {
-            manaFactor = getManaFactor();
-        } else {
-            manaFactor = 1f;
-        }
-        return manaFactor;
-    }
 
     public void renegerateMana() {
 
@@ -124,15 +111,11 @@ public class ManaBar {
     public void render() {
         Shader.STRIP.enable();
         Shader.STRIP.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
-
         blueTexture.bind();
         blueMesh.render();
-
         blackTexture.bind();
         blackMesh.render();
-
         Shader.STRIP.disable();
-
     }
 
 

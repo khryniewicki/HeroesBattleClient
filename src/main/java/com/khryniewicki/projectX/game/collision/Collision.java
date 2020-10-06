@@ -1,8 +1,9 @@
 package com.khryniewicki.projectX.game.collision;
 
-import com.khryniewicki.projectX.game.board.Board;
+import com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS;
+import com.khryniewicki.projectX.game.user_interface.board.Board;
 
-import com.khryniewicki.projectX.game.board.BoardObjects;
+import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
 import com.khryniewicki.projectX.game.heroes.character.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
@@ -58,16 +59,16 @@ public class Collision {
 
         checkCollisionForSpecificDirection();
     }
-    private com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS checkInWhichQuerterIsHero() {
-        com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS quarter;
+    private MAP_QUARTERS checkInWhichQuerterIsHero() {
+        MAP_QUARTERS quarter;
         if (bx > 0 && by > 0) {
-            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.TOP_RIGHT;
+            quarter = MAP_QUARTERS.TOP_RIGHT;
         } else if (bx > 0 && by < 0) {
-            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.BOTTOM_RIGHT;
+            quarter = MAP_QUARTERS.BOTTOM_RIGHT;
         } else if (bx < 0 && by > 0) {
-            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.TOP_LEFT;
+            quarter = MAP_QUARTERS.TOP_LEFT;
         } else {
-            quarter = com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS.BOTTOM_LEFT;
+            quarter = MAP_QUARTERS.BOTTOM_LEFT;
         }
         return quarter;
     }
@@ -81,34 +82,33 @@ public class Collision {
         }
     }
 
-    private boolean boundaryCollision() {
+    private void boundaryCollision() {
         Arrays.fill(BoundaryCollisions, false);
         if (bx >= 9.5f) {
             BoundaryCollisions[0] = true;
-            return true;
         } else if (bx <= -9.5f) {
             BoundaryCollisions[1] = true;
-            return true;
         } else if (by >= 5.0f) {
             BoundaryCollisions[2] = true;
-            return true;
         } else if (by <= -5.2f) {
             BoundaryCollisions[3] = true;
-            return true;
-        } else
-            return false;
+        }
     }
 
-    private boolean obstacleCollision(com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS map_quarter) {
+    private void obstacleCollision(MAP_QUARTERS map_quarter) {
         switch (map_quarter) {
             case BOTTOM_LEFT:
-                return obstacleCollisionInQuarter(obstacleList_BL);
+                obstacleCollisionInQuarter(obstacleList_BL);
+                return;
             case BOTTOM_RIGHT:
-                return obstacleCollisionInQuarter(obstacleList_BR);
+                obstacleCollisionInQuarter(obstacleList_BR);
+                return;
             case TOP_LEFT:
-                return obstacleCollisionInQuarter(obstacleList_TL);
+                obstacleCollisionInQuarter(obstacleList_TL);
+                return;
             case TOP_RIGHT:
-                return obstacleCollisionInQuarter(obstacleList_TR);
+                obstacleCollisionInQuarter(obstacleList_TR);
+                return;
             default:
                 throw new IllegalArgumentException("There is no map quarter");
         }
@@ -117,15 +117,15 @@ public class Collision {
 
 
 
-    public boolean obstacleCollisionInQuarter(List<BoardObjects> mapObstacles) {
-        return checkConditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
+    public void obstacleCollisionInQuarter(List<BoardObjects> mapObstacles) {
+        checkConditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
     }
 
-    public boolean terrainCollision(List<BoardObjects> mapObstacles) {
-        return checkConditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
+    public void terrainCollision(List<BoardObjects> mapObstacles) {
+        checkConditionForObstacleOrTerrain(mapObstacles, TerrainCollisions);
     }
 
-    private boolean checkConditionForObstacleOrTerrain(List<BoardObjects> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
+    private void checkConditionForObstacleOrTerrain(List<BoardObjects> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
         Arrays.fill(obstacleOrTerrainCollisions,false);
         if (collision(mapObstacles)) {
             mapObstaclesListHashMap.values().forEach(e -> {
@@ -135,9 +135,7 @@ public class Collision {
                         obstacleOrTerrainCollisions[i] = true;
                 }
             });
-            return true;
         }
-        return false;
     }
 
     public Boolean collision(List<BoardObjects> obstacles) {
@@ -154,16 +152,16 @@ public class Collision {
             float tangens = obstacle.getTangens();
 
             if (tangens == 0) {
-                px0 = (obstacle.getObstacle_positionX0() - hero.hero_positionX0) + delta_x;
-                py0 = (obstacle.getObstacle_positionY0() - hero.hero_positionY0) + delta_y;
+                px0 = (obstacle.getObstacle_positionX0() - SuperHero.hero_positionX0) + delta_x;
+                py0 = (obstacle.getObstacle_positionY0() - SuperHero.hero_positionY0) + delta_y;
                 px1 = px0 + obstacle.getWidth();
                 py1 = py0 + obstacle.getHeight();
                 proximtyValue = 0.21f;
             } else {
-                float px = (obstacle.getObstacle_positionX0() - hero.hero_positionX0);
-                float py = (obstacle.getObstacle_positionY0() - hero.hero_positionY0);
-                float pX = (obstacle.getObstacle_positionX1() - hero.hero_positionX0);
-                float pY = (obstacle.getObstacle_positionY1() - hero.hero_positionY0);
+                float px = (obstacle.getObstacle_positionX0() - SuperHero.hero_positionX0);
+                float py = (obstacle.getObstacle_positionY0() - SuperHero.hero_positionY0);
+                float pX = (obstacle.getObstacle_positionX1() - SuperHero.hero_positionX0);
+                float pY = (obstacle.getObstacle_positionY1() - SuperHero.hero_positionY0);
                 float X = 1.0f;
                 if (by1 < py) X = 0;
                 if (bx1 < px) X = 0;
