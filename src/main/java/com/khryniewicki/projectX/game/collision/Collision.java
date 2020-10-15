@@ -4,7 +4,7 @@ import com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 
 import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;

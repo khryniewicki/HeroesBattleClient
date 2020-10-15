@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.playerBar;
 
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
@@ -50,8 +50,6 @@ public class DigitsSymbol implements Symbol {
         }
     }
 
-
-
     public Texture getHundredDigitTexture() {
         return Digits.getHundredDigitTexture(getNumber());
     }
@@ -69,7 +67,7 @@ public class DigitsSymbol implements Symbol {
     }
 
     private Position getPosition(String name) {
-        return new Position(-5.95f, name.equals("life") ? -7.45f : 5.2f);
+        return new Position(name.equals("life") ? -7.45f : -5.95f, 5.2f);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -33,14 +32,16 @@ public class LifeBar {
         updateLifeBar();
     }
 
-
-    public float getLifeFactor() {
-        float life = hero.getLife() ;
-        return life > 0 ? life / 100f : 0;
+    public Float getLifeFactor() {
+        if (Objects.isNull(hero.getLife())) {
+            return 1f;
+        } else {
+            float life = hero.getLife();
+            return life < 0 ? 0 : life / 100f;
+        }
     }
 
-
-    private float getLifeFactor(String textureType) {
+     private float getLifeFactor(String textureType) {
         return textureType.equals("green") ? getLifeFactor() : 1f;
     }
 

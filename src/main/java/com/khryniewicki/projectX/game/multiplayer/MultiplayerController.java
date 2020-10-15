@@ -48,7 +48,6 @@ public class MultiplayerController {
             if (!contains) {
                 inputText = null;
                 renderFactory.render(TextUtil.ERROR);
-
             }
         }
     }
@@ -81,8 +80,6 @@ public class MultiplayerController {
                 inputText = "else";
 
         });
-
-
     }
 
     public void waitingForSecondPlayer() {

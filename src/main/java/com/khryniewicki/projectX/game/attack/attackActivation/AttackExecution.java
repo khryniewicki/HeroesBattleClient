@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;

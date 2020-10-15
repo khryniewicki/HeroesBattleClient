@@ -1,8 +1,10 @@
-package com.khryniewicki.projectX.game.heroes.character.properties;
+package com.khryniewicki.projectX.game.settings;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.collision.Collision;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.StackEvent;

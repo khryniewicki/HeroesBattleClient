@@ -1,9 +1,10 @@
-package com.khryniewicki.projectX.game.heroes.character.properties;
+package com.khryniewicki.projectX.game.settings;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.DTO.DTO;
@@ -12,9 +13,7 @@ import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.lwjgl.BufferUtils;
 
-import java.nio.DoubleBuffer;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -24,6 +23,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class MouseSettings {
 
     private final StackEvent stackEvent;
+    private final MousePosition mousePosition;
     private Position cursorPosition;
     private SpellInstance spellInstance;
     private SuperHero hero;
@@ -38,17 +38,17 @@ public class MouseSettings {
         this.sendingService = new SendingService();
         this.basicSpell = hero.getBasicSpell();
         this.ultimateSpell = hero.getUltimateSpell();
+        this.mousePosition = new MousePosition();
     }
 
     public void setMouseCallBack() {
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
-            cursorPosition = getCursorPosition();
+            cursorPosition = mousePosition.getCursorPosition();
             if ((key == 0 || key == 1)) {
                 getHeroInstance();
                 if (key == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE && !basicSpell.isSpellActivated()) {
                     setSpell(hero.getBasicSpell());
                     send();
-
                 } else if (key == GLFW_MOUSE_BUTTON_2 && action != GLFW_RELEASE && !ultimateSpell.isSpellActivated()) {
                     setSpell(hero.getUltimateSpell());
                     send();
@@ -59,7 +59,7 @@ public class MouseSettings {
 
     private void send() {
         spell.setStartingTimeSpell(System.currentTimeMillis());
-        if (isSpellCursorInView()&&isEnoughManaToCast()) {
+        if (isSpellCursorInView() && isEnoughManaToCast()) {
             setSpellTarget(spell);
             spell.setSpellActivated(true);
             consumeSpellMana();
@@ -68,16 +68,16 @@ public class MouseSettings {
     }
 
     private boolean isSpellCursorInView() {
-      return cursorPosition.getPositionYD() > 40f;
+        return cursorPosition.getPositionYD() > 40f;
     }
 
 
     private void setSpellTarget(UltraSpell ultraSpell) {
-            float factor = 1.1f;
-            float finalX = (float) (cursorPosition.getPositionXD() - Game.width / 2) / (Game.width / 20);
-            float finalY = (float) ((Game.height / 2 - cursorPosition.getPositionYD()) * factor) / (Game.height / 10);
-            ultraSpell.setTarget(new Position(finalX, finalY));
-            log.info("Y:{}",cursorPosition.getPositionYD());
+        float factor = 1.1f;
+        float finalX = (float) (cursorPosition.getPositionXD() - Game.width / 2) / (Game.width / 20f);
+        float finalY = (float) ((Game.height / 2 - cursorPosition.getPositionYD()) * factor) / (Game.height / 10f);
+        ultraSpell.setTarget(new Position(finalX, finalY));
+        log.info("Y:{}", cursorPosition.getPositionYD());
     }
 
     private void consumeSpellMana() {
@@ -92,15 +92,6 @@ public class MouseSettings {
 
     private boolean isEnoughManaToCast() {
         return hero.getMana() >= spell.getManaConsumed();
-    }
-
-    private Position getCursorPosition() {
-        DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
-        DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
-        glfwGetCursorPos(Game.window, xBuffer, yBuffer);
-        double x = xBuffer.get(0);
-        double y = yBuffer.get(0);
-        return new Position(x, y);
     }
 
     private void getHeroInstance() {

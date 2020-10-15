@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.playerBar;
 
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.SymbolImp;

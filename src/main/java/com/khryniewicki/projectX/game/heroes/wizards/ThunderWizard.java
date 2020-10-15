@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellIn
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.Thunder;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.VioletMissle;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 

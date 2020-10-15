@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.heroes.character;
+package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.math.Vector;
 

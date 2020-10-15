@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage.positions;
 
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 
 public class HeroStartingPosition implements StartingPosition{

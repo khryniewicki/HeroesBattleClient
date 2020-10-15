@@ -14,4 +14,5 @@ public class GameUtill {
     public static Texture LIFESYMBOL = new Texture("lifeSymbol.png");
 
     public static Texture FRAME = new Texture("frame.png");
+
 }

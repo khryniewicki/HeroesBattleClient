@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.websocket;
 
 
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.websocket.messages.ConnectionStatus;

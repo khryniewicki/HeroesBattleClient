@@ -1,14 +1,14 @@
 package com.khryniewicki.projectX.game.user_interface.board;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.collision.Collision;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
+import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.SymbolImp;
-import com.khryniewicki.projectX.game.collision.Collision;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.Ultra;
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
@@ -26,9 +26,6 @@ public class Board {
     public static Collision collision;
     private SuperHero hero;
     private UltraHero mock;
-    private Symbol playerBar;
-    private Symbol bar;
-    private Symbol background;
     private UltraSpell basicSpell;
     private UltraSpell ultimateSpell;
     private UltraSpell basicSpellMock;
@@ -50,20 +47,20 @@ public class Board {
     }
 
     private void createBackground() {
-        background = new SymbolImp.Builder(GameUtill.BACKGROUND, -10f, -10.0f * 9.0f / 16.0f)
+        Symbol background = new SymbolImp.Builder(GameUtill.BACKGROUND, -10f, -10.0f * 9.0f / 16.0f)
                 .withVisibility(0.0f)
                 .withWidth(20f)
-                .withHeight(19*9.0f / 16.0f)
+                .withHeight(19 * 9.0f / 16.0f)
                 .build();
 
-        bar = new SymbolImp.Builder(GameUtill.BAR, -10f, 9.0f * 9.0f / 16.0f)
+        Symbol bar = new SymbolImp.Builder(GameUtill.BAR, -10f, 9.0f * 9.0f / 16.0f)
                 .withVisibility(0.9f)
                 .withWidth(20f)
                 .withHeight(9.0f / 16.0f)
                 .build();
 
-        playerBar = new PlayerBar();
-        symbols= new ArrayList<>(Arrays.asList(background, bar, playerBar));
+        Symbol playerBar = new PlayerBar();
+        symbols = new ArrayList<>(Arrays.asList(background, bar, playerBar));
     }
 
     private void createCollision() {
@@ -94,9 +91,7 @@ public class Board {
     public void render() {
         symbols.forEach(Symbol::render);
         collision.test();
-
         heroes.forEach(Ultra::render);
-
         spells.forEach(spell -> {
             if (spell.isSpellActivated()) {
                 spell.render();

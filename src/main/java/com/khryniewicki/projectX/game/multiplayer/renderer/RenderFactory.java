@@ -1,13 +1,11 @@
 package com.khryniewicki.projectX.game.multiplayer.renderer;
 
-import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.TextUtil;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import static com.khryniewicki.projectX.Game.window;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
@@ -29,8 +27,6 @@ public class RenderFactory {
     public void render(String path) {
 
         textureLoader = new TextureLoader(path);
-
-
 
         textScheme(path);
 
@@ -54,7 +50,7 @@ public class RenderFactory {
         if (!path.equals(TextUtil.ASK_FOR_CHAR)) {
             byte[] array = new byte[7];
             new Random().nextBytes(array);
-            String generatedString = new String(array, Charset.forName("UTF-8"));
+            String generatedString = new String(array, StandardCharsets.UTF_8);
             mapWithTextures.put(generatedString, textureLoader);
         }
         if (mapWithTextures.size() == 20) {

@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.attack.spells.spell_settings;
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackExecution;
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.SpellReceiveService;

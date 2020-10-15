@@ -1,9 +1,9 @@
 package com.khryniewicki.projectX.game.heroes.factory;
 
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.fallens.FallenWitcher;
-import com.khryniewicki.projectX.game.heroes.character.fallens.FallenMonk;
 import com.khryniewicki.projectX.game.heroes.character.fallens.FallenKing;
+import com.khryniewicki.projectX.game.heroes.character.fallens.FallenMonk;
+import com.khryniewicki.projectX.game.heroes.character.fallens.FallenWitcher;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
@@ -35,6 +35,6 @@ public class HeroFactory {
         if (heroesFactory.containsKey(character)) {
             return heroesFactory.get(character).create();
         }
-        throw new UnsupportedOperationException("Nieznaleziono postaci");
+        throw new UnsupportedOperationException("Postać nie została znaleziona");
     }
 }

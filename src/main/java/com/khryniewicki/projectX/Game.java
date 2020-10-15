@@ -1,10 +1,11 @@
 package com.khryniewicki.projectX;
 
 
-import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
+import com.khryniewicki.projectX.game.user_interface.board.Board;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
@@ -72,8 +73,8 @@ public class Game implements Runnable {
     public void run() {
         init();
         initializeMultiplayerGame();
-        gameLoop();
-        terminateGame();
+//        gameLoop();
+//        terminateGame();
     }
 
     private void init() {
@@ -121,21 +122,11 @@ public class Game implements Runnable {
                     (vidmode.width() - pWidth.get(0)) / 2,
                     (vidmode.height() + bar - pHeight.get(0)) / 2
             );
-        } // the stack frame is popped automatically
-
-        // Make the OpenGL context current
+        }
         glfwMakeContextCurrent(window);
-        // Enable v-sync
-//        glfwSwapInterval(1);
-
-        // Make the window visible
         glfwShowWindow(window);
-
-
         GL.createCapabilities();
-
         glfwMakeContextCurrent(window);
-
         glEnable(GL_DEPTH_TEST);
         glActiveTexture(GL_TEXTURE1);
         glEnable(GL_BLEND);
@@ -147,7 +138,14 @@ public class Game implements Runnable {
     }
 
     private void initializeMultiplayerGame() {
-        multiplayerController.getHeroTypeFromPlayer();
+        MainMenu mainMenu = MainMenu.getInstance();
+        mainMenu.render();
+        boolean running = false;
+
+        do {
+            glfwPollEvents();
+        } while (!mainMenu.isRunning());
+//        multiplayerController.getHeroTypeFromPlayer();
         initializeWebsocketConnection();
         setMultiplayerGame();
     }
@@ -184,7 +182,7 @@ public class Game implements Runnable {
     }
 
     private void registerHero() {
-        heroesInstances.setHero();
+//        heroesInstances.setHero();
         setHeroesInitialPositions();
         heroesInstances.setHeroBasicProperties();
     }

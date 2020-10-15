@@ -1,10 +1,8 @@
-package com.khryniewicki.projectX.game.heroes.character;
+package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
-import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.math.Vector;
@@ -24,6 +22,7 @@ public class HeroMock implements UltraHero {
     private Long now;
 
     public HeroMock(SuperHero superHero) {
+        super();
         this.ultraHero = superHero;
         heroReceiveService = HeroReceiveService.getInstance();
     }
@@ -131,8 +130,6 @@ public class HeroMock implements UltraHero {
         return ultraHero.getPosition();
     }
 
-
-
     @Override
     public LifeBar getLifeBar() {
         return ultraHero.getLifeBar();
@@ -152,8 +149,6 @@ public class HeroMock implements UltraHero {
     public Integer getMana() {
         return heroReceiveService.getMockMana();
     }
-
-
 
     @Override
     public UltimateSpellInstance getUltimateSpellInstance() {

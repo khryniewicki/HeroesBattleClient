@@ -4,7 +4,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellIn
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.Storm;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.Wind;
-import com.khryniewicki.projectX.game.heroes.character.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.utils.HeroUtil;
 
 

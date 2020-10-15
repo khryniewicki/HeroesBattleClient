@@ -1,14 +1,19 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
+import com.khryniewicki.projectX.game.multiplayer.renderer.TextureLoader;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@SuperBuilder
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class SymbolImp implements Symbol {
     private final VertexArray mesh;
@@ -16,6 +21,8 @@ public class SymbolImp implements Symbol {
     private final Float x, y;
     private Texture texture;
     private Float width, height, visibility;
+    private TextureLoader textureLoader;
+
 
     private SymbolImp(Builder builder) {
         this.position = builder.position;
@@ -63,7 +70,7 @@ public class SymbolImp implements Symbol {
         Shader.SYMBOL.disable();
     }
 
-    public static class Builder {
+    public static class Builder{
         private final Texture texture;
         private final Vector position;
         private final Float x, y;

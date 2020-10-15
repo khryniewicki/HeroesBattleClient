@@ -1,10 +1,8 @@
-package com.khryniewicki.projectX.game.heroes.character;
+package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
-import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 
 public interface UltraHero extends Ultra {

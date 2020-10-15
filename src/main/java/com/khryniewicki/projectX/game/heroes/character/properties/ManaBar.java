@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.heroes.character.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -37,9 +36,13 @@ public class ManaBar {
 
     }
 
-    public float getManaFactor() {
-        float mana = hero.getMana() ;
-        return mana > 0 ? mana / 100f : 0;
+    public Float getManaFactor() {
+        if (Objects.isNull(hero.getMana())) {
+            return 1f;
+        } else {
+            float mana = hero.getMana();
+            return mana < 0 ? 0 : mana / 100f;
+        }
     }
 
     private float getManaFactor(String textureType) {
@@ -87,7 +90,7 @@ public class ManaBar {
 
     public void renegerateMana() {
 
-        if (start == null) {
+        if (Objects.isNull(start)) {
             start = System.currentTimeMillis();
         }
 
