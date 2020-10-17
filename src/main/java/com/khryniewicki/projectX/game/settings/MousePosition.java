@@ -4,6 +4,7 @@ import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import lombok.Data;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.BufferUtils;
 
 import java.nio.DoubleBuffer;
@@ -11,13 +12,14 @@ import java.nio.DoubleBuffer;
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
 
 @Data
+@Slf4j
 public class MousePosition {
     private float windowPositionX;
     private float windowPositionY;
 
     public void setWindowPositions(double x, double y) {
         windowPositionX = (float) ((x - Game.width / 2) / (Game.width / 20f));
-        windowPositionY = (float) ((Game.height / 2 - y)) / (Game.height / 10f);
+        windowPositionY = (float) (((Game.height+Game.bar) / 2 - y)) / ((Game.height+Game.bar) / 11f);
     }
 
     public Position getCursorPosition() {
@@ -30,5 +32,11 @@ public class MousePosition {
         return new Position(x, y);
     }
 
-
+    @Override
+    public String toString() {
+        return "MousePosition{" +
+                "windowPositionX=" + windowPositionX +
+                ", windowPositionY=" + windowPositionY +
+                '}';
+    }
 }

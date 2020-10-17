@@ -4,7 +4,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstanc
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.SymbolImp;
+import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.utils.GameUtill;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class SpellSymbol implements Symbol {
     private final SpellInstance spellInstance;
     private final UltraSpell ultraSpell;
-    private final SymbolImp spellTexture;
+    private final GameSymbol spellTexture;
     private List<Symbol> symbolList;
     private Position spellPositionPlayerBar;
 
@@ -27,13 +27,13 @@ public class SpellSymbol implements Symbol {
         float offset = 0.03f;
         getPositionPlayerBar(spellInstance.isBasic());
 
-        SymbolImp frame = new SymbolImp.Builder(GameUtill.FRAME, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
+        GameSymbol frame = new GameSymbol.Builder(GameUtill.FRAME, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
                 .withWidth(0.62f)
                 .withHeight(0.465f)
                 .withVisibility(0.95f)
                 .build();
 
-        this.spellTexture = new SymbolImp.Builder(spellInstance.getIcon(), offset + spellPositionPlayerBar.getX(), offset + spellPositionPlayerBar.getY())
+        this.spellTexture = new GameSymbol.Builder(spellInstance.getIcon(), offset + spellPositionPlayerBar.getX(), offset + spellPositionPlayerBar.getY())
                 .withWidth(0.56f)
                 .withHeight(0.40f)
                 .build();

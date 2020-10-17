@@ -1,13 +1,17 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import org.springframework.stereotype.Component;
 
-public interface Menu extends Symbol {
+import java.util.List;
+@Component
+public interface Menu extends com.khryniewicki.projectX.game.user_interface.symbols.Symbol {
     void addEventClick();
     void swapBuffers();
-    void changeButton(Button button, ButtonTransferObject buttonTransferObject);
-    void subscribe();
+    void start();
+    default void subscribe(){}
     default void init(){}
+    void setButtons(List<MenuSymbol> buttons);
+    void setButtonTransferObject(ButtonTransferObject buttonTransferObject);
 }

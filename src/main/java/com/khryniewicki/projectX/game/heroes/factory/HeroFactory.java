@@ -7,12 +7,16 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Slf4j
+@Data
 public class HeroFactory {
 
     private Map<String, CharacterFactory> heroesFactory;
@@ -32,6 +36,7 @@ public class HeroFactory {
     }
 
     public SuperHero create(String character) {
+
         if (heroesFactory.containsKey(character)) {
             return heroesFactory.get(character).create();
         }

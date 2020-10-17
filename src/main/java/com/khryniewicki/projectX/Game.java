@@ -5,6 +5,8 @@ import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.CharacterMenu;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.ControlSettingsMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
@@ -51,6 +53,7 @@ public class Game implements Runnable {
     private final HeroesInstances heroesInstances;
     private final MultiplayerController multiplayerController;
 
+
     public Game() {
         renderFactory = RenderFactory.getRenderFactory();
         heroesInstances = HeroesInstances.getInstance();
@@ -67,14 +70,13 @@ public class Game implements Runnable {
         running = true;
         game = new Thread(this, "Game");
         game.start();
-
     }
 
     public void run() {
         init();
         initializeMultiplayerGame();
-//        gameLoop();
-//        terminateGame();
+        gameLoop();
+        terminateGame();
     }
 
     private void init() {
@@ -120,7 +122,7 @@ public class Game implements Runnable {
             glfwSetWindowPos(
                     window,
                     (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height() + bar - pHeight.get(0)) / 2
+                    (vidmode.height()  - pHeight.get(0)) / 2
             );
         }
         glfwMakeContextCurrent(window);
@@ -132,27 +134,28 @@ public class Game implements Runnable {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         System.out.println("OpenGL: " + glGetString(GL_VERSION));
+
         Shader.loadAll();
         GameShaders.loadAll();
-
     }
 
     private void initializeMultiplayerGame() {
-        MainMenu mainMenu = MainMenu.getInstance();
-        mainMenu.render();
-        boolean running = false;
-
-        do {
-            glfwPollEvents();
-        } while (!mainMenu.isRunning());
-//        multiplayerController.getHeroTypeFromPlayer();
+        initializeMenu();
         initializeWebsocketConnection();
         setMultiplayerGame();
     }
 
+    private void initializeMenu() {
+        MainMenu mainMenu = MainMenu.getInstance();
+        mainMenu.render();
+        do {
+            glfwPollEvents();
+        } while (!mainMenu.isRunning());
+    }
 
     private void initializeWebsocketConnection() {
         renderFactory.render(TextUtil.CONNECTION);
+        heroesInstances.setHero();
         new WebsocketApplication().startWebsocket();
         renderFactory.render(TextUtil.CONNECTION_ESTABLISHED);
     }
@@ -182,7 +185,6 @@ public class Game implements Runnable {
     }
 
     private void registerHero() {
-//        heroesInstances.setHero();
         setHeroesInitialPositions();
         heroesInstances.setHeroBasicProperties();
     }

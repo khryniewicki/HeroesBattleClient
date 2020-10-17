@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.user_interface.playerBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.SymbolImp;
+import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.utils.GameUtill;
 
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ public class PlayerBar implements Symbol {
 
     public PlayerBar() {
         UltraHero hero = HeroesInstances.getInstance().getHero();
-        Symbol manaSymbol = new SymbolImp.Builder(GameUtill.MANASYMBOL, -6.3f, 5.2f).build();
-        Symbol lifeSymbol = new SymbolImp.Builder(GameUtill.LIFESYMBOL, -7.8f, 5.2f).build();
+        Symbol manaSymbol = new GameSymbol.Builder(GameUtill.MANASYMBOL, -6.3f, 5.2f).build();
+        Symbol lifeSymbol = new GameSymbol.Builder(GameUtill.LIFESYMBOL, -7.8f, 5.2f).build();
 
         Symbol lifeAsNumber = new DigitsSymbol("life");
         Symbol manaAsNumber = new DigitsSymbol("mana");

@@ -2,16 +2,11 @@ package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellMock;
-import com.khryniewicki.projectX.game.heroes.character.properties.HeroMock;
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
-import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
-import com.khryniewicki.projectX.game.settings.MoveSettings;
+import com.khryniewicki.projectX.game.heroes.character.properties.*;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
-import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
+import com.khryniewicki.projectX.game.settings.MoveSettings;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.websocket.messages.Message;
 import lombok.Data;
@@ -27,7 +22,7 @@ public class HeroesInstances {
     private SuperHero hero;
     private UltraHero mock;
     private final HeroFactory heroFactory;
-
+    private String heroType;
     private HeroesInstances() {
         heroFactory = new HeroFactory();
     }
@@ -41,19 +36,19 @@ public class HeroesInstances {
         ultraHero.setLifeBar(new LifeBar(ultraHero));
         ultraHero.setManaBar(new ManaBar(ultraHero));
 
-        if (ultraHero.equals(hero)){
+        if (ultraHero.equals(hero)) {
             ultraHero.setStartingPosition(HeroStartingPosition.getInstance());
             ultraHero.setBasicSpell(new Spell(ultraHero.getBasicSpellInstance()));
             ultraHero.setUltimateSpell(new Spell(ultraHero.getUltimateSpellInstance()));
-        } else{
+        } else {
             ultraHero.setStartingPosition(MockStartingPosition.getInstance());
             ultraHero.setBasicSpell(new SpellMock(ultraHero.getBasicSpellInstance()));
             ultraHero.setUltimateSpell(new SpellMock(ultraHero.getUltimateSpellInstance()));
         }
-            ultraHero.setMesh();
+        ultraHero.setMesh();
     }
 
-    public void setHeroMoveSetting(){
+    public void setHeroMoveSetting() {
         hero.setMoveSettings(MoveSettings.getInstance());
     }
 
@@ -68,8 +63,7 @@ public class HeroesInstances {
             String key = hero.getKey();
             if (!key.equals(sessionId)) {
                 String heroType = hero.getValue().getContent();
-                SuperHero superHero = heroFactory.create(heroType);
-                this.mock = new HeroMock(superHero);
+                setMock(heroType);
                 setBasicProperties(mock);
             }
         }
@@ -77,6 +71,12 @@ public class HeroesInstances {
 
     public static HeroesInstances getInstance() {
         return HELPER.INSTANCE;
+    }
+
+    public void setHero() { hero = heroFactory.create(heroType); }
+
+    public void setMock(String mockName) {
+        mock = new HeroMock(heroFactory.create(mockName));
     }
 
     private static class HELPER {

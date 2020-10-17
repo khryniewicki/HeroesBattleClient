@@ -4,7 +4,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.SymbolImp;
+import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.Digits;
 import lombok.Data;
@@ -35,11 +35,11 @@ public class DigitsSymbol implements Symbol {
 
         initDigitRegistry();
 
-        this.hundred = new SymbolImp.Builder(getHundredDigitTexture(), position.getX(), position.getY())
+        this.hundred = new GameSymbol.Builder(getHundredDigitTexture(), position.getX(), position.getY())
                 .build();
-        this.dozen = new SymbolImp.Builder(getDozenDigitTexture(), position.getX() + offset, position.getY())
+        this.dozen = new GameSymbol.Builder(getDozenDigitTexture(), position.getX() + offset, position.getY())
                 .build();
-        this.unit = new SymbolImp.Builder(getUnitDigitTexture(), position.getX() + 2 * offset, position.getY())
+        this.unit = new GameSymbol.Builder(getUnitDigitTexture(), position.getX() + 2 * offset, position.getY())
                 .build();
         this.numbers = new ArrayList<>(Arrays.asList(this.hundred, this.dozen, this.unit));
     }

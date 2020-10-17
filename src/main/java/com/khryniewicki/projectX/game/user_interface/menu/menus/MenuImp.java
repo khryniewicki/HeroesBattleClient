@@ -3,13 +3,14 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.settings.MousePosition;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.khryniewicki.projectX.Game.window;
@@ -18,22 +19,35 @@ import static org.lwjgl.opengl.GL11.*;
 
 @Data
 @Slf4j
-public class MenuImp implements PropertyChangeListener, Menu {
 
+public class MenuImp implements PropertyChangeListener, Menu {
+    private boolean running;
     private ButtonTransferObject buttonTransferObject;
-    private List<Button> buttons;
+    private List<MenuSymbol> buttons = new ArrayList<>();
     private MousePosition mousePosition;
+    private String className;
+    private Menu menu;
+
+    public MenuImp() {
+        this.className = this.getClass().getName();
+        mousePosition = new MousePosition();
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        setButtonTransferObject((ButtonTransferObject) evt.getNewValue());
     }
 
     @Override
     public void render() {
+        addEventClick();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        buttons.forEach(Button::render);
+        buttons.forEach(MenuSymbol::render);
         swapBuffers();
+    }
+
+    @Override
+    public void subscribe() {
+        buttons.forEach(button -> button.addPropertyChangeListener(this));
     }
 
     @Override
@@ -45,27 +59,26 @@ public class MenuImp implements PropertyChangeListener, Menu {
     }
 
     @Override
-    public void changeButton(Button button, ButtonTransferObject buttonTransferObject) {
-        button.setNews(buttonTransferObject);
+    public void addEventClick() {
+        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
+
+            if (key == 0 && action != GLFW_RELEASE) {
+                Position cursorPosition = mousePosition.getCursorPosition();
+                buttons.stream()
+                        .filter(btn -> btn.getClassName().equals(className))
+                        .filter(btn -> mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1())
+                        .filter(btn -> mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1())
+                        .findFirst()
+                        .ifPresent(btn -> {
+                            btn.setNews(new ButtonTransferObject(btn.getName(), cursorPosition));
+                        });
+            }
+        });
     }
 
     @Override
-    public void addEventClick() {
-        mousePosition = new MousePosition();
-        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
-            Position cursorPosition = mousePosition.getCursorPosition();
-            if (key == 0) {
-                if (action != GLFW_RELEASE) {
-                    buttons.forEach(btn -> {
-                        if (mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1()) {
-                            if (mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1()) {
-                                changeButton(btn, new ButtonTransferObject(btn.getName(), cursorPosition));
-                                log.info("{}: [{}, {}]", buttonTransferObject.getName(), buttonTransferObject.getPosition().getPositionXD(), buttonTransferObject.getPosition().getPositionYD());
-                            }
-                        }
-                    });
-                }
-            }
-        });
+    public void start() {
+        init();
+        subscribe();
     }
 }

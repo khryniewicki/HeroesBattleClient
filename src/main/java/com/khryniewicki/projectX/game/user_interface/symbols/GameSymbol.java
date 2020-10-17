@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class SymbolImp implements Symbol {
+public class GameSymbol implements Symbol {
     private final VertexArray mesh;
     private final Vector position;
     private final Float x, y;
@@ -24,7 +24,7 @@ public class SymbolImp implements Symbol {
     private TextureLoader textureLoader;
 
 
-    private SymbolImp(Builder builder) {
+    private GameSymbol(Builder builder) {
         this.position = builder.position;
         this.x = builder.x;
         this.y = builder.y;
@@ -101,8 +101,8 @@ public class SymbolImp implements Symbol {
             return this;
         }
 
-        public SymbolImp build() {
-            return new SymbolImp(this);
+        public GameSymbol build() {
+            return new GameSymbol(this);
         }
     }
 }

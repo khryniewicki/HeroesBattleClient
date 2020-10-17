@@ -8,7 +8,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.SymbolImp;
+import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.utils.GameUtill;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
@@ -47,13 +47,13 @@ public class Board {
     }
 
     private void createBackground() {
-        Symbol background = new SymbolImp.Builder(GameUtill.BACKGROUND, -10f, -10.0f * 9.0f / 16.0f)
+        Symbol background = new GameSymbol.Builder(GameUtill.BACKGROUND, -10f, -10.0f * 9.0f / 16.0f)
                 .withVisibility(0.0f)
                 .withWidth(20f)
                 .withHeight(19 * 9.0f / 16.0f)
                 .build();
 
-        Symbol bar = new SymbolImp.Builder(GameUtill.BAR, -10f, 9.0f * 9.0f / 16.0f)
+        Symbol bar = new GameSymbol.Builder(GameUtill.BAR, -10f, 9.0f * 9.0f / 16.0f)
                 .withVisibility(0.9f)
                 .withWidth(20f)
                 .withHeight(9.0f / 16.0f)
