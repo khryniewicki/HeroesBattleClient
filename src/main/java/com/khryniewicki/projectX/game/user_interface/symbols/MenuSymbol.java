@@ -19,6 +19,8 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
     private float positionY0;
     private float positionY1;
     private String name;
+    private String oldText;
+    private boolean disabled;
     private String className;
     private PropertyChangeSupport support;
     private ButtonTransferObject buttonTransferObject;
@@ -26,7 +28,7 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
     public MenuSymbol(Builder builder) {
         super(builder);
         this.name = builder.name;
-
+        this.disabled = builder.disabled;
         setButtonPositions();
         support = new PropertyChangeSupport(this);
     }
@@ -49,8 +51,17 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
     }
 
     @Override
+    public void setAction(String text) {
+        support.firePropertyChange("heroName", oldText, text);
+        oldText = text;
+    }
+
+    @Override
     public void setNews(ButtonTransferObject value) {
-        ButtonTransferObject oldValue = this.buttonTransferObject;
+        ButtonTransferObject oldValue = null;
+        if (!"Return".equals(value.getName())) {
+            oldValue = this.buttonTransferObject;
+        }
         this.buttonTransferObject = value;
         support.firePropertyChange("news", oldValue, value);
     }
@@ -62,9 +73,15 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
 
     public static class Builder extends GraphicLoader.Builder<Builder> {
         private String name;
+        private boolean disabled;
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withDisabled(Boolean disabled) {
+            this.disabled = disabled;
             return this;
         }
 

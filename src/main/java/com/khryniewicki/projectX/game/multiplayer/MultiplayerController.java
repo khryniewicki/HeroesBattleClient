@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.multiplayer;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
-import com.khryniewicki.projectX.utils.TextUtil;
+import com.khryniewicki.projectX.utils.ConnectionTextFactory;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ public class MultiplayerController {
     }
 
     public void waitingForSecondPlayer() {
-        renderFactory.render(TextUtil.OTHER_PLAYER);
+        renderFactory.render(ConnectionTextFactory.OTHER_PLAYER);
 
         WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
@@ -26,7 +26,7 @@ public class MultiplayerController {
             websocketInitializer.getSecondPlayerMockType();
             heroesInstances.setMock();
 
-            renderFactory.render(TextUtil.GET_READY);
+            renderFactory.render(ConnectionTextFactory.GET_READY);
             Thread.sleep(5000);
 
         } catch (InterruptedException e) {
@@ -35,7 +35,7 @@ public class MultiplayerController {
     }
 
     public void occupiedRoom() {
-        renderFactory.render(TextUtil.TRY_LATER);
+        renderFactory.render(ConnectionTextFactory.TRY_LATER);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

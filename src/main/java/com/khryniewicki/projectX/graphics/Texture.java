@@ -3,16 +3,11 @@ package com.khryniewicki.projectX.graphics;
 import com.khryniewicki.projectX.utils.BufferUtilsOwn;
 import com.khryniewicki.projectX.utils.FileUtils;
 import lombok.Data;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -22,17 +17,23 @@ public class Texture {
 
     private int width, height;
     private int texture;
+    private BufferedImage image;
 
     public Texture(String path) {
         texture = load(path);
     }
+
+    public Texture(BufferedImage image) {
+        this.texture = load2(image);
+    }
+
 
     private int load(String path) {
         int[] pixels = null;
 
         try {
             InputStream inputStream = FileUtils.pathTransformer("png", "img", path);
-            BufferedImage image = ImageIO.read(inputStream);
+            image = ImageIO.read(inputStream);
             width = image.getWidth();
             height = image.getHeight();
             pixels = new int[width * height];
@@ -40,6 +41,20 @@ public class Texture {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return getPixels(pixels);
+    }
+
+    private int load2(BufferedImage image) {
+        int[] pixels;
+
+        width = image.getWidth();
+        height = image.getHeight();
+        pixels = new int[width * height];
+        image.getRGB(0, 0, width, height, pixels, 0, width);
+        return getPixels(pixels);
+    }
+
+    private int getPixels(int[] pixels) {
         int[] data = new int[width * height];
         for (int i = 0; i < width * height; i++) {
             int a = (pixels[i] & 0xff000000) >> 24;
@@ -57,8 +72,6 @@ public class Texture {
         glBindTexture(GL_TEXTURE_2D, 0);
         return result;
     }
-
-
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, texture);

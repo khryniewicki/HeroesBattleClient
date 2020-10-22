@@ -1,7 +1,8 @@
-package com.khryniewicki.projectX.game.settings;
+package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.collision.Collision;
+import com.khryniewicki.projectX.game.control_settings.mouse_settings.MouseSettings;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;

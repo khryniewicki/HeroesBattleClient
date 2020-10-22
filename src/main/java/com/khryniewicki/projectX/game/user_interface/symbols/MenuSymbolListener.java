@@ -10,4 +10,5 @@ public interface MenuSymbolListener extends Symbol {
     void removePropertyChangeListener(PropertyChangeListener pcl);
 
     void setNews(ButtonTransferObject value);
+    default void setAction(String text){};
 }

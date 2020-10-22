@@ -2,9 +2,9 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.game.settings.MousePosition;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.Game.window;
 import static org.lwjgl.glfw.GLFW.*;
@@ -24,6 +25,7 @@ public class MenuImp implements PropertyChangeListener, Menu {
     private boolean running;
     private ButtonTransferObject buttonTransferObject;
     private List<MenuSymbol> buttons = new ArrayList<>();
+    private List<MenuSymbol> messages=new ArrayList<>();
     private MousePosition mousePosition;
     private String className;
     private Menu menu;
@@ -42,6 +44,10 @@ public class MenuImp implements PropertyChangeListener, Menu {
         addEventClick();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         buttons.forEach(MenuSymbol::render);
+        messages.stream()
+                .filter(menuSymbol -> !menuSymbol.isDisabled())
+                .collect(Collectors.toList())
+                .forEach(MenuSymbol::render);
         swapBuffers();
     }
 

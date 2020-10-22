@@ -2,16 +2,17 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.utils.Buttons;
-import com.khryniewicki.projectX.utils.TextUtil;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 
@@ -20,8 +21,10 @@ import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 @Setter
 public class MainMenu extends MenuImp {
     private MenuSymbol noHero;
+    private MenuSymbol fireWizard;
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;
+    private static TextMenuFactory textMenuFactory;
 
     public static MainMenu getInstance() {
         return instance;
@@ -29,20 +32,34 @@ public class MainMenu extends MenuImp {
 
     private MainMenu() {
         super();
-        start();
         heroesInstances = HeroesInstances.getInstance();
+        textMenuFactory = TextMenuFactory.getInstance();
+        start();
     }
 
     @Override
     public void init() {
+        initButtons();
+        initMessages();
+    }
+
+    private void initButtons() {
         MenuSymbol startButton = Buttons.STARTING_BUTTON;
+        MenuSymbol writeName = Buttons.WRITE_NAME;
         MenuSymbol button = Buttons.CHOOSE_CHARACTER;
         MenuSymbol controlSettings = Buttons.CONTROL_SETTINGS;
         MenuSymbol quitGame = Buttons.QUIT_BUTTON;
-        noHero = TextUtil.TEXT_NO_HERO;
-        List<MenuSymbol> buttonList = Collections.synchronizedList(new ArrayList<>(Arrays.asList(button, startButton, controlSettings, quitGame)));
+        List<MenuSymbol> buttonList = Collections.synchronizedList(new ArrayList<>(Arrays.asList(button, startButton, controlSettings, quitGame,writeName)));
         buttonList.forEach(btn -> btn.setClassName(this.getClass().getName()));
         super.setButtons(buttonList);
+    }
+
+    private void initMessages() {
+        noHero = TextMenuFactory.TEXT_NO_HERO;
+        List<MenuSymbol> listWithMenuSymbols = textMenuFactory.getListWithTextMenuSymbols();
+        listWithMenuSymbols.add(noHero);
+        listWithMenuSymbols.forEach(btn -> btn.setClassName(this.getClass().getName()));
+        super.setMessages(listWithMenuSymbols);
     }
 
     @Override
@@ -53,10 +70,13 @@ public class MainMenu extends MenuImp {
     }
 
     private void showMenu(ButtonTransferObject bto) {
-        List<MenuSymbol> buttons = super.getButtons();
-        buttons.remove(noHero);
+        disableAllMessages();
 
         switch (bto.getName()) {
+            case "WriteName":
+                WriteNameMenu writeNameMenu = WriteNameMenu.getInstance();
+                writeNameMenu.render();
+                break;
             case "ChooseCharacter":
                 CharacterMenu characterMenu = CharacterMenu.getInstance();
                 characterMenu.render();
@@ -72,10 +92,32 @@ public class MainMenu extends MenuImp {
                 if (Objects.nonNull(heroesInstances.getHeroType())) {
                     setRunning(true);
                 } else {
-                    buttons.add(noHero);
-                    render();
+                    showMessage(noHero);
                 }
                 break;
         }
     }
+
+    public void showMessage(MenuSymbol symbol) {
+        List<MenuSymbol> menuSymbols = super.getMessages()
+                .stream()
+                .peek(menuSymbol -> {
+                    if (menuSymbol.equals(symbol)) {
+                        menuSymbol.setDisabled(false);
+                    }
+                })
+                .collect(Collectors.toList());
+        super.setMessages(menuSymbols);
+        render();
+    }
+
+    private void disableAllMessages() {
+        List<MenuSymbol> menuSymbols = super.getMessages()
+                .stream()
+                .peek(menuSymbol -> menuSymbol.setDisabled(true))
+                .collect(Collectors.toList());
+        super.setMessages(menuSymbols);
+        render();
+    }
+
 }

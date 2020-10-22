@@ -8,6 +8,8 @@ import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
 
+import java.util.Objects;
+
 
 @Data
 public class GraphicLoader implements Symbol {
@@ -43,7 +45,9 @@ public class GraphicLoader implements Symbol {
     }
 
     public void init(String path) {
-        texture = new Texture(path);
+        if (Objects.nonNull(path)) {
+            this.texture = new Texture(path);
+        }
         float ratio = getRatio();
 
         if (isSizeKnown) {

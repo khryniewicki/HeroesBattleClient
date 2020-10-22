@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.renderer;
 
-import com.khryniewicki.projectX.utils.TextUtil;
+import com.khryniewicki.projectX.utils.ConnectionTextFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -45,9 +45,9 @@ public class RenderFactory {
 
     private void textScheme(String path) {
 
-        if (!mapWithTextures.containsKey(TextUtil.ASK_FOR_CHAR))
+        if (!mapWithTextures.containsKey(ConnectionTextFactory.ASK_FOR_CHAR))
             mapWithTextures.put(path, textureLoader);
-        if (!path.equals(TextUtil.ASK_FOR_CHAR)) {
+        if (!path.equals(ConnectionTextFactory.ASK_FOR_CHAR)) {
             byte[] array = new byte[7];
             new Random().nextBytes(array);
             String generatedString = new String(array, StandardCharsets.UTF_8);

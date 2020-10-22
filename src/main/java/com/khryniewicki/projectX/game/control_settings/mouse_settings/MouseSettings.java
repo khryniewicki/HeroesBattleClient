@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.settings;
+package com.khryniewicki.projectX.game.control_settings.mouse_settings;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
