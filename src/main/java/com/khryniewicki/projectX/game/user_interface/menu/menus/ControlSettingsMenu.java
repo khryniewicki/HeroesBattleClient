@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.utils.Buttons;
 import lombok.Getter;
@@ -29,16 +28,13 @@ public class ControlSettingsMenu extends MenuImp {
     @Override
     public void init() {
         MenuSymbol returnButton = Buttons.RETURN_BUTTON2;
-        returnButton.setClassName(this.getClass().getName());
         super.setButtons(Collections.singletonList(returnButton));
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        ButtonTransferObject bto = (ButtonTransferObject) evt.getNewValue();
-        String btnName = bto.getName();
-        setButtonTransferObject(bto);
+        String btnName = (String) evt.getNewValue();
         log.info(btnName);
         if (btnName.equals("Return2")) {
             MainMenu mainMenu = MainMenu.getInstance();

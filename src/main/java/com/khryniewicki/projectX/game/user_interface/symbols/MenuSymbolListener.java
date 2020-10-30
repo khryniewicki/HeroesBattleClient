@@ -1,7 +1,5 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
-
 import java.beans.PropertyChangeListener;
 
 public interface MenuSymbolListener extends Symbol {
@@ -9,6 +7,6 @@ public interface MenuSymbolListener extends Symbol {
 
     void removePropertyChangeListener(PropertyChangeListener pcl);
 
-    void setNews(ButtonTransferObject value);
+    void setNews(String news);
     default void setAction(String text){};
 }

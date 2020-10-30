@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
 import com.khryniewicki.projectX.game.multiplayer.renderer.GraphicLoader;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,6 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
     private boolean disabled;
     private String className;
     private PropertyChangeSupport support;
-    private ButtonTransferObject buttonTransferObject;
 
     public MenuSymbol(Builder builder) {
         super(builder);
@@ -57,13 +55,8 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
     }
 
     @Override
-    public void setNews(ButtonTransferObject value) {
-        ButtonTransferObject oldValue = null;
-        if (!"Return".equals(value.getName())) {
-            oldValue = this.buttonTransferObject;
-        }
-        this.buttonTransferObject = value;
-        support.firePropertyChange("news", oldValue, value);
+    public void setNews(String value) {
+             support.firePropertyChange("news", null, value);
     }
 
     @Override

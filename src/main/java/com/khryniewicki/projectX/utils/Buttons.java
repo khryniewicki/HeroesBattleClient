@@ -14,16 +14,9 @@ public class Buttons {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)
-            .withPositionY(-0.2f)
-            .build();
-    public static final MenuSymbol WRITE_NAME = new Button.Builder()
-            .withPath("button_write-name-for-hero.png")
-            .withName("WriteName")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(5f)
             .withPositionY(-1.4f)
             .build();
+
     public static final MenuSymbol CHOOSE_CHARACTER = new Button.Builder()
             .withPath("ChooseCharacter.png")
             .withName("ChooseCharacter")

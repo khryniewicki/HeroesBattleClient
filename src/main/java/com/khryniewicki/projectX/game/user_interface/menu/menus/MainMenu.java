@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.utils.Buttons;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
@@ -45,12 +44,10 @@ public class MainMenu extends MenuImp {
 
     private void initButtons() {
         MenuSymbol startButton = Buttons.STARTING_BUTTON;
-        MenuSymbol writeName = Buttons.WRITE_NAME;
         MenuSymbol button = Buttons.CHOOSE_CHARACTER;
         MenuSymbol controlSettings = Buttons.CONTROL_SETTINGS;
         MenuSymbol quitGame = Buttons.QUIT_BUTTON;
-        List<MenuSymbol> buttonList = Collections.synchronizedList(new ArrayList<>(Arrays.asList(button, startButton, controlSettings, quitGame,writeName)));
-        buttonList.forEach(btn -> btn.setClassName(this.getClass().getName()));
+        List<MenuSymbol> buttonList = Collections.synchronizedList(new ArrayList<>(Arrays.asList(button, startButton, controlSettings, quitGame)));
         super.setButtons(buttonList);
     }
 
@@ -58,25 +55,19 @@ public class MainMenu extends MenuImp {
         noHero = TextMenuFactory.TEXT_NO_HERO;
         List<MenuSymbol> listWithMenuSymbols = textMenuFactory.getListWithTextMenuSymbols();
         listWithMenuSymbols.add(noHero);
-        listWithMenuSymbols.forEach(btn -> btn.setClassName(this.getClass().getName()));
         super.setMessages(listWithMenuSymbols);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ButtonTransferObject bto = (ButtonTransferObject) evt.getNewValue();
-        super.setButtonTransferObject(bto);
+        String bto = (String) evt.getNewValue();
         showMenu(bto);
     }
 
-    private void showMenu(ButtonTransferObject bto) {
+    private void showMenu(String buttonName) {
         disableAllMessages();
 
-        switch (bto.getName()) {
-            case "WriteName":
-                WriteNameMenu writeNameMenu = WriteNameMenu.getInstance();
-                writeNameMenu.render();
-                break;
+        switch (buttonName) {
             case "ChooseCharacter":
                 CharacterMenu characterMenu = CharacterMenu.getInstance();
                 characterMenu.render();

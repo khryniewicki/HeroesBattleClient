@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonTransferObject;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.utils.Buttons;
@@ -40,7 +39,6 @@ public class CharacterMenu extends MenuImp {
         heroesInstances = HeroesInstances.getInstance();
         textMenuFactory = TextMenuFactory.getInstance();
         keyboardSettings = new KeyboardSettings();
-
     }
 
     @Override
@@ -56,7 +54,6 @@ public class CharacterMenu extends MenuImp {
 
         List<MenuSymbol> buttonList = Collections.synchronizedList(
                 new ArrayList<>(Arrays.asList(fireWizard, iceWizard, thunderWizard, fallenKing, fallenMonk, fallenWitcher, returnButton, heroNameButton)));
-        buttonList.forEach(btn -> btn.setClassName(this.getClass().getName()));
         super.setButtons(buttonList);
     }
 
@@ -65,11 +62,9 @@ public class CharacterMenu extends MenuImp {
         if (evt.getPropertyName().equals("heroName")) {
             updateName(heroNameButton, (String) evt.getNewValue());
         } else {
-            ButtonTransferObject bto = (ButtonTransferObject) evt.getNewValue();
-            String btnName = bto.getName();
-            setButtonTransferObject(bto);
+            String btnName = (String) evt.getNewValue();
+
             MainMenu mainMenu = MainMenu.getInstance();
-            log.info(btnName);
 
             if (!btnName.equals("Return")) {
                 heroesInstances.setHeroType(btnName);
@@ -78,11 +73,13 @@ public class CharacterMenu extends MenuImp {
             }
             mainMenu.render();
         }
-
-
     }
 
-
+    @Override
+    public void addEventClick() {
+        super.addEventClick();
+        keyboardSettings.insert(heroNameButton);
+    }
     public void updateName(MenuSymbol symbol, String name) {
         List<MenuSymbol> menuSymbols = super.getButtons()
                 .stream()
