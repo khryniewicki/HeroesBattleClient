@@ -13,12 +13,26 @@ import java.util.HashMap;
 
 public class CreateText {
     public static final HashMap<RenderingHints.Key, Object> RenderingProperties = new HashMap<>();
+    private static Color defaultColor = Color.WHITE;
 
     static {
         RenderingProperties.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         RenderingProperties.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
         RenderingProperties.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
     }
+    public static Texture textToImage(String text, int fontSize, Color color) {
+        BufferedImage image = new Texture("blankTextWindow.png").getImage();
+        setImage(text, fontSize, color, image);
+        return new Texture(image);
+    }
+
+    public static Texture textToImage(String text, int fontSize) {
+        //Derives font to new specified size, can be removed if not necessary.
+        BufferedImage image = new Texture("blankTextWindowWithLine.png").getImage();
+        setImage(text, fontSize, Color.WHITE, image);
+        return new Texture(image);
+    }
+
 
     public static Texture textToImage(String Text) {
         //Derives font to new specified size, can be removed if not necessary.
@@ -43,7 +57,7 @@ public class CreateText {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
         g2d.setBackground(Color.BLACK);
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(defaultColor);
 
         g2d.clearRect(0, 0, img.getWidth(), img.getHeight());
 
@@ -56,14 +70,12 @@ public class CreateText {
         return new Texture(img);
     }
 
-    public static Texture textToImage(String text, int fontSize) {
-        //Derives font to new specified size, can be removed if not necessary.
-        BufferedImage image = new Texture("blankTextWindow.png").getImage();
-        if (text.length() > 0 ) {
+    private static void setImage(String text, int fontSize, Color color, BufferedImage image) {
+        if (text.length() > 0) {
             Font font = new Font("Verdana", Font.PLAIN, fontSize);
 
             Graphics g = image.getGraphics();
-            g.setColor(Color.WHITE);
+            g.setColor(color);
             FontMetrics metrics = g.getFontMetrics(font);
             AttributedString attributedText = new AttributedString(text);
             attributedText.addAttribute(TextAttribute.FONT, font);
@@ -71,8 +83,7 @@ public class CreateText {
             int positionY = (image.getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
             g.drawString(attributedText.getIterator(), positionX, positionY);
         }
-        return new Texture(image);
-
     }
+
 
 }

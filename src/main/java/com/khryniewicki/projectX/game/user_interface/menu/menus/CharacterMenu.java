@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,6 +81,7 @@ public class CharacterMenu extends MenuImp {
         super.addEventClick();
         keyboardSettings.insert(heroNameButton);
     }
+
     public void updateName(MenuSymbol symbol, String name) {
         List<MenuSymbol> menuSymbols = super.getButtons()
                 .stream()
