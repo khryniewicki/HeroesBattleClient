@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,7 +86,7 @@ public class CharacterMenu extends MenuImp {
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(CreateText.textToImage(name,30));
+                        symbol.setTexture(CreateText.textToImageWithLine(name,30));
                     }
                 })
                 .collect(Collectors.toList());

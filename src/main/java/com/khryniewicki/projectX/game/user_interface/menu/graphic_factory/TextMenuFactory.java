@@ -1,9 +1,11 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.CreateText;
 
 import java.util.*;
+import java.util.List;
 
 public class TextMenuFactory {
     public static Map<String, MenuSymbol> TEXT_FACTORY;
@@ -39,66 +41,77 @@ public class TextMenuFactory {
         return new ArrayList<>(Arrays.asList(TEXT_FALLENKING,TEXT_FALLENMONK,TEXT_FALLENWITCHER,TEXT_FIREWIZARD,TEXT_ICEWIZARD,TEXT_THUNDERWIZARD));
     }
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Please choose your hero"))
+            .withTexture(CreateText.textToImageMenu("Please choose your hero"))
             .withName("NoHero")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FIREWIZARD = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Your hero is Fire Wizard"))
+            .withTexture(CreateText.textToImageMenu("Your hero is Fire Wizard"))
             .withName("CHOSE_FIREWIZARD")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_ICEWIZARD = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Your hero is Ice Wizard"))
+            .withTexture(CreateText.textToImageMenu("Your hero is Ice Wizard"))
             .withName("CHOSE_ICEWIZARD")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_THUNDERWIZARD = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Your hero is Thunder Wizard"))
+            .withTexture(CreateText.textToImageMenu("Your hero is Thunder Wizard"))
             .withName("CHOSE_THUNDERWIZARD")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FALLENMONK = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Your hero is Fallen Monk"))
+            .withTexture(CreateText.textToImageMenu("Your hero is Fallen Monk"))
             .withName("CHOSE_FALLENMONK")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FALLENWITCHER = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Your hero is Fallen Witcher"))
+            .withTexture(CreateText.textToImageMenu("Your hero is Fallen Witcher"))
             .withName("CHOSE_FALLENWITCHER")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FALLENKING = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImage("Your hero is Fallen King"))
+            .withTexture(CreateText.textToImageMenu("Your hero is Fallen King"))
             .withName("CHOSE_FALLENKING")
             .withDisabled(true)
-            .withHeight(1f)
+            .withHeight(0.7f)
             .withWidth(4f)
-            .withPositionX(-2f)
-            .withPositionY(-5f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
+            .build();
+
+    public static final MenuSymbol MENU_IMAGE = new MenuSymbol.Builder()
+            .withTexture(new Texture("wizard2.png"))
+            .withName("wizard")
+            .withDisabled(false)
+            .withVisibility(0f)
+            .withHeight(9.5f)
+            .withWidth(9.5f)
+            .withPositionX(-7f)
+            .withPositionY(-4.5f)
             .build();
 }

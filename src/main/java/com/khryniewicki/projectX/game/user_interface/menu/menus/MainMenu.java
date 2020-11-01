@@ -2,9 +2,9 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.utils.Buttons;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.MENU_IMAGE;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 
 @Slf4j
@@ -20,6 +21,7 @@ import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 @Setter
 public class MainMenu extends MenuImp {
     private MenuSymbol noHero;
+    private MenuSymbol menuImage;
     private MenuSymbol fireWizard;
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;
@@ -53,8 +55,10 @@ public class MainMenu extends MenuImp {
 
     private void initMessages() {
         noHero = TextMenuFactory.TEXT_NO_HERO;
+        menuImage = MENU_IMAGE;
         List<MenuSymbol> listWithMenuSymbols = textMenuFactory.getListWithTextMenuSymbols();
         listWithMenuSymbols.add(noHero);
+        listWithMenuSymbols.add(menuImage);
         super.setMessages(listWithMenuSymbols);
     }
 
@@ -105,7 +109,13 @@ public class MainMenu extends MenuImp {
     private void disableAllMessages() {
         List<MenuSymbol> menuSymbols = super.getMessages()
                 .stream()
-                .peek(menuSymbol -> menuSymbol.setDisabled(true))
+                .peek(menuSymbol -> {
+                    if (menuSymbol.equals(menuImage)) {
+                        menuSymbol.setDisabled(false);
+                    } else {
+                        menuSymbol.setDisabled(true);
+                    }
+                })
                 .collect(Collectors.toList());
         super.setMessages(menuSymbols);
         render();

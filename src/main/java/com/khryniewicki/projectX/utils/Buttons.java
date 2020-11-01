@@ -3,7 +3,6 @@ package com.khryniewicki.projectX.utils;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Data;
-import org.w3c.dom.css.RGBColor;
 
 import java.awt.*;
 
@@ -168,7 +167,7 @@ public class Buttons {
             .withPositionY(-1.6f)
             .build();
     public static final MenuSymbol TEXT_UP = new Button.Builder()
-            .withTexture(CreateText.textToImage("MOVE UP",30, Color.WHITE))
+            .withTexture(CreateText.textInControlSettingsToImage("MOVE UP", Color.WHITE))
             .withName("TEXT_up_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -176,7 +175,7 @@ public class Buttons {
             .withPositionY(2.0f)
             .build();
     public static final MenuSymbol TEXT_DOWN = new Button.Builder()
-            .withTexture(CreateText.textToImage("MOVE DOWN",30, Color.WHITE))
+            .withTexture(CreateText.textInControlSettingsToImage("MOVE DOWN", Color.WHITE))
             .withName("TEXT_down_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -184,7 +183,7 @@ public class Buttons {
             .withPositionY(0.8f)
             .build();
     public static final MenuSymbol TEXT_RIGHT = new Button.Builder()
-            .withTexture(CreateText.textToImage("MOVE RIGHT",30, Color.WHITE))
+            .withTexture(CreateText.textInControlSettingsToImage("MOVE RIGHT", Color.WHITE))
             .withName("TEXT_right_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -192,7 +191,7 @@ public class Buttons {
             .withPositionY(-0.4f)
             .build();
     public static final MenuSymbol TEXT_LEFT = new Button.Builder()
-            .withTexture(CreateText.textToImage("MOVE LEFT",30, Color.WHITE))
+            .withTexture(CreateText.textInControlSettingsToImage("MOVE LEFT", Color.WHITE))
             .withName("TEXT_left_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -200,7 +199,7 @@ public class Buttons {
             .withPositionY(-1.6f)
             .build();
     public static final MenuSymbol BASIC_ATTACK= new Button.Builder()
-            .withTexture(CreateText.textToImage("BASIC ATTACK",30, new Color(196,255,14)))
+            .withTexture(CreateText.textInControlSettingsToImage("BASIC ATTACK", new Color(196,255,14)))
             .withName("TEXT_right_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -208,7 +207,7 @@ public class Buttons {
             .withPositionY(2.1f)
             .build();
     public static final MenuSymbol ULTIMATE_ATTACK = new Button.Builder()
-            .withTexture(CreateText.textToImage("ULTIMATE ATTACK",30, new Color(140,255,251)))
+            .withTexture(CreateText.textInControlSettingsToImage("ULTIMATE ATTACK", new Color(140,255,251)))
             .withName("TEXT_left_arrow")
             .withHeight(1f)
             .withWidth(4f)
