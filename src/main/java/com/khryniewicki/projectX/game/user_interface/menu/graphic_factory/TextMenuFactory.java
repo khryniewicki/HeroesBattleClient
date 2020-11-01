@@ -38,7 +38,7 @@ public class TextMenuFactory {
         return TEXT_FACTORY.get(text);
     }
     public List<MenuSymbol> getListWithTextMenuSymbols(){
-        return new ArrayList<>(Arrays.asList(TEXT_FALLENKING,TEXT_FALLENMONK,TEXT_FALLENWITCHER,TEXT_FIREWIZARD,TEXT_ICEWIZARD,TEXT_THUNDERWIZARD));
+        return new ArrayList<>(Arrays.asList(MENU_IMAGE,TEXT_FALLENKING,TEXT_FALLENMONK,TEXT_FALLENWITCHER,TEXT_FIREWIZARD,TEXT_ICEWIZARD,TEXT_THUNDERWIZARD));
     }
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
             .withTexture(CreateText.textToImageMenu("Please choose your hero"))
@@ -103,10 +103,9 @@ public class TextMenuFactory {
             .withPositionX(-3.5f)
             .withPositionY(-5.4f)
             .build();
-
     public static final MenuSymbol MENU_IMAGE = new MenuSymbol.Builder()
             .withTexture(new Texture("wizard2.png"))
-            .withName("wizard")
+            .withName("menu_image")
             .withDisabled(false)
             .withVisibility(0f)
             .withHeight(9.5f)

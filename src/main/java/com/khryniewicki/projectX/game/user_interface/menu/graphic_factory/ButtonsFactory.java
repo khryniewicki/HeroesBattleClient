@@ -1,15 +1,42 @@
-package com.khryniewicki.projectX.utils;
+package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Data;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 @Data
-public class Buttons {
-    private static final Buttons instance = new Buttons();
+public class ButtonsFactory {
+    private static final ButtonsFactory instance = new ButtonsFactory();
+    public List<MenuSymbol> listWithMainMenuButtons;
+    public List<MenuSymbol> listWithCharacterMenuButtons;
+    private ButtonsFactory() {
+    }
+    public static ButtonsFactory getInstance() {
+        return ButtonsFactory.HELPER.INSTANCE;
+    }
 
+    private static class HELPER {
+        private final static ButtonsFactory INSTANCE = new ButtonsFactory();
+    }
+
+    public List<MenuSymbol> getListWithMainMenuButtons() {
+        if (Objects.isNull(listWithMainMenuButtons)) {
+            listWithMainMenuButtons = new ArrayList<>(Arrays.asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON));
+        }
+        return listWithMainMenuButtons;
+    }
+
+    public List<MenuSymbol> getListWithCharacterMenuButtons() {
+        if (Objects.isNull(listWithCharacterMenuButtons)) {
+            listWithCharacterMenuButtons = new ArrayList<>(Arrays.asList(RETURN_BUTTON, FIRE_WIZARD_BUTTON, ICE_WIZARD_BUTTON, THUNDER_WIZARD_BUTTON, FALLEN_KING_BUTTON, FALLEN_MONK_BUTTON, FALLEN_WITCHER_BUTTON));
+        }
+        return listWithCharacterMenuButtons;
+    }
 
     public static final MenuSymbol STARTING_BUTTON = new Button.Builder()
             .withPath("buttonStart.png")
@@ -124,95 +151,6 @@ public class Buttons {
             .withWidth(4f)
             .withPositionX(-2f)
             .withPositionY(0.0f)
-            .build();
-
-    public static final MenuSymbol MOUSE = new Button.Builder()
-            .withPath("mouse.png")
-            .withName("mouse")
-            .withHeight(6f)
-            .withWidth(3f)
-            .withPositionX(1.0f)
-            .withPositionY(-2.0f)
-            .build();
-    public static final MenuSymbol UP = new Button.Builder()
-            .withPath("up_arrow.png")
-            .withName("up_arrow")
-            .withHeight(1f)
-            .withWidth(1f)
-            .withPositionX(-8f)
-            .withPositionY(2.0f)
-            .build();
-    public static final MenuSymbol DOWN = new Button.Builder()
-            .withPath("down_arrow.png")
-            .withName("down_arrow")
-            .withHeight(1f)
-            .withWidth(1f)
-            .withPositionX(-8f)
-            .withPositionY(0.8f)
-            .build();
-    public static final MenuSymbol RIGHT = new Button.Builder()
-            .withPath("right_arrow.png")
-            .withName("right_arrow")
-            .withHeight(1f)
-            .withWidth(1f)
-            .withPositionX(-8f)
-            .withPositionY(-0.4f)
-            .build();
-    public static final MenuSymbol LEFT = new Button.Builder()
-            .withPath("left_arrow.png")
-            .withName("left_arrow")
-            .withHeight(1f)
-            .withWidth(1f)
-            .withPositionX(-8f)
-            .withPositionY(-1.6f)
-            .build();
-    public static final MenuSymbol TEXT_UP = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE UP", Color.WHITE))
-            .withName("TEXT_up_arrow")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(-6.5f)
-            .withPositionY(2.0f)
-            .build();
-    public static final MenuSymbol TEXT_DOWN = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE DOWN", Color.WHITE))
-            .withName("TEXT_down_arrow")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(-6.5f)
-            .withPositionY(0.8f)
-            .build();
-    public static final MenuSymbol TEXT_RIGHT = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE RIGHT", Color.WHITE))
-            .withName("TEXT_right_arrow")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(-6.5f)
-            .withPositionY(-0.4f)
-            .build();
-    public static final MenuSymbol TEXT_LEFT = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE LEFT", Color.WHITE))
-            .withName("TEXT_left_arrow")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(-6.5f)
-            .withPositionY(-1.6f)
-            .build();
-    public static final MenuSymbol BASIC_ATTACK= new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("BASIC ATTACK", new Color(196,255,14)))
-            .withName("TEXT_right_arrow")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(-1.5f)
-            .withPositionY(2.1f)
-            .build();
-    public static final MenuSymbol ULTIMATE_ATTACK = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("ULTIMATE ATTACK", new Color(140,255,251)))
-            .withName("TEXT_left_arrow")
-            .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(3.5f)
-            .withPositionY(2.1f)
             .build();
 
 }

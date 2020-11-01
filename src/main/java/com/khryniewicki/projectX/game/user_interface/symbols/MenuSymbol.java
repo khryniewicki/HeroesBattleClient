@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
-import com.khryniewicki.projectX.game.multiplayer.renderer.GraphicLoader;
+import com.khryniewicki.projectX.graphics.GraphicLoader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

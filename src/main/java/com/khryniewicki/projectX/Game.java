@@ -3,7 +3,7 @@ package com.khryniewicki.projectX;
 
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.multiplayer.renderer.RenderFactory;
+import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
@@ -12,7 +12,6 @@ import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.services.SendingService;
-import com.khryniewicki.projectX.utils.ConnectionTextFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -152,10 +151,10 @@ public class Game implements Runnable {
     }
 
     private void initializeWebsocketConnection() {
-        renderFactory.render(ConnectionTextFactory.CONNECTION);
+        renderFactory.render("Waiting for connections...");
         heroesInstances.setHero();
         new WebsocketApplication().startWebsocket();
-        renderFactory.render(ConnectionTextFactory.CONNECTION_ESTABLISHED);
+        renderFactory.render("Connection established");
     }
 
 

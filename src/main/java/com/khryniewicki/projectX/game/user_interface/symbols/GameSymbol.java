@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
-import com.khryniewicki.projectX.game.multiplayer.renderer.TextureLoader;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
@@ -21,8 +20,6 @@ public class GameSymbol implements Symbol {
     private final Float x, y;
     private Texture texture;
     private Float width, height, visibility;
-    private TextureLoader textureLoader;
-
 
     private GameSymbol(Builder builder) {
         this.position = builder.position;
@@ -59,13 +56,11 @@ public class GameSymbol implements Symbol {
 
     public void render() {
         Shader.SYMBOL.enable();
-
         texture.bind();
         mesh.bind();
         Shader.SYMBOL.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
         mesh.draw();
         mesh.unbind();
-
         texture.unbind();
         Shader.SYMBOL.disable();
     }

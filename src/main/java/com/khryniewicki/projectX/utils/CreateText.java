@@ -27,7 +27,11 @@ public class CreateText {
         setImage(text, 30, color, image);
         return new Texture(image);
     }
-
+    public static Texture textInConnectionWindow(String text) {
+        BufferedImage image = new Texture("blankTextWindow.png").getImage();
+        setImage(text, 20, defaultColor, image);
+        return new Texture(image);
+    }
     private static void setImage(String text, int fontSize, Color color, BufferedImage image) {
         if (text.length() > 0) {
             Font font = new Font("Open Sans", Font.BOLD, fontSize);

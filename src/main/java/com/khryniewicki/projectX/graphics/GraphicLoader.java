@@ -1,9 +1,6 @@
-package com.khryniewicki.projectX.game.multiplayer.renderer;
+package com.khryniewicki.projectX.graphics;
 
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.graphics.Shader;
-import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;

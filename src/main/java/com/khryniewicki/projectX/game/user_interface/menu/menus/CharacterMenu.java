@@ -2,18 +2,15 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.utils.Buttons;
 import com.khryniewicki.projectX.utils.CreateText;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,56 +19,49 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class CharacterMenu extends MenuImp {
+
     private final HeroesInstances heroesInstances;
+    private final TextMenuFactory textMenuFactory;
+    private final KeyboardSettings keyboardSettings;
+    private final ButtonsFactory buttonsFactory;
+    private MenuSymbol heroNameButton;
+
     private static final CharacterMenu instance = new CharacterMenu();
-    private static TextMenuFactory textMenuFactory;
 
     public static CharacterMenu getInstance() {
         return instance;
     }
 
-    private static KeyboardSettings keyboardSettings;
-    private MenuSymbol heroNameButton;
-
     private CharacterMenu() {
         super();
-        start();
         heroesInstances = HeroesInstances.getInstance();
         textMenuFactory = TextMenuFactory.getInstance();
+        buttonsFactory = ButtonsFactory.getInstance();
         keyboardSettings = new KeyboardSettings();
+        start();
     }
 
     @Override
     public void init() {
-        MenuSymbol fireWizard = Buttons.FIRE_WIZARD_BUTTON;
-        MenuSymbol iceWizard = Buttons.ICE_WIZARD_BUTTON;
-        MenuSymbol thunderWizard = Buttons.THUNDER_WIZARD_BUTTON;
-        MenuSymbol fallenKing = Buttons.FALLEN_KING_BUTTON;
-        MenuSymbol fallenWitcher = Buttons.FALLEN_WITCHER_BUTTON;
-        MenuSymbol fallenMonk = Buttons.FALLEN_MONK_BUTTON;
-        MenuSymbol returnButton = Buttons.RETURN_BUTTON;
-        heroNameButton = Buttons.HERO_NAME;
-
-        List<MenuSymbol> buttonList = Collections.synchronizedList(
-                new ArrayList<>(Arrays.asList(fireWizard, iceWizard, thunderWizard, fallenKing, fallenMonk, fallenWitcher, returnButton, heroNameButton)));
+        List<MenuSymbol> buttonList = buttonsFactory.getListWithCharacterMenuButtons();
+        heroNameButton = ButtonsFactory.HERO_NAME;
+        buttonList.add(heroNameButton);
         super.setButtons(buttonList);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        String btnName = (String) evt.getNewValue();
+        MainMenu mainMenu = MainMenu.getInstance();
+
         if (evt.getPropertyName().equals("heroName")) {
-            updateName(heroNameButton, (String) evt.getNewValue());
-        } else {
-            String btnName = (String) evt.getNewValue();
-
-            MainMenu mainMenu = MainMenu.getInstance();
-
-            if (!btnName.equals("Return")) {
-                heroesInstances.setHeroType(btnName);
-                MenuSymbol menuSymbol = textMenuFactory.getText(btnName);
-                mainMenu.showMessage(menuSymbol);
-            }
+            updateName(heroNameButton, btnName);
+        } else if (btnName.equals("Return")) {
             mainMenu.render();
+        } else {
+            heroesInstances.setHeroType(btnName);
+            MenuSymbol menuSymbol = textMenuFactory.getText(btnName);
+            mainMenu.showMessage(menuSymbol);
         }
     }
 
@@ -86,7 +76,7 @@ public class CharacterMenu extends MenuImp {
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(CreateText.textToImageWithLine(name,30));
+                        symbol.setTexture(CreateText.textToImageWithLine(name, 30));
                     }
                 })
                 .collect(Collectors.toList());
