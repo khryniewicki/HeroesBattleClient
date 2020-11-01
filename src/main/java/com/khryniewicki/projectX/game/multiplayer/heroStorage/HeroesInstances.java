@@ -23,8 +23,9 @@ public class HeroesInstances {
     private UltraHero mock;
     private final HeroFactory heroFactory;
     private String heroType;
+
     private HeroesInstances() {
-        heroFactory = new HeroFactory();
+        heroFactory = HeroFactory.getInstance();
     }
 
     public void setHeroBasicProperties() {
@@ -69,14 +70,14 @@ public class HeroesInstances {
         }
     }
 
-    public static HeroesInstances getInstance() {
-        return HELPER.INSTANCE;
-    }
 
     public void setHero() { hero = heroFactory.create(heroType); }
 
     public void setMock(String mockName) {
         mock = new HeroMock(heroFactory.create(mockName));
+    }
+    public static HeroesInstances getInstance() {
+        return HELPER.INSTANCE;
     }
 
     private static class HELPER {

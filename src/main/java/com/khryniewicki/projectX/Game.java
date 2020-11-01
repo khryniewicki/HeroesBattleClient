@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX;
 
 
+import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
@@ -115,6 +116,7 @@ public class Game implements Runnable {
                     (vidmode.height() - pHeight.get(0)) / 2
             );
         }
+
         glfwMakeContextCurrent(window);
         glfwShowWindow(window);
         GL.createCapabilities();
@@ -136,6 +138,7 @@ public class Game implements Runnable {
     }
 
     private void initializeMenu() {
+
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.render();
         do {

@@ -7,6 +7,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.wizards.FireWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.IceWizard;
 import com.khryniewicki.projectX.game.heroes.wizards.ThunderWizard;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,20 +20,20 @@ import java.util.Map;
 @Data
 public class HeroFactory {
 
-    private Map<String, CharacterFactory> heroesFactory;
+    private static Map<String, CharacterFactory> heroesFactory;
 
-    public HeroFactory() {
+    private HeroFactory() {
+        heroesFactory = new HashMap<>();
         initMap();
     }
 
-    public void initMap() {
-        this.heroesFactory = new HashMap<>();
-        this.heroesFactory.put("FireWizard", FireWizard::new);
-        this.heroesFactory.put("IceWizard", IceWizard::new);
-        this.heroesFactory.put("ThunderWizard", ThunderWizard::new);
-        this.heroesFactory.put("FallenWitcher", FallenWitcher::new);
-        this.heroesFactory.put("FallenMonk", FallenMonk::new);
-        this.heroesFactory.put("FallenKing", FallenKing::new);
+    private void initMap() {
+        heroesFactory.put("FireWizard", FireWizard::new);
+        heroesFactory.put("IceWizard", IceWizard::new);
+        heroesFactory.put("ThunderWizard", ThunderWizard::new);
+        heroesFactory.put("FallenWitcher", FallenWitcher::new);
+        heroesFactory.put("FallenMonk", FallenMonk::new);
+        heroesFactory.put("FallenKing", FallenKing::new);
     }
 
     public SuperHero create(String character) {
@@ -41,5 +42,13 @@ public class HeroFactory {
             return heroesFactory.get(character).create();
         }
         throw new UnsupportedOperationException("Postać nie została znaleziona");
+    }
+
+    public static HeroFactory getInstance() {
+        return HeroFactory.HELPER.INSTANCE;
+    }
+
+    private static class HELPER {
+        public static final HeroFactory INSTANCE = new HeroFactory();
     }
 }

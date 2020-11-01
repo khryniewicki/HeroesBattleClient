@@ -7,6 +7,7 @@ import com.khryniewicki.projectX.utils.CreateText;
 import java.util.*;
 import java.util.List;
 
+
 public class TextMenuFactory {
     public static Map<String, MenuSymbol> TEXT_FACTORY;
 
@@ -112,5 +113,16 @@ public class TextMenuFactory {
             .withWidth(9.5f)
             .withPositionX(-7f)
             .withPositionY(-4.5f)
+            .build();
+
+    public static final MenuSymbol TABLE = new MenuSymbol.Builder()
+            .withTexture(new Texture("blankTableWindow.png"))
+            .withName("table")
+            .withDisabled(false)
+            .withVisibility(0f)
+            .withHeight(3.75f)
+            .withWidth(13.5f)
+            .withPositionX(-8.5f)
+            .withPositionY(-3f)
             .build();
 }

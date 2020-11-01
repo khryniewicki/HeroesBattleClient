@@ -34,4 +34,8 @@ public interface UltraSpell extends Ultra {
     void setSpellActivated(boolean isActivated);
 
     void setSpellInstance(SpellInstance spellInstance);
+
+    Float getCastingSpeed();
+
+    Long getSpellDuration();
 }

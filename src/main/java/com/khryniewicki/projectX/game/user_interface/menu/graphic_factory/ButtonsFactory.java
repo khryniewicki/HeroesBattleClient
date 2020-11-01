@@ -150,7 +150,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(-2f)
-            .withPositionY(0.0f)
+            .withPositionY(-4.0f)
             .build();
 
 }

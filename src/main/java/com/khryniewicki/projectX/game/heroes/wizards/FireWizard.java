@@ -33,7 +33,6 @@ public class FireWizard extends SuperHero {
         setHeroUp(HeroUtil.FIRE_WIZARD_RUN);
         setHeroDown(HeroUtil.FIRE_WIZARD_RUN);
         setHeroAttack(HeroUtil.FIRE_WIZARD_ATTACK);
-
     }
 
 
@@ -44,8 +43,6 @@ public class FireWizard extends SuperHero {
         setHero_top_offset(0.5f);
         setMana(100);
         setLife(100);
-
     }
-
 
 }
