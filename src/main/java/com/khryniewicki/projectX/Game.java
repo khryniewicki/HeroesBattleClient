@@ -221,7 +221,7 @@ public class Game implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                glfwSetWindowTitle(window, "Project X  | " + updates + " ups, " + frames + " fps ");
+                glfwSetWindowTitle(window, "HeroesBattle  | " + updates + " ups, " + frames + " fps ");
                 updates = 0;
                 frames = 0;
             }
