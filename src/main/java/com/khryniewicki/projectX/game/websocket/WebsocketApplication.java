@@ -7,6 +7,7 @@ import com.khryniewicki.projectX.game.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.websocket.messages.ConnectionStatus;
 import com.khryniewicki.projectX.game.websocket.messages.Message;
 import com.khryniewicki.projectX.game.websocket.messages.MessageHandler;
+import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
@@ -42,13 +43,13 @@ public class WebsocketApplication implements Runnable{
     public synchronized static StompSession getSession() {
         return copy_session;
     }
+    public RenderFactory renderFactory;
 
 
 
     @Slf4j
     public static  class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
-
         private final HeroReceiveService heroReceiveService;
         private final Channels channels;
 
@@ -172,6 +173,9 @@ public class WebsocketApplication implements Runnable{
     }
 
     public void startWebsocket() {
+        renderFactory = RenderFactory.getRenderFactory();
+        renderFactory.render("Waiting for connections...");
+
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
 
@@ -197,6 +201,7 @@ public class WebsocketApplication implements Runnable{
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        renderFactory.render("Connection established");
 
     }
 }

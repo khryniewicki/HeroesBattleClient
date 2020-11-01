@@ -3,13 +3,13 @@ package com.khryniewicki.projectX;
 
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
 import com.khryniewicki.projectX.graphics.GameShaders;
+import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.services.SendingService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,26 +33,19 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 @Slf4j
 public class Game implements Runnable {
 
-
     public static int width = 1600;
     public static int height = 800;
     public static int bar = 40;
-    private Thread game;
     private boolean running;
     public static long window;
-
-
     private Board board;
     public static CountDownLatch latch;
-
-    public final RenderFactory renderFactory;
     private final WebsocketInitializer websocketInitializer;
     private final HeroesInstances heroesInstances;
     private final MultiplayerController multiplayerController;
 
 
     public Game() {
-        renderFactory = RenderFactory.getRenderFactory();
         heroesInstances = HeroesInstances.getInstance();
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         multiplayerController = new MultiplayerController();
@@ -65,7 +58,7 @@ public class Game implements Runnable {
     public void start() {
         latch = new CountDownLatch(1);
         running = true;
-        game = new Thread(this, "Game");
+        Thread game = new Thread(this, "Game");
         game.start();
     }
 
@@ -119,7 +112,7 @@ public class Game implements Runnable {
             glfwSetWindowPos(
                     window,
                     (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height()  - pHeight.get(0)) / 2
+                    (vidmode.height() - pHeight.get(0)) / 2
             );
         }
         glfwMakeContextCurrent(window);
@@ -151,14 +144,11 @@ public class Game implements Runnable {
     }
 
     private void initializeWebsocketConnection() {
-        renderFactory.render("Waiting for connections...");
-        heroesInstances.setHero();
         new WebsocketApplication().startWebsocket();
-        renderFactory.render("Connection established");
     }
 
-
     private void setMultiplayerGame() {
+        heroesInstances.setHero();
         if (isHeroLoadedProperly()) {
             multiplayerController.waitingForSecondPlayer();
             createBoard();
