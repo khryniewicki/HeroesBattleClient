@@ -1,9 +1,9 @@
-package com.khryniewicki.projectX.game.websocket;
+package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
 import com.khryniewicki.projectX.game.user_interface.symbols.observers.Listener;
-import com.khryniewicki.projectX.game.websocket.messages.Channels;
-import com.khryniewicki.projectX.game.websocket.messages.Message;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -26,7 +26,7 @@ public class WebsocketScheduler implements Listener {
     private final Channels channels;
     private String sessionId;
     private String path = "https://heroes.khryniewicki.com.pl";
-    public static  String numberOfPlayers="";
+    public static String numberOfPlayers = "";
     private final PropertyChangeSupport support;
 
     private volatile DispThreadState state = DispThreadState.PENDING;
@@ -56,13 +56,17 @@ public class WebsocketScheduler implements Listener {
                 ResponseEntity<HashMap<String, Message>> exchange = restTemplate.exchange(request, responseType);
                 HashMap<String, Message> map = exchange.getBody();
                 if (Objects.nonNull(map)) {
-                    setNews("Players online: " + map.size());
+                    if (map.size() < 2) {
+                        setNews("Players online: " + map.size());
+                    }
                     if (map.size() == 2) {
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
                             setNews("Over");
                             timer.cancel();
+                        } else {
+                            setNews("Server is full");
                         }
                     }
                 } else {
@@ -87,17 +91,16 @@ public class WebsocketScheduler implements Listener {
         support.removePropertyChangeListener(pcl);
 
     }
+
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(propertyName, listener);
     }
 
     @Override
     public void setNews(String news) {
-        log.info(news);
         support.firePropertyChange("playersOnline", numberOfPlayers, news);
-        numberOfPlayers=news;
+        numberOfPlayers = news;
     }
-
 
     private static class HELPER {
         private final static WebsocketScheduler INSTANCE = new WebsocketScheduler();

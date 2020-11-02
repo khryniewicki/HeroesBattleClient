@@ -1,10 +1,8 @@
 package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.graphics.RenderFactory;
-import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
-import com.sun.tools.javac.Main;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

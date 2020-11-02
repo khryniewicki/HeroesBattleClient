@@ -2,14 +2,13 @@ package com.khryniewicki.projectX;
 
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellRegistry;
-import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
-import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
-import com.khryniewicki.projectX.game.websocket.messages.LoadedStatus;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.LoadedStatus;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -22,10 +21,8 @@ import org.lwjgl.system.MemoryStack;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.PLAYERS_ONLINE_LABEL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;

@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 
-import com.khryniewicki.projectX.game.websocket.messages.Message;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import java.util.Map;
 
 public class HeroesRegistry {

@@ -40,18 +40,14 @@ public class HeroMock implements UltraHero {
                 setHeroIdle();
                 setMesh();
                 isIdle = false;
-                log.info("IDLE");
             }
             return;
         }
 
         changeMockSide();
-
         setHeroRun();
         setMesh();
         changePosition();
-        log.info("RUN");
-
         updateLifeBar();
         updateManaBar();
     }

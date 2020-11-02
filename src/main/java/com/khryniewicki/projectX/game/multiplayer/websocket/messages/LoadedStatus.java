@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.websocket.messages;
+package com.khryniewicki.projectX.game.multiplayer.websocket.messages;
 
 import lombok.Data;
 

@@ -7,8 +7,8 @@ import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.MoveSettings;
-import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
-import com.khryniewicki.projectX.game.websocket.messages.Message;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

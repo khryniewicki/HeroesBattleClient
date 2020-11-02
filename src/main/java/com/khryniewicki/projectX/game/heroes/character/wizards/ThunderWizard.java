@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.heroes.wizards;
+package com.khryniewicki.projectX.game.heroes.character.wizards;
 
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;

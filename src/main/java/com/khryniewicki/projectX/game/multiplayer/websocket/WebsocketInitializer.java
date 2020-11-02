@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.websocket;
+package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 

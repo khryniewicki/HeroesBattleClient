@@ -1,7 +1,7 @@
-package com.khryniewicki.projectX.game.websocket.messages;
+package com.khryniewicki.projectX.game.multiplayer.websocket.messages;
 
 import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.game.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;

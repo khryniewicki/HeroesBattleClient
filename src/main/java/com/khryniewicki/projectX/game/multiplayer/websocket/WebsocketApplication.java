@@ -1,12 +1,12 @@
-package com.khryniewicki.projectX.game.websocket;
+package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.websocket.messages.Channels;
-import com.khryniewicki.projectX.game.websocket.messages.ConnectionStatus;
-import com.khryniewicki.projectX.game.websocket.messages.Message;
-import com.khryniewicki.projectX.game.websocket.messages.MessageHandler;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.ConnectionStatus;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
 import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
