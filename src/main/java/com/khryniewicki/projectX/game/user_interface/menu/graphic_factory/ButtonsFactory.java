@@ -26,7 +26,7 @@ public class ButtonsFactory {
 
     public List<MenuSymbol> getListWithMainMenuButtons() {
         if (Objects.isNull(listWithMainMenuButtons)) {
-            listWithMainMenuButtons = new ArrayList<>(Arrays.asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON));
+            listWithMainMenuButtons = new ArrayList<>(Arrays.asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON ));
         }
         return listWithMainMenuButtons;
     }
@@ -152,5 +152,6 @@ public class ButtonsFactory {
             .withPositionX(-2f)
             .withPositionY(-4.0f)
             .build();
+
 
 }

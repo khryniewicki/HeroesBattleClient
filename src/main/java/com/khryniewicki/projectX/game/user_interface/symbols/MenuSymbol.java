@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
+import com.khryniewicki.projectX.game.user_interface.symbols.observers.MenuSymbolListener;
 import com.khryniewicki.projectX.graphics.GraphicLoader;
 import lombok.Getter;
 import lombok.Setter;

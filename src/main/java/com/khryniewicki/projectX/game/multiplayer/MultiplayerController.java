@@ -1,8 +1,10 @@
 package com.khryniewicki.projectX.game.multiplayer;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.game.websocket.WebsocketInitializer;
+import com.sun.tools.javac.Main;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,11 +20,11 @@ public class MultiplayerController {
 
     public void waitingForSecondPlayer() {
         renderFactory.render("Waiting for other player");
-
         WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         try {
-            websocketInitializer.getSecondPlayerMockType();
+            websocketInitializer.setSessionId();
+            websocketInitializer.connectionEstablished();
             heroesInstances.setMock();
 
             renderFactory.render("Other player has joined game. Game is starting, get ready");

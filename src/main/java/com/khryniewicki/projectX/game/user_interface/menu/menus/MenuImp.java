@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL11.*;
 @Slf4j
 
 public class MenuImp implements PropertyChangeListener, Menu {
-    private boolean running;
+
     private List<MenuSymbol> buttons = new ArrayList<>();
     private List<MenuSymbol> messages=new ArrayList<>();
     private MousePosition mousePosition;

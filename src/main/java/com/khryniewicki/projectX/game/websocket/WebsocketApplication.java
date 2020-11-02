@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
 
 @Data
 @Slf4j
-public class WebsocketApplication implements Runnable{
+public class WebsocketApplication implements Runnable {
     private static StompSession session;
     private static StompSession copy_session;
     private static boolean client_running;
@@ -43,20 +43,21 @@ public class WebsocketApplication implements Runnable{
     public synchronized static StompSession getSession() {
         return copy_session;
     }
+
     public RenderFactory renderFactory;
 
 
-
     @Slf4j
-    public static  class MyStompSessionHandler
+    public static class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
         private final HeroReceiveService heroReceiveService;
         private final Channels channels;
 
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
-            channels=Channels.getINSTANCE();
+            channels = Channels.getINSTANCE();
         }
+
         public String getSessionID() {
             return session.getSessionId();
         }
@@ -85,13 +86,16 @@ public class WebsocketApplication implements Runnable{
         }
 
         public void getHeroesRegistry() {
-            WebsocketScheduler websocketScheduler = new WebsocketScheduler();
-            websocketScheduler.getHeroesRegistryFromServer(path);
+            WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
+            websocketScheduler.observerPlayers();
         }
 
+        public void setSessionID() {
+            WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
+            websocketScheduler.setSessionId(session.getSessionId());
+        }
 
-
-        public  void subscribeHero(String topic, StompSession session) {
+        public void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
 
                 @Override
@@ -162,11 +166,11 @@ public class WebsocketApplication implements Runnable{
             System.err.println("Connected! Headers:" + "\n" + sessionID);
             showHeaders(connectedHeaders);
             subscribeGameInitials("/topic/room", session);
-
         }
 
 
     }
+
     @Override
     public void run() {
         startWebsocket();
@@ -197,7 +201,7 @@ public class WebsocketApplication implements Runnable{
         try {
             session = stompClient.connect(url, sessionHandler)
                     .get();
-            copy_session=session;
+            copy_session = session;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

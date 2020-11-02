@@ -1,5 +1,7 @@
 package com.khryniewicki.projectX.game.websocket;
 
+import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
+
 public class WebsocketInitializer implements Runnable {
 
     private WebsocketApplication.MyStompSessionHandler handler;
@@ -26,10 +28,15 @@ public class WebsocketInitializer implements Runnable {
         handler.unregister();
     }
 
-    public void getSecondPlayerMockType() {
-        handler.getHeroesRegistry();
+    public void setSessionId() {
+        handler.setSessionID();
     }
+    public void connectionEstablished(){
+        MainMenu mainMenu=MainMenu.getInstance();
+        do{
 
+        }while (!mainMenu.isConnection());
+    }
     public String getSessionId() {
         return handler.getSessionID();
     }

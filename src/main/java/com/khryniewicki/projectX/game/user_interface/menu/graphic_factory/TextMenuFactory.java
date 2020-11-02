@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.CreateText;
@@ -38,7 +39,7 @@ public class TextMenuFactory {
     public MenuSymbol getText(String text) {
         return TEXT_FACTORY.get(text);
     }
-    public List<MenuSymbol> getListWithTextMenuSymbols(){
+    public List<MenuSymbol> getListWithTextMainMenuSymbols(){
         return new ArrayList<>(Arrays.asList(MENU_IMAGE,TEXT_FALLENKING,TEXT_FALLENMONK,TEXT_FALLENWITCHER,TEXT_FIREWIZARD,TEXT_ICEWIZARD,TEXT_THUNDERWIZARD));
     }
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
@@ -124,5 +125,15 @@ public class TextMenuFactory {
             .withWidth(13.5f)
             .withPositionX(-8.5f)
             .withPositionY(-3f)
+            .build();
+
+    public static final MenuSymbol PLAYERS_ONLINE_LABEL = new Button.Builder()
+            .withTexture(new Texture("blankTextWindow.png"))
+            .withDisabled(false)
+            .withName("label")
+            .withHeight(1f)
+            .withWidth(4f)
+            .withPositionX(6f)
+            .withPositionY(4.0f)
             .build();
 }

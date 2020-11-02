@@ -22,8 +22,10 @@ import org.lwjgl.system.MemoryStack;
 import org.springframework.stereotype.Component;
 
 import java.nio.IntBuffer;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.PLAYERS_ONLINE_LABEL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
@@ -142,16 +144,10 @@ public class Game implements Runnable {
     }
 
     private void initializeMenu() {
-
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.render();
-        log.info("SPELL BEFORE");
         SpellRegistry.getInstance();
-        log.info("SPELL AFTER");
-        do {
-            glfwPollEvents();
-        } while (!mainMenu.isRunning());
-
+        mainMenu.runMenu();
     }
 
     private void initializeWebsocketConnection() {
