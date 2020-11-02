@@ -96,6 +96,7 @@ public class CharacterMenu extends MenuImp {
                     if (menuSymbol.getName().equals(symbol.getName())) {
                         log.info("UPDATE TABLE");
                         symbol.setTexture(CreateTable.tableImage(btnName));
+                        log.info("AFTER UPDATE");
                     }
                 })
                 .collect(Collectors.toList());

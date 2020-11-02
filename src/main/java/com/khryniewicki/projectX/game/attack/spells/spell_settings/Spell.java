@@ -111,7 +111,7 @@ public class Spell implements UltraSpell {
     public void setSpellDetails(){
         createProperties();
         setPosition();
-        setMesh(createMesh());
+//        setMesh(createMesh());
     }
 
     public void createProperties() {

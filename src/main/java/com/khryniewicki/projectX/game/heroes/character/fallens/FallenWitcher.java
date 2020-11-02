@@ -12,7 +12,7 @@ public class FallenWitcher extends SuperHero {
 
     public FallenWitcher() {
         setPosition();
-        setSpellBasis();
+       setSpellBasis();
         setMesh();
         setTexture();
         setProperties();

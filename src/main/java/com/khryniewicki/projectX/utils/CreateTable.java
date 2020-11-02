@@ -42,9 +42,11 @@ public class CreateTable {
         g2d.setColor(Color.BLUE);
 
         String[] heroHeader = {"Life", "Mana", "Speed", "Basic Attack", "Ultimate Attack"};
-        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", basicSpellInstance.getName(), ultimateSpellInstance.getName()};
+        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", "AAA", "BBB"};
+
+//        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", basicSpellInstance.getName(), ultimateSpellInstance.getName()};
         String[] spellsHeader={"Spell", "Damage", "Mana Cost", "Speed", "Casting speed"};
-        String[] spelldata1={basicSpellInstance.getName(), "15", "10", "20", "4 sec."};
+        String[] spelldata1={"AAA", "15", "10", "20", "4 sec."};
         String[] spelldata2={"Fire Bomb", "25", "20", "20", "8 sec."};
 
         for (int i = 0; i < heroHeader.length; i++) {

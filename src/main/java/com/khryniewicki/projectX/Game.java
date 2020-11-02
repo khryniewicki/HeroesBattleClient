@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX;
 
 
+import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellRegistry;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -118,6 +119,7 @@ public class Game implements Runnable {
         }
 
         glfwMakeContextCurrent(window);
+
         glfwShowWindow(window);
         GL.createCapabilities();
         glfwMakeContextCurrent(window);
@@ -129,6 +131,8 @@ public class Game implements Runnable {
 
         Shader.loadAll();
         GameShaders.loadAll();
+
+
     }
 
     private void initializeMultiplayerGame() {
@@ -141,9 +145,13 @@ public class Game implements Runnable {
 
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.render();
+        log.info("SPELL BEFORE");
+        SpellRegistry.getInstance();
+        log.info("SPELL AFTER");
         do {
             glfwPollEvents();
         } while (!mainMenu.isRunning());
+
     }
 
     private void initializeWebsocketConnection() {

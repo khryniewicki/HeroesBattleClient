@@ -7,7 +7,7 @@ import com.khryniewicki.projectX.utils.SpellUtil;
 
 public class IceBolt extends Spell {
 
-    public IceBolt() {
+    public  IceBolt() {
         setProperties();
         setTexture();
     }

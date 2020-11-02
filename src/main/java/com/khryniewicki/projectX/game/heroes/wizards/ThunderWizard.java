@@ -31,7 +31,6 @@ public class ThunderWizard extends SuperHero {
     }
 
 
-
     @Override
     public void setSpellBasis() {
         setBasicSpellInstance(new BasicSpellInstance(new VioletMissle()));

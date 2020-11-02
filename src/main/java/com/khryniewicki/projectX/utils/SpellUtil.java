@@ -13,6 +13,7 @@ public class SpellUtil {
     public static final Texture ULTIMATEFIREICON= new Texture("fireIcon.png");
     public static final Texture ULTIMATEFIREICONFADED= new Texture("fireIconFaded.png");
 
+
     //Icewizard
     public static final Texture ICE= new Texture("ice6.png");
     public static final Texture ICEBALL= new Texture("iceball.png");
