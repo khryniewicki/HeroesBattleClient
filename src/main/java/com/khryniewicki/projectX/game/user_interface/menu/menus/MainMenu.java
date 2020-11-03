@@ -77,7 +77,7 @@ public class MainMenu extends MenuImp {
         initMessages();
     }
 
-    public void runMenu(){
+    public void execute(){
         String tmpNumbers="";
         do {
             if (Objects.nonNull(numberOfPlayers) && !numberOfPlayers.equals(tmpNumbers)){

@@ -26,7 +26,8 @@ public class HeroFactory {
         initMap();
     }
 
-    private void initMap() {
+    public void initMap() {
+        new SuperHero();
         heroesFactory.put("FireWizard", FireWizard::new);
         heroesFactory.put("IceWizard", IceWizard::new);
         heroesFactory.put("ThunderWizard", ThunderWizard::new);

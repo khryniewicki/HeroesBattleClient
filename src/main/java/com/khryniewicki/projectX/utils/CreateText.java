@@ -12,29 +12,39 @@ public class CreateText {
 
     public static Texture textToImageWithLine(String text, int fontSize) {
         BufferedImage image = new Texture("blankTextWindowWithLine.png").getImage();
-        setImage(text, fontSize, defaultColor, image);
+        Font font = new Font("Open Sans", Font.BOLD, fontSize);
+        setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
 
     public static Texture textToImageMenu(String text) {
         BufferedImage image = new Texture("blankTextWindow.png").getImage();
-        setImage(text, 24, defaultColor, image);
+        Font font = new Font("Open Sans", Font.BOLD, 24);
+
+        setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
-
+    public static Texture textInLoadingMenuToImage(String text, Color color) {
+        BufferedImage image = new Texture("blankTextWindow.png").getImage();
+        Font font = new Font("Open Sans", Font.PLAIN, 22);
+        setImage(text, font, color, image);
+        return new Texture(image);
+    }
     public static Texture textInControlSettingsToImage(String text, Color color) {
         BufferedImage image = new Texture("blankTextWindow.png").getImage();
-        setImage(text, 30, color, image);
+        Font font = new Font("Open Sans", Font.BOLD, 30);
+
+        setImage(text, font, color, image);
         return new Texture(image);
     }
     public static Texture textInConnectionWindow(String text) {
         BufferedImage image = new Texture("blankTextWindow.png").getImage();
-        setImage(text, 20, defaultColor, image);
+        Font font = new Font("Open Sans", Font.BOLD, 20);
+        setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
-    private static void setImage(String text, int fontSize, Color color, BufferedImage image) {
+    private static void setImage(String text, Font font, Color color, BufferedImage image) {
         if (text.length() > 0) {
-            Font font = new Font("Open Sans", Font.BOLD, fontSize);
 
             Graphics2D g2d = (Graphics2D) image.getGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);

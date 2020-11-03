@@ -136,4 +136,13 @@ public class TextMenuFactory {
             .withPositionX(6f)
             .withPositionY(4.0f)
             .build();
+    public static final MenuSymbol LOADING = new Button.Builder()
+            .withTexture(new Texture("blankTextWindow.png"))
+            .withDisabled(false)
+            .withName("loading")
+            .withHeight(1f)
+            .withWidth(4f)
+            .withPositionX(-1.0f)
+            .withPositionY(0.0f)
+            .build();
 }

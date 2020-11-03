@@ -27,10 +27,9 @@ public class SpellRegistry {
 
     private SpellRegistry() {
         this.spellbook = new ArrayList<>();
-        fill();
     }
 
-    private void fill() {
+    public void fill() {
         Spell[] spellist = new Spell[]{
                 new Fire(), new UltimateFire(),
                 new IceBolt(), new IceBerg(),

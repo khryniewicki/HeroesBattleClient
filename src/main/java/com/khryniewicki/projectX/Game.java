@@ -1,10 +1,10 @@
 package com.khryniewicki.projectX;
 
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellRegistry;
 import com.khryniewicki.projectX.game.multiplayer.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
@@ -130,6 +130,7 @@ public class Game implements Runnable {
 
         Shader.loadAll();
         GameShaders.loadAll();
+        glfwShowWindow(window);
 
 
     }
@@ -141,10 +142,11 @@ public class Game implements Runnable {
     }
 
     private void initializeMenu() {
+        LoadingMenu loadingMenu=LoadingMenu.getInstance();
+        loadingMenu.execute();
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.render();
-        SpellRegistry.getInstance();
-        mainMenu.runMenu();
+        mainMenu.execute();
     }
 
     private void initializeWebsocketConnection() {
