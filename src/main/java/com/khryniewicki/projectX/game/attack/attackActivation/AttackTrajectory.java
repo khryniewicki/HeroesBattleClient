@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -9,6 +10,8 @@ import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.khryniewicki.projectX.utils.SpellUtil.ICEBALL_STRAIGHT;
 
 @Slf4j
 @Data
@@ -106,16 +109,29 @@ public class AttackTrajectory {
     public void prepareSpell() {
         if (isSpellNotPrepared) {
             hero.setHeroAttack();
-            log.info("[x:{} , y:{}]",spell.getHeroPositionX(),spell.getHeroPositionY());
+            log.info("[x:{} , y:{}]", spell.getHeroPositionX(), spell.getHeroPositionY());
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
-            if (spellInstance.getName().equals("Skull")) {
-                spell.setImage(Math.signum(1), (-Math.signum(distance.getX())) * (-Math.signum(distance.getY())), spellInstance.getThrowingSpellTexture());
-            } else {
-                spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
-            }
+
+            spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
+            skull_spell_exception();
+            iceball_exception();
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));
             setSpellNotPrepared(false);
             log.info("Target[{}],[{}]", target.getX(), target.getY());
+        }
+    }
+
+    private void iceball_exception() {
+        if (spellInstance.getName().equals("IceBerg") || spellInstance.getName().equals("IceBolt")) {
+            if (distance.getX() < 0.5 || distance.getY() < 0.5) {
+                spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), new SpellTexture(ICEBALL_STRAIGHT, spellInstance.getThrowingSpellTexture().getSize()));
+            }
+        }
+    }
+
+    private void skull_spell_exception() {
+        if (spellInstance.getName().equals("Skull")) {
+            spell.setImage(Math.signum(1), (-Math.signum(distance.getX())) * (-Math.signum(distance.getY())), spellInstance.getThrowingSpellTexture());
         }
     }
 

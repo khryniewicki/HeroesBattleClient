@@ -132,7 +132,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(0f)
-            .withPositionY(-5f)
+            .withPositionY(-3.8f)
             .build();
 
     public static final MenuSymbol TYPE_YOUR_NAME = new Button.Builder()
@@ -141,7 +141,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(0f)
-            .withPositionY(-3.8f)
+            .withPositionY(-5f)
             .build();
 
     public static final MenuSymbol RETURN_BUTTON = new Button.Builder()

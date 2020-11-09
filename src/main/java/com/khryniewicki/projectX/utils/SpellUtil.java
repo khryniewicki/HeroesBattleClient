@@ -17,6 +17,7 @@ public class SpellUtil {
     //Icewizard
     public static final Texture ICE= new Texture("ice6.png");
     public static final Texture ICEBALL= new Texture("iceball.png");
+    public static final Texture ICEBALL_STRAIGHT= new Texture("iceballS.png");
     public static final Texture ICEICON= new Texture("iceIcon.png");
     public static final Texture ICEICONFADED= new Texture("iceIconFaded.png");
 

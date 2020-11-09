@@ -80,16 +80,18 @@ public class CharacterMenu extends MenuImp {
                 animation.stop();
                 toggleImage(TABLE, true);
                 removeButton(CHARACTER_SKILLS);
+                setActiveWriting(false);
                 mainMenu.render();
                 break;
             case "showTable":
-                toggleImage(TABLE, !TABLE.isDisabled());
-                updateImage(CHARACTER_SKILLS, TABLE.isDisabled() ? HIDE_SKILLS : SKILLS);
+                boolean disabled = TABLE.isDisabled();
+                toggleImage(TABLE, !disabled);
+                updateButtonText(disabled, CHARACTER_SKILLS, HIDE_SKILLS, SKILLS);
                 break;
             case "typeYourName":
                 toggleImage(HERO_NAME, activeWriting);
-                updateImage(TYPE_YOUR_NAME, activeWriting ? TYPE_NAME : CONFIRM);
                 this.activeWriting = !activeWriting;
+                updateButtonText(activeWriting, TYPE_YOUR_NAME, CONFIRM, TYPE_NAME);
                 break;
             default:
                 addButton(CHARACTER_SKILLS);
@@ -99,6 +101,11 @@ public class CharacterMenu extends MenuImp {
                 showMessageInMainMenu(btnName);
                 break;
         }
+    }
+
+    private void updateButtonText(boolean disabled, MenuSymbol characterSkills, Texture hideSkills, Texture skills) {
+        characterSkills.setTexture(disabled ? hideSkills : skills);
+        render();
     }
 
     private void setHero(String btnName) {
@@ -132,7 +139,6 @@ public class CharacterMenu extends MenuImp {
             symbol.addPropertyChangeListener(this);
         }
     }
-
 
 
     private Texture getTextureFromTextFactory(String name) {

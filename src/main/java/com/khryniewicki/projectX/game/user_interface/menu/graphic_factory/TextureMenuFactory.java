@@ -191,6 +191,6 @@ public class TextureMenuFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(-5f)
-            .withPositionY(-3.8f)
+            .withPositionY(-5f)
             .build();
 }
