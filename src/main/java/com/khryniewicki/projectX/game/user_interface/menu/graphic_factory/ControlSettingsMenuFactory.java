@@ -2,12 +2,14 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.utils.CreateText;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
+import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
 
 public class ControlSettingsMenuFactory {
     public List<MenuSymbol> listWithControlSettingsIcons;
@@ -70,7 +72,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(-1.6f)
             .build();
     public static final MenuSymbol TEXT_UP = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE UP", Color.WHITE))
+            .withTexture(TextFactory.textInControlSettingsToImage("MOVE UP", Color.WHITE))
             .withName("TEXT_up_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -78,7 +80,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(2.0f)
             .build();
     public static final MenuSymbol TEXT_DOWN = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE DOWN", Color.WHITE))
+            .withTexture(TextFactory.textInControlSettingsToImage("MOVE DOWN", Color.WHITE))
             .withName("TEXT_down_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -86,7 +88,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(0.8f)
             .build();
     public static final MenuSymbol TEXT_RIGHT = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE RIGHT", Color.WHITE))
+            .withTexture(TextFactory.textInControlSettingsToImage("MOVE RIGHT", Color.WHITE))
             .withName("TEXT_right_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -94,7 +96,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(-0.4f)
             .build();
     public static final MenuSymbol TEXT_LEFT = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("MOVE LEFT", Color.WHITE))
+            .withTexture(TextFactory.textInControlSettingsToImage("MOVE LEFT", Color.WHITE))
             .withName("TEXT_left_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -102,7 +104,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(-1.6f)
             .build();
     public static final MenuSymbol BASIC_ATTACK = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("BASIC ATTACK", new Color(196, 255, 14)))
+            .withTexture(TextFactory.textInControlSettingsToImage("BASIC ATTACK", BRIGHT_YELLOW))
             .withName("TEXT_right_arrow")
             .withHeight(1f)
             .withWidth(4f)
@@ -110,7 +112,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(2.1f)
             .build();
     public static final MenuSymbol ULTIMATE_ATTACK = new Button.Builder()
-            .withTexture(CreateText.textInControlSettingsToImage("ULTIMATE ATTACK", new Color(140, 255, 251)))
+            .withTexture(TextFactory.textInControlSettingsToImage("ULTIMATE ATTACK", BRIGHT_BLUE))
             .withName("TEXT_left_arrow")
             .withHeight(1f)
             .withWidth(4f)

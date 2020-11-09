@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.ANIMATION_DUMMY;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.ANIMATION_HERO;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.ANIMATION_DUMMY;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.ANIMATION_HERO;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
@@ -115,7 +115,7 @@ public class Animation extends GameLoopImp {
             addSpellingCounter();
         } else if (this.spellingCounter > randomCasting) {
             removeSymbol(dummy);
-            removeSpell();
+            removeSpellIfExists();
             drawRandomNumber();
             this.spellingCounter = 0;
         }
@@ -216,7 +216,7 @@ public class Animation extends GameLoopImp {
         this.spellingCounter++;
     }
 
-    public void removeSpell() {
+    public void removeSpellIfExists() {
         removeSymbol(spell);
     }
 

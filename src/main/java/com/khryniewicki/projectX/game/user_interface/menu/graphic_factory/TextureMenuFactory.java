@@ -3,12 +3,11 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.utils.CreateText;
 
 import java.util.*;
 
 
-public class TextMenuFactory {
+public class TextureMenuFactory {
     public final static Texture BAR_FULL = new Texture("bar_full.png");
     public final static Texture BAR_EMPTY = new Texture("bar_empty.png");
     public final static Texture BAR_HALF = new Texture("bar_half.png");
@@ -16,16 +15,16 @@ public class TextMenuFactory {
     public static Map<String, MenuSymbol> TEXT_FACTORY;
     public List<MenuSymbol> listWithCharacterMenuMessages;
 
-    public static TextMenuFactory getInstance() {
-        return TextMenuFactory.HELPER.INSTANCE;
+    public static TextureMenuFactory getInstance() {
+        return TextureMenuFactory.HELPER.INSTANCE;
     }
 
-    private TextMenuFactory() {
+    private TextureMenuFactory() {
         fill();
     }
 
     private static class HELPER {
-        private final static TextMenuFactory INSTANCE = new TextMenuFactory();
+        private final static TextureMenuFactory INSTANCE = new TextureMenuFactory();
     }
 
     public List<MenuSymbol> getListWithCharacterMenuMessages() {
@@ -55,7 +54,7 @@ public class TextMenuFactory {
     }
 
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Please choose your hero"))
+            .withTexture(TextFactory.textToImageMenu("Please choose your hero"))
             .withName("NoHero")
             .withDisabled(true)
             .withHeight(0.7f)
@@ -64,7 +63,7 @@ public class TextMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FIREWIZARD = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Your hero is Fire Wizard"))
+            .withTexture(TextFactory.textToImageMenu("Your hero is Fire Wizard"))
             .withName("CHOSE_FIREWIZARD")
             .withDisabled(true)
             .withHeight(0.7f)
@@ -73,7 +72,7 @@ public class TextMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_ICEWIZARD = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Your hero is Ice Wizard"))
+            .withTexture(TextFactory.textToImageMenu("Your hero is Ice Wizard"))
             .withName("CHOSE_ICEWIZARD")
             .withDisabled(true)
             .withHeight(0.7f)
@@ -82,7 +81,7 @@ public class TextMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_THUNDERWIZARD = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Your hero is Thunder Wizard"))
+            .withTexture(TextFactory.textToImageMenu("Your hero is Thunder Wizard"))
             .withName("CHOSE_THUNDERWIZARD")
             .withDisabled(true)
             .withHeight(0.7f)
@@ -91,7 +90,7 @@ public class TextMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FALLENMONK = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Your hero is Fallen Monk"))
+            .withTexture(TextFactory.textToImageMenu("Your hero is Fallen Monk"))
             .withName("CHOSE_FALLENMONK")
             .withDisabled(true)
             .withHeight(0.7f)
@@ -100,7 +99,7 @@ public class TextMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FALLENWITCHER = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Your hero is Fallen Witcher"))
+            .withTexture(TextFactory.textToImageMenu("Your hero is Fallen Witcher"))
             .withName("CHOSE_FALLENWITCHER")
             .withDisabled(true)
             .withHeight(0.7f)
@@ -109,7 +108,7 @@ public class TextMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_FALLENKING = new MenuSymbol.Builder()
-            .withTexture(CreateText.textToImageMenu("Your hero is Fallen King"))
+            .withTexture(TextFactory.textToImageMenu("Your hero is Fallen King"))
             .withName("CHOSE_FALLENKING")
             .withDisabled(true)
             .withHeight(0.7f)

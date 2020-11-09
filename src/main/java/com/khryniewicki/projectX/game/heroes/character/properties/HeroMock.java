@@ -67,7 +67,7 @@ public class HeroMock implements UltraHero {
         finalPosition = heroReceiveService.getMockPosition();
         if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) isMovingLeft = true;
         else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) isMovingLeft = false;
-        setMovingLeft(isMovingLeft);
+        setTurningLeft(isMovingLeft);
 
     }
 
@@ -259,8 +259,8 @@ public class HeroMock implements UltraHero {
     }
 
     @Override
-    public void setMovingLeft(boolean movingLeft) {
-        ultraHero.setMovingLeft(movingLeft);
+    public void setTurningLeft(boolean movingLeft) {
+        ultraHero.setTurningLeft(movingLeft);
     }
 
 

@@ -2,12 +2,9 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.Animation;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.*;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.utils.CreateTable;
-import com.khryniewicki.projectX.utils.CreateText;
+import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.*;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.HERO_NAME;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.TABLE;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.HERO_NAME;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.TABLE;
 
 
 @Slf4j
@@ -27,7 +24,7 @@ import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory
 public class CharacterMenu extends MenuImp {
     private boolean activeWriting;
     private final HeroesInstances heroesInstances;
-    private final TextMenuFactory textMenuFactory;
+    private final TextureMenuFactory textureMenuFactory;
     private final KeyboardSettings keyboardSettings;
     private final ButtonsFactory buttonsFactory;
     private static final CharacterMenu instance = new CharacterMenu();
@@ -42,7 +39,7 @@ public class CharacterMenu extends MenuImp {
     private CharacterMenu() {
         super();
         heroesInstances = HeroesInstances.getInstance();
-        textMenuFactory = TextMenuFactory.getInstance();
+        textureMenuFactory = TextureMenuFactory.getInstance();
         buttonsFactory = ButtonsFactory.getInstance();
         keyboardSettings = new KeyboardSettings();
         animation = new Animation();
@@ -60,13 +57,18 @@ public class CharacterMenu extends MenuImp {
     }
 
     public void initMessages() {
-        HERO_NAME.addPropertyChangeListener(evt -> updateName(HERO_NAME, (String) evt.getNewValue()));
-        super.setMessages(textMenuFactory.getListWithCharacterMenuMessages());
+        HERO_NAME.addPropertyChangeListener(evt -> {
+            String newValue = (String) evt.getNewValue();
+            updateSymbol(HERO_NAME, getTextureFromTextFactory(newValue));
+        });
+        super.setMessages(textureMenuFactory.getListWithCharacterMenuMessages());
     }
 
-    public void initAnimation(String character) {
-        animation.removeSpell();
-        animation.play(character);
+
+    @Override
+    public void addEventClick() {
+        super.addEventClick();
+        keyboardSettings.insert(HERO_NAME);
     }
 
     @Override
@@ -77,41 +79,43 @@ public class CharacterMenu extends MenuImp {
         switch (btnName) {
             case "Return":
                 animation.stop();
-                mainMenu.render();
-                TABLE.setDisabled(true);
+                setMessagesVisibility(TABLE, true);
                 removeButton(CHARACTER_SKILLS);
+                mainMenu.render();
                 break;
             case "showTable":
-                CHARACTER_SKILLS.setTexture(TABLE.isDisabled() ? HIDE_SKILLS : SKILLS);
-                toggleMessagesVisibility(TABLE);
+                setMessagesVisibility(TABLE, !TABLE.isDisabled());
+                updateSymbol(CHARACTER_SKILLS, TABLE.isDisabled() ? HIDE_SKILLS : SKILLS);
                 break;
             case "typeYourName":
-                HERO_NAME.setDisabled(activeWriting);
-                TYPE_YOUR_NAME.setTexture(activeWriting ? TYPE_NAME : CONFIRM);
+                setMessagesVisibility(HERO_NAME, activeWriting);
+                updateSymbol(TYPE_YOUR_NAME, activeWriting ? TYPE_NAME : CONFIRM);
                 this.activeWriting = !activeWriting;
-                render();
                 break;
             default:
                 addButton(CHARACTER_SKILLS);
-                updateTable(TABLE, btnName);
-                heroesInstances.setHero(btnName);
+                updateSymbol(TABLE, getTextureFromTableFactory(btnName));
+                setHero(btnName);
                 initAnimation(btnName);
                 showMessageInMainMenu(btnName);
                 break;
         }
     }
 
+    private void setHero(String btnName) {
+        heroesInstances.setHero(btnName);
+    }
+
     private void showMessageInMainMenu(String btnName) {
-        MenuSymbol text = textMenuFactory.getText(btnName);
+        MenuSymbol text = textureMenuFactory.getText(btnName);
         mainMenu.showMessage(text);
     }
 
-
-    @Override
-    public void addEventClick() {
-        super.addEventClick();
-        keyboardSettings.insert(HERO_NAME);
+    public void initAnimation(String character) {
+        animation.removeSpellIfExists();
+        animation.play(character);
     }
+
 
     public void removeButton(MenuSymbol symbol) {
         List<MenuSymbol> buttons = super.getButtons();
@@ -130,13 +134,12 @@ public class CharacterMenu extends MenuImp {
         }
     }
 
-    public void toggleMessagesVisibility(MenuSymbol symbol) {
+    public void updateSymbol(MenuSymbol symbol, Texture texture) {
         List<MenuSymbol> menuSymbols = super.getMessages()
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.equals(symbol)) {
-                        boolean disabled = menuSymbol.isDisabled();
-                        menuSymbol.setDisabled(!disabled);
+                        symbol.setTexture(texture);
                     }
                 })
                 .collect(Collectors.toList());
@@ -144,28 +147,11 @@ public class CharacterMenu extends MenuImp {
         render();
     }
 
-    public void updateName(MenuSymbol symbol, String name) {
-        List<MenuSymbol> menuSymbols = super.getMessages()
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(CreateText.textToImageWithLine(name, 30));
-                    }
-                })
-                .collect(Collectors.toList());
-        super.setMessages(menuSymbols);
-        render();
+    private Texture getTextureFromTextFactory(String name) {
+        return TextFactory.textToImageWithLine(name, 30);
     }
 
-    public void updateTable(MenuSymbol symbol, String btnName) {
-        List<MenuSymbol> menuSymbols = super.getMessages()
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.getName().equals(symbol.getName())) {
-                        symbol.setTexture(CreateTable.tableImage(btnName));
-                    }
-                })
-                .collect(Collectors.toList());
-        super.setMessages(menuSymbols);
+    private Texture getTextureFromTableFactory(String btnName) {
+        return TableFactory.tableImage(btnName);
     }
 }

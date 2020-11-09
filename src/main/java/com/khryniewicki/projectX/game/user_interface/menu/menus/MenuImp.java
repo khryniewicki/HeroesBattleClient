@@ -86,4 +86,17 @@ public class MenuImp implements PropertyChangeListener, Menu {
         init();
         subscribe();
     }
+
+    public void setMessagesVisibility(MenuSymbol symbol, boolean state) {
+        List<MenuSymbol> menuSymbols = messages
+                .stream()
+                .peek(menuSymbol -> {
+                    if (menuSymbol.equals(symbol)) {
+                        menuSymbol.setDisabled(state);
+                    }
+                })
+                .collect(Collectors.toList());
+        setMessages(menuSymbols);
+        render();
+    }
 }

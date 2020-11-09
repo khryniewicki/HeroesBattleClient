@@ -5,9 +5,10 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.ServerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.utils.CreateText;
+import com.khryniewicki.projectX.graphics.Colors;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.*;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
@@ -33,7 +34,7 @@ public class MainMenu extends MenuImp {
     private volatile boolean connection;
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;
-    private final TextMenuFactory textMenuFactory;
+    private final TextureMenuFactory textureMenuFactory;
     private final ButtonsFactory buttonsFactory;
     private final WebsocketScheduler websocketScheduler;
     private MenuSymbol noHero;
@@ -48,7 +49,7 @@ public class MainMenu extends MenuImp {
     private MainMenu() {
         super();
         heroesInstances = HeroesInstances.getInstance();
-        textMenuFactory = TextMenuFactory.getInstance();
+        textureMenuFactory = TextureMenuFactory.getInstance();
         buttonsFactory = ButtonsFactory.getInstance();
         websocketScheduler = WebsocketScheduler.getInstance();
         start();
@@ -101,7 +102,7 @@ public class MainMenu extends MenuImp {
     }
 
     private void initMessages() {
-        List<MenuSymbol> listWithMenuSymbols = textMenuFactory.getListWithTextMainMenuSymbols();
+        List<MenuSymbol> listWithMenuSymbols = textureMenuFactory.getListWithTextMainMenuSymbols();
         noHero = TEXT_NO_HERO;
         listWithMenuSymbols.add(noHero);
         super.setMessages(listWithMenuSymbols);
@@ -146,15 +147,7 @@ public class MainMenu extends MenuImp {
     }
 
     public void showMessage(MenuSymbol symbol) {
-        List<MenuSymbol> menuSymbols = super.getMessages()
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        menuSymbol.setDisabled(false);
-                    }
-                })
-                .collect(Collectors.toList());
-        super.setMessages(menuSymbols);
+        setMessagesVisibility(symbol, false);
     }
 
     public void updateLabel(MenuSymbol symbol, ServerState state) {
@@ -162,11 +155,11 @@ public class MainMenu extends MenuImp {
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
-                        Color color = new Color(196, 255, 14);
+                        Color color = Colors.BRIGHT_YELLOW;
                         if (state.equals(ServerState.SERVER_OFFLINE)) {
-                            color = new Color(236, 28, 36);
+                            color = Colors.BRIGHT_RED;
                         }
-                        symbol.setTexture(CreateText.textInPlayersMenuToImage(state.getTitle(), color));
+                        symbol.setTexture(TextFactory.textInPlayersMenuToImage(state.getTitle(), color));
                     }
                 })
                 .collect(Collectors.toList());
@@ -201,12 +194,7 @@ public class MainMenu extends MenuImp {
     }
 
     private void disableAllMessages() {
-        List<MenuSymbol> menuSymbols = super.getMessages()
-                .stream()
-                .peek(menuSymbol -> menuSymbol.setDisabled(true))
-                .collect(Collectors.toList());
-        super.setMessages(menuSymbols);
-        render();
+        super.getMessages().forEach(s -> setMessagesVisibility(s, true));
     }
 
 }

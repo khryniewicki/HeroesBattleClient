@@ -11,7 +11,7 @@ public interface UltraHero extends Ultra {
 
     BasicSpellInstance getBasicSpellInstance();
     UltimateSpellInstance getUltimateSpellInstance();
-    void setMovingLeft(boolean movingLeft);
+    void setTurningLeft(boolean movingLeft);
 
     LifeBar getLifeBar();
     void setLifeBar(LifeBar lifeBar);

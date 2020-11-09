@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SuperHero implements UltraHero {
 
-    private boolean isMovingLeft;
+    private boolean isTurningLeft;
     private VertexArray mesh;
     private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle,heroAttack;
     private Vector position;
@@ -48,7 +48,7 @@ public class SuperHero implements UltraHero {
 
 
     public VertexArray createHero() {
-        int i = isMovingLeft ? -1 : 1;
+        int i = isTurningLeft ? -1 : 1;
 
         float[] vertices = new float[]{
                 hero_positionX0 + -SIZE / 2.0f, hero_positionY0 + -SIZE / 2.0f, 0.8f,

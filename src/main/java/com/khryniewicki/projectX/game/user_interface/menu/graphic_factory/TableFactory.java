@@ -1,8 +1,7 @@
-package com.khryniewicki.projectX.utils;
+package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -13,8 +12,12 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.text.AttributedString;
+
+import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
+import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
+
 @Slf4j
-public class CreateTable {
+public class TableFactory {
 
 
     public static Texture tableImage(String heroName) {
@@ -55,7 +58,7 @@ public class CreateTable {
             int x3=500;
             int positionX = 10;
             int positionY = y + 30;
-           g2d.setColor(new Color(140, 255, 251));
+           g2d.setColor(BRIGHT_BLUE);
             if (i == 0) {
                 g2d.draw(new Line2D.Float((float) x, 30f, (float) x, 215f));
                 g2d.draw(new Line2D.Float((float) x+x2, 30f, (float) x+x2, 215f));
@@ -74,7 +77,7 @@ public class CreateTable {
             spellHeader.addAttribute(TextAttribute.FONT, font);
             g2d.drawString(spellHeader.getIterator(), x2+positionX, positionY);
 
-            g2d.setColor(new Color(196, 255, 14));
+            g2d.setColor(BRIGHT_YELLOW);
 
             AttributedString content = new AttributedString(heroData[i]);
             content.addAttribute(TextAttribute.FONT, font);

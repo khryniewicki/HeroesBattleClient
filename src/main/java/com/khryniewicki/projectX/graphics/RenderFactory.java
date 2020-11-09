@@ -1,8 +1,8 @@
 package com.khryniewicki.projectX.graphics;
 
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.utils.CreateText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class RenderFactory {
 
     public MenuSymbol createText(String text) {
         return new Button.Builder()
-                .withTexture(CreateText.textInConnectionWindow(text))
+                .withTexture(TextFactory.textInConnectionWindow(text))
                 .withName(text)
                 .withHeight(0.8f)
                 .withWidth(7f)

@@ -18,7 +18,6 @@ public class KeyboardSettings {
             CharacterMenu characterMenu = CharacterMenu.getInstance();
             if (characterMenu.isActiveWriting()) {
                 if (key >= 65 && key <= 90 && action != GLFW_RELEASE) {
-
                     String letter = Character.toString((char) key);
                     if (sb.length() <= 15) {
                         sb.append(letter);

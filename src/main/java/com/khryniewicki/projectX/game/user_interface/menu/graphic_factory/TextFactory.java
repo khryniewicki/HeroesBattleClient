@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.utils;
+package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.graphics.Texture;
 
@@ -7,7 +7,7 @@ import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.text.AttributedString;
 
-public class CreateText {
+public class TextFactory {
     private static Color defaultColor = Color.WHITE;
 
     public static Texture textToImageWithLine(String text, int fontSize) {

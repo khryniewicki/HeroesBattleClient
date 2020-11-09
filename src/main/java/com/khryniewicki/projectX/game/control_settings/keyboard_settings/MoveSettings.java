@@ -49,11 +49,11 @@ public class MoveSettings {
                 hero.setTexture(hero.getHeroDown());
             } else if (key == GLFW_KEY_LEFT && action != GLFW_RELEASE && !Collision.collisions[1]) {
                 hero.setPositionX(position.x - velocity);
-                hero.setMovingLeft(true);
+                hero.setTurningLeft(true);
                 hero.setTexture(hero.getHeroLeft());
             } else if (key == GLFW_KEY_RIGHT && action != GLFW_RELEASE && !Collision.collisions[0]) {
                 hero.setPositionX(position.x + velocity);
-                hero.setMovingLeft(false);
+                hero.setTurningLeft(false);
                 hero.setTexture(hero.getHeroRight());
             } else {
                 hero.setTexture(hero.getHeroIdle());
