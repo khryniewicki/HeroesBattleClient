@@ -7,9 +7,12 @@ import java.beans.PropertyChangeListener;
 public interface Symbol {
     void render();
 
-    default void setTexture(Texture texture) {
+    default String getName() {
+        return "";
     }
 
 
+    default void setTexture(Texture texture) {
+    }
 
 }

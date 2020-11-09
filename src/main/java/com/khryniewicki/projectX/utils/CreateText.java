@@ -26,7 +26,13 @@ public class CreateText {
     }
     public static Texture textInLoadingMenuToImage(String text, Color color) {
         BufferedImage image = new Texture("blankTextWindow.png").getImage();
-        Font font = new Font("Open Sans", Font.PLAIN, 22);
+        Font font = new Font("Open Sans", Font.BOLD, 22);
+        setImage(text, font, color, image);
+        return new Texture(image);
+    }
+    public static Texture textInPlayersMenuToImage(String text, Color color) {
+        BufferedImage image = new Texture("blankTextWindow.png").getImage();
+        Font font = new Font("Open Sans", Font.BOLD, 20);
         setImage(text, font, color, image);
         return new Texture(image);
     }

@@ -154,7 +154,7 @@ public class Game implements Runnable {
     }
 
     private void setMultiplayerGame() {
-        heroesInstances.setHero();
+
         if (isHeroLoadedProperly()) {
             multiplayerController.waitingForSecondPlayer();
             createBoard();

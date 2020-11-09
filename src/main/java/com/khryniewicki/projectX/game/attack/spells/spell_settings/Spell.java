@@ -19,16 +19,16 @@ public class Spell implements UltraSpell {
 
     private VertexArray mesh;
     private Texture texture;
-    private Vector position=new Vector();
+    private Vector position = new Vector();
     public Float SIZE = 1f;
 
     private Position target;
     private SpellTexture missleSpell, executedSpell;
-    private Texture icon,fadedIcon;
+    private Texture icon, fadedIcon;
     private Float castingSpeed;
     private SpellTexture spellTexture;
 
-    private Long startingTimeSpell=0L;
+    private Long startingTimeSpell = 0L;
     private Long spellDuration;
     private boolean isBasic;
     private boolean isSpellActivated;
@@ -51,10 +51,12 @@ public class Spell implements UltraSpell {
 
     public Spell(SpellInstance spellInstance) {
         createHero();
-        this.spellInstance=spellInstance;
-        this.attackTrajectory = new AttackTrajectory(this,ultraHero);
+        this.spellInstance = spellInstance;
+        this.attackTrajectory = new AttackTrajectory(this, ultraHero);
         setSpellDetails();
     }
+
+
 
     public VertexArray createMesh() {
         float[] vertices = new float[]{
@@ -72,7 +74,7 @@ public class Spell implements UltraSpell {
         float[] tcs = new float[]{
                 0, indexHeight,
                 0, 0,
-                indexWidth , 0,
+                indexWidth, 0,
                 indexWidth, indexHeight
         };
 
@@ -108,19 +110,19 @@ public class Spell implements UltraSpell {
         Shader.SPELL.disable();
     }
 
-    public void setSpellDetails(){
+    public void setSpellDetails() {
         createProperties();
         setPosition();
-//        setMesh(createMesh());
+        mesh=createMesh();
     }
 
     public void createProperties() {
-        this.name=spellInstance.getName();
+        this.name = spellInstance.getName();
         this.castingSpeed = spellInstance.getCastingSpeed();
         this.executedSpell = spellInstance.getConsumedSpellTexture();
         this.missleSpell = spellInstance.getThrowingSpellTexture();
         this.texture = missleSpell.getTexture();
-        this.SIZE= missleSpell.getSize();
+        this.SIZE = missleSpell.getSize();
         this.powerAttack = spellInstance.getPowerAttack();
         this.manaConsumed = spellInstance.getManaConsumed();
     }
@@ -135,12 +137,12 @@ public class Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionX() {
-     return ultraHero.getX();
+        return ultraHero.getX();
     }
 
     @Override
     public Float getHeroPositionY() {
-        return ultraHero.getY() ;
+        return ultraHero.getY();
     }
 
     @Override
@@ -160,7 +162,6 @@ public class Spell implements UltraSpell {
     public void setPositionZ(Float positionZ) {
         this.position.z = positionZ;
     }
-
 
 
     public void setPosition(Float x, Float y, Float z) {

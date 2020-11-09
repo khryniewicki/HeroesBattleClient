@@ -6,11 +6,15 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.CreateText;
 
 import java.util.*;
-import java.util.List;
 
 
 public class TextMenuFactory {
+    public final static Texture BAR_FULL = new Texture("bar_full.png");
+    public final static Texture BAR_EMPTY = new Texture("bar_empty.png");
+    public final static Texture BAR_HALF = new Texture("bar_half.png");
+    public final static Texture BAR_SERVER_OFFLINE = new Texture("bar_server_offline.png");
     public static Map<String, MenuSymbol> TEXT_FACTORY;
+    public List<MenuSymbol> listWithCharacterMenuMessages;
 
     public static TextMenuFactory getInstance() {
         return TextMenuFactory.HELPER.INSTANCE;
@@ -24,6 +28,12 @@ public class TextMenuFactory {
         private final static TextMenuFactory INSTANCE = new TextMenuFactory();
     }
 
+    public List<MenuSymbol> getListWithCharacterMenuMessages() {
+        if (Objects.isNull(listWithCharacterMenuMessages)) {
+            listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, TABLE));
+        }
+        return listWithCharacterMenuMessages;
+    }
 
     private void fill() {
         TEXT_FACTORY = new HashMap<>();
@@ -39,9 +49,11 @@ public class TextMenuFactory {
     public MenuSymbol getText(String text) {
         return TEXT_FACTORY.get(text);
     }
-    public List<MenuSymbol> getListWithTextMainMenuSymbols(){
-        return new ArrayList<>(Arrays.asList(MENU_IMAGE,TEXT_FALLENKING,TEXT_FALLENMONK,TEXT_FALLENWITCHER,TEXT_FIREWIZARD,TEXT_ICEWIZARD,TEXT_THUNDERWIZARD));
+
+    public List<MenuSymbol> getListWithTextMainMenuSymbols() {
+        return new ArrayList<>(Arrays.asList(TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD, TEXT_ICEWIZARD, TEXT_THUNDERWIZARD));
     }
+
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
             .withTexture(CreateText.textToImageMenu("Please choose your hero"))
             .withName("NoHero")
@@ -118,23 +130,32 @@ public class TextMenuFactory {
 
     public static final MenuSymbol TABLE = new MenuSymbol.Builder()
             .withTexture(new Texture("blankTableWindow.png"))
+            .withDisabled(true)
             .withName("table")
-            .withDisabled(false)
             .withVisibility(0f)
             .withHeight(3.75f)
             .withWidth(13.5f)
             .withPositionX(-8.5f)
-            .withPositionY(-3f)
+            .withPositionY(-2.5f)
             .build();
 
-    public static final MenuSymbol PLAYERS_ONLINE_LABEL = new Button.Builder()
+    public static final MenuSymbol PLAYERS_DESCRIPTION_LABEL = new Button.Builder()
             .withTexture(new Texture("blankTextWindow.png"))
             .withDisabled(false)
             .withName("label")
             .withHeight(1f)
-            .withWidth(4f)
-            .withPositionX(6f)
-            .withPositionY(4.0f)
+            .withWidth(5f)
+            .withPositionX(5.55f)
+            .withPositionY(3.2f)
+            .build();
+    public static final MenuSymbol PLAYERS_BAR_LABEL = new Button.Builder()
+            .withTexture(new Texture("blankTextWindow.png"))
+            .withDisabled(false)
+            .withName("label")
+            .withHeight(2.5f)
+            .withWidth(3f)
+            .withPositionX(5.4f)
+            .withPositionY(3.0f)
             .build();
     public static final MenuSymbol LOADING = new Button.Builder()
             .withTexture(new Texture("blankTextWindow.png"))
@@ -144,5 +165,33 @@ public class TextMenuFactory {
             .withWidth(4f)
             .withPositionX(-1.0f)
             .withPositionY(0.0f)
+            .build();
+
+    public static final MenuSymbol ANIMATION_HERO = new Button.Builder()
+            .withTexture(new Texture("blankTextWindow.png"))
+            .isSizeKnown(true)
+            .withDisabled(false)
+            .withName("animation")
+            .withPositionX(-1.0f)
+            .withPositionY(2.8f)
+            .build();
+    public static final MenuSymbol ANIMATION_DUMMY = new Button.Builder()
+            .withTexture(new Texture("training_dummy1.png"))
+            .isSizeKnown(true)
+            .withDisabled(false)
+            .withSize(2f)
+            .withName("dummy")
+            .withPositionX(4f)
+            .withPositionY(2.8f)
+            .withVisibility(0f)
+            .build();
+    public static final MenuSymbol HERO_NAME = new Button.Builder()
+            .withPath("blankTextWindowWithLine.png")
+            .withName("HeroName")
+            .withDisabled(true)
+            .withHeight(1f)
+            .withWidth(4f)
+            .withPositionX(-5f)
+            .withPositionY(-3.8f)
             .build();
 }

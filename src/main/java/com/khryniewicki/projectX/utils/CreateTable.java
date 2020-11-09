@@ -26,8 +26,8 @@ public class CreateTable {
     }
 
     public static void createTableImage(BufferedImage image, SuperHero superHero) {
-        BasicSpellInstance basicSpellInstance = superHero.getBasicSpellInstance();
-        UltimateSpellInstance ultimateSpellInstance = superHero.getUltimateSpellInstance();
+        BasicSpellInstance basic = superHero.getBasicSpellInstance();
+        UltimateSpellInstance ultimate = superHero.getUltimateSpellInstance();
         Font font = new Font("Open Sans", Font.BOLD, 20);
 
         Graphics2D g2d = (Graphics2D) image.getGraphics();
@@ -42,12 +42,11 @@ public class CreateTable {
         g2d.setColor(Color.BLUE);
 
         String[] heroHeader = {"Life", "Mana", "Speed", "Basic Attack", "Ultimate Attack"};
-        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", "AAA", "BBB"};
 
-//        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", basicSpellInstance.getName(), ultimateSpellInstance.getName()};
+        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", basic.getName(), ultimate.getName()};
         String[] spellsHeader={"Spell", "Damage", "Mana Cost", "Speed", "Casting speed"};
-        String[] spelldata1={"AAA", "15", "10", "20", "4 sec."};
-        String[] spelldata2={"Fire Bomb", "25", "20", "20", "8 sec."};
+        String[] spelldata1={basic.getName(), basic.getPowerAttack().toString(), basic.getManaConsumed().toString(), String.valueOf(basic.getCastingSpeed()*10), String.format("%d sec", basic.getSpellDuration() / 1000)};
+        String[] spelldata2={ultimate.getName(), ultimate.getPowerAttack().toString(), ultimate.getManaConsumed().toString(), String.valueOf((ultimate.getCastingSpeed()*10)), String.format("%d sec", ultimate.getSpellDuration() / 1000)};
 
         for (int i = 0; i < heroHeader.length; i++) {
             int y = 20 + i * 40;

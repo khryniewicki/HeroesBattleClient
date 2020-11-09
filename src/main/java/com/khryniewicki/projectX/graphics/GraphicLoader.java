@@ -23,7 +23,8 @@ public class GraphicLoader implements Symbol {
     private Vector position;
     private float width;
     private float height;
-    boolean isSizeKnown;
+    private boolean isSizeKnown;
+    private boolean isMovingLeft;
 
     public GraphicLoader(Builder<?> builder) {
         this.path = builder.path;
@@ -38,14 +39,16 @@ public class GraphicLoader implements Symbol {
         this.height = builder.height;
         this.isSizeKnown = builder.isSizeKnown;
         this.position = new Vector();
-        init(path);
-    }
-
-    public void init(String path) {
         if (Objects.nonNull(path)) {
             this.texture = new Texture(path);
         }
+        updateMesh();
+    }
+
+    public void updateMesh() {
+
         float ratio = getRatio();
+        int t = isMovingLeft ? -1 : 1;
 
         if (isSizeKnown) {
             vertices = new float[]{
@@ -70,19 +73,18 @@ public class GraphicLoader implements Symbol {
         tcs = new float[]{
                 0, 1,
                 0, 0,
-                1, 0,
-                1, 1
+                t, 0,
+                t, 1
         };
         mesh = new VertexArray(vertices, indices, tcs);
-        Vector position = new Vector();
-        ml_matrix = Matrix4f.translate(position);
+
     }
 
     public void render() {
         texture.bind();
         Shader.TEXT.enable();
         mesh.bind();
-        Shader.TEXT.setUniformMat4f("ml_matrix", ml_matrix);
+        Shader.TEXT.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
         mesh.draw();
         mesh.render();
         Shader.TEXT.disable();
@@ -112,7 +114,7 @@ public class GraphicLoader implements Symbol {
         public Builder() {
         }
 
-        public T withSize(boolean isSizeKnown) {
+        public T isSizeKnown(boolean isSizeKnown) {
             this.isSizeKnown = isSizeKnown;
             return (T) this;
         }

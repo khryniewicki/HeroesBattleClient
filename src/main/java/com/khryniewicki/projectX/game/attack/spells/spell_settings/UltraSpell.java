@@ -33,7 +33,6 @@ public interface UltraSpell extends Ultra {
     boolean isSpellActivated();
     void setSpellActivated(boolean isActivated);
 
-    void setSpellInstance(SpellInstance spellInstance);
 
     Float getCastingSpeed();
 

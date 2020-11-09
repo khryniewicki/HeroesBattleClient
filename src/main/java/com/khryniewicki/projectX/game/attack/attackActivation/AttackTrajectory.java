@@ -106,6 +106,7 @@ public class AttackTrajectory {
     public void prepareSpell() {
         if (isSpellNotPrepared) {
             hero.setHeroAttack();
+            log.info("[x:{} , y:{}]",spell.getHeroPositionX(),spell.getHeroPositionY());
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
             if (spellInstance.getName().equals("Skull")) {
                 spell.setImage(Math.signum(1), (-Math.signum(distance.getX())) * (-Math.signum(distance.getY())), spellInstance.getThrowingSpellTexture());

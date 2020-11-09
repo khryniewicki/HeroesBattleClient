@@ -1,8 +1,10 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,9 +22,10 @@ import static org.lwjgl.opengl.GL11.*;
 @Slf4j
 
 public class MenuImp implements PropertyChangeListener, Menu {
-
+    private List<Symbol> animationSymbols=new ArrayList<>();
     private List<MenuSymbol> buttons = new ArrayList<>();
-    private List<MenuSymbol> messages=new ArrayList<>();
+    private List<MenuSymbol> messages = new ArrayList<>();
+    private List<MenuSymbol> constantImages = new ArrayList<>();
     private MousePosition mousePosition;
     private String news;
     private Menu menu;
@@ -40,11 +43,15 @@ public class MenuImp implements PropertyChangeListener, Menu {
         addEventClick();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         buttons.forEach(MenuSymbol::render);
+        constantImages.forEach(MenuSymbol::render);
+        animationSymbols.forEach(Symbol::render);
+
         messages.stream()
                 .filter(menuSymbol -> !menuSymbol.isDisabled())
                 .collect(Collectors.toList())
                 .forEach(MenuSymbol::render);
         swapBuffers();
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
-import com.khryniewicki.projectX.game.user_interface.symbols.observers.Listener;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import lombok.Data;
@@ -22,14 +21,12 @@ import java.util.TimerTask;
 
 @Data
 @Slf4j
-public class WebsocketScheduler implements Listener {
+public class WebsocketScheduler {
     private final Channels channels;
     private String sessionId;
     private String path = "https://heroes.khryniewicki.com.pl";
-    public static String numberOfPlayers = "";
+    public volatile static ServerState state = ServerState.START;
     private final PropertyChangeSupport support;
-
-    private volatile DispThreadState state = DispThreadState.PENDING;
 
     private WebsocketScheduler() {
         channels = Channels.getINSTANCE();
@@ -56,21 +53,22 @@ public class WebsocketScheduler implements Listener {
                 ResponseEntity<HashMap<String, Message>> exchange = restTemplate.exchange(request, responseType);
                 HashMap<String, Message> map = exchange.getBody();
                 if (Objects.nonNull(map)) {
-                    if (map.size() < 2) {
-                        setNews("Players online: " + map.size());
-                    }
-                    if (map.size() == 2) {
+                    if (map.size() == 0) {
+                        setState(ServerState.NO_PLAYERS);
+                    } else if (map.size() == 1) {
+                        setState(ServerState.ONE_PLAYER);
+                    } else if (map.size() == 2) {
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
-                            setNews("Over");
+                            setState(ServerState.JOIN_GAME);
                             timer.cancel();
                         } else {
-                            setNews("Server is full");
+                            setState(ServerState.TWO_PLAYERS);
                         }
                     }
                 } else {
-                    setNews("Server offline");
+                    setState(ServerState.SERVER_OFFLINE);
                 }
             }
         }, 0, 1000);
@@ -81,25 +79,23 @@ public class WebsocketScheduler implements Listener {
         return WebsocketScheduler.HELPER.INSTANCE;
     }
 
-    @Override
+
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
 
-    @Override
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
-
     }
+
 
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(propertyName, listener);
     }
 
-    @Override
-    public void setNews(String news) {
-        support.firePropertyChange("playersOnline", numberOfPlayers, news);
-        numberOfPlayers = news;
+    public void setState(ServerState new_state) {
+        support.firePropertyChange("playersOnline", state, new_state);
+        state = new_state;
     }
 
     private static class HELPER {

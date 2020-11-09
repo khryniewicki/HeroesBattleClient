@@ -22,7 +22,7 @@ public class HeroesInstances {
     private SuperHero hero;
     private UltraHero mock;
     private final HeroFactory heroFactory;
-    private String heroType;
+
 
     private HeroesInstances() {
         heroFactory = HeroFactory.getInstance();
@@ -71,7 +71,7 @@ public class HeroesInstances {
     }
 
 
-    public void setHero() { hero = heroFactory.create(heroType); }
+    public void setHero(String heroType) { hero = heroFactory.create(heroType); }
 
     public void setMock(String mockName) {
         mock = new HeroMock(heroFactory.create(mockName));

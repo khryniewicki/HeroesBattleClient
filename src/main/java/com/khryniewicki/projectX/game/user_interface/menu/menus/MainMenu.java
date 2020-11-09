@@ -2,23 +2,27 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.websocket.ServerState;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.Animation;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.utils.CreateText;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.PLAYERS_ONLINE_LABEL;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.TEXT_NO_HERO;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.*;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
@@ -34,8 +38,9 @@ public class MainMenu extends MenuImp {
     private final ButtonsFactory buttonsFactory;
     private final WebsocketScheduler websocketScheduler;
     private MenuSymbol noHero;
-    private MenuSymbol playersOnlineLabel;
-    private volatile String numberOfPlayers;
+    private MenuSymbol playersDescriptionLabel;
+    private MenuSymbol playersBarLabel;
+    private volatile ServerState state;
 
     public static MainMenu getInstance() {
         return instance;
@@ -60,12 +65,12 @@ public class MainMenu extends MenuImp {
         websocketScheduler.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                String newValue = (String) evt.getNewValue();
-                if (newValue.equals("Over")) {
+                ServerState serverState = (ServerState) evt.getNewValue();
+                if (serverState == ServerState.JOIN_GAME) {
                     setConnection(true);
                     websocketScheduler.removePropertyChangeListener(this);
                 } else {
-                    numberOfPlayers = newValue;
+                    state = serverState;
                 }
             }
         });
@@ -75,14 +80,17 @@ public class MainMenu extends MenuImp {
     public void init() {
         initButtons();
         initMessages();
+        initConstantImages();
     }
 
-    public void execute(){
-        String tmpNumbers="";
+
+    public void execute() {
+        ServerState tmpNumbers = null;
         do {
-            if (Objects.nonNull(numberOfPlayers) && !numberOfPlayers.equals(tmpNumbers)){
-                updateLabel(playersOnlineLabel, numberOfPlayers);
-                tmpNumbers = numberOfPlayers;
+            if (Objects.nonNull(state) && !state.equals(tmpNumbers)) {
+                updateLabel(playersDescriptionLabel, state);
+                updateLabelDescription(playersBarLabel, state);
+                tmpNumbers = state;
             }
             glfwPollEvents();
         } while (!running);
@@ -96,15 +104,18 @@ public class MainMenu extends MenuImp {
     private void initMessages() {
         List<MenuSymbol> listWithMenuSymbols = textMenuFactory.getListWithTextMainMenuSymbols();
         noHero = TEXT_NO_HERO;
-        playersOnlineLabel = PLAYERS_ONLINE_LABEL;
         listWithMenuSymbols.add(noHero);
-        listWithMenuSymbols.add(PLAYERS_ONLINE_LABEL);
         super.setMessages(listWithMenuSymbols);
+    }
+
+    private void initConstantImages() {
+        playersBarLabel = PLAYERS_BAR_LABEL;
+        playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
+        super.setConstantImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, MENU_IMAGE)));
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
         String buttonName = (String) evt.getNewValue();
         showMenu(buttonName);
     }
@@ -125,7 +136,7 @@ public class MainMenu extends MenuImp {
                 glfwDestroyWindow(Game.window);
                 break;
             case "Start":
-                if (Objects.nonNull(heroesInstances.getHeroType())) {
+                if (Objects.nonNull(heroesInstances.getHero())) {
                     setRunning(true);
                 } else {
                     showMessage(noHero);
@@ -147,31 +158,53 @@ public class MainMenu extends MenuImp {
         super.setMessages(menuSymbols);
     }
 
-    public void updateLabel(MenuSymbol symbol, String btnName) {
-        List<MenuSymbol> menuSymbols = super.getMessages()
+    public void updateLabel(MenuSymbol symbol, ServerState state) {
+        List<MenuSymbol> menuSymbols = super.getConstantImages()
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
-                        symbol.setTexture(CreateText.textToImageMenu(btnName));
+                        Color color = new Color(196, 255, 14);
+                        if (state.equals(ServerState.SERVER_OFFLINE)) {
+                            color = new Color(236, 28, 36);
+                        }
+                        symbol.setTexture(CreateText.textInPlayersMenuToImage(state.getTitle(), color));
                     }
                 })
                 .collect(Collectors.toList());
-        super.setMessages(menuSymbols);
+        super.setConstantImages(menuSymbols);
+        render();
+    }
+
+    public void updateLabelDescription(MenuSymbol symbol, ServerState state) {
+        List<MenuSymbol> menuSymbols = super.getConstantImages()
+                .stream()
+                .peek(menuSymbol -> {
+                    if (menuSymbol.getName().equals(symbol.getName())) {
+                        switch (state) {
+                            case NO_PLAYERS:
+                                symbol.setTexture(BAR_EMPTY);
+                                break;
+                            case ONE_PLAYER:
+                                symbol.setTexture(BAR_HALF);
+                                break;
+                            case TWO_PLAYERS:
+                                symbol.setTexture(BAR_FULL);
+                                break;
+                            case SERVER_OFFLINE:
+                                symbol.setTexture(BAR_SERVER_OFFLINE);
+                                break;
+                        }
+                    }
+                })
+                .collect(Collectors.toList());
+        super.setConstantImages(menuSymbols);
         render();
     }
 
     private void disableAllMessages() {
         List<MenuSymbol> menuSymbols = super.getMessages()
                 .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.getName().equals("menu_image")) {
-                        menuSymbol.setDisabled(false);
-                    } else if (menuSymbol.getName().equals("label")) {
-                        menuSymbol.setDisabled(false);
-                    } else {
-                        menuSymbol.setDisabled(true);
-                    }
-                })
+                .peek(menuSymbol -> menuSymbol.setDisabled(true))
                 .collect(Collectors.toList());
         super.setMessages(menuSymbols);
         render();
