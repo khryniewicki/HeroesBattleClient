@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.engine.GameLoopImp;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -8,7 +8,8 @@ import com.khryniewicki.projectX.game.user_interface.menu.menus.CharacterMenu;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -18,21 +19,22 @@ import java.util.Random;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.ANIMATION_DUMMY;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory.ANIMATION_HERO;
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
-@Data
-public class Animation {
+@Getter
+@Setter
+public class Animation extends GameLoopImp {
 
-    private boolean running = true;
     private boolean spellActive;
     private boolean tmpHeroSide;
-    private float left_boundary = -7.0f;
-    private float right_boundary = 2.5f;
     private int spellingCounter;
     private int randomCasting;
     private int loopCycles;
+    private float left_boundary = -7.0f;
+    private float right_boundary = 2.5f;
     private float speed = 0.2f;
+
     private AnimationSpell spell;
     private SuperHero superHero;
     private HeroFactory heroFactory;
@@ -47,49 +49,33 @@ public class Animation {
         animation_hero = ANIMATION_HERO;
         dummy = ANIMATION_DUMMY;
         random = new Random(331);
-        this.randomCasting = drawRandomNumber();
+        drawRandomNumber();
     }
 
     public void play(String hero) {
-        setRunning(true);
+        prepare(hero);
+        loop();
+    }
+
+    private void prepare(String hero) {
+        begin();
         superHero = heroFactory.create(hero);
         spell = new AnimationSpell(superHero, animation_hero);
         characterMenu = CharacterMenu.getInstance();
-        animationSymbols = characterMenu.getAnimationSymbols();
-        animationSymbols.add(animation_hero);
-        long lastTime = System.nanoTime();
-        double delta = 0.0;
-        double ns = 1000000000.0 / 60.0;
-        long timer = System.currentTimeMillis();
-        int updates = 0;
-        int frames = 0;
-        while (running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            if (delta >= 1.0) {
-                update();
-                updates++;
-                delta--;
-            }
-            render();
-            frames++;
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                glfwSetWindowTitle(Game.window, "HeroesBattle  | " + updates + " ups, " + frames + " fps ");
-                updates = 0;
-                frames = 0;
-            }
-            if (glfwWindowShouldClose(Game.window))
-                running = false;
-        }
+        addAnimationSymbol(animation_hero);
     }
 
-    private void render() {
+    @Override
+    public void loop() {
+        super.loop();
+    }
+
+    @Override
+    public void render() {
         characterMenu.render();
     }
 
-
+    @Override
     public void update() {
         if (!spellActive) {
             spellAndDummyControl();
@@ -108,98 +94,130 @@ public class Animation {
         }
         if (loopCycles == 9) {
             action(superHero.getHeroIdle());
-            spellingCounter++;
-            loopCycles = 0;
+            addSpellingCounter();
+            resetLoopCounter();
         }
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        characterMenu.setAnimationSymbols(new ArrayList<>());
     }
 
     private void spellAndDummyControl() {
         if (this.spellingCounter == (randomCasting - 40)) {
             addDummy();
-            this.spellingCounter++;
+            addSpellingCounter();
         } else if (this.spellingCounter == (randomCasting - 20)) {
             action(superHero.getHeroAttack());
             castingSpell();
-            this.spellingCounter++;
+            addSpellingCounter();
         } else if (this.spellingCounter > randomCasting) {
-            animationSymbols.remove(dummy);
-            removeIfSpellExists();
-            this.randomCasting = drawRandomNumber();
+            removeSymbol(dummy);
+            removeSpell();
+            drawRandomNumber();
             this.spellingCounter = 0;
         }
     }
 
+
     private void addDummy() {
         if (((left_boundary + right_boundary) / 2) <= getHeroX()) {
-            dummy.setPositionX(left_boundary - 0.5f);
-            dummy.setMovingLeft(true);
+            setPosition(dummy, left_boundary - 0.5f);
+            turnLeft(dummy, true);
         } else {
-            dummy.setPositionX(right_boundary + 0.5f);
-            dummy.setMovingLeft(false);
+            setPosition(dummy, right_boundary + 0.5f);
+            turnLeft(dummy, false);
         }
-        dummy.updateMesh();
-        animationSymbols.add(dummy);
+        updateMesh(dummy);
+        addAnimationSymbol(dummy);
     }
 
 
     private void castingSpell() {
-
-        tmpHeroSide = animation_hero.isMovingLeft();
-        animation_hero.setMovingLeft(dummy.getPositionX() < 0);
-        animation_hero.updateMesh();
+        tmpHeroSide = animation_hero.isTurningLeft();
+        turnLeft(animation_hero, dummy.getPositionX() < 0);
+        updateMesh(animation_hero);
         spell.newSpell(randomCasting);
         spell.setTarget(new Position(dummy.getPositionX(), dummy.getPositionY()));
-        animationSymbols.add(spell);
+        addAnimationSymbol(spell);
         setSpellActive(true);
-        loopCycles = 0;
+        resetLoopCounter();
     }
 
 
     private void resetCounting() {
         if (loopCycles == 20) {
-            this.loopCycles = 0;
+            resetLoopCounter();
             setSpellActive(false);
-            animation_hero.setMovingLeft(tmpHeroSide);
-            animation_hero.updateMesh();
+            turnLeft(animation_hero, tmpHeroSide);
+            updateMesh(animation_hero);
         }
     }
+
+    private void resetLoopCounter() {
+        this.loopCycles = 0;
+    }
+
 
     private void action(Texture texture) {
         glfwPollEvents();
         animation_hero.setTexture(texture);
         animation_hero.setSIZE(superHero.getSIZE());
-        animation_hero.updateMesh();
+        updateMesh(animation_hero);
     }
 
     private void move() {
         Float x = getHeroX();
         if (x > right_boundary) {
             speed = -0.2f;
-            animation_hero.setMovingLeft(true);
+            turnLeft(animation_hero, true);
         } else if (x < left_boundary) {
             speed = 0.2f;
-            animation_hero.setMovingLeft(false);
+            turnLeft(animation_hero, false);
         }
-        spellingCounter++;
+        addSpellingCounter();
         animation_hero.getPosition().x += speed;
     }
 
-    private int drawRandomNumber() {
-        return random.ints(60, 100).findFirst().getAsInt();
+    private void drawRandomNumber() {
+        this.randomCasting = random.ints(60, 100).findFirst().getAsInt();
     }
 
     private Float getHeroX() {
         return animation_hero.getPosition().x;
     }
 
-    public void removeIfSpellExists() {
-        if (Objects.nonNull(spell)) {
-            animationSymbols.removeIf(s -> s.getName().equals(spell.getName()));
+    private void updateMesh(MenuSymbol animation_hero) {
+        animation_hero.updateMesh();
+    }
+
+    private void setPosition(MenuSymbol symbol, float v) {
+        symbol.setPositionX(v);
+    }
+
+    private void turnLeft(MenuSymbol symbol, boolean b) {
+        symbol.setTurningLeft(b);
+    }
+
+    private void addAnimationSymbol(Symbol symbol) {
+        animationSymbols = characterMenu.getAnimationSymbols();
+        animationSymbols.add(symbol);
+    }
+
+    public void removeSymbol(Symbol menuSymbol) {
+        if (Objects.nonNull(menuSymbol)) {
+            animationSymbols.removeIf(s -> s.getName().equals(menuSymbol.getName()));
         }
     }
 
-    public void stop() {
-        characterMenu.setAnimationSymbols(new ArrayList<>());
-        setRunning(false);
+    private void addSpellingCounter() {
+        this.spellingCounter++;
     }
+
+    public void removeSpell() {
+        removeSymbol(spell);
+    }
+
 }

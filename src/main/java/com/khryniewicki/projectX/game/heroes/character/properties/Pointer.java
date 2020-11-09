@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;

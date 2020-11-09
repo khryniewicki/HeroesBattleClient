@@ -49,9 +49,9 @@ j  org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(J)V+17
 v  ~StubRoutines::call_stub
 J 4430  org.lwjgl.system.JNI.invokeV(J)V (0 bytes) @ 0x00000191e9cbc991 [0x00000191e9cbc940+0x0000000000000051]
 J 4436 c1 org.lwjgl.glfw.GLFW.glfwPollEvents()V (12 bytes) @ 0x00000191e9cbe35c [0x00000191e9cbe340+0x000000000000001c]
-j  com.khryniewicki.projectX.Game.initializeMenu()V+23
-j  com.khryniewicki.projectX.Game.initializeMultiplayerGame()V+1
-j  com.khryniewicki.projectX.Game.run()V+5
+j  com.khryniewicki.projectX.game.engine.Game.initializeMenu()V+23
+j  com.khryniewicki.projectX.game.engine.Game.initializeMultiplayerGame()V+1
+j  com.khryniewicki.projectX.game.engine.Game.run()V+5
 j  java.lang.Thread.run()V+11 java.base@13.0.1
 v  ~StubRoutines::call_stub
 

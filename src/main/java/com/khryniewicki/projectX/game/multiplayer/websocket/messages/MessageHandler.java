@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket.messages;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;

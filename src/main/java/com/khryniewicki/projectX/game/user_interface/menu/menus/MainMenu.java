@@ -1,10 +1,9 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.ServerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.Animation;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;

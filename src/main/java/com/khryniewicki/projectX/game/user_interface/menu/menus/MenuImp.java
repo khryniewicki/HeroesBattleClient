@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.Game;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.khryniewicki.projectX.Game.window;
+import static com.khryniewicki.projectX.game.engine.Game.window;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 

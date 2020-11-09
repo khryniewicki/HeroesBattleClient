@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.CharacterMenu;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Getter;

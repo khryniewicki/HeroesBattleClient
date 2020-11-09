@@ -65,7 +65,7 @@ public class CharacterMenu extends MenuImp {
     }
 
     public void initAnimation(String character) {
-        animation.removeIfSpellExists();
+        animation.removeSpell();
         animation.play(character);
     }
 
@@ -128,7 +128,6 @@ public class CharacterMenu extends MenuImp {
             buttons.add(symbol);
             symbol.addPropertyChangeListener(this);
         }
-        render();
     }
 
     public void toggleMessagesVisibility(MenuSymbol symbol) {
@@ -168,6 +167,5 @@ public class CharacterMenu extends MenuImp {
                 })
                 .collect(Collectors.toList());
         super.setMessages(menuSymbols);
-        render();
     }
 }

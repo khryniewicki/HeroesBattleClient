@@ -24,7 +24,7 @@ public class GraphicLoader implements Symbol {
     private float width;
     private float height;
     private boolean isSizeKnown;
-    private boolean isMovingLeft;
+    private boolean isTurningLeft;
 
     public GraphicLoader(Builder<?> builder) {
         this.path = builder.path;
@@ -48,7 +48,7 @@ public class GraphicLoader implements Symbol {
     public void updateMesh() {
 
         float ratio = getRatio();
-        int t = isMovingLeft ? -1 : 1;
+        int t = isTurningLeft ? -1 : 1;
 
         if (isSizeKnown) {
             vertices = new float[]{

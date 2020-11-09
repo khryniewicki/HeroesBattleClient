@@ -11,7 +11,6 @@ public interface Symbol {
         return "";
     }
 
-
     default void setTexture(Texture texture) {
     }
 

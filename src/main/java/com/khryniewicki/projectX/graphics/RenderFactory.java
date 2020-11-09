@@ -7,7 +7,7 @@ import com.khryniewicki.projectX.utils.CreateText;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.khryniewicki.projectX.Game.window;
+import static com.khryniewicki.projectX.game.engine.Game.window;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.*;
 

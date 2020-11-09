@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.control_settings.mouse_settings;
 
-import com.khryniewicki.projectX.Game;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
