@@ -27,7 +27,6 @@ public class IceWizard extends SuperHero {
         setHeroUp(HeroUtil.ICE_WIZARD_RUN);
         setHeroDown(HeroUtil.ICE_WIZARD_RUN);
         setHeroAttack(HeroUtil.ICE_WIZARD_ATTACK);
-
     }
 
     @Override
@@ -43,10 +42,5 @@ public class IceWizard extends SuperHero {
         setHero_top_offset(0.5f);
         setMana(100);
         setLife(100);
-
     }
-
-
-
-
 }

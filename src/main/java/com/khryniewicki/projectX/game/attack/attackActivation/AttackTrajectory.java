@@ -11,7 +11,8 @@ import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.khryniewicki.projectX.utils.SpellUtil.ICEBALL_STRAIGHT;
+import static com.khryniewicki.projectX.utils.SpellUtil.ICEBALL_SIDE;
+import static com.khryniewicki.projectX.utils.SpellUtil.ICEBALL_UP;
 
 @Slf4j
 @Data
@@ -123,8 +124,14 @@ public class AttackTrajectory {
 
     private void iceball_exception() {
         if (spellInstance.getName().equals("IceBerg") || spellInstance.getName().equals("IceBolt")) {
-            if (distance.getX() < 0.5 || distance.getY() < 0.5) {
-                spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), new SpellTexture(ICEBALL_STRAIGHT, spellInstance.getThrowingSpellTexture().getSize()));
+            log.info("distX {}, distY {}", distance.getX(), distance.getY());
+            float size = spellInstance.getThrowingSpellTexture().getSize();
+            if (Math.abs(distance.getY()) < 1) {
+                log.info("protopadly");
+                spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), new SpellTexture(ICEBALL_SIDE, size*1.2f));
+            } else if (Math.abs(distance.getX()) < 1) {
+                log.info("rownolegly");
+                spell.setImage(Math.signum(distance.getY()), Math.signum(distance.getX()), new SpellTexture(ICEBALL_UP, size*1.2f));
             }
         }
     }
