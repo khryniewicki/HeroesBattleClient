@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.*;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.HERO_NAME;
@@ -59,9 +58,9 @@ public class CharacterMenu extends MenuImp {
     public void initMessages() {
         HERO_NAME.addPropertyChangeListener(evt -> {
             String newValue = (String) evt.getNewValue();
-            updateSymbol(HERO_NAME, getTextureFromTextFactory(newValue));
+            updateImage(HERO_NAME, getTextureFromTextFactory(newValue));
         });
-        super.setMessages(textureMenuFactory.getListWithCharacterMenuMessages());
+        super.setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
     }
 
 
@@ -79,22 +78,22 @@ public class CharacterMenu extends MenuImp {
         switch (btnName) {
             case "Return":
                 animation.stop();
-                setMessagesVisibility(TABLE, true);
+                toggleImage(TABLE, true);
                 removeButton(CHARACTER_SKILLS);
                 mainMenu.render();
                 break;
             case "showTable":
-                setMessagesVisibility(TABLE, !TABLE.isDisabled());
-                updateSymbol(CHARACTER_SKILLS, TABLE.isDisabled() ? HIDE_SKILLS : SKILLS);
+                toggleImage(TABLE, !TABLE.isDisabled());
+                updateImage(CHARACTER_SKILLS, TABLE.isDisabled() ? HIDE_SKILLS : SKILLS);
                 break;
             case "typeYourName":
-                setMessagesVisibility(HERO_NAME, activeWriting);
-                updateSymbol(TYPE_YOUR_NAME, activeWriting ? TYPE_NAME : CONFIRM);
+                toggleImage(HERO_NAME, activeWriting);
+                updateImage(TYPE_YOUR_NAME, activeWriting ? TYPE_NAME : CONFIRM);
                 this.activeWriting = !activeWriting;
                 break;
             default:
                 addButton(CHARACTER_SKILLS);
-                updateSymbol(TABLE, getTextureFromTableFactory(btnName));
+                updateImage(TABLE, getTextureFromTableFactory(btnName));
                 setHero(btnName);
                 initAnimation(btnName);
                 showMessageInMainMenu(btnName);
@@ -134,18 +133,7 @@ public class CharacterMenu extends MenuImp {
         }
     }
 
-    public void updateSymbol(MenuSymbol symbol, Texture texture) {
-        List<MenuSymbol> menuSymbols = super.getMessages()
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(texture);
-                    }
-                })
-                .collect(Collectors.toList());
-        super.setMessages(menuSymbols);
-        render();
-    }
+
 
     private Texture getTextureFromTextFactory(String name) {
         return TextFactory.textToImageWithLine(name, 30);

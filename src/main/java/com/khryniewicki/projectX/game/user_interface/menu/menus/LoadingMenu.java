@@ -2,8 +2,8 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellRegistry;
 import com.khryniewicki.projectX.game.heroes.character.wizards.FireWizard;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
+import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,6 @@ public class LoadingMenu extends MenuImp {
         return instance;
     }
 
-    private MenuSymbol loading;
     private SpellRegistry spellRegistry;
 
     private LoadingMenu() {
@@ -34,8 +33,7 @@ public class LoadingMenu extends MenuImp {
 
     @Override
     public void init() {
-        loading = LOADING;
-        setMessages(Collections.singletonList(loading));
+        setVolatileImages(Collections.singletonList(LOADING));
     }
 
     public void execute() {
@@ -67,7 +65,11 @@ public class LoadingMenu extends MenuImp {
     private void getProgress(long now) {
         long progress = (System.currentTimeMillis() - now) / 50;
         String text = "Loading " + progress + "%";
-        loading.setTexture(TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN));
+        updateImage(LOADING, getTextureForLoading(text));
         render();
+    }
+
+    private Texture getTextureForLoading(String text) {
+        return TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN);
     }
 }

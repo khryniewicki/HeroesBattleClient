@@ -29,7 +29,7 @@ public class ControlSettingsMenu extends MenuImp {
 
     @Override
     public void init() {
-        super.setMessages(factory.listWithControlSettingsIcons);
+        super.setVolatileImages(factory.listWithControlSettingsIcons);
         super.setButtons(new ArrayList<>(Collections.singletonList(ButtonsFactory.RETURN_BUTTON2)));
     }
 

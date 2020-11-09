@@ -105,13 +105,13 @@ public class MainMenu extends MenuImp {
         List<MenuSymbol> listWithMenuSymbols = textureMenuFactory.getListWithTextMainMenuSymbols();
         noHero = TEXT_NO_HERO;
         listWithMenuSymbols.add(noHero);
-        super.setMessages(listWithMenuSymbols);
+        super.setVolatileImages(listWithMenuSymbols);
     }
 
     private void initConstantImages() {
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
-        super.setConstantImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, MENU_IMAGE)));
+        super.setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, MENU_IMAGE)));
     }
 
     @Override
@@ -147,11 +147,11 @@ public class MainMenu extends MenuImp {
     }
 
     public void showMessage(MenuSymbol symbol) {
-        setMessagesVisibility(symbol, false);
+        toggleImage(symbol, false);
     }
 
     public void updateLabel(MenuSymbol symbol, ServerState state) {
-        List<MenuSymbol> menuSymbols = super.getConstantImages()
+        List<MenuSymbol> menuSymbols = super.getPermanentImages()
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
@@ -163,12 +163,12 @@ public class MainMenu extends MenuImp {
                     }
                 })
                 .collect(Collectors.toList());
-        super.setConstantImages(menuSymbols);
+        super.setPermanentImages(menuSymbols);
         render();
     }
 
     public void updateLabelDescription(MenuSymbol symbol, ServerState state) {
-        List<MenuSymbol> menuSymbols = super.getConstantImages()
+        List<MenuSymbol> menuSymbols = super.getPermanentImages()
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
@@ -189,12 +189,12 @@ public class MainMenu extends MenuImp {
                     }
                 })
                 .collect(Collectors.toList());
-        super.setConstantImages(menuSymbols);
+        super.setPermanentImages(menuSymbols);
         render();
     }
 
     private void disableAllMessages() {
-        super.getMessages().forEach(s -> setMessagesVisibility(s, true));
+        super.getVolatileImages().forEach(s -> toggleImage(s, true));
     }
 
 }

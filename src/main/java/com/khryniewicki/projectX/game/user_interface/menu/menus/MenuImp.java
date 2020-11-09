@@ -1,9 +1,10 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,13 +22,11 @@ import static org.lwjgl.opengl.GL11.*;
 @Slf4j
 
 public class MenuImp implements PropertyChangeListener, Menu {
-    private List<Symbol> animationSymbols=new ArrayList<>();
+    private List<Symbol> animationSymbols = new ArrayList<>();
     private List<MenuSymbol> buttons = new ArrayList<>();
-    private List<MenuSymbol> messages = new ArrayList<>();
-    private List<MenuSymbol> constantImages = new ArrayList<>();
-    private MousePosition mousePosition;
-    private String news;
-    private Menu menu;
+    private List<MenuSymbol> volatileImages = new ArrayList<>();
+    private List<MenuSymbol> permanentImages = new ArrayList<>();
+    private final MousePosition mousePosition;
 
     public MenuImp() {
         mousePosition = new MousePosition();
@@ -42,10 +41,9 @@ public class MenuImp implements PropertyChangeListener, Menu {
         addEventClick();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         buttons.forEach(MenuSymbol::render);
-        constantImages.forEach(MenuSymbol::render);
+        permanentImages.forEach(MenuSymbol::render);
         animationSymbols.forEach(Symbol::render);
-
-        messages.stream()
+        volatileImages.stream()
                 .filter(menuSymbol -> !menuSymbol.isDisabled())
                 .collect(Collectors.toList())
                 .forEach(MenuSymbol::render);
@@ -87,8 +85,8 @@ public class MenuImp implements PropertyChangeListener, Menu {
         subscribe();
     }
 
-    public void setMessagesVisibility(MenuSymbol symbol, boolean state) {
-        List<MenuSymbol> menuSymbols = messages
+    public void toggleImage(MenuSymbol symbol, boolean state) {
+        List<MenuSymbol> menuSymbols = volatileImages
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.equals(symbol)) {
@@ -96,7 +94,20 @@ public class MenuImp implements PropertyChangeListener, Menu {
                     }
                 })
                 .collect(Collectors.toList());
-        setMessages(menuSymbols);
+        setVolatileImages(menuSymbols);
+        render();
+    }
+
+    public void updateImage(MenuSymbol symbol, Texture texture) {
+        List<MenuSymbol> menuSymbols = volatileImages
+                .stream()
+                .peek(menuSymbol -> {
+                    if (menuSymbol.equals(symbol)) {
+                        symbol.setTexture(texture);
+                    }
+                })
+                .collect(Collectors.toList());
+        setVolatileImages(menuSymbols);
         render();
     }
 }
