@@ -16,7 +16,7 @@ public class IceBerg extends Spell {
     public void setProperties() {
         setName("IceBerg");
         setBasic(false);
-        setCastingSpeed(0.25f);
+        setCastingSpeed(0.05f);
         setSpellDuration(6000L);
         setPowerAttack(20);
         setManaConsumed(15);

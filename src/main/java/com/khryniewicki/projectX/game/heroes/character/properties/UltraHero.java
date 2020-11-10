@@ -17,13 +17,16 @@ public interface UltraHero extends Ultra {
     void setLifeBar(LifeBar lifeBar);
 
     Integer getLife();
-    default void setLife(Integer mana){};
+    default void setLife(Integer mana){}
 
     ManaBar getManaBar();
     void setManaBar(ManaBar manaBar);
 
+    Long getManaRenegeration();
+    void setManaRenegeration(Long manaRenegeration);
+
     Integer getMana();
-    default void setMana(Integer mana){};
+    default void setMana(Integer mana){}
 
     UltraSpell getBasicSpell();
     void setBasicSpell(UltraSpell ultraSpell);
@@ -34,10 +37,10 @@ public interface UltraHero extends Ultra {
     StartingPosition getStartingPosition();
     void setStartingPosition(StartingPosition startingPosition);
 
-    default void setSpellBasis(){};
-    default void setHeroIdle(){};
-    default void setHeroRun(){};
-    default void setHeroAttack(){};
-    default void updateManaBar(){};
+    default void setSpellBasis(){}
+    default void setHeroIdle(){}
+    default void setHeroRun(){}
+    default void setHeroAttack(){}
+    default void updateManaBar(){}
 
 }

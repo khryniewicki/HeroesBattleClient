@@ -81,6 +81,7 @@ public class HeroMock implements UltraHero {
         ManaBar manaBar = getManaBar();
         manaBar.updateManaBar();
     }
+
     @Override
     public void update() {
         mockMove();
@@ -158,11 +159,12 @@ public class HeroMock implements UltraHero {
 
     @Override
     public UltraSpell getUltimateSpell() {
-        return ultraHero.getUltimateSpell();    }
+        return ultraHero.getUltimateSpell();
+    }
 
     @Override
     public void setUltimateSpell(UltraSpell ultraSpell) {
-            ultraHero.setUltimateSpell(ultraSpell);
+        ultraHero.setUltimateSpell(ultraSpell);
     }
 
     @Override
@@ -251,6 +253,16 @@ public class HeroMock implements UltraHero {
     @Override
     public void setManaBar(ManaBar manaBar) {
         ultraHero.setManaBar(manaBar);
+    }
+
+    @Override
+    public Long getManaRenegeration() {
+        return ultraHero.getManaRenegeration();
+    }
+
+    @Override
+    public void setManaRenegeration(Long manaRenegeration) {
+        ultraHero.setManaRenegeration(manaRenegeration);
     }
 
     @Override
