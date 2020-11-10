@@ -44,7 +44,7 @@ public class TextFactory {
         return new Texture(image);
     }
     public static Texture textInConnectionWindow(String text) {
-        BufferedImage image = new Texture("blankTextWindow.png").getImage();
+        BufferedImage image = new Texture("blankTextWindowConnection.png").getImage();
         Font font = new Font("Open Sans", Font.BOLD, 20);
         setImage(text, font, defaultColor, image);
         return new Texture(image);
