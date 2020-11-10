@@ -111,7 +111,7 @@ public class MainMenu extends MenuImp {
     private void initConstantImages() {
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
-        super.setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, MENU_IMAGE)));
+        super.setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel,BG_ANIMATION, MENU_IMAGE)));
     }
 
     @Override

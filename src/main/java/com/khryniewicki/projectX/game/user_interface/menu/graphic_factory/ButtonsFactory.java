@@ -54,7 +54,7 @@ public class ButtonsFactory {
             .build();
 
     public static final MenuSymbol CHOOSE_CHARACTER = new Button.Builder()
-            .withPath("ChooseCharacter.png")
+            .withPath("select.png")
             .withName("ChooseCharacter")
             .withHeight(1f)
             .withWidth(4f)

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.BG_ANIMATION;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
 
@@ -23,7 +24,7 @@ public class ControlSettingsMenuFactory {
     }
 
     private void fill() {
-        listWithControlSettingsIcons = new ArrayList<>(Arrays.asList(MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT,
+        listWithControlSettingsIcons = new ArrayList<>(Arrays.asList(BG_ANIMATION,MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT,
                 TEXT_UP, BASIC_ATTACK, ULTIMATE_ATTACK));
     }
 

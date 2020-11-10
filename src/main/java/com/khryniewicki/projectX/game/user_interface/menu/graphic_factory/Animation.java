@@ -61,7 +61,7 @@ public class Animation extends GameLoopImp {
         begin();
         superHero = heroFactory.create(hero);
         spell = new AnimationSpell(superHero, animation_hero);
-        characterMenu = CharacterMenu.getInstance();
+        initCharacterMenu();
         addAnimationSymbol(animation_hero);
     }
 
@@ -102,7 +102,12 @@ public class Animation extends GameLoopImp {
     @Override
     public void stop() {
         super.stop();
+        initCharacterMenu();
         characterMenu.setAnimationSymbols(new ArrayList<>());
+    }
+
+    private void initCharacterMenu() {
+        characterMenu = CharacterMenu.getInstance();
     }
 
     private void spellAndDummyControl() {
