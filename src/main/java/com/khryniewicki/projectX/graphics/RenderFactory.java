@@ -44,7 +44,7 @@ public class RenderFactory {
                 .withTexture(TextFactory.textInConnectionWindow(text))
                 .withName(text)
                 .withHeight(0.8f)
-                .withWidth(7f)
+                .withWidth(10f)
                 .withPositionX(-9.5f)
                 .withPositionY(level)
                 .build();

@@ -29,7 +29,7 @@ public class TextureMenuFactory {
 
     public List<MenuSymbol> getListWithCharacterMenuMessages() {
         if (Objects.isNull(listWithCharacterMenuMessages)) {
-            listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, TABLE));
+            listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, BG_ANIMATION,TABLE));
         }
         return listWithCharacterMenuMessages;
     }
@@ -131,7 +131,7 @@ public class TextureMenuFactory {
             .withTexture(new Texture("blankTableWindow.png"))
             .withDisabled(true)
             .withName("table")
-            .withVisibility(0f)
+            .withVisibility(1f)
             .withHeight(3.75f)
             .withWidth(13.5f)
             .withPositionX(-8.5f)
@@ -173,6 +173,16 @@ public class TextureMenuFactory {
             .withName("animation")
             .withPositionX(-1.0f)
             .withPositionY(2.8f)
+            .build();
+    public static final MenuSymbol BG_ANIMATION = new Button.Builder()
+            .withTexture(new Texture("bgAnimation.png"))
+            .withDisabled(false)
+            .withName("bg_animation")
+            .withHeight(11f)
+            .withWidth(20f)
+            .withVisibility(-0.5f)
+            .withPositionX(-10f)
+            .withPositionY(-5.5f)
             .build();
     public static final MenuSymbol ANIMATION_DUMMY = new Button.Builder()
             .withTexture(new Texture("training_dummy1.png"))

@@ -74,11 +74,13 @@ public class CharacterMenu extends MenuImp {
     public void propertyChange(PropertyChangeEvent evt) {
         String btnName = (String) evt.getNewValue();
         mainMenu = MainMenu.getInstance();
-        log.info("{}", btnName);
         switch (btnName) {
             case "Return":
                 animation.stop();
                 toggleImage(TABLE, true);
+                toggleImage(HERO_NAME, true);
+                updateButtonText(CHARACTER_SKILLS, HIDE_SKILLS);
+                updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
                 removeButton(CHARACTER_SKILLS);
                 setActiveWriting(false);
                 mainMenu.render();
@@ -86,12 +88,12 @@ public class CharacterMenu extends MenuImp {
             case "showTable":
                 boolean disabled = TABLE.isDisabled();
                 toggleImage(TABLE, !disabled);
-                updateButtonText(disabled, CHARACTER_SKILLS, HIDE_SKILLS, SKILLS);
+                updateButtonText(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SKILLS);
                 break;
             case "typeYourName":
                 toggleImage(HERO_NAME, activeWriting);
                 this.activeWriting = !activeWriting;
-                updateButtonText(activeWriting, TYPE_YOUR_NAME, CONFIRM, TYPE_NAME);
+                updateButtonText(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
             default:
                 addButton(CHARACTER_SKILLS);
@@ -103,8 +105,8 @@ public class CharacterMenu extends MenuImp {
         }
     }
 
-    private void updateButtonText(boolean disabled, MenuSymbol characterSkills, Texture hideSkills, Texture skills) {
-        characterSkills.setTexture(disabled ? hideSkills : skills);
+    private void updateButtonText(MenuSymbol characterSkills, Texture tex) {
+        characterSkills.setTexture(tex);
         render();
     }
 

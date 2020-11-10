@@ -22,18 +22,19 @@ public class SuperHero implements UltraHero {
 
     private boolean isTurningLeft;
     private VertexArray mesh;
-    private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle,heroAttack;
+    private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle, heroAttack;
     private Vector position;
 
     private String name;
     private Integer life;
     private Integer mana;
+    private Long manaRenegeration = 1000l;
 
     public static float hero_positionX0;
     public static float hero_positionY0;
-    private float hero_left_offset,hero_right_offset,hero_bottom_offset;
+    private float hero_left_offset, hero_right_offset, hero_bottom_offset;
     private float hero_top_offset;
-    public float SIZE=1f;
+    public float SIZE = 1f;
 
     private LifeBar lifeBar;
     private ManaBar manaBar;

@@ -105,8 +105,7 @@ public class AttackTrajectory {
         }
         spell.setSpellActivated(false);
     }
-
-
+///TODO:znikające spell
     public void prepareSpell() {
         if (isSpellNotPrepared) {
             hero.setHeroAttack();
@@ -127,10 +126,8 @@ public class AttackTrajectory {
             log.info("distX {}, distY {}", distance.getX(), distance.getY());
             float size = spellInstance.getThrowingSpellTexture().getSize();
             if (Math.abs(distance.getY()) < 1) {
-                log.info("protopadly");
                 spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), new SpellTexture(ICEBALL_SIDE, size*1.2f));
-            } else if (Math.abs(distance.getX()) < 1) {
-                log.info("rownolegly");
+            } else if (Math.abs(distance.getX()) < 1.5) {
                 spell.setImage(Math.signum(distance.getY()), Math.signum(distance.getX()), new SpellTexture(ICEBALL_UP, size*1.2f));
             }
         }

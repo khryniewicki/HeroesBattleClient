@@ -31,7 +31,7 @@ public class ManaBar {
         height = 0.07f;
         width = 0.65f;
         hero = ultraHero;
-        stackEvent=StackEvent.getInstance();
+        stackEvent = StackEvent.getInstance();
         updateManaBar();
 
     }
@@ -64,10 +64,10 @@ public class ManaBar {
         float offsetPositionX = -0.3f;
         float heroPositionX = hero.getPosition().x;
         float heroPositionY = hero.getPosition().y;
-        float visibility= 0.8f;
+        float visibility = 0.8f;
         float[] vertices = new float[]{
-                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY , visibility,
-                offsetPositionX + heroPositionX , offsetPositionY + heroPositionY + height,visibility,
+                offsetPositionX + heroPositionX, offsetPositionY + heroPositionY, visibility,
+                offsetPositionX + heroPositionX, offsetPositionY + heroPositionY + height, visibility,
                 offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY + height, visibility,
                 offsetPositionX + heroPositionX + manaFactor * width, offsetPositionY + heroPositionY, visibility
         };
@@ -94,7 +94,7 @@ public class ManaBar {
             start = System.currentTimeMillis();
         }
 
-        if (System.currentTimeMillis() - start > 3000) {
+        if (System.currentTimeMillis() - start > hero.getManaRenegeration()) {
             addMana();
             updateManaBar();
             start = null;
@@ -103,10 +103,9 @@ public class ManaBar {
 
     private void addMana() {
         Integer mana = hero.getMana();
-
         if (mana <= 98) {
             hero.setMana(mana + 2);
-        }else if (mana==99){
+        } else if (mana == 99) {
             hero.setMana(mana + 1);
         }
     }
