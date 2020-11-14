@@ -38,6 +38,7 @@ public class SuperHero implements UltraHero {
 
     private LifeBar lifeBar;
     private ManaBar manaBar;
+    private PlayerNameBar playerNameBar;
     private MoveSettings moveSettings;
     private StartingPosition startingPosition;
 
@@ -87,6 +88,7 @@ public class SuperHero implements UltraHero {
         Shader.HERO.disable();
         lifeBar.render();
         manaBar.render();
+        playerNameBar.render();
     }
 
 

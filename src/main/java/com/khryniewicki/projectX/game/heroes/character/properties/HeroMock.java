@@ -10,7 +10,7 @@ import com.khryniewicki.projectX.services.HeroReceiveService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class HeroMock implements UltraHero {
+public class HeroMock extends SuperHero {
     private Position tmp, finalPosition;
     private Integer tmpLife;
     private Integer tmpMana;
@@ -120,6 +120,11 @@ public class HeroMock implements UltraHero {
     @Override
     public void render() {
         ultraHero.render();
+    }
+
+    @Override
+    public void setPlayerNameBar(PlayerNameBar playerBarName) {
+        ultraHero.setPlayerNameBar(playerBarName);
     }
 
     @Override

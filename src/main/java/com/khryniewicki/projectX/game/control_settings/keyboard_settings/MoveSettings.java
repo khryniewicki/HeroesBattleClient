@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MouseSettings;
+import com.khryniewicki.projectX.game.heroes.character.properties.PlayerNameBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
@@ -19,13 +20,14 @@ public class MoveSettings {
     private final StackEvent stackEvent;
     private final LifeBar lifeBar;
     private final ManaBar manaBar;
-
+    private final PlayerNameBar playerNameBar;
     private MoveSettings() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         stackEvent = StackEvent.getInstance();
         lifeBar = hero.getLifeBar();
         manaBar = hero.getManaBar();
+        playerNameBar=hero.getPlayerNameBar();
         MouseSettings mouseSettings = MouseSettings.getInstance();
         mouseSettings.setMouseCallBack();
         move();
@@ -70,6 +72,7 @@ public class MoveSettings {
             hero.setMesh(hero.createHero());
             lifeBar.updateLifeBar();
             manaBar.updateManaBar();
+            playerNameBar.update();
         } else
             stackEvent.setHasAction(false);
     }

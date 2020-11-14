@@ -36,6 +36,7 @@ public class Shader {
         STRIP=  new Shader("hero.vert", "hero.frag");
         SYMBOL=  new Shader("object.vert", "object.frag");
 
+
     }
 
 

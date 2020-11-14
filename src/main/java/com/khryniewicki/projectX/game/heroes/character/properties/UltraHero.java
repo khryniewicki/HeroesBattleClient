@@ -18,7 +18,7 @@ public interface UltraHero extends Ultra {
 
     Integer getLife();
     default void setLife(Integer mana){}
-
+    default void setPlayerNameBar(PlayerNameBar playerNameBar){}
     ManaBar getManaBar();
     void setManaBar(ManaBar manaBar);
 
