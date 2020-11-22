@@ -9,8 +9,6 @@ import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.text.AttributedString;
 
-import static com.khryniewicki.projectX.graphics.Colors.BOTTLE_GREEN;
-import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_GREEN;
 
 public class TextFactory {
     private static Color defaultColor = Color.WHITE;
@@ -22,12 +20,12 @@ public class TextFactory {
         setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
-    public static Texture textToPlayerName(String text, int fontSize) {
+    public static Texture textToPlayerName(String text) {
 
         BufferedImage image = new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = image.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        Font font = new Font("Comic Sans FTW", Font.BOLD, fontSize);
+        Font font = new Font("Comic Sans FTW", Font.BOLD, 35);
         FontRenderContext frc = graphics.getFontRenderContext();
         TextLayout textTl = new TextLayout(text, font, frc);
         Shape outline = textTl.getOutline(null);
@@ -40,7 +38,7 @@ public class TextFactory {
 //            Stroke stroke = g2d.getStroke();
         graphics.setColor(Color.BLUE);
         graphics.fill(outline);
-        graphics.setStroke(new BasicStroke(0.5f));
+        graphics.setStroke(new BasicStroke(0.8f));
         // Comic Sans FTW
         graphics.setFont(font);
         graphics.setColor(Color.BLACK);

@@ -6,6 +6,9 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 
 public interface UltraHero extends Ultra {
+    void setHeroAttributes(HeroAttributes heroAttributes);
+    HeroAttributes getHeroAttributes();
+
     Float getX();
     Float getY();
 
@@ -14,14 +17,10 @@ public interface UltraHero extends Ultra {
     void setTurningLeft(boolean movingLeft);
 
     LifeBar getLifeBar();
-    void setLifeBar(LifeBar lifeBar);
-
     Integer getLife();
     default void setLife(Integer mana){}
-    default void setPlayerNameBar(PlayerNameBar playerNameBar){}
     ManaBar getManaBar();
-    void setManaBar(ManaBar manaBar);
-
+    PlayerNameBar getPlayerNameBar();
     Long getManaRenegeration();
     void setManaRenegeration(Long manaRenegeration);
 

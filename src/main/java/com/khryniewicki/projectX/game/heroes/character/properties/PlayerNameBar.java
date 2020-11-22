@@ -11,6 +11,7 @@ public class PlayerNameBar extends GraphicLoader {
     public PlayerNameBar(Builder builder) {
         super(builder);
         this.ultraHero = builder.ultraHero;
+        update();
     }
 
 

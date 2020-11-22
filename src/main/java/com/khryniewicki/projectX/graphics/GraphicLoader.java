@@ -26,6 +26,9 @@ public class GraphicLoader implements Symbol {
     private boolean isSizeKnown;
     private boolean isTurningLeft;
 
+    public GraphicLoader() {
+    }
+
     public GraphicLoader(Builder<?> builder) {
         this.path = builder.path;
         this.texture = builder.texture;
@@ -45,9 +48,9 @@ public class GraphicLoader implements Symbol {
         updateMesh();
     }
 
-    public void updateMesh() {
+    public VertexArray updateMesh() {
 
-        float ratio = getRatio();
+//        float ratio = getRatio();
         int t = isTurningLeft ? -1 : 1;
 
         if (isSizeKnown) {
@@ -77,7 +80,7 @@ public class GraphicLoader implements Symbol {
                 t, 1
         };
         mesh = new VertexArray(vertices, indices, tcs);
-
+        return mesh;
     }
 
     public void render() {

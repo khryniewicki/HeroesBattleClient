@@ -3,10 +3,7 @@ package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.collision.Collision;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MouseSettings;
-import com.khryniewicki.projectX.game.heroes.character.properties.PlayerNameBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
-import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.*;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.StackEvent;
@@ -18,16 +15,13 @@ public class MoveSettings {
     private Vector position;
     private final SuperHero hero;
     private final StackEvent stackEvent;
-    private final LifeBar lifeBar;
-    private final ManaBar manaBar;
-    private final PlayerNameBar playerNameBar;
+    private final HeroAttributes heroAttributes;
+
     private MoveSettings() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         stackEvent = StackEvent.getInstance();
-        lifeBar = hero.getLifeBar();
-        manaBar = hero.getManaBar();
-        playerNameBar=hero.getPlayerNameBar();
+        heroAttributes = hero.getHeroAttributes();
         MouseSettings mouseSettings = MouseSettings.getInstance();
         mouseSettings.setMouseCallBack();
         move();
@@ -60,7 +54,7 @@ public class MoveSettings {
             } else {
                 hero.setTexture(hero.getHeroIdle());
             }
-            sendMsg(tmpX,tmpY);
+            sendMsg(tmpX, tmpY);
         });
 
     }
@@ -69,10 +63,8 @@ public class MoveSettings {
 
         if (tmpX != hero.getPosition().x || tmpY != hero.getPosition().y) {
             stackEvent.setHasAction(true);
-            hero.setMesh(hero.createHero());
-            lifeBar.updateLifeBar();
-            manaBar.updateManaBar();
-            playerNameBar.update();
+            hero.setMesh();
+            heroAttributes.update();
         } else
             stackEvent.setHasAction(false);
     }

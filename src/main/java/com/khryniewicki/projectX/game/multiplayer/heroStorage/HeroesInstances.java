@@ -10,7 +10,6 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStar
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
-import com.khryniewicki.projectX.graphics.GraphicLoader;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,9 @@ import java.util.Objects;
 public class HeroesInstances {
 
     private SuperHero hero;
-    private UltraHero mock;
+    private SuperHero mock;
+    private String heroName="Konrad";
+    private String mockName="Malanix";
     private final HeroFactory heroFactory;
 
 
@@ -36,23 +37,19 @@ public class HeroesInstances {
         setHeroMoveSetting();
     }
 
-    public void setBasicProperties(UltraHero ultraHero) {
-        ultraHero.setLifeBar(new LifeBar(ultraHero));
-        ultraHero.setManaBar(new ManaBar(ultraHero));
-
-        if (ultraHero.equals(hero)) {
-            ultraHero.setStartingPosition(HeroStartingPosition.getInstance());
-            ultraHero.setBasicSpell(new Spell(ultraHero.getBasicSpellInstance()));
-            ultraHero.setUltimateSpell(new Spell(ultraHero.getUltimateSpellInstance()));
-            setHeroPlayerNameBar(hero, "Konrad");
-
+    public void setBasicProperties(SuperHero superHero) {
+        if (superHero.equals(hero)) {
+            superHero.setStartingPosition(HeroStartingPosition.getInstance());
+            superHero.setBasicSpell(new Spell(superHero.getBasicSpellInstance()));
+            superHero.setUltimateSpell(new Spell(superHero.getUltimateSpellInstance()));
+            superHero.setHeroAttributes(new HeroAttributes(superHero, heroName));
         } else {
-            ultraHero.setStartingPosition(MockStartingPosition.getInstance());
-            ultraHero.setBasicSpell(new SpellMock(ultraHero.getBasicSpellInstance()));
-            ultraHero.setUltimateSpell(new SpellMock(ultraHero.getUltimateSpellInstance()));
-            setHeroPlayerNameBar(mock, "ziomek");
+            superHero.setStartingPosition(MockStartingPosition.getInstance());
+            superHero.setBasicSpell(new SpellMock(superHero.getBasicSpellInstance()));
+            superHero.setUltimateSpell(new SpellMock(superHero.getUltimateSpellInstance()));
+            superHero.setHeroAttributes(new HeroAttributes(superHero, mockName));
         }
-        ultraHero.setMesh();
+        superHero.setMesh();
     }
 
     public void setHeroMoveSetting() {
@@ -76,17 +73,6 @@ public class HeroesInstances {
         }
     }
 
-    public void setHeroPlayerNameBar(UltraHero hero,String name) {
-        if (Objects.nonNull(name)) {
-            hero.setPlayerNameBar(new PlayerNameBar.Builder()
-                    .withHero(hero)
-                    .withHeight(0.5f)
-                    .withWidth(2f)
-                    .withVisibility(0.8f)
-                    .withTexture(TextFactory.textToPlayerName(name, 35))
-                    .build());
-        }
-    }
 
     public void setHero(String heroType) {
         hero = heroFactory.create(heroType);

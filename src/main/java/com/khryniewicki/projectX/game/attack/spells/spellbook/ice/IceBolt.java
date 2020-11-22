@@ -16,7 +16,7 @@ public class IceBolt extends Spell {
     public void setProperties() {
         setName("IceBolt");
         setBasic(true);
-        setCastingSpeed(0.05f);
+        setCastingSpeed(0.25f);
         setSpellDuration(3000L);
         setPowerAttack(10);
         setManaConsumed(10);
