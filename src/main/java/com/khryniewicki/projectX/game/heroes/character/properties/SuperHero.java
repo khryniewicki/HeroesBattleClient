@@ -30,7 +30,7 @@ public class SuperHero implements UltraHero {
     private String name;
     private Integer life;
     private Integer mana;
-    private Long manaRenegeration = 1000l;
+    private Long manaRenegeration = 1000L;
 
     public static float hero_positionX0;
     public static float hero_positionY0;

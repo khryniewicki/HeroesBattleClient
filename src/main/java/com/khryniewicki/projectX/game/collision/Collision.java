@@ -1,11 +1,9 @@
 package com.khryniewicki.projectX.game.collision;
 
-import com.khryniewicki.projectX.game.objectCollision.MAP_QUARTERS;
-import com.khryniewicki.projectX.game.user_interface.board.Board;
-
-import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.user_interface.board.Board;
+import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -196,5 +194,8 @@ public class Collision {
             }
         }
         return isCollision;
+    }
+     enum MAP_QUARTERS {
+        BOTTOM_LEFT,BOTTOM_RIGHT,TOP_LEFT,TOP_RIGHT
     }
 }

@@ -108,8 +108,7 @@ public class CharacterMenu extends MenuImp {
     }
 
     private void setHeroName(String name) {
-//        SuperHero hero = heroesInstances.getHero();
-//        heroesInstances.setHeroPlayerNameBar(hero,name);
+        heroesInstances.setHeroName(name);
     }
 
     private void updateButtonText(MenuSymbol characterSkills, Texture tex) {
@@ -117,8 +116,8 @@ public class CharacterMenu extends MenuImp {
         render();
     }
 
-    private void setHero(String btnName) {
-        heroesInstances.setHero(btnName);
+    private void setHero(String heroType) {
+        heroesInstances.setHero(heroType);
     }
 
     private void showMessageInMainMenu(String btnName) {

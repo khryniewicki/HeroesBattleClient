@@ -23,8 +23,8 @@ public class HeroesInstances {
 
     private SuperHero hero;
     private SuperHero mock;
-    private String heroName="Konrad";
-    private String mockName="Malanix";
+    private String heroName="Player 1";
+    private String mockName="Player 2";
     private final HeroFactory heroFactory;
 
 
@@ -66,8 +66,10 @@ public class HeroesInstances {
         for (Map.Entry<String, Message> hero : heroes.entrySet()) {
             String key = hero.getKey();
             if (!key.equals(sessionId)) {
-                String heroType = hero.getValue().getContent();
+                Message message = hero.getValue();
+                String heroType = message.getContent();
                 setMock(heroType);
+                setMockName(message.getPlayerName());
                 setBasicProperties(mock);
             }
         }

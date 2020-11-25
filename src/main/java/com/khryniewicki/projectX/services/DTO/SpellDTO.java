@@ -1,10 +1,14 @@
 package com.khryniewicki.projectX.services.DTO;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class SpellDTO implements Serializable,DTO {
     private String name;
     private Float targetSpellX;
@@ -16,8 +20,6 @@ public class SpellDTO implements Serializable,DTO {
         this.targetSpellY = targetSpellY;
     }
 
-    public SpellDTO() {
-    }
 
     @Override
     public String toString() {
@@ -39,7 +41,7 @@ public class SpellDTO implements Serializable,DTO {
     }
 
     @Override
-    public Boolean isSpellDTO() {
+    public boolean isSpellDTO() {
         return true;
     }
 }

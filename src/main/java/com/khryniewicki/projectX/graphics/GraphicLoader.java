@@ -14,13 +14,13 @@ public class GraphicLoader implements Symbol {
     private Texture texture;
     private VertexArray mesh;
     private Matrix4f ml_matrix;
-    private float SIZE;
+    float SIZE;
     float[] vertices;
     float[] tcs;
     private float positionX;
     private float positionY;
     private float visibility;
-    private Vector position;
+    private Vector position= new Vector();
     private float width;
     private float height;
     private boolean isSizeKnown;
@@ -41,7 +41,6 @@ public class GraphicLoader implements Symbol {
         this.width = builder.width;
         this.height = builder.height;
         this.isSizeKnown = builder.isSizeKnown;
-        this.position = new Vector();
         if (Objects.nonNull(path)) {
             this.texture = new Texture(path);
         }
