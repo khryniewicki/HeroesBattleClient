@@ -1,41 +1,40 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
-import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.HeroReceiveService;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class HeroMock implements UltraHero {
+@Getter
+@Setter
+public class HeroMock extends SuperHero {
     private Position tmp, finalPosition;
-    private Integer tmpLife;
-    private Integer tmpMana;
-
-    private final UltraHero ultraHero;
+    private Integer tmpLife, tmpMana;
     private final HeroReceiveService heroReceiveService;
-    boolean isMovingLeft = false;
-    boolean isIdle = false;
+    boolean isMovingLeft, isIdle;
     private Long now;
 
     public HeroMock(SuperHero superHero) {
         super();
-        this.ultraHero = superHero;
+        addProperties(superHero);
         heroReceiveService = HeroReceiveService.getInstance();
     }
 
+    @Override
+    public void update() {
+        move();
+        checkLifeAndMana();
+        updateHeroAttributes();
+    }
 
-    private void mockMove() {
-
-        if (tmp != null && tmp.equals(heroReceiveService.getMockPosition())) {
-            if (now != null && System.currentTimeMillis() - now > 500) {
+    private void move() {
+        if (tmp != null && tmp.equals(getMockPosition())) {
+            if (now != null && System.currentTimeMillis() - now > 300) {
                 isIdle = true;
                 now = null;
             }
-
             if (isIdle) {
                 setHeroIdle();
                 setMesh();
@@ -48,13 +47,15 @@ public class HeroMock implements UltraHero {
         setHeroRun();
         setMesh();
         changePosition();
-        updateLifeBar();
-        updateManaBar();
     }
 
 
+    private void updateHeroAttributes() {
+        heroAttributes.update();
+    }
+
     private void changePosition() {
-        tmp = heroReceiveService.getMockPosition();
+        tmp = getMockPosition();
         now = System.currentTimeMillis();
         setPositionX(finalPosition.getX());
         setPositionY(finalPosition.getY());
@@ -62,30 +63,20 @@ public class HeroMock implements UltraHero {
 
     private void changeMockSide() {
         if (tmp == null) {
-            tmp = heroReceiveService.getMockPosition();
+            tmp = getMockPosition();
         }
-        finalPosition = heroReceiveService.getMockPosition();
-        if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) isMovingLeft = true;
-        else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) isMovingLeft = false;
+        finalPosition = getMockPosition();
+        if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) {
+            isMovingLeft = true;
+        } else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) {
+            isMovingLeft = false;
+        }
         setTurningLeft(isMovingLeft);
 
     }
 
-    private void updateLifeBar() {
-        LifeBar lifeBar = getLifeBar();
-        lifeBar.updateLifeBar();
-    }
-
-    @Override
-    public void updateManaBar() {
-        ManaBar manaBar = getManaBar();
-        manaBar.updateManaBar();
-    }
-
-    @Override
-    public void update() {
-        mockMove();
-        checkLifeAndMana();
+    private Position getMockPosition() {
+        return heroReceiveService.getMockPosition();
     }
 
     private void checkLifeAndMana() {
@@ -100,9 +91,13 @@ public class HeroMock implements UltraHero {
                 updateLifeBar();
                 tmpLife = life;
             }
-
         } else
             tmpLife = life;
+    }
+
+    private void updateLifeBar() {
+        LifeBar lifeBar = getLifeBar();
+        lifeBar.updateLifeBar();
     }
 
     private void checkMana() {
@@ -112,30 +107,16 @@ public class HeroMock implements UltraHero {
                 updateManaBar();
                 tmpMana = mana;
             }
-
         } else
             tmpMana = mana;
     }
 
     @Override
-    public void render() {
-        ultraHero.render();
+    public void updateManaBar() {
+        ManaBar manaBar = getManaBar();
+        manaBar.updateManaBar();
     }
 
-    @Override
-    public Vector getPosition() {
-        return ultraHero.getPosition();
-    }
-
-    @Override
-    public LifeBar getLifeBar() {
-        return ultraHero.getLifeBar();
-    }
-
-    @Override
-    public ManaBar getManaBar() {
-        return ultraHero.getManaBar();
-    }
 
     @Override
     public Integer getLife() {
@@ -145,134 +126,6 @@ public class HeroMock implements UltraHero {
     @Override
     public Integer getMana() {
         return heroReceiveService.getMockMana();
-    }
-
-    @Override
-    public UltimateSpellInstance getUltimateSpellInstance() {
-        return ultraHero.getUltimateSpellInstance();
-    }
-
-    @Override
-    public void setBasicSpell(UltraSpell ultraSpell) {
-        ultraHero.setBasicSpell(ultraSpell);
-    }
-
-    @Override
-    public UltraSpell getUltimateSpell() {
-        return ultraHero.getUltimateSpell();
-    }
-
-    @Override
-    public void setUltimateSpell(UltraSpell ultraSpell) {
-        ultraHero.setUltimateSpell(ultraSpell);
-    }
-
-    @Override
-    public UltraSpell getBasicSpell() {
-        return ultraHero.getBasicSpell();
-    }
-
-    @Override
-    public Float getX() {
-        return ultraHero.getX();
-    }
-
-    @Override
-    public Float getY() {
-        return ultraHero.getY();
-    }
-
-
-    @Override
-    public StartingPosition getStartingPosition() {
-        return ultraHero.getStartingPosition();
-    }
-
-    @Override
-    public void setStartingPosition(StartingPosition startingPosition) {
-        ultraHero.setStartingPosition(startingPosition);
-    }
-
-    @Override
-    public BasicSpellInstance getBasicSpellInstance() {
-        return ultraHero.getBasicSpellInstance();
-    }
-
-
-    @Override
-    public void setPosition() {
-        ultraHero.setPosition();
-    }
-
-    @Override
-    public void setPositionX(Float positionX) {
-        ultraHero.setPositionX(positionX);
-    }
-
-    @Override
-    public void setPositionY(Float positionY) {
-        ultraHero.setPositionY(positionY);
-    }
-
-    @Override
-    public void setProperties() {
-        ultraHero.setProperties();
-    }
-
-    @Override
-    public void setTexture() {
-        ultraHero.setTexture();
-    }
-
-    @Override
-    public void setHeroIdle() {
-        ultraHero.setHeroIdle();
-    }
-
-    @Override
-    public void setHeroRun() {
-        ultraHero.setHeroRun();
-    }
-
-    @Override
-    public void setHeroAttack() {
-        ultraHero.setHeroAttack();
-    }
-
-
-    @Override
-    public void setSpellBasis() {
-        ultraHero.setSpellBasis();
-    }
-
-    @Override
-    public void setLifeBar(LifeBar lifeBar) {
-        ultraHero.setLifeBar(lifeBar);
-    }
-
-    @Override
-    public void setManaBar(ManaBar manaBar) {
-        ultraHero.setManaBar(manaBar);
-    }
-
-    @Override
-    public Long getManaRenegeration() {
-        return ultraHero.getManaRenegeration();
-    }
-
-    @Override
-    public void setManaRenegeration(Long manaRenegeration) {
-        ultraHero.setManaRenegeration(manaRenegeration);
-    }
-
-    @Override
-    public void setMesh() {
-        ultraHero.setMesh();
-    }
-
-    @Override
-    public void setTurningLeft(boolean movingLeft) {
-        ultraHero.setTurningLeft(movingLeft);
     }
 
 

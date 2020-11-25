@@ -14,4 +14,5 @@ public interface Symbol {
     default void setTexture(Texture texture) {
     }
 
+    default void update(){}
 }

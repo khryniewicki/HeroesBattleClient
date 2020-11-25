@@ -78,11 +78,19 @@ public class WebsocketApplication implements Runnable {
         public void register() {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             SuperHero superHero = heroesInstances.getHero();
-            session.send("/app/room", new Message(superHero.getName(), session.getSessionId(), ConnectionStatus.CONNECTED));
+            session.send("/app/room", new Message.Builder()
+                    .heroType(superHero.getName())
+                    .playerName(heroesInstances.getHeroName())
+                    .status(ConnectionStatus.CONNECTED)
+                    .sessionID(session.getSessionId())
+                    .build());
         }
 
         public void unregister() {
-            session.send("/app/room", new Message(session.getSessionId(), ConnectionStatus.DISCONNECTED));
+            session.send("/app/room", new Message.Builder()
+                    .status(ConnectionStatus.DISCONNECTED)
+                    .sessionID(session.getSessionId())
+                    .build());
         }
 
         public void getHeroesRegistry() {

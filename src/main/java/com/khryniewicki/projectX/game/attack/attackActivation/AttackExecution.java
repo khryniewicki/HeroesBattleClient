@@ -1,6 +1,8 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
@@ -16,7 +18,7 @@ import java.util.Objects;
 public class AttackExecution {
 
     private final UltraSpell spell;
-    private final UltraHero hero,mock;
+    private final SuperHero hero,mock;
     private final LifeBar lifeBar;
     private final SendingService sendingService;
     private float ox0, ox1, oy0, oy1, oz0;
@@ -30,7 +32,8 @@ public class AttackExecution {
         this.spell = spell;
         this.hero = heroesInstances.getHero();
         this.mock = heroesInstances.getMock();
-        this.lifeBar = hero.getLifeBar();
+        HeroAttributes heroAttributes=hero.getHeroAttributes();
+        this.lifeBar = heroAttributes.getLifeBar();
     }
 
     public void executeSpell() {

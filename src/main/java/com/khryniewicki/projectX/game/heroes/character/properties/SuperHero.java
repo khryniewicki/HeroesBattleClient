@@ -15,6 +15,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Data
 @Slf4j
 @Service
@@ -23,12 +25,12 @@ public class SuperHero implements UltraHero {
     private boolean isTurningLeft;
     private VertexArray mesh;
     private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle, heroAttack;
-    private Vector position;
-
+    private Vector position = new Vector();
+    protected HeroAttributes heroAttributes;
     private String name;
     private Integer life;
     private Integer mana;
-    private Long manaRenegeration = 1000l;
+    private Long manaRenegeration = 1000L;
 
     public static float hero_positionX0;
     public static float hero_positionY0;
@@ -36,8 +38,7 @@ public class SuperHero implements UltraHero {
     private float hero_top_offset;
     public float SIZE = 1f;
 
-    private LifeBar lifeBar;
-    private ManaBar manaBar;
+
     private MoveSettings moveSettings;
     private StartingPosition startingPosition;
 
@@ -46,7 +47,25 @@ public class SuperHero implements UltraHero {
     private UltraSpell ultimateSpell;
     private BasicSpellInstance basicSpellInstance;
     private UltimateSpellInstance ultimateSpellInstance;
+    private ManaBar manaBar;
 
+    public void addProperties(SuperHero superHero) {
+        this.name = superHero.name;
+        this.texture = superHero.heroIdle;
+        this.heroUp = superHero.heroUp;
+        this.heroDown = superHero.heroDown;
+        this.heroLeft = superHero.heroLeft;
+        this.heroRight = superHero.heroRight;
+        this.heroIdle = superHero.heroIdle;
+        this.heroAttack = superHero.heroAttack;
+        this.hero_left_offset = superHero.hero_left_offset;
+        this.hero_top_offset = superHero.hero_top_offset;
+        this.basicSpellInstance = superHero.basicSpellInstance;
+        this.ultimateSpellInstance = superHero.ultimateSpellInstance;
+        this.mana = superHero.mana;
+        this.life = superHero.life;
+        this.SIZE = superHero.SIZE;
+    }
 
     public VertexArray createHero() {
         int i = isTurningLeft ? -1 : 1;
@@ -75,6 +94,13 @@ public class SuperHero implements UltraHero {
 
 
     public void update() {
+        regenerateMana();
+    }
+
+    private void regenerateMana() {
+        if (Objects.isNull(manaBar)){
+            manaBar=getManaBar();
+        }
         manaBar.renegerateMana();
     }
 
@@ -85,8 +111,7 @@ public class SuperHero implements UltraHero {
         texture.bind();
         mesh.render();
         Shader.HERO.disable();
-        lifeBar.render();
-        manaBar.render();
+        heroAttributes.render();
     }
 
 
@@ -132,4 +157,20 @@ public class SuperHero implements UltraHero {
     public void setHeroAttack() {
         setTexture(heroAttack);
     }
+
+    @Override
+    public LifeBar getLifeBar() {
+        return heroAttributes.getLifeBar();
+    }
+
+    @Override
+    public ManaBar getManaBar() {
+        return heroAttributes.getManaBar();
+    }
+
+    @Override
+    public PlayerNameBar getPlayerNameBar() {
+        return heroAttributes.getPlayerNameBar();
+    }
+
 }

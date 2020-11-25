@@ -51,7 +51,13 @@ public class SendingService implements Runnable {
     }
 
     public HeroDTO getHeroDTO() {
-        return new HeroDTO(hero.getName(), hero.getLife(), hero.getMana(), getHeroPositionX(), getHeroPositionY());
+        return new HeroDTO.Builder()
+                .heroType(hero.getName())
+                .life(hero.getLife())
+                .mana(hero.getMana())
+                .positionX(getHeroPositionX())
+                .positionY(getHeroPositionY())
+                .build();
     }
 
     public synchronized void updatePosition() {

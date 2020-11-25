@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.*;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
@@ -59,6 +60,7 @@ public class CharacterMenu extends MenuImp {
         HERO_NAME.addPropertyChangeListener(evt -> {
             String newValue = (String) evt.getNewValue();
             updateImage(HERO_NAME, getTextureFromTextFactory(newValue));
+            setHeroName(newValue);
         });
         super.setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
     }
@@ -105,13 +107,17 @@ public class CharacterMenu extends MenuImp {
         }
     }
 
+    private void setHeroName(String name) {
+        heroesInstances.setHeroName(name);
+    }
+
     private void updateButtonText(MenuSymbol characterSkills, Texture tex) {
         characterSkills.setTexture(tex);
         render();
     }
 
-    private void setHero(String btnName) {
-        heroesInstances.setHero(btnName);
+    private void setHero(String heroType) {
+        heroesInstances.setHero(heroType);
     }
 
     private void showMessageInMainMenu(String btnName) {
@@ -144,7 +150,7 @@ public class CharacterMenu extends MenuImp {
 
 
     private Texture getTextureFromTextFactory(String name) {
-        return TextFactory.textToImageWithLine(name, 30);
+        return TextFactory.textToImageWithLine(name, 50);
     }
 
     private Texture getTextureFromTableFactory(String btnName) {
