@@ -13,6 +13,7 @@ import com.khryniewicki.projectX.graphics.RenderFactory;
 import com.khryniewicki.projectX.services.SendingService;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
@@ -23,6 +24,7 @@ import static org.lwjgl.opengl.GL11.*;
 @Component
 @Getter
 @Setter
+@Slf4j
 public class Game extends GameLoopImp implements Runnable {
 
     private Board board;

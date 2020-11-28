@@ -23,13 +23,15 @@ import java.util.TimerTask;
 @Slf4j
 public class WebsocketScheduler {
     private final Channels channels;
+    private final PropertyChangeSupport support;
+    private final WebsocketInitializer websocketInstance;
     private String sessionId;
     private String path = "https://heroes.khryniewicki.com.pl";
     public volatile static ServerState state = ServerState.START;
-    private final PropertyChangeSupport support;
 
     private WebsocketScheduler() {
         channels = Channels.getINSTANCE();
+        websocketInstance = WebsocketInitializer.getWebsocketInstance();
         support = new PropertyChangeSupport(this);
     }
 
@@ -61,28 +63,25 @@ public class WebsocketScheduler {
                         setState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
                         setState(ServerState.ONE_PLAYER);
-                        log.info("sessionid {} ", sessionId);
-                        log.info("SIZE{} AND MESSAGE {}", map.size(), map.values().toArray()[0]);
-
-
                     } else if (map.size() == 2) {
-                        log.info("sessionid {} ", sessionId);
-                        log.info("SIZE{} AND MESSAGE {}", map.size(), map.values().toArray()[0]);
-                        log.info("SIZE{} AND MESSAGE {}", map.size(), map.values().toArray()[1]);
-
+                        initSessionId();
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
                             setState(ServerState.JOIN_GAME);
-
                             timer.cancel();
-
                         } else {
                             setState(ServerState.TWO_PLAYERS);
                         }
                     }
                 } else {
                     setState(ServerState.SERVER_OFFLINE);
+                }
+            }
+
+            private void initSessionId() {
+                if (!websocketInstance.getSessionId().isEmpty() && Objects.isNull(sessionId)) {
+                    sessionId = websocketInstance.getSessionId();
                 }
             }
         }, 0, 1000);
@@ -102,10 +101,6 @@ public class WebsocketScheduler {
         support.removePropertyChangeListener(pcl);
     }
 
-
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        support.addPropertyChangeListener(propertyName, listener);
-    }
 
     public void setState(ServerState new_state) {
         support.firePropertyChange("playersOnline", state, new_state);

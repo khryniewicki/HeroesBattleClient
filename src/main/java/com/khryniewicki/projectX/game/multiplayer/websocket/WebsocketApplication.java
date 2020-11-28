@@ -12,7 +12,8 @@ import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.SpellReceiveService;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
@@ -24,16 +25,16 @@ import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 
-@Data
+@Getter
+@Setter
 @Slf4j
 public class WebsocketApplication implements Runnable {
-    private static StompSession session;
+    public static StompSession session;
+
     private static StompSession copy_session;
     private static boolean client_running;
     private static boolean server_running;
@@ -48,19 +49,23 @@ public class WebsocketApplication implements Runnable {
 
 
     @Slf4j
+    @Getter
+    @Setter
     public static class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
         private final HeroReceiveService heroReceiveService;
         private final Channels channels;
+        private static String sessionId;
+
+        public Optional<String> getSessionId() {
+            return Optional.ofNullable(sessionId);
+        }
 
         public MyStompSessionHandler() {
             heroReceiveService = HeroReceiveService.getInstance();
             channels = Channels.getINSTANCE();
         }
 
-        public String getSessionID() {
-            return session.getSessionId();
-        }
 
         private void showHeaders(StompHeaders headers) {
             for (Map.Entry<String, List<String>> e : headers.entrySet()) {
@@ -86,22 +91,11 @@ public class WebsocketApplication implements Runnable {
                     .build());
         }
 
-        public void unregister() {
+        public void leave() {
             session.send("/app/room", new Message.Builder()
                     .status(ConnectionStatus.DISCONNECTED)
                     .sessionID(session.getSessionId())
                     .build());
-        }
-
-        public void getHeroesRegistry() {
-            WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
-            websocketScheduler.observerPlayers();
-        }
-
-        public void setSessionID() {
-            WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
-            log.info(session.getSessionId());
-            websocketScheduler.setSessionId(session.getSessionId());
         }
 
         public void subscribeHero(String topic, StompSession session) {
@@ -145,6 +139,7 @@ public class WebsocketApplication implements Runnable {
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
+
                     Message message = (Message) payload;
                     MessageHandler instance = MessageHandler.getINSTANCE();
 
@@ -204,7 +199,7 @@ public class WebsocketApplication implements Runnable {
         String url = path + "/websocket-example";
 
 
-        StompSessionHandler sessionHandler = new MyStompSessionHandler();
+        sessionHandler = new MyStompSessionHandler();
         session = null;
 
         try {
@@ -214,8 +209,14 @@ public class WebsocketApplication implements Runnable {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        setSessionId();
         renderFactory.render("Connection established");
-
     }
+
+    private static void setSessionId() {
+        MyStompSessionHandler.sessionId = session.getSessionId();
+    }
+
+
 }
 

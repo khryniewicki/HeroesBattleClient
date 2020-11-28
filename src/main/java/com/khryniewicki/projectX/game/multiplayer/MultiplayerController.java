@@ -21,7 +21,6 @@ public class MultiplayerController {
         WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         try {
-            websocketInitializer.setSessionId();
             websocketInitializer.connectionEstablished();
             heroesInstances.setMock();
 

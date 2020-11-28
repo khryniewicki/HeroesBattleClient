@@ -2,6 +2,9 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 
+import java.util.Objects;
+import java.util.Optional;
+
 public class WebsocketInitializer implements Runnable {
 
     private WebsocketApplication.MyStompSessionHandler handler;
@@ -25,20 +28,23 @@ public class WebsocketInitializer implements Runnable {
     }
 
     public void disconnect() {
-        handler.unregister();
+        handler.leave();
     }
 
-    public void setSessionId() {
-        handler.setSessionID();
-    }
-    public void connectionEstablished(){
-        MainMenu mainMenu=MainMenu.getInstance();
-        do{
+    public void connectionEstablished() {
+        MainMenu mainMenu = MainMenu.getInstance();
+        do {
 
-        }while (!mainMenu.isConnection());
+        } while (!mainMenu.isConnection());
+
     }
+
     public String getSessionId() {
-        return handler.getSessionID();
+        Optional<String> sessionId = Optional.empty();
+        if (Objects.nonNull(handler)) {
+            sessionId = handler.getSessionId();
+        }
+        return sessionId.orElse("");
     }
 
 }

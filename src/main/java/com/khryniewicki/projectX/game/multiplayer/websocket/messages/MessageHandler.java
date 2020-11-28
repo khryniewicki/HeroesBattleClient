@@ -45,7 +45,7 @@ public class MessageHandler {
 
 
     public void validateMessage() {
-        if (isNumeric(message.getContent())) {
+        if (isNumeric(message.getChannel())) {
             setChannelsAndStartingPositions();
         }
         Game.latch.countDown();
@@ -56,7 +56,7 @@ public class MessageHandler {
     }
 
     private void setChannelsAndStartingPositions() {
-        int appDTO = Integer.parseInt(message.getContent());
+        int appDTO = Integer.parseInt(message.getChannel());
 
         if ((appDTO == 1 || appDTO == 2) && flag) {
 

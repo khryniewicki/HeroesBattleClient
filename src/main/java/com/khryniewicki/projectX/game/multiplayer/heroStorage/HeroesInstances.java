@@ -11,6 +11,7 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -19,6 +20,7 @@ import java.util.Objects;
 
 @Service
 @Data
+@Slf4j
 public class HeroesInstances {
 
     private SuperHero hero;
@@ -59,7 +61,7 @@ public class HeroesInstances {
     public void setMock() {
         WebsocketInitializer websocketInstance = WebsocketInitializer.getWebsocketInstance();
         String sessionId = websocketInstance.getSessionId();
-
+        log.info(sessionId);
         HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
         Map<String, Message> heroes = heroesRegistry.getHeroesRegistryBook();
 

@@ -50,12 +50,21 @@ public class TextureMenuFactory {
     }
 
     public List<MenuSymbol> getListWithTextMainMenuSymbols() {
-        return new ArrayList<>(Arrays.asList(TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD, TEXT_ICEWIZARD, TEXT_THUNDERWIZARD));
+        return new ArrayList<>(Arrays.asList(TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD, TEXT_ICEWIZARD, TEXT_THUNDERWIZARD,TEXT_SERVER_OFFLINE));
     }
 
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
             .withTexture(TextFactory.textToImageMenu("Please choose your hero"))
             .withName("NoHero")
+            .withDisabled(true)
+            .withHeight(0.7f)
+            .withWidth(4f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
+            .build();
+    public static final MenuSymbol TEXT_SERVER_OFFLINE = new MenuSymbol.Builder()
+            .withTexture(TextFactory.textToImageMenu("Please try when server is on"))
+            .withName("ServerOffLine")
             .withDisabled(true)
             .withHeight(0.7f)
             .withWidth(4f)

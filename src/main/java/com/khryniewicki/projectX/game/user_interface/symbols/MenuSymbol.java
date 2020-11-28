@@ -14,14 +14,12 @@ import java.beans.PropertyChangeSupport;
 @Slf4j
 public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
 
-    private float positionX0;
-    private float positionX1;
-    private float positionY0;
-    private float positionY1;
+    private float positionX0, positionX1;
+    private float positionY0,positionY1;
+    private boolean disabled;
     private String name;
     private String oldText;
-    private boolean disabled;
-    private String className;
+
     private PropertyChangeSupport support;
 
     public MenuSymbol(Builder builder) {
@@ -34,9 +32,9 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
 
     private void setButtonPositions() {
         positionX0 = getPositionX();
-        positionX1 = getPositionX() + getWidth();
+        positionX1 = positionX0 + getWidth();
         positionY0 = getPositionY();
-        positionY1 = getPositionY() + getHeight();
+        positionY1 = positionY0  + getHeight();
     }
 
     @Override

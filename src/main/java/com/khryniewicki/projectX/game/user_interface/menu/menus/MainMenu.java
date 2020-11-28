@@ -136,11 +136,16 @@ public class MainMenu extends MenuImp {
                 glfwDestroyWindow(Game.window);
                 break;
             case "Start":
-                if (Objects.nonNull(heroesInstances.getHero())) {
-                    setRunning(true);
-                } else {
-                    showMessage(noHero);
+                if (state.equals(ServerState.SERVER_OFFLINE)){
+                    showMessage(TEXT_SERVER_OFFLINE);
                     render();
+                }else {
+                    if (Objects.nonNull(heroesInstances.getHero())) {
+                        setRunning(true);
+                    } else {
+                        showMessage(noHero);
+                        render();
+                    }
                 }
                 break;
         }
