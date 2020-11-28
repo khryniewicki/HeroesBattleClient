@@ -50,19 +50,33 @@ public class WebsocketScheduler {
         timer.schedule(new TimerTask() {
 
             public void run() {
+                //TODO: jak wyłączony server Exception in thread "Timer-0" org.springframework.web.client.HttpServerErrorException$BadGateway: 502 Bad Gateway: [<html>
                 ResponseEntity<HashMap<String, Message>> exchange = restTemplate.exchange(request, responseType);
                 HashMap<String, Message> map = exchange.getBody();
                 if (Objects.nonNull(map)) {
+
+
+
                     if (map.size() == 0) {
                         setState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
                         setState(ServerState.ONE_PLAYER);
+                        log.info("sessionid {} ",sessionId);
+                        log.info("SIZE{} AND MESSAGE {}",map.size(),map.values().toArray()[0]);
+
+
                     } else if (map.size() == 2) {
+                        log.info("sessionid {} ",sessionId);
+                        log.info("SIZE{} AND MESSAGE {}",map.size(),map.values().toArray()[0]);
+                        log.info("SIZE{} AND MESSAGE {}",map.size(),map.values().toArray()[1]);
+
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
                             setState(ServerState.JOIN_GAME);
+
                             timer.cancel();
+
                         } else {
                             setState(ServerState.TWO_PLAYERS);
                         }

@@ -100,6 +100,7 @@ public class WebsocketApplication implements Runnable {
 
         public void setSessionID() {
             WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
+            log.info(session.getSessionId());
             websocketScheduler.setSessionId(session.getSessionId());
         }
 

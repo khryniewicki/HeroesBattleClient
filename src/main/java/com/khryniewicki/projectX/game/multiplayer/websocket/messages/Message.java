@@ -17,17 +17,6 @@ public class Message implements Serializable {
     private String playerName;
     private ConnectionStatus status;
 
-    public Message(String sessionID, ConnectionStatus status) {
-        this.sessionID = sessionID;
-        this.status = status;
-    }
-
-    public Message(String content, String sessionID, ConnectionStatus status) {
-        this.content = content;
-        this.sessionID = sessionID;
-        this.status = status;
-    }
-
     public Message(Builder builder) {
         this.channel = builder.channel;
         this.content = builder.content;
@@ -42,11 +31,6 @@ public class Message implements Serializable {
         private String sessionID;
         private String playerName;
         private ConnectionStatus status;
-
-        public Builder channel(String channel) {
-            this.channel = channel;
-            return this;
-        }
 
         public Builder heroType(String heroType) {
             this.content = heroType;
@@ -71,5 +55,16 @@ public class Message implements Serializable {
         public Message build() {
             return new Message(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "channel='" + channel + '\'' +
+                ", content='" + content + '\'' +
+                ", sessionID='" + sessionID + '\'' +
+                ", playerName='" + playerName + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
