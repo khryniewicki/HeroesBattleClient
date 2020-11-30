@@ -5,10 +5,10 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.ServerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Colors;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
@@ -31,7 +30,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Setter
 public class MainMenu extends MenuImp {
     private boolean running;
-    private volatile boolean connection;
+
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;
     private final TextureMenuFactory textureMenuFactory;
@@ -41,6 +40,7 @@ public class MainMenu extends MenuImp {
     private MenuSymbol playersDescriptionLabel;
     private MenuSymbol playersBarLabel;
     private volatile ServerState state;
+    private boolean finishGame;
 
     public static MainMenu getInstance() {
         return instance;
@@ -65,12 +65,14 @@ public class MainMenu extends MenuImp {
         websocketScheduler.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                ServerState serverState = (ServerState) evt.getNewValue();
-                if (serverState == ServerState.JOIN_GAME) {
-                    setConnection(true);
-                    websocketScheduler.removePropertyChangeListener(this);
-                } else {
-                    state = serverState;
+                String propertyName = evt.getPropertyName();
+                if (propertyName.equals("playersOnline")) {
+                    ServerState serverState = (ServerState) evt.getNewValue();
+                    if (serverState == ServerState.JOIN_GAME) {
+                        websocketScheduler.removePropertyChangeListener(this);
+                    } else {
+                        state = serverState;
+                    }
                 }
             }
         });
@@ -83,9 +85,10 @@ public class MainMenu extends MenuImp {
         initConstantImages();
     }
 
-
+    @Override
     public void execute() {
         ServerState tmpNumbers = null;
+        setRunning(false);
         do {
             if (Objects.nonNull(state) && !state.equals(tmpNumbers)) {
                 updateLabel(playersDescriptionLabel, state);
@@ -94,6 +97,9 @@ public class MainMenu extends MenuImp {
             }
             glfwPollEvents();
         } while (!running);
+        if (finishGame) {
+            Game.terminateGame();
+        }
     }
 
     private void initButtons() {
@@ -105,13 +111,13 @@ public class MainMenu extends MenuImp {
         List<MenuSymbol> listWithMenuSymbols = textureMenuFactory.getListWithTextMainMenuSymbols();
         noHero = TEXT_NO_HERO;
         listWithMenuSymbols.add(noHero);
-        super.setVolatileImages(listWithMenuSymbols);
+        setVolatileImages(listWithMenuSymbols);
     }
 
     private void initConstantImages() {
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
-        super.setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel,BG_ANIMATION, MENU_IMAGE)));
+        setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE)));
     }
 
     @Override
@@ -133,18 +139,19 @@ public class MainMenu extends MenuImp {
                 controlSettingsMenu.render();
                 break;
             case "QuitGame":
-                glfwDestroyWindow(Game.window);
+                setRunning(true);
+                setFinishGame(true);
                 break;
             case "Start":
-                if (state.equals(ServerState.SERVER_OFFLINE)){
+                if (state.equals(ServerState.SERVER_OFFLINE)) {
                     showMessage(TEXT_SERVER_OFFLINE);
-                    render();
-                }else {
+                } else if (state.equals(ServerState.TWO_PLAYERS)) {
+                    showMessage(TEXT_ROOM_IS_FULL);
+                } else {
                     if (Objects.nonNull(heroesInstances.getHero())) {
                         setRunning(true);
                     } else {
                         showMessage(noHero);
-                        render();
                     }
                 }
                 break;

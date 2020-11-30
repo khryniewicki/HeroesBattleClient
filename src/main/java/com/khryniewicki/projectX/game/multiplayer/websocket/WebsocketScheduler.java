@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,9 +26,11 @@ public class WebsocketScheduler {
     private final Channels channels;
     private final PropertyChangeSupport support;
     private final WebsocketInitializer websocketInstance;
+    private WaitingRoomMenu waitingRoomMenu;
     private String sessionId;
     private String path = "https://heroes.khryniewicki.com.pl";
     public volatile static ServerState state = ServerState.START;
+    private boolean subscribed;
 
     private WebsocketScheduler() {
         channels = Channels.getINSTANCE();
@@ -36,35 +39,53 @@ public class WebsocketScheduler {
     }
 
     public void observerPlayers() {
-        RestTemplate restTemplate = new RestTemplate();
+        requestScheduler();
+    }
+
+    public HashMap<String, Message> playersInGame() {
         ParameterizedTypeReference<HashMap<String, Message>> responseType =
                 new ParameterizedTypeReference<>() {
                 };
         RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/map"))
                 .accept(MediaType.APPLICATION_JSON).build();
-
-        requestScheduler(restTemplate, responseType, request);
+        return new RestTemplate().exchange(request, responseType).getBody();
     }
 
-    private void requestScheduler(RestTemplate restTemplate, ParameterizedTypeReference<HashMap<String, Message>> responseType, RequestEntity<Void> request) {
+    public Long startCounter() {
+        ParameterizedTypeReference<Long> responseType =
+                new ParameterizedTypeReference<>() {
+                };
+        RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/time-left-to-log-in"))
+                .accept(MediaType.APPLICATION_JSON).build();
+
+        return new RestTemplate().exchange(request, responseType).getBody();
+    }
+
+    private void requestScheduler() {
         Timer timer = new Timer();
 
         timer.schedule(new TimerTask() {
 
             public void run() {
                 HashMap<String, Message> map;
+                Long timeLeft;
                 try {
-                    map = restTemplate.exchange(request, responseType).getBody();
+                    map = playersInGame();
+                    timeLeft = startCounter();
+                    setTime(timeLeft);
                 } catch (RestClientException exception) {
                     map = null;
+                    timeLeft = null;
                 }
                 if (Objects.nonNull(map)) {
+                    initSessionId();
+
                     if (map.size() == 0) {
                         setState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
                         setState(ServerState.ONE_PLAYER);
+                        subscribeTimer();
                     } else if (map.size() == 2) {
-                        initSessionId();
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
@@ -77,6 +98,15 @@ public class WebsocketScheduler {
                 } else {
                     setState(ServerState.SERVER_OFFLINE);
                 }
+            }
+
+            private void subscribeTimer() {
+                if (Objects.nonNull(sessionId) && !subscribed) {
+                    waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
+                    waitingRoomMenu.subscribePlayersInGame();
+                    setSubscribed(true);
+                }
+
             }
 
             private void initSessionId() {
@@ -101,6 +131,11 @@ public class WebsocketScheduler {
         support.removePropertyChangeListener(pcl);
     }
 
+    public void setTime(Long time) {
+        if (Objects.nonNull(time)) {
+            support.firePropertyChange("timeLeftToLogOut", null, time);
+        }
+    }
 
     public void setState(ServerState new_state) {
         support.firePropertyChange("playersOnline", state, new_state);
@@ -110,4 +145,5 @@ public class WebsocketScheduler {
     private static class HELPER {
         private final static WebsocketScheduler INSTANCE = new WebsocketScheduler();
     }
+
 }

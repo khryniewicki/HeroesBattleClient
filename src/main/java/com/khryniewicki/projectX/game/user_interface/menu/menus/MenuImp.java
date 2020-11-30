@@ -22,10 +22,10 @@ import static org.lwjgl.opengl.GL11.*;
 @Slf4j
 
 public class MenuImp implements PropertyChangeListener, Menu {
-    private List<Symbol> animationSymbols = new ArrayList<>();
-    private List<MenuSymbol> buttons = new ArrayList<>();
-    private List<MenuSymbol> volatileImages = new ArrayList<>();
-    private List<MenuSymbol> permanentImages = new ArrayList<>();
+    protected List<Symbol> animationSymbols = new ArrayList<>();
+    protected List<MenuSymbol> buttons = new ArrayList<>();
+    protected List<MenuSymbol> volatileImages = new ArrayList<>();
+    protected List<MenuSymbol> permanentImages = new ArrayList<>();
     private final MousePosition mousePosition;
 
     public MenuImp() {
@@ -48,7 +48,6 @@ public class MenuImp implements PropertyChangeListener, Menu {
                 .collect(Collectors.toList())
                 .forEach(MenuSymbol::render);
         swapBuffers();
-
     }
 
     @Override

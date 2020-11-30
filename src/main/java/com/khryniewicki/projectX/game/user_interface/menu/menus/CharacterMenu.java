@@ -149,7 +149,7 @@ public class CharacterMenu extends MenuImp {
 
 
     private Texture getTextureFromTextFactory(String name) {
-        return TextFactory.textToImageWithLine(name, 50);
+        return TextFactory.textToImageWithLine(name, 35);
     }
 
     private Texture getTextureFromTableFactory(String btnName) {

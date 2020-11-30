@@ -36,6 +36,14 @@ public class GameLoopImp implements GameLoop {
     }
 
     @Override
+    public void swapBuffers() {
+        int error = glGetError();
+        if (error != GL_NO_ERROR)
+            System.out.println(error);
+        glfwSwapBuffers(window);
+    }
+
+    @Override
     public void loop() {
         long lastTime = System.nanoTime();
         double delta = 0.0;

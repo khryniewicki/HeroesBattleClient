@@ -1,7 +1,9 @@
 package com.khryniewicki.projectX.game.multiplayer;
 
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.graphics.RenderFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -9,31 +11,34 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 public class MultiplayerController {
-    private RenderFactory renderFactory;
-    public static String inputText;
+
+    private WaitingRoomMenu waitingRoomMenu;
 
     public MultiplayerController() {
-        renderFactory = RenderFactory.getRenderFactory();
+        waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
     }
 
     public void waitingForSecondPlayer() {
-        renderFactory.render("Waiting for other player");
+        waitingRoomMenu.addText("Waiting for other player");
         WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        try {
-            websocketInitializer.connectionEstablished();
-            heroesInstances.setMock();
-
-            renderFactory.render("Other player has joined game. Game is starting, get ready");
-            Thread.sleep(5000);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        websocketInitializer.waitForSecondPlayer();
+        if (waitingRoomMenu.isRestart()) {
+            Game game = Game.getInstance();
+            game.initializeMultiplayerGame();
+        } else {
+            try {
+                heroesInstances.setMock();
+                waitingRoomMenu.addText("Other player has joined game. Game is starting, get ready");
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void occupiedRoom() {
-        renderFactory.render("Try later, room is full");
+        waitingRoomMenu.addText("Try later, room is full");
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

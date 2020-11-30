@@ -7,7 +7,7 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.ConnectionStatus;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
-import com.khryniewicki.projectX.graphics.RenderFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
@@ -45,7 +45,7 @@ public class WebsocketApplication implements Runnable {
         return copy_session;
     }
 
-    public RenderFactory renderFactory;
+    public WaitingRoomMenu waitingRoomMenu;
 
 
     @Slf4j
@@ -181,8 +181,8 @@ public class WebsocketApplication implements Runnable {
     }
 
     public void startWebsocket() {
-        renderFactory = RenderFactory.getRenderFactory();
-        renderFactory.render("Waiting for connections...");
+        waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
+        waitingRoomMenu.addText("Waiting for connections...");
 
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
@@ -210,7 +210,7 @@ public class WebsocketApplication implements Runnable {
             e.printStackTrace();
         }
         setSessionId();
-        renderFactory.render("Connection established");
+        waitingRoomMenu.addText("Connection established");
     }
 
     private static void setSessionId() {

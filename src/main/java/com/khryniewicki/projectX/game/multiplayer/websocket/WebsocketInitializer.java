@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
-import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
+
+import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -11,6 +12,7 @@ public class WebsocketInitializer implements Runnable {
     private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
 
     private WebsocketInitializer() {
+
     }
 
     public static WebsocketInitializer getWebsocketInstance() {
@@ -22,6 +24,11 @@ public class WebsocketInitializer implements Runnable {
         register();
     }
 
+    public void waitForSecondPlayer() {
+        WaitingRoomMenu waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
+        waitingRoomMenu.execute();
+    }
+
     public void register() {
         handler = new WebsocketApplication.MyStompSessionHandler();
         handler.register();
@@ -31,13 +38,6 @@ public class WebsocketInitializer implements Runnable {
         handler.leave();
     }
 
-    public void connectionEstablished() {
-        MainMenu mainMenu = MainMenu.getInstance();
-        do {
-
-        } while (!mainMenu.isConnection());
-
-    }
 
     public String getSessionId() {
         Optional<String> sessionId = Optional.empty();

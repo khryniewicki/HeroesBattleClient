@@ -7,4 +7,5 @@ public interface GameLoop {
     void init();
     void begin();
     void stop();
+    void swapBuffers();
 }

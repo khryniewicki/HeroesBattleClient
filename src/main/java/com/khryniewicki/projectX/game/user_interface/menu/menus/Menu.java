@@ -9,13 +9,16 @@ public interface Menu extends com.khryniewicki.projectX.game.user_interface.symb
     void swapBuffers();
 
     void start();
-
     default void subscribe() {
     }
 
     default void init() {
     }
 
+    default void execute(){}
 
+    default boolean terminatingCondition(){
+        return true;
+    }
 
 }

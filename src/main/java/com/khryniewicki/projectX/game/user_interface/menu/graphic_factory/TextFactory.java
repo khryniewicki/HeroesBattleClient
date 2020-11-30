@@ -15,7 +15,7 @@ public class TextFactory {
     private static Color bg=new Color(0,0,0,1);
 
     public static Texture textToImageWithLine(String text, int fontSize) {
-        BufferedImage image = new Texture("blankTextWindow.png").getImage();
+        BufferedImage image = new Texture("blankTextWindowWithLine.png").getImage();
         Font font = new Font("Open Sans", Font.BOLD, fontSize);
         setImage(text, font, defaultColor, image);
         return new Texture(image);

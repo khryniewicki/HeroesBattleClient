@@ -9,13 +9,14 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.messages.LoadedStatu
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.graphics.RenderFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import com.khryniewicki.projectX.services.SendingService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -29,30 +30,27 @@ public class Game extends GameLoopImp implements Runnable {
 
     private Board board;
     public static CountDownLatch latch;
-    private final WebsocketInitializer websocketInitializer;
+    private static WebsocketInitializer websocketInitializer;
     private final HeroesInstances heroesInstances;
     private final MultiplayerController multiplayerController;
+    private WebsocketApplication websocketApplication;
 
-
-    public Game() {
+    private Game() {
         heroesInstances = HeroesInstances.getInstance();
         websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         multiplayerController = new MultiplayerController();
     }
 
-    public static void main(String[] args) {
-        new Game().begin();
-    }
 
     public void start() {
         latch = new CountDownLatch(1);
-        begin();
         Thread game = new Thread(this, "Game");
         game.start();
     }
 
     public void run() {
         init();
+        initLoadingMenu();
         initializeMultiplayerGame();
         loop();
         terminateGame();
@@ -63,30 +61,36 @@ public class Game extends GameLoopImp implements Runnable {
         super.init();
     }
 
-    private void initializeMultiplayerGame() {
+    public void initializeMultiplayerGame() {
         initializeMenu();
         initializeWebsocketConnection();
         setMultiplayerGame();
+
     }
 
     private void initializeMenu() {
-        LoadingMenu loadingMenu = LoadingMenu.getInstance();
-        loadingMenu.execute();
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.render();
         mainMenu.execute();
     }
 
+    private void initLoadingMenu() {
+        LoadingMenu loadingMenu = LoadingMenu.getInstance();
+        loadingMenu.execute();
+    }
+
     private void initializeWebsocketConnection() {
-        new WebsocketApplication().startWebsocket();
+        websocketApplication = new WebsocketApplication();
+        websocketApplication.startWebsocket();
     }
 
     private void setMultiplayerGame() {
 
-        if (isHeroLoadedProperly()) {
+        if (setHeroOnPosition()) {
             multiplayerController.waitingForSecondPlayer();
             createBoard();
             createSendingService();
+            begin();
         } else {
             multiplayerController.occupiedRoom();
             stop();
@@ -100,7 +104,7 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
 
-    private boolean isHeroLoadedProperly() {
+    private boolean setHeroOnPosition() {
         registerHero();
         return LoadedStatus.INSTANCE().isHeroLoaded;
     }
@@ -113,6 +117,7 @@ public class Game extends GameLoopImp implements Runnable {
     private void setHeroesInitialPositions() {
         Thread websocket = new Thread(websocketInitializer, "websocket");
         websocket.start();
+
         try {
             latch.await();
         } catch (InterruptedException e) {
@@ -139,15 +144,23 @@ public class Game extends GameLoopImp implements Runnable {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         board.render();
-        RenderFactory.swapBuffers();
+        swapBuffers();
     }
 
 
-    private void terminateGame() {
-        websocketInitializer.disconnect();
+    public static void terminateGame() {
+        if (!websocketInitializer.getSessionId().isEmpty()) {
+            websocketInitializer.disconnect();
+        }
         glfwDestroyWindow(window);
         glfwTerminate();
     }
+    public static Game getInstance() {
+        return Game.HELPER.WAITING_ROOM_MENU;
+    }
 
+    private static class HELPER {
+        private final static Game WAITING_ROOM_MENU = new Game();
+    }
 
 }
