@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.ServerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
@@ -29,7 +28,6 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Getter
 @Setter
 public class MainMenu extends MenuImp {
-    private boolean running;
 
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;
@@ -40,7 +38,8 @@ public class MainMenu extends MenuImp {
     private MenuSymbol playersDescriptionLabel;
     private MenuSymbol playersBarLabel;
     private volatile ServerState state;
-    private boolean finishGame;
+    private ServerState currentState;
+
 
     public static MainMenu getInstance() {
         return instance;
@@ -81,44 +80,51 @@ public class MainMenu extends MenuImp {
     @Override
     public void init() {
         initButtons();
-        initMessages();
-        initConstantImages();
-    }
-
-    @Override
-    public void execute() {
-        ServerState tmpNumbers = null;
-        setRunning(false);
-        do {
-            if (Objects.nonNull(state) && !state.equals(tmpNumbers)) {
-                updateLabel(playersDescriptionLabel, state);
-                updateLabelDescription(playersBarLabel, state);
-                tmpNumbers = state;
-            }
-            glfwPollEvents();
-        } while (!running);
-        if (finishGame) {
-            Game.terminateGame();
-        }
+        initVolatileMessages();
+        initPermanentImages();
     }
 
     private void initButtons() {
-        List<MenuSymbol> buttonList = buttonsFactory.getListWithMainMenuButtons();
-        super.setButtons(buttonList);
+        setButtons(buttonsFactory.getListWithMainMenuButtons());
     }
 
-    private void initMessages() {
-        List<MenuSymbol> listWithMenuSymbols = textureMenuFactory.getListWithTextMainMenuSymbols();
-        noHero = TEXT_NO_HERO;
-        listWithMenuSymbols.add(noHero);
-        setVolatileImages(listWithMenuSymbols);
+    private void initVolatileMessages() {
+        setVolatileImages(textureMenuFactory.getListWithTextMainMenuSymbols());
     }
 
-    private void initConstantImages() {
+    private void initPermanentImages() {
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
         setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE)));
     }
+
+    @Override
+    public void execute() {
+        currentState = null;
+        begin();
+        loop();
+    }
+
+    @Override
+    public void insideLoop() {
+        do {
+            update();
+            windowsShouldClose();
+        } while (running);
+        terminateIfWindowShutDown();
+    }
+
+    @Override
+    public void update() {
+        if (Objects.nonNull(state) && !state.equals(currentState)) {
+            updateLabel(playersDescriptionLabel, state);
+            updateLabelDescription(playersBarLabel, state);
+            currentState = state;
+            render();
+        }
+        glfwPollEvents();
+    }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -139,7 +145,7 @@ public class MainMenu extends MenuImp {
                 controlSettingsMenu.render();
                 break;
             case "QuitGame":
-                setRunning(true);
+                stop();
                 setFinishGame(true);
                 break;
             case "Start":
@@ -149,9 +155,9 @@ public class MainMenu extends MenuImp {
                     showMessage(TEXT_ROOM_IS_FULL);
                 } else {
                     if (Objects.nonNull(heroesInstances.getHero())) {
-                        setRunning(true);
+                        stop();
                     } else {
-                        showMessage(noHero);
+                        showMessage(TEXT_NO_HERO);
                     }
                 }
                 break;
@@ -163,7 +169,7 @@ public class MainMenu extends MenuImp {
     }
 
     public void updateLabel(MenuSymbol symbol, ServerState state) {
-        List<MenuSymbol> menuSymbols = super.getPermanentImages()
+        List<MenuSymbol> menuSymbols = permanentImages
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
@@ -175,12 +181,11 @@ public class MainMenu extends MenuImp {
                     }
                 })
                 .collect(Collectors.toList());
-        super.setPermanentImages(menuSymbols);
-        render();
+        setPermanentImages(menuSymbols);
     }
 
     public void updateLabelDescription(MenuSymbol symbol, ServerState state) {
-        List<MenuSymbol> menuSymbols = super.getPermanentImages()
+        List<MenuSymbol> menuSymbols = permanentImages
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
@@ -201,12 +206,11 @@ public class MainMenu extends MenuImp {
                     }
                 })
                 .collect(Collectors.toList());
-        super.setPermanentImages(menuSymbols);
-        render();
+        setPermanentImages(menuSymbols);
     }
 
     private void disableAllMessages() {
-        super.getVolatileImages().forEach(s -> toggleImage(s, true));
+        volatileImages.forEach(s -> toggleImage(s, true));
     }
 
 }

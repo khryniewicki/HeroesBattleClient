@@ -3,10 +3,12 @@ package com.khryniewicki.projectX.game.engine;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
+import org.springframework.stereotype.Service;
 
 import java.nio.IntBuffer;
 
@@ -18,12 +20,15 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Data
+@Service
+@Slf4j
 public class GameLoopImp implements GameLoop {
-    private boolean running;
+    protected boolean running;
     public static long window;
     public static int width = 1600;
     public static int height = 800;
     public static int bar = 40;
+    protected boolean finishGame;
 
     @Override
     public void render() {
@@ -43,8 +48,15 @@ public class GameLoopImp implements GameLoop {
         glfwSwapBuffers(window);
     }
 
-    @Override
     public void loop() {
+        if (Game.state.equals(GameState.OK)) {
+            insideLoop();
+        }
+    }
+
+    @Override
+    public void insideLoop() {
+
         long lastTime = System.nanoTime();
         double delta = 0.0;
         double ns = 1000000000.0 / 60.0;
@@ -60,7 +72,6 @@ public class GameLoopImp implements GameLoop {
                 updates++;
                 delta--;
             }
-
             render();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
@@ -69,8 +80,22 @@ public class GameLoopImp implements GameLoop {
                 updates = 0;
                 frames = 0;
             }
-            if (glfwWindowShouldClose(window))
-                running = false;
+            windowsShouldClose();
+        }
+    }
+
+
+    protected void windowsShouldClose() {
+        if (glfwWindowShouldClose(window)) {
+            setRunning(false);
+            Game.state = GameState.FINISH;
+        }
+    }
+
+    protected void terminateIfWindowShutDown() {
+        if (finishGame) {
+            glfwDestroyWindow(window);
+            glfwTerminate();
         }
     }
 
@@ -102,7 +127,6 @@ public class GameLoopImp implements GameLoop {
             if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
                 glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
         });
-
         // Get the thread stack and push a new frame
         try (MemoryStack stack = stackPush()) {
             IntBuffer pWidth = stack.mallocInt(1); // int*
@@ -137,6 +161,7 @@ public class GameLoopImp implements GameLoop {
         GameShaders.loadAll();
         glfwShowWindow(window);
     }
+
 
     @Override
     public void begin() {

@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
-import java.util.List;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.*;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.HERO_NAME;
@@ -29,7 +28,7 @@ public class CharacterMenu extends MenuImp {
     private static final CharacterMenu instance = new CharacterMenu();
     private final Animation animation;
     private MainMenu mainMenu;
-
+    private volatile String chosenHero;
 
     public static CharacterMenu getInstance() {
         return instance;
@@ -61,7 +60,7 @@ public class CharacterMenu extends MenuImp {
             updateImage(HERO_NAME, getTextureFromTextFactory(newValue));
             setHeroName(newValue);
         });
-        super.setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
+        setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
     }
 
 
@@ -97,11 +96,12 @@ public class CharacterMenu extends MenuImp {
                 updateButtonText(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
             default:
+                setChosenHero(btnName);
                 addButton(CHARACTER_SKILLS);
                 updateImage(TABLE, getTextureFromTableFactory(btnName));
-                setHero(btnName);
                 initAnimation(btnName);
-                showMessageInMainMenu(btnName);
+                setHero(chosenHero);
+                showMessageInMainMenu(chosenHero);
                 break;
         }
     }
@@ -131,15 +131,12 @@ public class CharacterMenu extends MenuImp {
 
 
     public void removeButton(MenuSymbol symbol) {
-        List<MenuSymbol> buttons = super.getButtons();
         symbol.removePropertyChangeListener(this);
         buttons.removeIf(s -> symbol.getName().equals(s.getName()));
     }
 
     public void addButton(MenuSymbol symbol) {
-        List<MenuSymbol> buttons = super.getButtons();
-        boolean exist = buttons
-                .stream()
+        boolean exist = buttons.stream()
                 .anyMatch(menuSymbol -> menuSymbol.equals(symbol));
         if (!exist) {
             buttons.add(symbol);

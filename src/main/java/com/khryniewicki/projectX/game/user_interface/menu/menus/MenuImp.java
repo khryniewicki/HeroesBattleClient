@@ -2,10 +2,12 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.engine.Game;
+import com.khryniewicki.projectX.game.engine.GameLoopImp;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
@@ -14,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.khryniewicki.projectX.game.engine.Game.window;
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
 import static org.lwjgl.opengl.GL11.*;
 
-@Data
+@Getter
 @Slf4j
-
-public class MenuImp implements PropertyChangeListener, Menu {
+@Setter
+public class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu {
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<MenuSymbol> buttons = new ArrayList<>();
     protected List<MenuSymbol> volatileImages = new ArrayList<>();
@@ -55,13 +57,6 @@ public class MenuImp implements PropertyChangeListener, Menu {
         buttons.forEach(button -> button.addPropertyChangeListener(this));
     }
 
-    @Override
-    public void swapBuffers() {
-        int error = glGetError();
-        if (error != GL_NO_ERROR)
-            System.out.println(error);
-        glfwSwapBuffers(window);
-    }
 
     @Override
     public void addEventClick() {

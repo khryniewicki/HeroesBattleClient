@@ -54,7 +54,7 @@ public class Animation extends GameLoopImp {
 
     public void play(String hero) {
         prepare(hero);
-        loop();
+        insideLoop();
     }
 
     private void prepare(String hero) {
@@ -66,8 +66,8 @@ public class Animation extends GameLoopImp {
     }
 
     @Override
-    public void loop() {
-        super.loop();
+    public void insideLoop() {
+        super.insideLoop();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
-import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import lombok.Data;
@@ -23,9 +22,9 @@ import java.util.TimerTask;
 @Data
 @Slf4j
 public class WebsocketScheduler {
-    private final Channels channels;
     private final PropertyChangeSupport support;
     private final WebsocketInitializer websocketInstance;
+    private final Timer timer;
     private WaitingRoomMenu waitingRoomMenu;
     private String sessionId;
     private String path = "https://heroes.khryniewicki.com.pl";
@@ -33,9 +32,9 @@ public class WebsocketScheduler {
     private boolean subscribed;
 
     private WebsocketScheduler() {
-        channels = Channels.getINSTANCE();
         websocketInstance = WebsocketInitializer.getWebsocketInstance();
         support = new PropertyChangeSupport(this);
+        timer = new Timer();
     }
 
     public void observerPlayers() {
@@ -43,26 +42,23 @@ public class WebsocketScheduler {
     }
 
     public HashMap<String, Message> playersInGame() {
-        ParameterizedTypeReference<HashMap<String, Message>> responseType =
-                new ParameterizedTypeReference<>() {
-                };
-        RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/map"))
-                .accept(MediaType.APPLICATION_JSON).build();
-        return new RestTemplate().exchange(request, responseType).getBody();
+        ParameterizedTypeReference<HashMap<String, Message>> responseType = new ParameterizedTypeReference<>() {
+        };
+        return new RestTemplate().exchange(request("/map"), responseType).getBody();
     }
 
     public Long startCounter() {
-        ParameterizedTypeReference<Long> responseType =
-                new ParameterizedTypeReference<>() {
-                };
-        RequestEntity<Void> request = RequestEntity.get(URI.create(path + "/time-left-to-log-in"))
-                .accept(MediaType.APPLICATION_JSON).build();
+        ParameterizedTypeReference<Long> responseType = new ParameterizedTypeReference<>() {
+        };
+        return new RestTemplate().exchange(request("/time-left-to-log-in"), responseType).getBody();
+    }
 
-        return new RestTemplate().exchange(request, responseType).getBody();
+    protected RequestEntity<Void> request(String s) {
+        return RequestEntity.get(URI.create(path + s))
+                .accept(MediaType.APPLICATION_JSON).build();
     }
 
     private void requestScheduler() {
-        Timer timer = new Timer();
 
         timer.schedule(new TimerTask() {
 
@@ -75,11 +71,9 @@ public class WebsocketScheduler {
                     setTime(timeLeft);
                 } catch (RestClientException exception) {
                     map = null;
-                    timeLeft = null;
                 }
                 if (Objects.nonNull(map)) {
                     initSessionId();
-
                     if (map.size() == 0) {
                         setState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
@@ -114,9 +108,10 @@ public class WebsocketScheduler {
                     sessionId = websocketInstance.getSessionId();
                 }
             }
-        }, 0, 1000);
+        }, 0, 500);
 
     }
+
 
     public static WebsocketScheduler getInstance() {
         return WebsocketScheduler.HELPER.INSTANCE;

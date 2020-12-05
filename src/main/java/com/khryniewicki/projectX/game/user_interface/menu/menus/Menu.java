@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 public interface Menu extends com.khryniewicki.projectX.game.user_interface.symbols.Symbol {
     void addEventClick();
 
-    void swapBuffers();
-
     void start();
     default void subscribe() {
     }
@@ -15,10 +13,7 @@ public interface Menu extends com.khryniewicki.projectX.game.user_interface.symb
     default void init() {
     }
 
-    default void execute(){}
+    default void execute() {}
 
-    default boolean terminatingCondition(){
-        return true;
-    }
 
 }

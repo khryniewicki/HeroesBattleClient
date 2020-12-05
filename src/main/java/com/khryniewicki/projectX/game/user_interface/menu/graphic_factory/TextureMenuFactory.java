@@ -50,7 +50,8 @@ public class TextureMenuFactory {
     }
 
     public List<MenuSymbol> getListWithTextMainMenuSymbols() {
-        return new ArrayList<>(Arrays.asList(TEXT_FALLENKING,TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD, TEXT_ICEWIZARD, TEXT_THUNDERWIZARD,TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL));
+        return new ArrayList<>(Arrays.asList(TEXT_NO_HERO,TEXT_FALLENKING,TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD,
+                TEXT_ICEWIZARD, TEXT_THUNDERWIZARD,TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL));
     }
 
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()

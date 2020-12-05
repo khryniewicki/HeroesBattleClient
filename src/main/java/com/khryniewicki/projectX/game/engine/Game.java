@@ -9,17 +9,15 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.messages.LoadedStatu
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import com.khryniewicki.projectX.services.SendingService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.opengl.GL11.*;
 
 @Component
@@ -34,6 +32,7 @@ public class Game extends GameLoopImp implements Runnable {
     private final HeroesInstances heroesInstances;
     private final MultiplayerController multiplayerController;
     private WebsocketApplication websocketApplication;
+    public static GameState state;
 
     private Game() {
         heroesInstances = HeroesInstances.getInstance();
@@ -46,6 +45,7 @@ public class Game extends GameLoopImp implements Runnable {
         latch = new CountDownLatch(1);
         Thread game = new Thread(this, "Game");
         game.start();
+        state = GameState.OK;
     }
 
     public void run() {
@@ -63,9 +63,10 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void initializeMultiplayerGame() {
         initializeMenu();
-        initializeWebsocketConnection();
-        setMultiplayerGame();
-
+        if (state.equals(GameState.OK)) {
+            initializeWebsocketConnection();
+            setMultiplayerGame();
+        }
     }
 
     private void initializeMenu() {
@@ -85,16 +86,15 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     private void setMultiplayerGame() {
-
         if (setHeroOnPosition()) {
             multiplayerController.waitingForSecondPlayer();
             createBoard();
             createSendingService();
             begin();
         } else {
-            multiplayerController.occupiedRoom();
             stop();
         }
+
     }
 
     private void createSendingService() {
@@ -148,13 +148,13 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
 
-    public static void terminateGame() {
+    public void terminateGame() {
         if (!websocketInitializer.getSessionId().isEmpty()) {
             websocketInitializer.disconnect();
         }
-        glfwDestroyWindow(window);
-        glfwTerminate();
+        terminateIfWindowShutDown();
     }
+
     public static Game getInstance() {
         return Game.HELPER.WAITING_ROOM_MENU;
     }

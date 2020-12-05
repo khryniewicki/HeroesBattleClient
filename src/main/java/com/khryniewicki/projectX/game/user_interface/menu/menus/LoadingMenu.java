@@ -12,12 +12,16 @@ import java.util.Collections;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOADING;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_GREEN;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
 @Getter
 @Setter
 public class LoadingMenu extends MenuImp {
-
+    private long duration;
+    private long now;
+    private boolean flag;
+    private long difference;
     private static final LoadingMenu instance = new LoadingMenu();
 
     public static LoadingMenu getInstance() {
@@ -36,21 +40,30 @@ public class LoadingMenu extends MenuImp {
         setVolatileImages(Collections.singletonList(LOADING));
     }
 
+    @Override
     public void execute() {
-        long duration = 5000L;
-        long now = System.currentTimeMillis();
-        boolean flag = true;
-        do {
-            getProgress(now);
+        begin();
+        loop();
+        terminateIfWindowShutDown();
+    }
 
+    @Override
+    public void insideLoop() {
+        duration = 5000L;
+        now = System.currentTimeMillis();
+        flag = true;
+        do {
+            setDifference(System.currentTimeMillis() - now);
+            getProgress();
             if (flag) {
                 initSpells();
-                getProgress(now);
+                getProgress();
                 initSuperHeroes();
                 flag = false;
             }
-        } while (System.currentTimeMillis() - now < duration);
-
+            glfwPollEvents();
+            windowsShouldClose();
+        } while (difference < duration && running);
     }
 
     private void initSpells() {
@@ -62,8 +75,8 @@ public class LoadingMenu extends MenuImp {
         new FireWizard();
     }
 
-    private void getProgress(long now) {
-        long progress = (System.currentTimeMillis() - now) / 50;
+    private void getProgress() {
+        long progress = difference / 50;
         String text = "Loading " + progress + "%";
         updateImage(LOADING, getTextureForLoading(text));
         render();

@@ -1,11 +1,13 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WaitingRoomTimer;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Colors;
+import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Slf4j
 public class WaitingRoomMenu extends WaitingRoomTimer {
     private float level = 4.5f;
-    private volatile boolean restart;
+    private boolean waitingForPlayer;
 
     private WaitingRoomMenu() {
         super();
@@ -54,32 +56,42 @@ public class WaitingRoomMenu extends WaitingRoomTimer {
 
     @Override
     public void execute() {
-        setRestart(false);
-        setJoined(false);
-        do {
-            if (Objects.nonNull(timeLeftToLogOut) && timeLeftToLogOut>0L) {
-                update(TIMER, timeLeftToLogOut);
-                render();
-                if (timeLeftToLogOut ==1L && !restart) {
-                    timeLeftToLogOut = null;
-                    permanentImages=new ArrayList<>();
-                    level = 4.5f;
-                    addTimer();
-                    setRestart(true);
-                    log.info("Restart: {}", restart);
-                }
-            }
-        } while (!joined && !restart);
-
+        begin();
+        loop();
+        terminateIfWindowShutDown();
     }
 
-    public void update(MenuSymbol symbol, Long timeLeftToLogOut) {
+    @Override
+    public void update() {
+        if (Objects.nonNull(timeLeftToLogOut)) {
+            if (timeLeftToLogOut > 0L) {
+                changeTime(TIMER, timeLeftToLogOut);
+                setWaitingForPlayer(true);
+            } else {
+                if (waitingForPlayer) {
+                    setWaitingForPlayer(false);
+                    initWaitingRoom();
+                    Game game = Game.getInstance();
+                    game.initializeMultiplayerGame();
+                }
+            }
+        }
+    }
+
+    protected void initWaitingRoom() {
+        TIMER.setTexture(new Texture("blankTextWindow.png"));
+        level = 4.5f;
+        permanentImages=new ArrayList<>();
+        addTimer();
+    }
+
+
+    public void changeTime(MenuSymbol symbol, Long timeLeftToLogOut) {
         glfwPollEvents();
-        List<MenuSymbol> collect = permanentImages
-                .stream()
+        List<MenuSymbol> collect = permanentImages.stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
-                        symbol.setTexture(TextFactory.textInLoadingMenuToImage("Time to logout: " + timeLeftToLogOut.toString() + " sec.", Colors.BRIGHT_GREEN));
+                        symbol.setTexture(TextFactory.textInLoadingMenuToImage("Logout in: " + timeLeftToLogOut.toString() + " sec.", Colors.BRIGHT_GREEN));
                     }
                 })
                 .collect(Collectors.toList());
