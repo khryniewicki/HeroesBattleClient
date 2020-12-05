@@ -67,6 +67,8 @@ public class WaitingRoomMenu extends WaitingRoomTimer {
             if (timeLeftToLogOut > 0L) {
                 changeTime(TIMER, timeLeftToLogOut);
                 setWaitingForPlayer(true);
+                log.info("{}",timeLeftToLogOut);
+
             } else {
                 if (waitingForPlayer) {
                     setWaitingForPlayer(false);
