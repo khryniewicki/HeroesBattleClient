@@ -17,26 +17,31 @@ public class WaitingRoomTimer extends MenuImp {
     protected MenuSymbol counter;
     protected Long timeLeftToLogOut;
     protected Long tmpTime = 0L;
-
+    protected boolean subscribed;
     public void subscribePlayersInGame() {
-       addTimer();
+        addTimer();
+        subscribed=true;
         websocketScheduler.addPropertyChangeListener(evt -> {
             String propertyName = evt.getPropertyName();
+//            log.info("EVENT NAME: {} , NEW VALUE: {}", propertyName, evt.getNewValue());
+//            log.info("RUNNING: {}", isRunning());
+
             if (propertyName.equals("timeLeftToLogOut")) {
                 timeLeftToLogOut = (Long) evt.getNewValue();
                 setTimeLeftToLogOut(timeLeftToLogOut);
             } else if (propertyName.equals("playersOnline")) {
                 serverState = (ServerState) evt.getNewValue();
                 if (serverState == ServerState.JOIN_GAME) {
+//                    log.info("JOINED");
                     stop();
-                    suspend();
                 }
             }
         });
     }
 
-    protected void suspend() {
+    public void suspend() {
         websocketScheduler.removePropertyChangeListener(this);
+        subscribed=false;
         log.info("suspend");
     }
 

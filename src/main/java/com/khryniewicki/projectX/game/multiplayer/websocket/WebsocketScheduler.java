@@ -59,7 +59,7 @@ public class WebsocketScheduler {
     }
 
     private void requestScheduler() {
-
+        setSubscribed(false);
         timer.schedule(new TimerTask() {
 
             public void run() {
@@ -72,13 +72,13 @@ public class WebsocketScheduler {
                 } catch (RestClientException exception) {
                     map = null;
                 }
+
                 if (Objects.nonNull(map)) {
                     initSessionId();
                     if (map.size() == 0) {
                         setState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
                         setState(ServerState.ONE_PLAYER);
-                        subscribeTimer();
                     } else if (map.size() == 2) {
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
@@ -94,14 +94,14 @@ public class WebsocketScheduler {
                 }
             }
 
-            private void subscribeTimer() {
-                if (Objects.nonNull(sessionId) && !subscribed) {
-                    waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
-                    waitingRoomMenu.subscribePlayersInGame();
-                    setSubscribed(true);
-                }
-
-            }
+//            private void subscribeTimer() {
+//                if (Objects.nonNull(sessionId) && !subscribed) {
+//                    waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
+//                    waitingRoomMenu.subscribePlayersInGame();
+//                    setSubscribed(true);
+//                }
+//
+//            }
 
             private void initSessionId() {
                 if (!websocketInstance.getSessionId().isEmpty() && Objects.isNull(sessionId)) {
@@ -133,7 +133,7 @@ public class WebsocketScheduler {
     }
 
     public void setState(ServerState new_state) {
-        support.firePropertyChange("playersOnline", state, new_state);
+        support.firePropertyChange("playersOnline",  null, new_state);
         state = new_state;
     }
 

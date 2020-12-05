@@ -58,17 +58,19 @@ public class WaitingRoomMenu extends WaitingRoomTimer {
     public void execute() {
         begin();
         loop();
+        suspend();
         terminateIfWindowShutDown();
     }
 
     @Override
     public void update() {
+        if (!subscribed){
+            subscribePlayersInGame();
+        }
         if (Objects.nonNull(timeLeftToLogOut)) {
             if (timeLeftToLogOut > 0L) {
                 changeTime(TIMER, timeLeftToLogOut);
                 setWaitingForPlayer(true);
-                log.info("{}",timeLeftToLogOut);
-
             } else {
                 if (waitingForPlayer) {
                     setWaitingForPlayer(false);

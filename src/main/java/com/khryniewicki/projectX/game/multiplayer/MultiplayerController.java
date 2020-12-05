@@ -24,6 +24,9 @@ public class MultiplayerController {
         try {
             websocketInitializer.waitForSecondPlayer();
             heroesInstances.setMock();
+            log.info("SET MOCK");
+//            waitingRoomMenu.suspend();
+
             waitingRoomMenu.addText("Other player has joined game. Game is starting, get ready");
             Thread.sleep(5000);
 
