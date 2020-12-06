@@ -59,7 +59,6 @@ public class WebsocketScheduler {
     }
 
     private void requestScheduler() {
-        setSubscribed(false);
         timer.schedule(new TimerTask() {
 
             public void run() {
@@ -84,7 +83,7 @@ public class WebsocketScheduler {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
                             setState(ServerState.JOIN_GAME);
-                            timer.cancel();
+//                            timer.cancel();
                         } else {
                             setState(ServerState.TWO_PLAYERS);
                         }
@@ -94,14 +93,6 @@ public class WebsocketScheduler {
                 }
             }
 
-//            private void subscribeTimer() {
-//                if (Objects.nonNull(sessionId) && !subscribed) {
-//                    waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
-//                    waitingRoomMenu.subscribePlayersInGame();
-//                    setSubscribed(true);
-//                }
-//
-//            }
 
             private void initSessionId() {
                 if (!websocketInstance.getSessionId().isEmpty() && Objects.isNull(sessionId)) {

@@ -17,16 +17,13 @@ public class MultiplayerController {
     }
 
     public void waitingForSecondPlayer() {
-        log.info("waiting for second player");
         waitingRoomMenu.addText("Waiting for other player");
         WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         try {
             websocketInitializer.waitForSecondPlayer();
             heroesInstances.setMock();
-            log.info("SET MOCK");
-//            waitingRoomMenu.suspend();
-
+            heroesInstances.setHeroMoveSetting();
             waitingRoomMenu.addText("Other player has joined game. Game is starting, get ready");
             Thread.sleep(5000);
 

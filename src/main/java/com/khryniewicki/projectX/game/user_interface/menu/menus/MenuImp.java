@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.engine.GameLoopImp;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -40,7 +41,6 @@ public class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu
 
     @Override
     public void render() {
-        addEventClick();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         buttons.forEach(MenuSymbol::render);
         permanentImages.forEach(MenuSymbol::render);
@@ -63,7 +63,10 @@ public class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
 
             if (key == 0 && action != GLFW_RELEASE) {
-                mousePosition.getCursorPosition();
+
+                Position cursorPosition = mousePosition.getCursorPosition();
+                log.info("{}",cursorPosition);
+
                 buttons.stream()
                         .filter(btn -> mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1())
                         .filter(btn -> mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1())
@@ -104,4 +107,9 @@ public class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu
         setVolatileImages(menuSymbols);
         render();
     }
+    protected void runMenu(Menu menu) {
+        menu.addEventClick();
+        menu.render();
+    }
+
 }

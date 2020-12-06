@@ -101,6 +101,7 @@ public class MainMenu extends MenuImp {
     @Override
     public void execute() {
         currentState = null;
+        addEventClick();
         begin();
         loop();
     }
@@ -137,12 +138,10 @@ public class MainMenu extends MenuImp {
 
         switch (buttonName) {
             case "ChooseCharacter":
-                CharacterMenu characterMenu = CharacterMenu.getInstance();
-                characterMenu.render();
+                runMenu(CharacterMenu.getInstance());
                 break;
             case "ControlSettings":
-                ControlSettingsMenu controlSettingsMenu = ControlSettingsMenu.getInstance();
-                controlSettingsMenu.render();
+                runMenu(ControlSettingsMenu.getInstance());
                 break;
             case "QuitGame":
                 stop();
@@ -162,6 +161,14 @@ public class MainMenu extends MenuImp {
                 }
                 break;
         }
+    }
+
+
+
+    @Override
+    public void stop() {
+        super.stop();
+        log.info("stop loop main menu");
     }
 
     public void showMessage(MenuSymbol symbol) {

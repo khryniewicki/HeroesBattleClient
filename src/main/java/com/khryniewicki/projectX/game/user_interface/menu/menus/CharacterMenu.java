@@ -83,7 +83,7 @@ public class CharacterMenu extends MenuImp {
                 updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
                 removeButton(CHARACTER_SKILLS);
                 setActiveWriting(false);
-                mainMenu.render();
+                runMenu(MainMenu.getInstance());
                 break;
             case "showTable":
                 boolean disabled = TABLE.isDisabled();

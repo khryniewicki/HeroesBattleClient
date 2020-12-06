@@ -30,8 +30,6 @@ public class MoveSettings {
     public void move() {
 
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
-
-
             float tmpX = hero.getX();
             float tmpY = hero.getY();
             position = hero.getPosition();

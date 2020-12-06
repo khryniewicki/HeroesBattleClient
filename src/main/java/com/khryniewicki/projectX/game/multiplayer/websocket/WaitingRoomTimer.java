@@ -23,16 +23,12 @@ public class WaitingRoomTimer extends MenuImp {
         subscribed=true;
         websocketScheduler.addPropertyChangeListener(evt -> {
             String propertyName = evt.getPropertyName();
-//            log.info("EVENT NAME: {} , NEW VALUE: {}", propertyName, evt.getNewValue());
-//            log.info("RUNNING: {}", isRunning());
-
             if (propertyName.equals("timeLeftToLogOut")) {
                 timeLeftToLogOut = (Long) evt.getNewValue();
                 setTimeLeftToLogOut(timeLeftToLogOut);
             } else if (propertyName.equals("playersOnline")) {
                 serverState = (ServerState) evt.getNewValue();
                 if (serverState == ServerState.JOIN_GAME) {
-//                    log.info("JOINED");
                     stop();
                 }
             }
@@ -41,12 +37,18 @@ public class WaitingRoomTimer extends MenuImp {
 
     public void suspend() {
         websocketScheduler.removePropertyChangeListener(this);
+        websocketScheduler.getTimer().cancel();
         subscribed=false;
-        log.info("suspend");
     }
 
-    protected void addTimer() {
+    protected void  addTimer() {
         permanentImages.add(TIMER);
     }
 
+
+    @Override
+    public void stop(){
+        super.stop();
+        log.info("stop loop waiting menu");
+    }
 }

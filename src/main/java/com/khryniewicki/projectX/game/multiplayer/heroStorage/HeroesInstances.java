@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.Objects;
 
 
 @Service
@@ -36,7 +35,6 @@ public class HeroesInstances {
 
     public void setHeroBasicProperties() {
         setBasicProperties(hero);
-        setHeroMoveSetting();
     }
 
     public void setBasicProperties(SuperHero superHero) {
@@ -61,7 +59,6 @@ public class HeroesInstances {
     public void setMock() {
         WebsocketInitializer websocketInstance = WebsocketInitializer.getWebsocketInstance();
         String sessionId = websocketInstance.getSessionId();
-        log.info(sessionId);
         HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
         Map<String, Message> heroes = heroesRegistry.getHeroesRegistryBook();
 

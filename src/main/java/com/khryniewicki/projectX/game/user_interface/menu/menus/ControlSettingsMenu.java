@@ -17,6 +17,7 @@ public class ControlSettingsMenu extends MenuImp {
 
     private static final ControlSettingsMenu instance = new ControlSettingsMenu();
     private ControlSettingsMenuFactory factory;
+
     public static ControlSettingsMenu getInstance() {
         return instance;
     }
@@ -37,10 +38,8 @@ public class ControlSettingsMenu extends MenuImp {
     public void propertyChange(PropertyChangeEvent evt) {
 
         String btnName = (String) evt.getNewValue();
-        log.info(btnName);
         if (btnName.equals("Return2")) {
-            MainMenu mainMenu = MainMenu.getInstance();
-            mainMenu.render();
+            runMenu(MainMenu.getInstance());
         }
     }
 

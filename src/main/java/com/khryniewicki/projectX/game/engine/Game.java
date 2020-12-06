@@ -71,7 +71,6 @@ public class Game extends GameLoopImp implements Runnable {
 
     private void initializeMenu() {
         MainMenu mainMenu = MainMenu.getInstance();
-        mainMenu.render();
         mainMenu.execute();
     }
 

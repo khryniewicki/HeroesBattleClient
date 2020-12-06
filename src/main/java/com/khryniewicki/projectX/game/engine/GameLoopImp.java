@@ -170,7 +170,6 @@ public class GameLoopImp implements GameLoop {
 
     @Override
     public void stop() {
-        log.info("stop loop");
         setRunning(false);
     }
 }
