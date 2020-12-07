@@ -68,10 +68,15 @@ public class TextFactory {
         setImage(text, font, color, image);
         return new Texture(image);
     }
+    public static Texture textInPlayerBar(String text, Color color) {
+        BufferedImage image = new Texture("blankTextWindowNumber.png").getImage();
+        Font font = new Font("Arial", Font.BOLD, 30);
+        setImage(text, font, color, image);
+        return new Texture(image);
+    }
     public static Texture textInControlSettingsToImage(String text, Color color) {
         BufferedImage image = new Texture("blankTextWindow.png").getImage();
         Font font = new Font("Arial", Font.BOLD, 30);
-
         setImage(text, font, color, image);
         return new Texture(image);
     }

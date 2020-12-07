@@ -2,8 +2,8 @@ package com.khryniewicki.projectX.game.user_interface.playerBar;
 
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.utils.GameUtill;
 
 import java.util.ArrayList;
@@ -25,6 +25,11 @@ public class PlayerBar implements Symbol {
         Symbol basicSpell = new SpellSymbol(hero.getBasicSpell());
         Symbol ultimateSpell = new SpellSymbol(hero.getUltimateSpell());
         symbolList = new ArrayList<>(Arrays.asList(manaSymbol, lifeSymbol, lifeAsNumber, manaAsNumber, basicSpell, ultimateSpell));
+    }
+
+    @Override
+    public void update() {
+        symbolList.forEach(Symbol::update);
     }
 
     @Override

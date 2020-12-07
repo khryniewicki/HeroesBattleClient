@@ -86,6 +86,7 @@ public class Board {
     public void update() {
         heroes.forEach(Ultra::update);
         spells.forEach(Ultra::update);
+        symbols.forEach(Symbol::update);
     }
 
     public void render() {

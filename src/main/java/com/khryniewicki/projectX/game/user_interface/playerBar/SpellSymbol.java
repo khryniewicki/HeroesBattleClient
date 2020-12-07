@@ -39,11 +39,13 @@ public class SpellSymbol implements Symbol {
                 .build();
         symbolList = new ArrayList<>(Arrays.asList(frame, this.spellTexture));
     }
-
+    @Override
+    public void update(){
+        isFaded();
+    }
 
     @Override
     public void render() {
-        isFaded();
         symbolList.forEach(Symbol::render);
     }
 

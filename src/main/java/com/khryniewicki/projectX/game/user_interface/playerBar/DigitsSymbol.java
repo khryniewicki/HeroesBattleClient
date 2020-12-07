@@ -3,18 +3,18 @@ package com.khryniewicki.projectX.game.user_interface.playerBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.utils.Digits;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.*;
 import java.util.Objects;
 
 @Data
+@Slf4j
 public class DigitsSymbol implements Symbol {
     private String name;
     private UltraHero hero;
@@ -24,65 +24,48 @@ public class DigitsSymbol implements Symbol {
     private Symbol hundred;
     private Symbol dozen;
     private Symbol unit;
-    private List<Symbol> numbers;
+    private Symbol numbers;
 
 
     public DigitsSymbol(String name) {
-        float offset = 0.3f;
         this.name = name;
         this.hero = HeroesInstances.getInstance().getHero();
         this.position = getPosition(name);
-
-        initDigitRegistry();
-
-        this.hundred = new GameSymbol.Builder(getHundredDigitTexture(), position.getX(), position.getY())
+        numbers = new GameSymbol.Builder(getTexture(), position.getX(), position.getY())
+                .withWidth(1f)
+                .withHeight(0.5f)
+                .withVisibility(1f)
                 .build();
-        this.dozen = new GameSymbol.Builder(getDozenDigitTexture(), position.getX() + offset, position.getY())
-                .build();
-        this.unit = new GameSymbol.Builder(getUnitDigitTexture(), position.getX() + 2 * offset, position.getY())
-                .build();
-        this.numbers = new ArrayList<>(Arrays.asList(this.hundred, this.dozen, this.unit));
     }
 
-    private void initDigitRegistry() {
-        if (Objects.isNull(Digits.digitsRegistry)) {
-            Digits.fillDigitsRegistry();
-        }
-    }
-
-    public Texture getHundredDigitTexture() {
-        return Digits.getHundredDigitTexture(getNumber());
-    }
-
-    public Texture getDozenDigitTexture() {
-        return Digits.getDozenDigitTexture(getNumber());
-    }
-
-    public Texture getUnitDigitTexture() {
-        return Digits.getUnitDigitTexture(getNumber());
-    }
 
     private Integer getNumber() {
         return name.equals("life") ? hero.getLife() : hero.getMana();
     }
 
     private Position getPosition(String name) {
-        return new Position(name.equals("life") ? -7.45f : -5.95f, 5.2f);
+        return new Position(name.equals("life") ? -7.6f : -6.1f, 5.1f);
+    }
+
+    @Override
+    public void update() {
+        updateNumber();
     }
 
     @Override
     public void render() {
-        updateNumber();
-        numbers.forEach(Symbol::render);
+        numbers.render();
     }
 
     private void updateNumber() {
         if (Objects.nonNull(tmpNumber) && tmpNumber.equals(getNumber())) {
             return;
         }
-        hundred.setTexture(getHundredDigitTexture());
-        dozen.setTexture(getDozenDigitTexture());
-        unit.setTexture(getUnitDigitTexture());
+        numbers.setTexture(getTexture());
         tmpNumber = number;
+    }
+
+    private Texture getTexture() {
+        return TextFactory.textInPlayerBar(getNumber().toString(), Color.WHITE);
     }
 }
