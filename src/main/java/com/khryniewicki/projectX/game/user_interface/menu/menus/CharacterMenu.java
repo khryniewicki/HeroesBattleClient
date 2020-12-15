@@ -11,24 +11,26 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.*;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.CHARACTER_SKILLS;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.TYPE_YOUR_NAME;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.HERO_NAME;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.TABLE;
+import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 
 
 @Slf4j
 @Getter
 @Setter
 public class CharacterMenu extends MenuImp {
-    private boolean activeWriting;
+    private static final CharacterMenu instance = new CharacterMenu();
     private final HeroesInstances heroesInstances;
     private final TextureMenuFactory textureMenuFactory;
     private final KeyboardSettings keyboardSettings;
     private final ButtonsFactory buttonsFactory;
-    private static final CharacterMenu instance = new CharacterMenu();
     private final Animation animation;
     private MainMenu mainMenu;
     private volatile String chosenHero;
+    private boolean activeWriting;
 
     public static CharacterMenu getInstance() {
         return instance;

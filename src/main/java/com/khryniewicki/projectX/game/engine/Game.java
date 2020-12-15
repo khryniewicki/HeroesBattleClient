@@ -32,7 +32,6 @@ public class Game extends GameLoopImp implements Runnable {
     private final HeroesInstances heroesInstances;
     private final MultiplayerController multiplayerController;
     private WebsocketApplication websocketApplication;
-    public static GameState state;
 
     private Game() {
         heroesInstances = HeroesInstances.getInstance();
@@ -56,10 +55,6 @@ public class Game extends GameLoopImp implements Runnable {
         terminateGame();
     }
 
-    @Override
-    public void init() {
-        super.init();
-    }
 
     public void initializeMultiplayerGame() {
         initializeMenu();

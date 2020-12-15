@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.fire;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class UltimateFire extends Spell {
@@ -24,10 +24,10 @@ public class UltimateFire extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.FIREORB, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.FIREBALL, 1.7f));
-        setIcon(SpellUtil.FIREICON);
-        setFadedIcon(SpellUtil.FIREICONFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.FIREORB, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellTextures.FIREBALL, 1.7f));
+        setIcon(SpellTextures.FIREICON);
+        setFadedIcon(SpellTextures.FIREICONFADED);
 
     }
 

@@ -2,7 +2,8 @@ package com.khryniewicki.projectX.graphics;
 
 import com.khryniewicki.projectX.utils.BufferUtilsOwn;
 import com.khryniewicki.projectX.utils.FileUtils;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,8 +12,8 @@ import java.io.InputStream;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@Data
-
+@Getter
+@Setter
 public class Texture {
 
     private int width, height;
@@ -33,6 +34,7 @@ public class Texture {
 
         try {
             InputStream inputStream = FileUtils.pathTransformer("png", "img", path);
+            assert inputStream != null;
             image = ImageIO.read(inputStream);
             width = image.getWidth();
             height = image.getHeight();

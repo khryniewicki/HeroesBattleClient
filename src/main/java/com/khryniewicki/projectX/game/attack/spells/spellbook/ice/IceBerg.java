@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.ice;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class IceBerg extends Spell {
@@ -24,10 +24,10 @@ public class IceBerg extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.ICEBALL, 1.2f));
-        setExecutedSpell(new SpellTexture(SpellUtil.ICEBERG, 1.2f));
-        setIcon(SpellUtil.ICEBERGICON);
-        setFadedIcon(SpellUtil.ICEBERGFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.ICEBALL, 1.2f));
+        setExecutedSpell(new SpellTexture(SpellTextures.ICEBERG, 1.2f));
+        setIcon(SpellTextures.ICEBERGICON);
+        setFadedIcon(SpellTextures.ICEBERGFADED);
     }
 
 }

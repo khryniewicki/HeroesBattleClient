@@ -8,6 +8,7 @@ import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFa
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Colors;
 import com.khryniewicki.projectX.graphics.Texture;
+import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -83,7 +84,7 @@ public class WaitingRoomMenu extends WaitingRoomTimer {
     }
 
     protected void initWaitingRoom() {
-        TIMER.setTexture(new Texture("blankTextWindow.png"));
+        TIMER.setTexture(MenuTextures.BLANK_TEXT_WINDOW);
         level = 4.5f;
         permanentImages=new ArrayList<>();
         addTimer();

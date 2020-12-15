@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.Thunder;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.thunder.VioletMissle;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
 public class ThunderWizard extends SuperHero {
@@ -21,13 +21,13 @@ public class ThunderWizard extends SuperHero {
 
     @Override
     public void setTexture() {
-        setTexture(HeroUtil.THUNDER_WIZARD_IDLE);
-        setHeroIdle(HeroUtil.THUNDER_WIZARD_IDLE);
-        setHeroRight(HeroUtil.THUNDER_WIZARD_RUN);
-        setHeroLeft(HeroUtil.THUNDER_WIZARD_RUN);
-        setHeroUp(HeroUtil.THUNDER_WIZARD_RUN);
-        setHeroDown(HeroUtil.THUNDER_WIZARD_RUN);
-        setHeroAttack(HeroUtil.THUNDER_WIZARD_ATTACK);
+        setTexture(HeroTextures.THUNDER_WIZARD_IDLE);
+        setHeroIdle(HeroTextures.THUNDER_WIZARD_IDLE);
+        setHeroRight(HeroTextures.THUNDER_WIZARD_RUN);
+        setHeroLeft(HeroTextures.THUNDER_WIZARD_RUN);
+        setHeroUp(HeroTextures.THUNDER_WIZARD_RUN);
+        setHeroDown(HeroTextures.THUNDER_WIZARD_RUN);
+        setHeroAttack(HeroTextures.THUNDER_WIZARD_ATTACK);
     }
 
 

@@ -76,7 +76,8 @@ public class LoadingMenu extends MenuImp {
     }
 
     private void getProgress() {
-        long progress = difference / 50;
+        long result = difference / 50;
+        long progress = result < 100 ? result : 100;
         String text = "Loading " + progress + "%";
         updateImage(LOADING, getTextureForLoading(text));
         render();

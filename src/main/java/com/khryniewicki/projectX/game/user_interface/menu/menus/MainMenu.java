@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
+import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
@@ -126,7 +127,6 @@ public class MainMenu extends MenuImp {
         glfwPollEvents();
     }
 
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String buttonName = (String) evt.getNewValue();
@@ -164,7 +164,6 @@ public class MainMenu extends MenuImp {
     }
 
 
-
     @Override
     public void stop() {
         super.stop();
@@ -198,16 +197,16 @@ public class MainMenu extends MenuImp {
                     if (menuSymbol.getName().equals(symbol.getName())) {
                         switch (state) {
                             case NO_PLAYERS:
-                                symbol.setTexture(BAR_EMPTY);
+                                symbol.setTexture(SERVER_EMPTY);
                                 break;
                             case ONE_PLAYER:
-                                symbol.setTexture(BAR_HALF);
+                                symbol.setTexture(SERVER_HALF_FULL);
                                 break;
                             case TWO_PLAYERS:
-                                symbol.setTexture(BAR_FULL);
+                                symbol.setTexture(SERVER_FULL);
                                 break;
                             case SERVER_OFFLINE:
-                                symbol.setTexture(BAR_SERVER_OFFLINE);
+                                symbol.setTexture(SERVER_OFFLINE);
                                 break;
                         }
                     }

@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing.BlackFire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing.Skull;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
 public class FallenKing extends SuperHero {
@@ -26,13 +26,13 @@ public class FallenKing extends SuperHero {
 
     @Override
     public void setTexture() {
-        setTexture(HeroUtil.FALLENIDLE3);
-        setHeroIdle(HeroUtil.FALLENIDLE3);
-        setHeroRight(HeroUtil.FALLENRUN3);
-        setHeroLeft(HeroUtil.FALLENRUN3);
-        setHeroUp(HeroUtil.FALLENRUN3);
-        setHeroDown(HeroUtil.FALLENRUN3);
-        setHeroAttack(HeroUtil.FALLENATTACK3);
+        setTexture(HeroTextures.FALLENIDLE3);
+        setHeroIdle(HeroTextures.FALLENIDLE3);
+        setHeroRight(HeroTextures.FALLENRUN3);
+        setHeroLeft(HeroTextures.FALLENRUN3);
+        setHeroUp(HeroTextures.FALLENRUN3);
+        setHeroDown(HeroTextures.FALLENRUN3);
+        setHeroAttack(HeroTextures.FALLENATTACK3);
     }
 
 

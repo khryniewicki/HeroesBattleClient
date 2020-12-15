@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.utils.GameUtill;
+import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,8 +31,8 @@ public class HeroAttributes implements Symbol {
                 .withHeight(0.07f)
                 .withWidth(0.65f)
                 .withVisibility(0.8f)
-                .withBlueBarTexture(GameUtill.MANA)
-                .withBlackBarTexture(GameUtill.EMPTY)
+                .withBlueBarTexture(GameTextures.MANA)
+                .withBlackBarTexture(GameTextures.EMPTY)
                 .build();
     }
 
@@ -42,8 +42,8 @@ public class HeroAttributes implements Symbol {
                 .withHeight(0.07f)
                 .withWidth(0.65f)
                 .withVisibility(0.8f)
-                .withGreenBarTexture(GameUtill.LIFE)
-                .withBlackBarTexture(GameUtill.EMPTY)
+                .withGreenBarTexture(GameTextures.LIFE)
+                .withBlackBarTexture(GameTextures.EMPTY)
                 .build();
     }
 

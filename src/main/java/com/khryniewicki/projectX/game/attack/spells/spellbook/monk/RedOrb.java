@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.monk;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class RedOrb extends Spell {
@@ -24,10 +24,10 @@ public class RedOrb extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.BLOODORB, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.REDORB, 1.0f));
-        setIcon(SpellUtil.REDORBICON);
-        setFadedIcon(SpellUtil.REDORBICONFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.BLOODORB, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellTextures.REDORB, 1.0f));
+        setIcon(SpellTextures.REDORBICON);
+        setFadedIcon(SpellTextures.REDORBICONFADED);
     }
 
 }

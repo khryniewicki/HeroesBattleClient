@@ -2,16 +2,18 @@ package com.khryniewicki.projectX.game.collision;
 
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 @Data
@@ -23,9 +25,10 @@ public class Collision {
     private float hero_top_offset;
     private float delta_x = 0.1f;
     private float delta_y = 0.1f;
-
+    private Map<Position, MenuSymbol> squares=new HashMap<>();
     private float bx, by, bx0, bx1, by0, by1;
     private float px0, px1, py0, py1;
+    boolean test_square=true;
 
     public static boolean collision_left, collision_right, collision_up, collision_down = false;
     public static Boolean[] collisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
@@ -41,6 +44,19 @@ public class Collision {
     private List<BoardObjects> obstacleList_TR = ObstacleStorage.getObstacleList_TR();
     private List<BoardObjects> terrainList = ObstacleStorage.getTerrainList();
 
+    public MenuSymbol createSquare(Position position) {
+        System.out.println("SQUARES: "+squares.size());
+
+        return new Button.Builder()
+                .withTexture(new Texture("red_square.png"))
+                .withName("text")
+                .withHeight(0.2f)
+                .withWidth(0.2f)
+                .withPositionX(position.getX())
+                .withPositionY(position.getY())
+                .withVisibility(1f)
+                .build();
+    }
 
     public void test() {
         if (hero==null){
@@ -54,7 +70,6 @@ public class Collision {
         obstacleCollision(checkInWhichQuerterIsHero());
         terrainCollision(terrainList);
         boundaryCollision();
-
         checkCollisionForSpecificDirection();
     }
     private MAP_QUARTERS checkInWhichQuerterIsHero() {
@@ -77,6 +92,14 @@ public class Collision {
         if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
             collisions[i] = true;
 //            log.info(Arrays.toString(collisions));
+        }
+
+        if (test_square) {
+            boolean b = new ArrayList<>(Arrays.asList(collisions)).stream().allMatch(c -> c.equals(true));
+            if (b) {
+                Position position = new Position(hero.getX(), hero.getY());
+                squares.put(position, createSquare(position));
+            }
         }
     }
 

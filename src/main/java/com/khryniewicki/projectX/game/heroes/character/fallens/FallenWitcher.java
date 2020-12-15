@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.Storm;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.Wind;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
 public class FallenWitcher extends SuperHero {
@@ -26,13 +26,13 @@ public class FallenWitcher extends SuperHero {
 
     @Override
     public void setTexture() {
-        setTexture(HeroUtil.FALLENIDLE1);
-        setHeroIdle(HeroUtil.FALLENIDLE1);
-        setHeroRight(HeroUtil.FALLENRUN1);
-        setHeroLeft(HeroUtil.FALLENRUN1);
-        setHeroUp(HeroUtil.FALLENRUN1);
-        setHeroDown(HeroUtil.FALLENRUN1);
-        setHeroAttack(HeroUtil.FALLENATTACK1);
+        setTexture(HeroTextures.FALLENIDLE1);
+        setHeroIdle(HeroTextures.FALLENIDLE1);
+        setHeroRight(HeroTextures.FALLENRUN1);
+        setHeroLeft(HeroTextures.FALLENRUN1);
+        setHeroUp(HeroTextures.FALLENRUN1);
+        setHeroDown(HeroTextures.FALLENRUN1);
+        setHeroAttack(HeroTextures.FALLENATTACK1);
     }
 
 

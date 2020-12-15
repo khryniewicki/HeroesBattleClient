@@ -24,7 +24,7 @@ import static org.lwjgl.opengl.GL11.*;
 @Getter
 @Slf4j
 @Setter
-public class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu {
+public abstract class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu {
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<MenuSymbol> buttons = new ArrayList<>();
     protected List<MenuSymbol> volatileImages = new ArrayList<>();

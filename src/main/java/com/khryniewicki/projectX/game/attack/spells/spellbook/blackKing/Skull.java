@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class Skull extends Spell {
@@ -24,10 +24,10 @@ public class Skull extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.SKULL4, 0.7f));
-        setExecutedSpell(new SpellTexture(SpellUtil.SKULL3, 1.2f));
-        setIcon(SpellUtil.SKULLICON);
-        setFadedIcon(SpellUtil.SKULLICONFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.SKULL4, 0.7f));
+        setExecutedSpell(new SpellTexture(SpellTextures.SKULL3, 1.2f));
+        setIcon(SpellTextures.SKULLICON);
+        setFadedIcon(SpellTextures.SKULLICONFADED);
     }
 
 }

@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -31,7 +31,7 @@ public class Pointer {
 
     public Pointer() {
         setMesh(isMovingLeft(false));
-        texture = HeroUtil.DOT;
+        texture = HeroTextures.DOT;
     }
 
     public VertexArray isMovingLeft(boolean isMovingLeft) {
@@ -55,8 +55,8 @@ public class Pointer {
         tcs = new float[]{
                 0, 1,
                 0, 0,
-                i * 1, 0,
-                i * 1, 1
+                i, 0,
+                i, 1
         };
         return new VertexArray(vertices, indices, tcs);
 

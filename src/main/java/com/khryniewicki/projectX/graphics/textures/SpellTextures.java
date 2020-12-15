@@ -1,8 +1,8 @@
-package com.khryniewicki.projectX.utils;
+package com.khryniewicki.projectX.graphics.textures;
 
 import com.khryniewicki.projectX.graphics.Texture;
 
-public class SpellUtil {
+public class SpellTextures {
     //Firewizard
     public static final Texture FIREORB= new Texture("fireOrb.png");
     public static final Texture FIRE= new Texture("fire3.png");

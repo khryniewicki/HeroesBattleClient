@@ -3,37 +3,33 @@ package com.khryniewicki.projectX.graphics;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
-
-@Data
+@Getter
+@Setter
 public class GraphicLoader implements Symbol {
-    private String path;
-    private Texture texture;
-    private VertexArray mesh;
-    private Matrix4f ml_matrix;
-    float SIZE;
-    float[] vertices;
-    float[] tcs;
-    private float positionX;
-    private float positionY;
-    private float visibility;
-    private Vector position= new Vector();
-    private float width;
-    private float height;
-    private boolean isSizeKnown;
-    private boolean isTurningLeft;
+    protected String path;
+    protected Texture texture;
+    protected VertexArray mesh;
+    protected float SIZE;
+    protected float[] vertices;
+    protected float[] tcs;
+    protected float positionX;
+    protected float positionY;
+    protected float visibility;
+    protected Vector position = new Vector();
+    protected float width;
+    protected float height;
+    protected boolean isSizeKnown;
+    protected boolean isTurningLeft;
 
-    public GraphicLoader() {
-    }
 
     public GraphicLoader(Builder<?> builder) {
         this.path = builder.path;
         this.texture = builder.texture;
-        this.vertices = builder.vertices;
-        this.tcs = builder.tcs;
         this.positionX = builder.positionX;
         this.positionY = builder.positionY;
         this.visibility = builder.visibility;
@@ -48,8 +44,6 @@ public class GraphicLoader implements Symbol {
     }
 
     public VertexArray updateMesh() {
-
-//        float ratio = getRatio();
         int t = isTurningLeft ? -1 : 1;
 
         if (isSizeKnown) {
@@ -104,8 +98,6 @@ public class GraphicLoader implements Symbol {
         private String path;
         private Texture texture;
         private float SIZE = 1f;
-        private float[] vertices;
-        private float[] tcs;
         private float positionX;
         private float positionY;
         private float width;

@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
-import com.khryniewicki.projectX.utils.GameUtill;
+import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class SpellSymbol implements Symbol {
         float offset = 0.03f;
         getPositionPlayerBar(spellInstance.isBasic());
 
-        GameSymbol frame = new GameSymbol.Builder(GameUtill.FRAME, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
+        GameSymbol frame = new GameSymbol.Builder(GameTextures.FRAME, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
                 .withWidth(0.62f)
                 .withHeight(0.465f)
                 .withVisibility(0.95f)

@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.ice.IceBerg;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.ice.IceBolt;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
 public class IceWizard extends SuperHero {
@@ -20,13 +20,13 @@ public class IceWizard extends SuperHero {
 
     @Override
     public void setTexture() {
-        setTexture(HeroUtil.ICE_WIZARD_IDLE);
-        setHeroIdle(HeroUtil.ICE_WIZARD_IDLE);
-        setHeroRight(HeroUtil.ICE_WIZARD_RUN);
-        setHeroLeft(HeroUtil.ICE_WIZARD_RUN);
-        setHeroUp(HeroUtil.ICE_WIZARD_RUN);
-        setHeroDown(HeroUtil.ICE_WIZARD_RUN);
-        setHeroAttack(HeroUtil.ICE_WIZARD_ATTACK);
+        setTexture(HeroTextures.ICE_WIZARD_IDLE);
+        setHeroIdle(HeroTextures.ICE_WIZARD_IDLE);
+        setHeroRight(HeroTextures.ICE_WIZARD_RUN);
+        setHeroLeft(HeroTextures.ICE_WIZARD_RUN);
+        setHeroUp(HeroTextures.ICE_WIZARD_RUN);
+        setHeroDown(HeroTextures.ICE_WIZARD_RUN);
+        setHeroAttack(HeroTextures.ICE_WIZARD_ATTACK);
     }
 
     @Override

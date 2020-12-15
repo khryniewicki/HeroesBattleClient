@@ -29,16 +29,8 @@ public class GameLoopImp implements GameLoop {
     public static int height = 800;
     public static int bar = 40;
     protected boolean finishGame;
+    protected static GameState state;
 
-    @Override
-    public void render() {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public void swapBuffers() {
@@ -49,7 +41,7 @@ public class GameLoopImp implements GameLoop {
     }
 
     public void loop() {
-        if (Game.state.equals(GameState.OK)) {
+        if (state.equals(GameState.OK)) {
             insideLoop();
         }
     }
@@ -84,6 +76,15 @@ public class GameLoopImp implements GameLoop {
         }
     }
 
+    @Override
+    public void render() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 
     protected void windowsShouldClose() {
         if (glfwWindowShouldClose(window)) {
@@ -150,7 +151,6 @@ public class GameLoopImp implements GameLoop {
 
         glfwShowWindow(window);
         GL.createCapabilities();
-        glfwMakeContextCurrent(window);
         glEnable(GL_DEPTH_TEST);
         glActiveTexture(GL_TEXTURE1);
         glEnable(GL_BLEND);
@@ -172,4 +172,6 @@ public class GameLoopImp implements GameLoop {
     public void stop() {
         setRunning(false);
     }
+
+
 }

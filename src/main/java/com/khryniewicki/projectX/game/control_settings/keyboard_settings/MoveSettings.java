@@ -8,6 +8,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.StackEvent;
 
+import static com.khryniewicki.projectX.game.user_interface.board.Board.collision;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class MoveSettings {
@@ -33,6 +34,7 @@ public class MoveSettings {
             float tmpX = hero.getX();
             float tmpY = hero.getY();
             position = hero.getPosition();
+            collision.test();
 
             float velocity = 0.2f;
             if (key == GLFW_KEY_UP && action != GLFW_RELEASE && !Collision.collisions[2]) {
@@ -47,6 +49,11 @@ public class MoveSettings {
                 hero.setTexture(hero.getHeroLeft());
             } else if (key == GLFW_KEY_RIGHT && action != GLFW_RELEASE && !Collision.collisions[0]) {
                 hero.setPositionX(position.x + velocity);
+                hero.setTurningLeft(false);
+                hero.setTexture(hero.getHeroRight());
+            } else if (key == GLFW_KEY_SPACE && action != GLFW_RELEASE) {
+                hero.setPositionX(-3f);
+                hero.setPositionY(-3f);
                 hero.setTurningLeft(false);
                 hero.setTexture(hero.getHeroRight());
             } else {

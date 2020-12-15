@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.thunder;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class Thunder extends Spell {
@@ -25,10 +25,10 @@ public class Thunder extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.THUNDERBALL2, 1.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.THUNDER, 1.7f));
-        setIcon(SpellUtil.THUNDERICON);
-        setFadedIcon(SpellUtil.THUNDERICONFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.THUNDERBALL2, 1.5f));
+        setExecutedSpell(new SpellTexture(SpellTextures.THUNDER, 1.7f));
+        setIcon(SpellTextures.THUNDERICON);
+        setFadedIcon(SpellTextures.THUNDERICONFADED);
     }
 
 }

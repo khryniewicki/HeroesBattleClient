@@ -15,4 +15,5 @@ public interface BoardObjects {
     float getTangens();
     Matrix4f getModelMatrix();
     VertexArray getMesh();
+    String getName();
 }

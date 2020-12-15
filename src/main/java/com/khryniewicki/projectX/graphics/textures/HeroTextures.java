@@ -1,8 +1,8 @@
-package com.khryniewicki.projectX.utils;
+package com.khryniewicki.projectX.graphics.textures;
 
 import com.khryniewicki.projectX.graphics.Texture;
 
-public class HeroUtil {
+public class HeroTextures {
 
     public static final Texture FIRE_WIZARD_IDLE = new Texture("FirewizardWalk.png");
     public static final Texture FIRE_WIZARD_RUN = new Texture("FirewizardRun.png");

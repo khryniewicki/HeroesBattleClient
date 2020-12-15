@@ -22,10 +22,10 @@ import java.util.Objects;
 @Service
 public class SuperHero implements UltraHero {
 
-    private boolean isTurningLeft;
+    private boolean isTurningLeft=false;
     private VertexArray mesh;
     private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle, heroAttack;
-    private Vector position = new Vector();
+    private volatile Vector position = new Vector();
     protected HeroAttributes heroAttributes;
     private String name;
     private Integer life;
@@ -92,14 +92,24 @@ public class SuperHero implements UltraHero {
         return new VertexArray(vertices, indices, tcs);
     }
 
-
     public void update() {
-        regenerateMana();
+        if (position.y>5.0f){
+        }else {
+            if (position.x >= 10f) {
+                setPositionY(position.y + 0.2f);
+                setPositionX(-10f);
+            }
+            setPositionX(position.x + 0.2f);
+        }
     }
 
+//    public void update() {
+//        regenerateMana();
+//    }
+
     private void regenerateMana() {
-        if (Objects.isNull(manaBar)){
-            manaBar=getManaBar();
+        if (Objects.isNull(manaBar)) {
+            manaBar = getManaBar();
         }
         manaBar.renegerateMana();
     }

@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.monk;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class BlueOrb extends Spell {
@@ -24,10 +24,10 @@ public class BlueOrb extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.BLUEORB, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.BLUE, 2.5f));
-        setIcon(SpellUtil.BLUEICON);
-        setFadedIcon(SpellUtil.BLUEICONFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.BLUEORB, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellTextures.BLUE, 2.5f));
+        setIcon(SpellTextures.BLUEICON);
+        setFadedIcon(SpellTextures.BLUEICONFADED);
     }
 
 }

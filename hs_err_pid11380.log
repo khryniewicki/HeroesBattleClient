@@ -36,7 +36,7 @@ j  org.lwjgl.opengl.GL11C.nglTexImage2D(IIIIIIIIJ)V+0
 J 4500 c1 com.khryniewicki.projectX.graphics.Texture.getPixels([I)I (171 bytes) @ 0x000001812de3605c [0x000001812de35cc0+0x000000000000039c]
 j  com.khryniewicki.projectX.graphics.Texture.load(Ljava/lang/String;)I+87
 j  com.khryniewicki.projectX.graphics.Texture.<init>(Ljava/lang/String;)V+7
-j  com.khryniewicki.projectX.utils.SpellUtil.<clinit>()V+414
+j  com.khryniewicki.projectX.graphics.textures.SpellTextures.<clinit>()V+414
 v  ~StubRoutines::call_stub
 j  com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire.setTexture()V+5
 j  com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire.<init>()V+9

@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.attack.spells.spellbook.witcher;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.utils.SpellUtil;
+import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
 public class Storm extends Spell {
@@ -24,10 +24,10 @@ public class Storm extends Spell {
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellUtil.WINDORB2, 0.5f));
-        setExecutedSpell(new SpellTexture(SpellUtil.STORM, 2.0f));
-        setIcon(SpellUtil.STORMICON);
-        setFadedIcon(SpellUtil.STORMICONFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.WINDORB2, 0.5f));
+        setExecutedSpell(new SpellTexture(SpellTextures.STORM, 2.0f));
+        setIcon(SpellTextures.STORMICON);
+        setFadedIcon(SpellTextures.STORMICONFADED);
     }
 
 }

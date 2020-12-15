@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.UltimateFire;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
 public class FireWizard extends SuperHero {
@@ -26,13 +26,13 @@ public class FireWizard extends SuperHero {
 
     @Override
     public void setTexture() {
-        setTexture(HeroUtil.FIRE_WIZARD_IDLE);
-        setHeroIdle(HeroUtil.FIRE_WIZARD_IDLE);
-        setHeroRight(HeroUtil.FIRE_WIZARD_RUN);
-        setHeroLeft(HeroUtil.FIRE_WIZARD_RUN);
-        setHeroUp(HeroUtil.FIRE_WIZARD_RUN);
-        setHeroDown(HeroUtil.FIRE_WIZARD_RUN);
-        setHeroAttack(HeroUtil.FIRE_WIZARD_ATTACK);
+        setTexture(HeroTextures.FIRE_WIZARD_IDLE);
+        setHeroIdle(HeroTextures.FIRE_WIZARD_IDLE);
+        setHeroRight(HeroTextures.FIRE_WIZARD_RUN);
+        setHeroLeft(HeroTextures.FIRE_WIZARD_RUN);
+        setHeroUp(HeroTextures.FIRE_WIZARD_RUN);
+        setHeroDown(HeroTextures.FIRE_WIZARD_RUN);
+        setHeroAttack(HeroTextures.FIRE_WIZARD_ATTACK);
     }
 
 

@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpel
 import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.BlueOrb;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.RedOrb;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.utils.HeroUtil;
+import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
 public class FallenMonk extends SuperHero {
@@ -26,13 +26,13 @@ public class FallenMonk extends SuperHero {
 
     @Override
     public void setTexture() {
-        setTexture(HeroUtil.FALLENIDLE2);
-        setHeroIdle(HeroUtil.FALLENIDLE2);
-        setHeroRight(HeroUtil.FALLENRUN2);
-        setHeroLeft(HeroUtil.FALLENRUN2);
-        setHeroUp(HeroUtil.FALLENRUN2);
-        setHeroDown(HeroUtil.FALLENRUN2);
-        setHeroAttack(HeroUtil.FALLENATTACK2);
+        setTexture(HeroTextures.FALLENIDLE2);
+        setHeroIdle(HeroTextures.FALLENIDLE2);
+        setHeroRight(HeroTextures.FALLENRUN2);
+        setHeroLeft(HeroTextures.FALLENRUN2);
+        setHeroUp(HeroTextures.FALLENRUN2);
+        setHeroDown(HeroTextures.FALLENRUN2);
+        setHeroAttack(HeroTextures.FALLENATTACK2);
     }
 
 
