@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket.messages;
 
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class Message implements Serializable {
     private String content;
     private String sessionID;
     private String playerName;
-    private ConnectionStatus status;
+    private ConnectionState status;
 
     public Message(Builder builder) {
         this.channel = builder.channel;
@@ -30,7 +31,7 @@ public class Message implements Serializable {
         private String content;
         private String sessionID;
         private String playerName;
-        private ConnectionStatus status;
+        private ConnectionState status;
 
         public Builder heroType(String heroType) {
             this.content = heroType;
@@ -47,7 +48,7 @@ public class Message implements Serializable {
             return this;
         }
 
-        public Builder status(ConnectionStatus status) {
+        public Builder status(ConnectionState status) {
             this.status = status;
             return this;
         }

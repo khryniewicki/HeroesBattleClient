@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.engine.GameLoopImp;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
     protected List<MenuSymbol> volatileImages = new ArrayList<>();
     protected List<MenuSymbol> permanentImages = new ArrayList<>();
     private final MousePosition mousePosition;
+    protected Subject subject;
 
     public MenuImp() {
         mousePosition = new MousePosition();

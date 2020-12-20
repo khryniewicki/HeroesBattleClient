@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.engine;
 
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import lombok.Data;
@@ -95,8 +96,11 @@ public class GameLoopImp implements GameLoop {
 
     protected void terminateIfWindowShutDown() {
         if (finishGame) {
+            Game.state = GameState.FINISH;
             glfwDestroyWindow(window);
             glfwTerminate();
+            WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
+            websocketScheduler.cancelTimer();
         }
     }
 

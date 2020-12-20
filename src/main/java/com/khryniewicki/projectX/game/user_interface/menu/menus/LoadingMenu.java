@@ -57,6 +57,7 @@ public class LoadingMenu extends MenuImp {
             getProgress();
             if (flag) {
                 initSpells();
+                setDifference(System.currentTimeMillis() - now);
                 getProgress();
                 initSuperHeroes();
                 flag = false;
@@ -84,6 +85,6 @@ public class LoadingMenu extends MenuImp {
     }
 
     private Texture getTextureForLoading(String text) {
-        return TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN);
+        return TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN,22);
     }
 }

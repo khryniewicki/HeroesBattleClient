@@ -81,7 +81,7 @@ public class CharacterMenu extends MenuImp {
                 animation.stop();
                 toggleImage(TABLE, true);
                 toggleImage(HERO_NAME, true);
-                updateButtonText(CHARACTER_SKILLS, HIDE_SKILLS);
+                updateButtonText(CHARACTER_SKILLS, SKILLS);
                 updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
                 removeButton(CHARACTER_SKILLS);
                 setActiveWriting(false);

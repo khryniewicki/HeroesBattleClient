@@ -9,8 +9,8 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStar
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,8 @@ import java.util.Map;
 
 
 @Service
-@Data
+@Getter
+@Setter
 @Slf4j
 public class HeroesInstances {
 
@@ -35,6 +36,7 @@ public class HeroesInstances {
 
     public void setHeroBasicProperties() {
         setBasicProperties(hero);
+        log.info("HERO BASIC PROPERTIES");
     }
 
     public void setBasicProperties(SuperHero superHero) {

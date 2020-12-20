@@ -52,8 +52,8 @@ public class Board {
         createCollision();
         createHeroes();
         createSpells();
-        mousePosition = new MousePosition();
-        addEventClick();
+//        mousePosition = new MousePosition();
+//        addEventClick();
     }
 
     private void createBackground() {
@@ -108,8 +108,8 @@ public class Board {
                 spell.render();
             }
         });
-        renderObstacles();
-        renderTerrains();
+//        renderObstacles();
+//        renderTerrains();
         if (collision.isTest_square()) {
             collision.getSquares().values().forEach(MenuSymbol::render);
         }

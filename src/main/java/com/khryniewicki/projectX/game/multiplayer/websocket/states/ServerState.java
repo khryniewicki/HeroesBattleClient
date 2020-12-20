@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.multiplayer.websocket;
+package com.khryniewicki.projectX.game.multiplayer.websocket.states;
 
 public enum ServerState {
     START("start"),NO_PLAYERS("Players online: 0 / 2"), ONE_PLAYER("Players online: 1 / 2"),

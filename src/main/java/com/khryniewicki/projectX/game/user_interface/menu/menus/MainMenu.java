@@ -1,12 +1,15 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
+import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.multiplayer.websocket.ServerState;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
 import com.khryniewicki.projectX.graphics.Colors;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,6 +55,8 @@ public class MainMenu extends MenuImp {
         textureMenuFactory = TextureMenuFactory.getInstance();
         buttonsFactory = ButtonsFactory.getInstance();
         websocketScheduler = WebsocketScheduler.getInstance();
+        subject = new Subject();
+        subject.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
         start();
         observeGame();
     }
@@ -66,7 +71,7 @@ public class MainMenu extends MenuImp {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 String propertyName = evt.getPropertyName();
-                if (propertyName.equals("playersOnline")) {
+                if (propertyName.equals("sever")) {
                     ServerState serverState = (ServerState) evt.getNewValue();
                     if (serverState == ServerState.JOIN_GAME) {
                         websocketScheduler.removePropertyChangeListener(this);
@@ -117,6 +122,10 @@ public class MainMenu extends MenuImp {
     }
 
     @Override
+    protected void terminateIfWindowShutDown() {
+        super.terminateIfWindowShutDown();
+    }
+    @Override
     public void update() {
         if (Objects.nonNull(state) && !state.equals(currentState)) {
             updateLabel(playersDescriptionLabel, state);
@@ -144,8 +153,8 @@ public class MainMenu extends MenuImp {
                 runMenu(ControlSettingsMenu.getInstance());
                 break;
             case "QuitGame":
-                stop();
                 setFinishGame(true);
+                stop();
                 break;
             case "Start":
                 if (state.equals(ServerState.SERVER_OFFLINE)) {
@@ -155,6 +164,7 @@ public class MainMenu extends MenuImp {
                 } else {
                     if (Objects.nonNull(heroesInstances.getHero())) {
                         stop();
+                        subject.setNews(MultiplayerState.CONNECT);
                     } else {
                         showMessage(TEXT_NO_HERO);
                     }

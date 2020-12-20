@@ -54,8 +54,8 @@ public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
     }
 
     @Override
-    public void setNews(String value) {
-             support.firePropertyChange("news", null, value);
+    public void setNews(Object value) {
+        support.firePropertyChange("news", null,  value);
     }
 
     @Override

@@ -7,5 +7,5 @@ public interface Listener {
 
     void removePropertyChangeListener(PropertyChangeListener pcl);
 
-    void setNews(String news);
+    void setNews(Object news);
 }

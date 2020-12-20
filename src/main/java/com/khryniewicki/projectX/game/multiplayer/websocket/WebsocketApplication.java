@@ -4,10 +4,9 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
-import com.khryniewicki.projectX.game.multiplayer.websocket.messages.ConnectionStatus;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.services.DTO.SpellDTO;
 import com.khryniewicki.projectX.services.HeroReceiveService;
@@ -25,27 +24,33 @@ import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+
+import static com.khryniewicki.projectX.utils.GameUtil.serverUrl;
 
 
 @Getter
 @Setter
 @Slf4j
 public class WebsocketApplication implements Runnable {
-    public static StompSession session;
-
-    private static StompSession copy_session;
     private static boolean client_running;
     private static boolean server_running;
+    public static StompSession session;
+    private static StompSession copy_session;
     public static StompSessionHandler sessionHandler;
-    public static String path = "https://heroes.khryniewicki.com.pl";
+
+
+    public WebsocketApplication() {
+
+    }
 
     public synchronized static StompSession getSession() {
         return copy_session;
     }
-
-    public WaitingRoomMenu waitingRoomMenu;
 
 
     @Slf4j
@@ -86,14 +91,14 @@ public class WebsocketApplication implements Runnable {
             session.send("/app/room", new Message.Builder()
                     .heroType(superHero.getName())
                     .playerName(heroesInstances.getHeroName())
-                    .status(ConnectionStatus.CONNECTED)
+                    .status(ConnectionState.CONNECTED)
                     .sessionID(session.getSessionId())
                     .build());
         }
 
         public void leave() {
             session.send("/app/room", new Message.Builder()
-                    .status(ConnectionStatus.DISCONNECTED)
+                    .status(ConnectionState.DISCONNECTED)
                     .sessionID(session.getSessionId())
                     .build());
         }
@@ -140,11 +145,8 @@ public class WebsocketApplication implements Runnable {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
 
-                    Message message = (Message) payload;
                     MessageHandler instance = MessageHandler.getINSTANCE();
-
-                    instance.setMessage(message);
-                    instance.latchCountDownMethod();
+                    instance.setChannelsAndStartingPositions((Message) payload);
 
                     subscribeHero("/topic/hero/" + channels.getTopic(), session);
                     subscribeSpell("/topic/spell/" + channels.getTopic(), session);
@@ -181,8 +183,6 @@ public class WebsocketApplication implements Runnable {
     }
 
     public void startWebsocket() {
-        waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
-        waitingRoomMenu.addText("Waiting for connections...");
 
         WebSocketClient simpleWebSocketClient =
                 new StandardWebSocketClient();
@@ -196,7 +196,7 @@ public class WebsocketApplication implements Runnable {
                 new WebSocketStompClient(sockJsClient);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
-        String url = path + "/websocket-example";
+        String url = serverUrl + "/websocket-example";
 
 
         sessionHandler = new MyStompSessionHandler();
@@ -206,11 +206,11 @@ public class WebsocketApplication implements Runnable {
             session = stompClient.connect(url, sessionHandler)
                     .get();
             copy_session = session;
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         setSessionId();
-        waitingRoomMenu.addText("Connection established");
     }
 
     private static void setSessionId() {

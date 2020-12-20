@@ -1,12 +1,10 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 
-import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
-
 import java.util.Objects;
 import java.util.Optional;
 
-public class WebsocketInitializer implements Runnable {
+public class WebsocketInitializer  {
 
     private WebsocketApplication.MyStompSessionHandler handler;
     private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
@@ -15,21 +13,16 @@ public class WebsocketInitializer implements Runnable {
 
     }
 
+    public void initializeWebsocket() {
+        WebsocketApplication websocketApplication = new WebsocketApplication();
+        websocketApplication.startWebsocket();
+    }
+
     public static WebsocketInitializer getWebsocketInstance() {
         return WEBSOCKET_INSTANCE;
     }
 
-    @Override
-    public void run() {
-        register();
-    }
-
-    public void waitForSecondPlayer() {
-        WaitingRoomMenu waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
-        waitingRoomMenu.execute();
-    }
-
-    public void register() {
+    public void registerHero() {
         handler = new WebsocketApplication.MyStompSessionHandler();
         handler.register();
     }

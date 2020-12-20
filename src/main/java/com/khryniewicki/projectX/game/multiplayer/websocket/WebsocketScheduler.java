@@ -1,8 +1,12 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
+import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
+import com.khryniewicki.projectX.utils.GameUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -27,9 +31,12 @@ public class WebsocketScheduler {
     private final Timer timer;
     private WaitingRoomMenu waitingRoomMenu;
     private String sessionId;
-    private String path = "https://heroes.khryniewicki.com.pl";
-    public volatile static ServerState state = ServerState.START;
-    private boolean subscribed;
+    private String path = GameUtil.serverUrl;
+    private Integer period = 500;
+
+    public volatile static ServerState serverState = ServerState.START;
+    public static MultiplayerState multiplayerState = MultiplayerState.NOT_CONNECTED;
+    private boolean hasStarted;
 
     private WebsocketScheduler() {
         websocketInstance = WebsocketInitializer.getWebsocketInstance();
@@ -38,6 +45,7 @@ public class WebsocketScheduler {
     }
 
     public void observerPlayers() {
+        hasStarted = true;
         requestScheduler();
     }
 
@@ -71,41 +79,34 @@ public class WebsocketScheduler {
                 } catch (RestClientException exception) {
                     map = null;
                 }
-
                 if (Objects.nonNull(map)) {
                     initSessionId();
                     if (map.size() == 0) {
-                        setState(ServerState.NO_PLAYERS);
+                        setServerState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
-                        setState(ServerState.ONE_PLAYER);
+                        setServerState(ServerState.ONE_PLAYER);
                     } else if (map.size() == 2) {
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
-                            setState(ServerState.JOIN_GAME);
-//                            timer.cancel();
+                            setServerState(ServerState.JOIN_GAME);
+                            setMultiplayerState(MultiplayerState.SECOND_PLAYER_REGISTERED);
                         } else {
-                            setState(ServerState.TWO_PLAYERS);
+                            setServerState(ServerState.TWO_PLAYERS);
                         }
                     }
                 } else {
-                    setState(ServerState.SERVER_OFFLINE);
+                    setServerState(ServerState.SERVER_OFFLINE);
                 }
             }
-
 
             private void initSessionId() {
                 if (!websocketInstance.getSessionId().isEmpty() && Objects.isNull(sessionId)) {
                     sessionId = websocketInstance.getSessionId();
                 }
             }
-        }, 0, 500);
+        }, 0, period);
 
-    }
-
-
-    public static WebsocketScheduler getInstance() {
-        return WebsocketScheduler.HELPER.INSTANCE;
     }
 
 
@@ -123,9 +124,28 @@ public class WebsocketScheduler {
         }
     }
 
-    public void setState(ServerState new_state) {
-        support.firePropertyChange("playersOnline",  null, new_state);
-        state = new_state;
+    public void setServerState(ServerState new_state) {
+        support.firePropertyChange("sever", null, new_state);
+        serverState = new_state;
+    }
+
+    public void setMultiplayerState(MultiplayerState new_state) {
+        MultiplayerController multiplayerInstance = MultiplayerController.getMultiplayerInstance();
+        multiplayerState = multiplayerInstance.getItsState();
+        if (multiplayerState.equals(MultiplayerState.WAITING_FOR_SECOND_PLAYER)) {
+            support.firePropertyChange("multiplayer", multiplayerState, new_state);
+            WebsocketScheduler.multiplayerState = new_state;
+        }
+    }
+
+    public static WebsocketScheduler getInstance() {
+        return WebsocketScheduler.HELPER.INSTANCE;
+    }
+
+    public void cancelTimer() {
+        if (hasStarted) {
+            timer.cancel();
+        }
     }
 
     private static class HELPER {

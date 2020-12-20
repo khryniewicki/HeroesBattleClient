@@ -226,10 +226,10 @@ public class TextureMenuFactory {
     public static final MenuSymbol TIMER = new MenuSymbol.Builder()
             .withTexture(BLANK_TEXT_WINDOW)
             .withName("Timer")
-            .withHeight(1f)
-            .withWidth(4f)
+            .withHeight(0.5f)
+            .withWidth(4.34f)
             .withPositionX(6f)
-            .withPositionY(4f)
+            .withPositionY(4.5f)
             .withVisibility(1.0f)
             .build();
 }

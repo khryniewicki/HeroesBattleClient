@@ -92,20 +92,20 @@ public class SuperHero implements UltraHero {
         return new VertexArray(vertices, indices, tcs);
     }
 
-    public void update() {
-        if (position.y>5.0f){
-        }else {
-            if (position.x >= 10f) {
-                setPositionY(position.y + 0.2f);
-                setPositionX(-10f);
-            }
-            setPositionX(position.x + 0.2f);
-        }
-    }
-
 //    public void update() {
-//        regenerateMana();
+//        if (position.y>5.0f){
+//        }else {
+//            if (position.x >= 10f) {
+//                setPositionY(position.y + 0.2f);
+//                setPositionX(-10f);
+//            }
+//            setPositionX(position.x + 0.2f);
+//        }
 //    }
+
+    public void update() {
+        regenerateMana();
+    }
 
     private void regenerateMana() {
         if (Objects.isNull(manaBar)) {

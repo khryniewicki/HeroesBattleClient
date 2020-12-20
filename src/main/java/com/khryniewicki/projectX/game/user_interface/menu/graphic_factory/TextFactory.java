@@ -25,14 +25,13 @@ public class TextFactory {
     public static Texture textToImageMenu(String text) {
         BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
         Font font = new Font("Open Sans", Font.BOLD, 24);
-
         setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
 
-    public static Texture textInLoadingMenuToImage(String text, Color color) {
+    public static Texture textInLoadingMenuToImage(String text, Color color, Integer size) {
         BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
-        Font font = new Font("Open Sans", Font.BOLD, 22);
+        Font font = new Font("Open Sans", Font.BOLD, size);
         setImage(text, font, color, image);
         return new Texture(image);
     }

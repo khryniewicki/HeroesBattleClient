@@ -1,13 +1,11 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.engine.Game;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WaitingRoomTimer;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
+import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Colors;
-import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,13 +22,17 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Setter
 @Getter
 @Slf4j
-public class WaitingRoomMenu extends WaitingRoomTimer {
+public class WaitingRoomMenu extends MenuImp {
     private float level = 4.5f;
     private boolean waitingForPlayer;
+    protected Long timeLeftToLogOut;
 
     private WaitingRoomMenu() {
         super();
-        websocketScheduler = WebsocketScheduler.getInstance();
+    }
+
+    public void addTimer() {
+        permanentImages.add(TIMER);
     }
 
     public void addText(String text) {
@@ -56,38 +58,28 @@ public class WaitingRoomMenu extends WaitingRoomTimer {
     }
 
     @Override
-    public void execute() {
-        begin();
-        loop();
-        suspend();
-        terminateIfWindowShutDown();
-    }
-
-    @Override
     public void update() {
-        if (!subscribed){
-            subscribePlayersInGame();
-        }
         if (Objects.nonNull(timeLeftToLogOut)) {
             if (timeLeftToLogOut > 0L) {
                 changeTime(TIMER, timeLeftToLogOut);
                 setWaitingForPlayer(true);
             } else {
                 if (waitingForPlayer) {
-                    setWaitingForPlayer(false);
-                    initWaitingRoom();
+                    restart();
                     Game game = Game.getInstance();
                     game.initializeMultiplayerGame();
+                    MultiplayerController.getMultiplayerInstance().stop();
                 }
             }
         }
     }
 
-    protected void initWaitingRoom() {
+
+    protected void restart() {
+        setWaitingForPlayer(false);
         TIMER.setTexture(MenuTextures.BLANK_TEXT_WINDOW);
         level = 4.5f;
-        permanentImages=new ArrayList<>();
-        addTimer();
+        permanentImages = new ArrayList<>();
     }
 
 
@@ -96,7 +88,7 @@ public class WaitingRoomMenu extends WaitingRoomTimer {
         List<MenuSymbol> collect = permanentImages.stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
-                        symbol.setTexture(TextFactory.textInLoadingMenuToImage("Logout in: " + timeLeftToLogOut.toString() + " sec.", Colors.BRIGHT_GREEN));
+                        symbol.setTexture(TextFactory.textInLoadingMenuToImage("Logout in: " + timeLeftToLogOut.toString() + " sec.", Colors.BRIGHT_GREEN,32));
                     }
                 })
                 .collect(Collectors.toList());
