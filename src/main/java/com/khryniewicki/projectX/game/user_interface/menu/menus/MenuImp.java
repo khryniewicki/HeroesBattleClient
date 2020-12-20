@@ -43,7 +43,7 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
 
     @Override
     public void render() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        clearBuffers();
         buttons.forEach(MenuSymbol::render);
         permanentImages.forEach(MenuSymbol::render);
         animationSymbols.forEach(Symbol::render);

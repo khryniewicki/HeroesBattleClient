@@ -41,6 +41,11 @@ public class GameLoopImp implements GameLoop {
         glfwSwapBuffers(window);
     }
 
+    @Override
+    public void clearBuffers() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
     public void loop() {
         if (state.equals(GameState.OK)) {
             insideLoop();
@@ -78,14 +83,10 @@ public class GameLoopImp implements GameLoop {
     }
 
     @Override
-    public void render() {
-
-    }
+    public void render() { }
 
     @Override
-    public void update() {
-
-    }
+    public void update() { }
 
     protected void windowsShouldClose() {
         if (glfwWindowShouldClose(window)) {
@@ -123,7 +124,7 @@ public class GameLoopImp implements GameLoop {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         // Create the window
-        window = glfwCreateWindow(width, height + bar, "Project X Screen:" + 1, NULL, NULL);
+        window = glfwCreateWindow(width, height + bar, "HeroesBattle", NULL, NULL);
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 

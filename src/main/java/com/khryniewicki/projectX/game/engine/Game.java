@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.opengl.GL11.*;
 
 @Component
 @Getter
@@ -22,13 +21,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Game extends GameLoopImp implements Runnable {
 
     private Board board;
-    private static WebsocketInitializer websocketInitializer;
-    private final MultiplayerController multiplayerController;
 
-    private Game() {
-        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-        multiplayerController = MultiplayerController.getMultiplayerInstance();
-    }
 
     public void start() {
         state = GameState.OK;
@@ -66,6 +59,7 @@ public class Game extends GameLoopImp implements Runnable {
 
 
     private void initializeWebsocketConnection() {
+        MultiplayerController multiplayerController = MultiplayerController.getMultiplayerInstance();
         multiplayerController.execute();
     }
 
@@ -88,20 +82,20 @@ public class Game extends GameLoopImp implements Runnable {
 
     @Override
     public void render() {
-        int error2 = glGetError();
-        if (error2 != GL_NO_ERROR)
-            System.out.println("ERROR2: " + error2);
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        clearBuffers();
         board.render();
         swapBuffers();
     }
 
     public void terminateGame() {
+        WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
         if (!websocketInitializer.getSessionId().isEmpty()) {
             websocketInitializer.disconnect();
         }
         terminateIfWindowShutDown();
+    }
+
+    private Game() {
     }
 
     public static Game getInstance() {

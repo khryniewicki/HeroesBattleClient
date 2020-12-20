@@ -3,7 +3,8 @@ package com.khryniewicki.projectX.graphics.textures;
 import com.khryniewicki.projectX.graphics.Texture;
 
 public class SpellTextures {
-    //Firewizard
+
+    //FIRE WIZARD
     public static final Texture FIREORB= new Texture("fireOrb.png");
     public static final Texture FIRE= new Texture("fire3.png");
     public static final Texture FIREICON= new Texture("ultimateFireIcon.png");
@@ -13,8 +14,7 @@ public class SpellTextures {
     public static final Texture ULTIMATEFIREICON= new Texture("fireIcon.png");
     public static final Texture ULTIMATEFIREICONFADED= new Texture("fireIconFaded.png");
 
-
-    //Icewizard
+    //ICE WIZARD
     public static final Texture ICE= new Texture("ice6.png");
     public static final Texture ICEBALL= new Texture("iceball.png");
     public static final Texture ICEBALL_SIDE = new Texture("iceballS.png");
@@ -26,7 +26,7 @@ public class SpellTextures {
     public static final Texture ICEBERGICON= new Texture("iceBergIcon.png");
     public static final Texture ICEBERGFADED= new Texture("iceBergIconFaded.png");
 
-    //ThunderWizard
+    //THUNDER WIZARD
     public static final Texture THUNDERBALL2= new Texture("thunderBall2.png");
     public static final Texture VIOLETMISSLE = new Texture("violetMissle.png");
     public static final Texture VIOLETICON= new Texture("thunderIcon.png");
@@ -36,7 +36,7 @@ public class SpellTextures {
     public static final Texture THUNDERICON= new Texture("thunderIcon2.png");
     public static final Texture THUNDERICONFADED= new Texture("thunderIconFaded2.png");
 
-    //FallenWitcher
+    //FALLEN WITCHER
     public static final Texture STORM = new Texture("storm.png");
     public static final Texture WINDORB2= new Texture("windOrb2.png");
     public static final Texture STORMICON = new Texture("stormIcon.png");
@@ -46,7 +46,7 @@ public class SpellTextures {
     public static final Texture WINDICON = new Texture("windIcon.png");
     public static final Texture WINDICONFADED = new Texture("windIconFaded.png");
 
-    //FallenKing
+    //FALLEN KING
     public static final Texture BLACKORB= new Texture("blackOrb.png");
     public static final Texture BLACKFIRE= new Texture("blackFire.png");
     public static final Texture BLACKFIREICON = new Texture("blackFireIcon2.png");
@@ -57,7 +57,7 @@ public class SpellTextures {
     public static final Texture SKULLICON= new Texture("skullIcon.png");
     public static final Texture SKULLICONFADED= new Texture("skullIconFaded.png");
 
-    //FallenMonk
+    //FALLEN MONK
     public static final Texture BLUEORB = new Texture("blueOrb.png");
     public static final Texture BLUE= new Texture("blue.png");
     public static final Texture BLUEICON= new Texture("blueIcon.png");

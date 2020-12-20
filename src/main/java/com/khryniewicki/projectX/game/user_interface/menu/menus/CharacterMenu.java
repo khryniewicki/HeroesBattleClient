@@ -78,14 +78,7 @@ public class CharacterMenu extends MenuImp {
         mainMenu = MainMenu.getInstance();
         switch (btnName) {
             case "Return":
-                animation.stop();
-                toggleImage(TABLE, true);
-                toggleImage(HERO_NAME, true);
-                updateButtonText(CHARACTER_SKILLS, SKILLS);
-                updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
-                removeButton(CHARACTER_SKILLS);
-                setActiveWriting(false);
-                runMenu(MainMenu.getInstance());
+                restart();
                 break;
             case "showTable":
                 boolean disabled = TABLE.isDisabled();
@@ -106,6 +99,17 @@ public class CharacterMenu extends MenuImp {
                 showMessageInMainMenu(chosenHero);
                 break;
         }
+    }
+
+    protected void restart() {
+        animation.stop();
+        toggleImage(TABLE, true);
+        toggleImage(HERO_NAME, true);
+        updateButtonText(CHARACTER_SKILLS, SKILLS);
+        updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
+        removeButton(CHARACTER_SKILLS);
+        setActiveWriting(false);
+        runMenu(MainMenu.getInstance());
     }
 
     private void setHeroName(String name) {

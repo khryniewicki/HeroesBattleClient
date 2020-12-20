@@ -8,4 +8,5 @@ public interface GameLoop {
     void begin();
     void stop();
     void swapBuffers();
+    void clearBuffers();
 }

@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.graphics.textures;
 import com.khryniewicki.projectX.graphics.Texture;
 
 public class HeroTextures {
-
+    //WIZARDS
     public static final Texture FIRE_WIZARD_IDLE = new Texture("FirewizardWalk.png");
     public static final Texture FIRE_WIZARD_RUN = new Texture("FirewizardRun.png");
     public static final Texture FIRE_WIZARD_ATTACK = new Texture("FireWizardAttack.png");
@@ -16,8 +16,7 @@ public class HeroTextures {
     public static final Texture THUNDER_WIZARD_RUN = new Texture("ThunderRun.png");
     public static final Texture THUNDER_WIZARD_ATTACK = new Texture("ThunderWizardAttack.png");
 
-    public static final Texture DOT= new Texture("dot.png");
-
+    //FALLENS
     public static final Texture FALLENIDLE1 = new Texture("FallenIdle1.png");
     public static final Texture FALLENRUN1 = new Texture("FallenRun1.png");
     public static final Texture FALLENATTACK1 = new Texture("FallenAttack1.png");
