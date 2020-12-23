@@ -34,12 +34,12 @@ public class GameLoopImp implements GameLoop {
 
     public void loop() {
         if (state.equals(GameState.OK)) {
-            beforeLoop();
+            prepare();
             insideLoop();
         }
     }
 
-    protected void beforeLoop() {
+    protected void prepare() {
 
     }
 
@@ -70,6 +70,11 @@ public class GameLoopImp implements GameLoop {
                 frames = 0;
             }
             windowsShouldClose();
+        }
+        try {
+            Thread.sleep(10000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

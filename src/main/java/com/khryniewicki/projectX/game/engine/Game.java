@@ -58,7 +58,7 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     @Override
-    protected void beforeLoop() {
+    protected void prepare() {
         create_board();
         start_sending_service();
         begin();

@@ -82,7 +82,6 @@ public class Board {
         hero = heroesInstances.getHero();
         mock = heroesInstances.getMock();
         heroes = new ArrayList<>(Arrays.asList(hero, mock));
-
     }
 
     private void createSpells() {

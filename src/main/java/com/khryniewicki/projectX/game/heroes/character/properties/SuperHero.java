@@ -22,7 +22,7 @@ import java.util.Objects;
 @Service
 public class SuperHero implements UltraHero {
 
-    private boolean isTurningLeft=false;
+    private boolean isTurningLeft;
     private VertexArray mesh;
     private Texture texture, heroUp, heroDown, heroLeft, heroRight, heroIdle, heroAttack;
     private volatile Vector position = new Vector();

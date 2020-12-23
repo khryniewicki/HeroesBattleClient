@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.graphics.GraphicLoader;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -62,6 +63,10 @@ public class LifeBar extends GraphicLoader {
             return 1f;
         } else {
             float life = ultraHero.getLife();
+            if (life < 0) {
+                Game.getInstance().setRunning(false);
+                log.info("{} life below 0", ultraHero.getName());
+            }
             return life < 0 ? 0 : life / 100f;
         }
     }

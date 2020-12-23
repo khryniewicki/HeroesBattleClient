@@ -22,13 +22,8 @@ public class LoadingMenu extends MenuImp {
     private long now;
     private boolean flag;
     private long difference;
-    private static final LoadingMenu instance = new LoadingMenu();
-
-    public static LoadingMenu getInstance() {
-        return instance;
-    }
-
     private SpellRegistry spellRegistry;
+    private static final LoadingMenu instance = new LoadingMenu();
 
     private LoadingMenu() {
         super();
@@ -44,11 +39,10 @@ public class LoadingMenu extends MenuImp {
     public void execute() {
         begin();
         loop();
-        terminateIfWindowShutDown();
     }
 
     @Override
-    protected void beforeLoop() {
+    protected void prepare() {
         duration = 5000L;
         now = System.currentTimeMillis();
         flag = true;
@@ -91,4 +85,9 @@ public class LoadingMenu extends MenuImp {
     private Texture getTextureForLoading(String text) {
         return TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN, 22);
     }
+
+    public static LoadingMenu getInstance() {
+        return instance;
+    }
+
 }

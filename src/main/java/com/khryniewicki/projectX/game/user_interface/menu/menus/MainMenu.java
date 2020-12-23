@@ -106,7 +106,6 @@ public class MainMenu extends MenuImp {
             update();
             windowsShouldClose();
         } while (running);
-        terminateIfWindowShutDown();
     }
 
     @Override
@@ -138,8 +137,8 @@ public class MainMenu extends MenuImp {
                 runMenu(ControlSettingsMenu.getInstance());
                 break;
             case "QuitGame":
-                finish_game();
                 stop();
+                finish_game();
                 break;
             case "Start":
                 if (state.equals(ServerState.SERVER_OFFLINE)) {

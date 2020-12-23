@@ -19,9 +19,6 @@ public class WebsocketController {
         websocketApplication.startWebsocket();
     }
 
-    public static WebsocketController getWebsocketInstance() {
-        return WEBSOCKET_INSTANCE;
-    }
 
     public void registerHero() {
         handler = new WebsocketApplication.MyStompSessionHandler();
@@ -48,6 +45,10 @@ public class WebsocketController {
 
     public void stop_sending_service() {
         sendingService.stop();
+    }
+
+    public static WebsocketController getWebsocketInstance() {
+        return WEBSOCKET_INSTANCE;
     }
 
     private WebsocketController() {
