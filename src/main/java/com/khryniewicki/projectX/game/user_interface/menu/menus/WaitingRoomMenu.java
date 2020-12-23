@@ -67,7 +67,7 @@ public class WaitingRoomMenu extends MenuImp {
                 if (waitingForPlayer) {
                     restart();
                     Game game = Game.getInstance();
-                    game.initializeMultiplayerGame();
+                    game.initialize_game();
                     MultiplayerController.getMultiplayerInstance().stop();
                 }
             }

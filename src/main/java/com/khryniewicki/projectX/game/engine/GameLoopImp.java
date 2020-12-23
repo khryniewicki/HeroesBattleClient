@@ -29,27 +29,18 @@ public class GameLoopImp implements GameLoop {
     public static int width = 1600;
     public static int height = 800;
     public static int bar = 40;
-    protected boolean finishGame;
     protected static GameState state;
 
 
-    @Override
-    public void swapBuffers() {
-        int error = glGetError();
-        if (error != GL_NO_ERROR)
-            System.out.println(error);
-        glfwSwapBuffers(window);
-    }
-
-    @Override
-    public void clearBuffers() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
-
     public void loop() {
         if (state.equals(GameState.OK)) {
+            beforeLoop();
             insideLoop();
         }
+    }
+
+    protected void beforeLoop() {
+
     }
 
     @Override
@@ -83,21 +74,40 @@ public class GameLoopImp implements GameLoop {
     }
 
     @Override
-    public void render() { }
+    public void update() {
+    }
 
     @Override
-    public void update() { }
+    public void render() {
+    }
+
+    @Override
+    public void swapBuffers() {
+        int error = glGetError();
+        if (error != GL_NO_ERROR)
+            System.out.println(error);
+        glfwSwapBuffers(window);
+    }
+
+    @Override
+    public void clearBuffers() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
 
     protected void windowsShouldClose() {
         if (glfwWindowShouldClose(window)) {
             setRunning(false);
-            Game.state = GameState.FINISH;
+            finish_game();
         }
     }
 
+    protected void finish_game() {
+        state = GameState.FINISH;
+    }
+
     protected void terminateIfWindowShutDown() {
-        if (finishGame) {
-            Game.state = GameState.FINISH;
+        if (state.equals(GameState.FINISH)) {
             glfwDestroyWindow(window);
             glfwTerminate();
             WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
@@ -177,6 +187,5 @@ public class GameLoopImp implements GameLoop {
     public void stop() {
         setRunning(false);
     }
-
 
 }

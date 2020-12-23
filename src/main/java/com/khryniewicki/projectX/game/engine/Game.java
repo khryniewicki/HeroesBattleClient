@@ -2,11 +2,10 @@ package com.khryniewicki.projectX.game.engine;
 
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.services.SendingService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 public class Game extends GameLoopImp implements Runnable {
 
     private Board board;
-
+    private WebsocketController websocketController;
 
     public void start() {
         state = GameState.OK;
@@ -31,47 +30,47 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void run() {
         init();
-        initLoadingMenu();
-        initializeMultiplayerGame();
+        loading_menu();
+        initialize_game();
         loop();
-        terminateGame();
+        terminate_game();
     }
 
-    private void initLoadingMenu() {
+    private void loading_menu() {
         LoadingMenu loadingMenu = LoadingMenu.getInstance();
         loadingMenu.execute();
     }
 
-    public void initializeMultiplayerGame() {
-        initializeMenu();
-        if (state.equals(GameState.OK)) {
-            initializeWebsocketConnection();
-            createBoard();
-            createSendingService();
-            begin();
-        }
+    public void initialize_game() {
+        main_menu();
+        start_multiplayer();
     }
 
-    public void initializeMenu() {
+    public void main_menu() {
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.execute();
     }
 
 
-    private void initializeWebsocketConnection() {
+    private void start_multiplayer() {
         MultiplayerController multiplayerController = MultiplayerController.getMultiplayerInstance();
         multiplayerController.execute();
     }
 
-
-    private void createSendingService() {
-        SendingService heroSending = new SendingService();
-        Thread sender = new Thread(heroSending);
-        sender.start();
+    @Override
+    protected void beforeLoop() {
+        create_board();
+        start_sending_service();
+        begin();
     }
 
-    private void createBoard() {
+
+    private void create_board() {
         board = Board.getInstance();
+    }
+
+    private void start_sending_service() {
+        websocketController.start_sending_service();
     }
 
     @Override
@@ -87,15 +86,16 @@ public class Game extends GameLoopImp implements Runnable {
         swapBuffers();
     }
 
-    public void terminateGame() {
-        WebsocketInitializer websocketInitializer = WebsocketInitializer.getWebsocketInstance();
-        if (!websocketInitializer.getSessionId().isEmpty()) {
-            websocketInitializer.disconnect();
+    public void terminate_game() {
+        if (!websocketController.getSessionId().isEmpty()) {
+            websocketController.disconnect();
         }
+        websocketController.stop_sending_service();
         terminateIfWindowShutDown();
     }
 
     private Game() {
+        websocketController = WebsocketController.getWebsocketInstance();
     }
 
     public static Game getInstance() {

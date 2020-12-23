@@ -27,7 +27,7 @@ import java.util.TimerTask;
 @Slf4j
 public class WebsocketScheduler {
     private final PropertyChangeSupport support;
-    private final WebsocketInitializer websocketInstance;
+    private final WebsocketController websocketInstance;
     private final Timer timer;
     private WaitingRoomMenu waitingRoomMenu;
     private String sessionId;
@@ -39,12 +39,12 @@ public class WebsocketScheduler {
     private boolean hasStarted;
 
     private WebsocketScheduler() {
-        websocketInstance = WebsocketInitializer.getWebsocketInstance();
+        websocketInstance = WebsocketController.getWebsocketInstance();
         support = new PropertyChangeSupport(this);
         timer = new Timer();
     }
 
-    public void observerPlayers() {
+    public void observePlayers() {
         hasStarted = true;
         requestScheduler();
     }

@@ -1,24 +1,25 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 
+import com.khryniewicki.projectX.services.SendingService;
+
 import java.util.Objects;
 import java.util.Optional;
 
-public class WebsocketInitializer  {
+public class WebsocketController {
 
     private WebsocketApplication.MyStompSessionHandler handler;
-    private final static WebsocketInitializer WEBSOCKET_INSTANCE = new WebsocketInitializer();
+    private final static WebsocketController WEBSOCKET_INSTANCE = new WebsocketController();
+    private final SendingService sendingService;
 
-    private WebsocketInitializer() {
 
-    }
 
     public void initializeWebsocket() {
         WebsocketApplication websocketApplication = new WebsocketApplication();
         websocketApplication.startWebsocket();
     }
 
-    public static WebsocketInitializer getWebsocketInstance() {
+    public static WebsocketController getWebsocketInstance() {
         return WEBSOCKET_INSTANCE;
     }
 
@@ -40,4 +41,16 @@ public class WebsocketInitializer  {
         return sessionId.orElse("");
     }
 
+    public void start_sending_service() {
+        Thread sender = new Thread(sendingService, "SendingService");
+        sender.start();
+    }
+
+    public void stop_sending_service() {
+        sendingService.stop();
+    }
+
+    private WebsocketController() {
+        sendingService = new SendingService();
+    }
 }

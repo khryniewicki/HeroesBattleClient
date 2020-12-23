@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.user_interface.board;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
-import com.khryniewicki.projectX.game.collision.Collision;
+import com.khryniewicki.projectX.game.control_settings.collision.Collision;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
@@ -102,14 +102,13 @@ public class Board {
     public void render() {
         symbols.forEach(Symbol::render);
         heroes.forEach(Ultra::render);
-        collision.test();
         spells.forEach(spell -> {
             if (spell.isSpellActivated()) {
                 spell.render();
             }
         });
-//        renderObstacles();
-//        renderTerrains();
+        renderObstacles();
+        renderTerrains();
         if (collision.isTest_square()) {
             collision.getSquares().values().forEach(MenuSymbol::render);
         }

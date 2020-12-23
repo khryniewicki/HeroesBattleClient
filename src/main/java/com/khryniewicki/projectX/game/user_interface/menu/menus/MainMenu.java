@@ -2,9 +2,9 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
@@ -55,15 +55,14 @@ public class MainMenu extends MenuImp {
         textureMenuFactory = TextureMenuFactory.getInstance();
         buttonsFactory = ButtonsFactory.getInstance();
         websocketScheduler = WebsocketScheduler.getInstance();
-        subject = new Subject();
-        subject.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
+        addObserver();
         start();
-        observeGame();
+        subscribePlayersInGame();
     }
 
-    private void observeGame() {
-        subscribePlayersInGame();
-        websocketScheduler.observerPlayers();
+    private void addObserver() {
+        subject = new Subject();
+        subject.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
     }
 
     private void subscribePlayersInGame() {
@@ -81,24 +80,13 @@ public class MainMenu extends MenuImp {
                 }
             }
         });
+        websocketScheduler.observePlayers();
     }
 
     @Override
     public void init() {
-        initButtons();
-        initVolatileMessages();
-        initPermanentImages();
-    }
-
-    private void initButtons() {
         setButtons(buttonsFactory.getListWithMainMenuButtons());
-    }
-
-    private void initVolatileMessages() {
         setVolatileImages(textureMenuFactory.getListWithTextMainMenuSymbols());
-    }
-
-    private void initPermanentImages() {
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
         setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE)));
@@ -122,10 +110,6 @@ public class MainMenu extends MenuImp {
     }
 
     @Override
-    protected void terminateIfWindowShutDown() {
-        super.terminateIfWindowShutDown();
-    }
-    @Override
     public void update() {
         if (Objects.nonNull(state) && !state.equals(currentState)) {
             updateLabel(playersDescriptionLabel, state);
@@ -143,7 +127,8 @@ public class MainMenu extends MenuImp {
     }
 
     private void showMenu(String buttonName) {
-        disableAllMessages();
+        //disable all messages
+        volatileImages.forEach(s -> toggleImage(s, true));
 
         switch (buttonName) {
             case "ChooseCharacter":
@@ -153,7 +138,7 @@ public class MainMenu extends MenuImp {
                 runMenu(ControlSettingsMenu.getInstance());
                 break;
             case "QuitGame":
-                setFinishGame(true);
+                finish_game();
                 stop();
                 break;
             case "Start":
@@ -171,13 +156,6 @@ public class MainMenu extends MenuImp {
                 }
                 break;
         }
-    }
-
-
-    @Override
-    public void stop() {
-        super.stop();
-        log.info("stop loop main menu");
     }
 
     public void showMessage(MenuSymbol symbol) {
@@ -223,10 +201,6 @@ public class MainMenu extends MenuImp {
                 })
                 .collect(Collectors.toList());
         setPermanentImages(menuSymbols);
-    }
-
-    private void disableAllMessages() {
-        volatileImages.forEach(s -> toggleImage(s, true));
     }
 
 }

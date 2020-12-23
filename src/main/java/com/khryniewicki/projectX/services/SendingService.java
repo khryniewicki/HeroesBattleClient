@@ -27,6 +27,7 @@ public class SendingService implements Runnable {
     private ConcurrentLinkedDeque<DTO> events;
     private int counter;
     private StompSession session;
+    private boolean running;
 
     public SendingService() {
         channel = Channels.getINSTANCE();
@@ -85,7 +86,8 @@ public class SendingService implements Runnable {
     public void run() {
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
         session = WebsocketApplication.getSession();
-        while (true) {
+        running = true;
+        while (running) {
             action();
             send();
         }
@@ -126,5 +128,9 @@ public class SendingService implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void stop() {
+        setRunning(false);
     }
 }

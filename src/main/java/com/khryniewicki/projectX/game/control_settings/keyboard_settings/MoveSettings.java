@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 
 import com.khryniewicki.projectX.game.engine.Game;
-import com.khryniewicki.projectX.game.collision.Collision;
+import com.khryniewicki.projectX.game.control_settings.collision.Collision;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MouseSettings;
 import com.khryniewicki.projectX.game.heroes.character.properties.*;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;

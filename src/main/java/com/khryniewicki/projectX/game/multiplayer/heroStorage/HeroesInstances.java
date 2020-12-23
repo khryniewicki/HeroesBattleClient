@@ -7,7 +7,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.*;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,7 +59,7 @@ public class HeroesInstances {
     }
 
     public void setMock() {
-        WebsocketInitializer websocketInstance = WebsocketInitializer.getWebsocketInstance();
+        WebsocketController websocketInstance = WebsocketController.getWebsocketInstance();
         String sessionId = websocketInstance.getSessionId();
         HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
         Map<String, Message> heroes = heroesRegistry.getHeroesRegistryBook();

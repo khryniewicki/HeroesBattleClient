@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.multiplayer.controller;
 
 import com.khryniewicki.projectX.game.engine.GameLoopImp;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketInitializer;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class MultiPlayerCommander extends GameLoopImp {
     protected final WaitingRoomMenu waitingRoomMenu;
     protected final HeroesInstances heroesInstances;
-    protected final WebsocketInitializer websocketInitializer;
+    protected final WebsocketController websocketController;
     protected final WebsocketScheduler websocketScheduler;
     protected Deque<Command> itsCommands = new LinkedList<>();
     protected MultiplayerState itsState;
@@ -25,16 +25,16 @@ public class MultiPlayerCommander extends GameLoopImp {
     public MultiPlayerCommander() {
         waitingRoomMenu = WaitingRoomMenu.getWaitingRoomMenu();
         heroesInstances = HeroesInstances.getInstance();
-        websocketInitializer = WebsocketInitializer.getWebsocketInstance();
+        websocketController = WebsocketController.getWebsocketInstance();
         websocketScheduler = WebsocketScheduler.getInstance();
     }
 
     protected Command connect() {
         return () -> {
             waitingRoomMenu.addText("Waiting for connections...");
-            websocketInitializer.initializeWebsocket();
+            websocketController.initializeWebsocket();
             waitingRoomMenu.addText("Connection established");
-            websocketInitializer.registerHero();
+            websocketController.registerHero();
         };
     }
 

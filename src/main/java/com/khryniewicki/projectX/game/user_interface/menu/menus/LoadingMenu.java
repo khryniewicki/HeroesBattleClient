@@ -48,10 +48,14 @@ public class LoadingMenu extends MenuImp {
     }
 
     @Override
-    public void insideLoop() {
+    protected void beforeLoop() {
         duration = 5000L;
         now = System.currentTimeMillis();
         flag = true;
+    }
+
+    @Override
+    public void insideLoop() {
         do {
             setDifference(System.currentTimeMillis() - now);
             getProgress();
@@ -85,6 +89,6 @@ public class LoadingMenu extends MenuImp {
     }
 
     private Texture getTextureForLoading(String text) {
-        return TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN,22);
+        return TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN, 22);
     }
 }

@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.collision;
+package com.khryniewicki.projectX.game.control_settings.collision;
 
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
@@ -6,7 +6,6 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
@@ -111,7 +110,7 @@ public class Collision {
             BoundaryCollisions[1] = true;
         } else if (by >= 5.0f) {
             BoundaryCollisions[2] = true;
-        } else if (by <= -5.2f) {
+        } else if (by <= -5.0f) {
             BoundaryCollisions[3] = true;
         }
     }
