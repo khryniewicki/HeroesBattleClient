@@ -74,8 +74,8 @@ public class WaitingRoomMenu extends MenuImp {
         }
     }
 
-
-    protected void restart() {
+    @Override
+    public void restart() {
         setWaitingForPlayer(false);
         TIMER.setTexture(MenuTextures.BLANK_TEXT_WINDOW);
         level = 4.5f;
@@ -88,7 +88,7 @@ public class WaitingRoomMenu extends MenuImp {
         List<MenuSymbol> collect = permanentImages.stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
-                        symbol.setTexture(TextFactory.textInLoadingMenuToImage("Logout in: " + timeLeftToLogOut.toString() + " sec.", Colors.BRIGHT_GREEN,32));
+                        symbol.setTexture(TextFactory.textInLoadingMenuToImage("Logout in: " + timeLeftToLogOut.toString() + " sec.", Colors.BRIGHT_GREEN, 32));
                     }
                 })
                 .collect(Collectors.toList());

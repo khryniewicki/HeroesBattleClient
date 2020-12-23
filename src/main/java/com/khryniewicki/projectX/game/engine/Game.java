@@ -6,6 +6,8 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.RestartMenu;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +53,6 @@ public class Game extends GameLoopImp implements Runnable {
         mainMenu.execute();
     }
 
-
     private void start_multiplayer() {
         MultiplayerController multiplayerController = MultiplayerController.getMultiplayerInstance();
         multiplayerController.execute();
@@ -64,7 +65,6 @@ public class Game extends GameLoopImp implements Runnable {
         begin();
     }
 
-
     private void create_board() {
         board = Board.getInstance();
     }
@@ -76,22 +76,33 @@ public class Game extends GameLoopImp implements Runnable {
     @Override
     public void update() {
         glfwPollEvents();
-        board.update();
+        if (state.equals(GameState.OK)) {
+            board.update();
+        }
     }
 
     @Override
     public void render() {
         clearBuffers();
         board.render();
+        if (state.equals(GameState.PLAYER_IS_DEAD)) {
+            RestartMenu restartMenu = RestartMenu.getInstance();
+            restartMenu.win_or_loose();
+            restartMenu.getButtons().forEach(MenuSymbol::render);
+        }
         swapBuffers();
     }
 
     public void terminate_game() {
+        stop_websocket();
+        terminateIfWindowShutDown();
+    }
+
+    public void stop_websocket() {
         if (!websocketController.getSessionId().isEmpty()) {
             websocketController.disconnect();
         }
         websocketController.stop_sending_service();
-        terminateIfWindowShutDown();
     }
 
     private Game() {

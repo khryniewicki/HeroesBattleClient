@@ -18,7 +18,7 @@ import java.util.Objects;
 public class AttackExecution {
 
     private final UltraSpell spell;
-    private final SuperHero hero,mock;
+    private final SuperHero hero, mock;
     private final LifeBar lifeBar;
     private final SendingService sendingService;
     private float ox0, ox1, oy0, oy1, oz0;
@@ -32,7 +32,7 @@ public class AttackExecution {
         this.spell = spell;
         this.hero = heroesInstances.getHero();
         this.mock = heroesInstances.getMock();
-        HeroAttributes heroAttributes=hero.getHeroAttributes();
+        HeroAttributes heroAttributes = hero.getHeroAttributes();
         this.lifeBar = heroAttributes.getLifeBar();
     }
 
@@ -67,8 +67,7 @@ public class AttackExecution {
         if (isAttackSucceeded && !isSpellActivated) {
             Integer life = hero.getLife();
             Integer powerAttack = spell.getPowerAttack();
-            hero.setLife(life - powerAttack);
-
+            hero.setLife(life > powerAttack ? life - powerAttack : 0);
             updateLifeBar();
             isSpellActivated = true;
         }

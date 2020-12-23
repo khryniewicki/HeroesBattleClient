@@ -73,7 +73,7 @@ public class TextureMenuFactory {
             .withPositionY(-5.4f)
             .build();
     public static final MenuSymbol TEXT_ROOM_IS_FULL = new MenuSymbol.Builder()
-            .withTexture(TextFactory.textToImageMenu("Room is full, Try later"))
+            .withTexture(TextFactory.textToImageMenu("Room is full, try later"))
             .withName("room_is_full")
             .withDisabled(true)
             .withHeight(0.7f)

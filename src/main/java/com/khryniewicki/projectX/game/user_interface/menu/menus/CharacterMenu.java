@@ -101,7 +101,8 @@ public class CharacterMenu extends MenuImp {
         }
     }
 
-    protected void restart() {
+    @Override
+    public void restart() {
         animation.stop();
         toggleImage(TABLE, true);
         toggleImage(HERO_NAME, true);

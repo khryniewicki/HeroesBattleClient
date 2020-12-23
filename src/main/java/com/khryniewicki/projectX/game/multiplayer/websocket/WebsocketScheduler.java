@@ -145,6 +145,7 @@ public class WebsocketScheduler {
     public void cancelTimer() {
         if (hasStarted) {
             timer.cancel();
+            hasStarted = false;
         }
     }
 

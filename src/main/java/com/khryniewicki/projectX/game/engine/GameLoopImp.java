@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.engine;
 
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -33,7 +34,7 @@ public class GameLoopImp implements GameLoop {
 
 
     public void loop() {
-        if (state.equals(GameState.OK)) {
+        if (!state.equals(GameState.FINISH)) {
             prepare();
             insideLoop();
         }
@@ -70,12 +71,29 @@ public class GameLoopImp implements GameLoop {
                 frames = 0;
             }
             windowsShouldClose();
+            restartGame();
         }
-        try {
-            Thread.sleep(10000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+    }
+
+    private void restartGame() {
+        if (state.equals(GameState.RESTART)) {
+            stop();
+            Game game = Game.getInstance();
+            game.stop_websocket();
+            game.initialize_game();
+            HeroesInstances heroesInstances=HeroesInstances.getInstance();
+            heroesInstances.reset();
+            state = GameState.OK;
         }
+    }
+
+    public void player_is_dead() {
+        state = GameState.PLAYER_IS_DEAD;
+    }
+
+    public void restart() {
+        state = GameState.RESTART;
     }
 
     @Override

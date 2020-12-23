@@ -55,15 +55,15 @@ public class MultiPlayerCommander extends GameLoopImp {
     protected Command second_player_registered() {
         return () -> {
             waitingRoomMenu.addText("Other player has joined game. Game is starting, get ready");
-            stop();
             heroesInstances.setHero();
             heroesInstances.setMock();
+            stop();
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            waitingRoomMenu.restart();
         };
     }
 

@@ -24,6 +24,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
 
     public void execute() {
         begin();
+        log.info("{}",itsState);
         loop();
         restart();
     }
@@ -69,14 +70,15 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
         }
     }
 
-    private void restart() {
+    @Override
+    public void restart() {
         itsState = MultiplayerState.NOT_CONNECTED;
+        log.info("Restart");
     }
 
     public static MultiplayerController getMultiplayerInstance() {
         return Instance;
     }
-
 
 
 }

@@ -102,6 +102,11 @@ public class HeroesInstances {
         return HELPER.INSTANCE;
     }
 
+    public void reset() {
+        hero=null;
+        mock=null;
+    }
+
     private static class HELPER {
         public static final HeroesInstances INSTANCE = new HeroesInstances();
     }

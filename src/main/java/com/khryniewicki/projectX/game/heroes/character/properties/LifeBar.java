@@ -63,9 +63,9 @@ public class LifeBar extends GraphicLoader {
             return 1f;
         } else {
             float life = ultraHero.getLife();
-            if (life < 0) {
-                Game.getInstance().setRunning(false);
-                log.info("{} life below 0", ultraHero.getName());
+            if (life == 0) {
+                Game game = Game.getInstance();
+                game.player_is_dead();
             }
             return life < 0 ? 0 : life / 100f;
         }

@@ -168,5 +168,20 @@ public class ButtonsFactory {
             .withPositionY(-5.0f)
             .build();
 
-
+    public static final MenuSymbol MAIN_MENU = new Button.Builder()
+            .withTexture(GO_TO_MAIN_MENU)
+            .withName("main_menu")
+            .withHeight(1f)
+            .withWidth(4f)
+            .withPositionX(-2f)
+            .withPositionY(0f)
+            .build();
+    public static final MenuSymbol QUIT = new Button.Builder()
+            .withTexture(QUIT_TEXTURE)
+            .withName("quit")
+            .withHeight(1f)
+            .withWidth(4f)
+            .withPositionX(-2f)
+            .withPositionY(-1.2f)
+            .build();
 }

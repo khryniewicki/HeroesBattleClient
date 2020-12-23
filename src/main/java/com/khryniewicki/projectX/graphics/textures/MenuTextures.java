@@ -28,6 +28,9 @@ public class MenuTextures {
     public final static Texture HIDE_SKILLS = new Texture("hideskills.png");
     public final static Texture CONFIRM = new Texture("confirm.png");
     public final static Texture TYPE_NAME = new Texture("typeName.png");
+    //RESTART_GAME
+    public static final Texture QUIT_TEXTURE = new Texture("quit.png");
+    public static final Texture GO_TO_MAIN_MENU = new Texture("main_menu.png");
 
     //ANIMATION
     public static final Texture BG_ANIMATION_TEXTURE = new Texture("bgAnimation.png");
