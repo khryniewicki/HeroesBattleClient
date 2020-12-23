@@ -2,10 +2,11 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 
 import com.khryniewicki.projectX.services.SendingService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.Optional;
-
+@Slf4j
 public class WebsocketController {
 
     private WebsocketApplication.MyStompSessionHandler handler;
@@ -23,6 +24,7 @@ public class WebsocketController {
     public void registerHero() {
         handler = new WebsocketApplication.MyStompSessionHandler();
         handler.register();
+        log.info("REGISTER HERO");
     }
 
     public void disconnect() {

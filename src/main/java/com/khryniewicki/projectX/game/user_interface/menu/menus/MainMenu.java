@@ -43,7 +43,7 @@ public class MainMenu extends MenuImp {
     private MenuSymbol playersBarLabel;
     private volatile ServerState state;
     private ServerState currentState;
-
+    private boolean subscribed;
 
     public static MainMenu getInstance() {
         return instance;
@@ -55,9 +55,10 @@ public class MainMenu extends MenuImp {
         textureMenuFactory = TextureMenuFactory.getInstance();
         buttonsFactory = ButtonsFactory.getInstance();
         websocketScheduler = WebsocketScheduler.getInstance();
-        addObserver();
         start();
+        addObserver();
         subscribePlayersInGame();
+        websocketScheduler.observePlayers();
     }
 
     private void addObserver() {
@@ -66,21 +67,25 @@ public class MainMenu extends MenuImp {
     }
 
     private void subscribePlayersInGame() {
-        websocketScheduler.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                String propertyName = evt.getPropertyName();
-                if (propertyName.equals("sever")) {
-                    ServerState serverState = (ServerState) evt.getNewValue();
-                    if (serverState == ServerState.JOIN_GAME) {
-                        websocketScheduler.removePropertyChangeListener(this);
-                    } else {
-                        state = serverState;
+        if (!subscribed) {
+            websocketScheduler.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    String propertyName = evt.getPropertyName();
+                    if (propertyName.equals("sever")) {
+                        ServerState serverState = (ServerState) evt.getNewValue();
+//                        log.info("{}", serverState);
+                        if (serverState == ServerState.JOIN_GAME) {
+                            websocketScheduler.removePropertyChangeListener(this);
+                            setSubscribed(false);
+                        } else {
+                            state = serverState;
+                        }
                     }
                 }
-            }
-        });
-        websocketScheduler.observePlayers();
+            });
+            setSubscribed(true);
+        }
     }
 
     @Override
@@ -94,10 +99,18 @@ public class MainMenu extends MenuImp {
 
     @Override
     public void execute() {
-        currentState = null;
-        addEventClick();
-        begin();
+        prepare();
         loop();
+    }
+
+    @Override
+    public void prepare() {
+        log.info("PREPARE");
+        addEventClick();
+        currentState = null;
+        setCurrentView(MenuCard.MAIN_MENU);
+        subscribePlayersInGame();
+        begin();
     }
 
     @Override
@@ -110,7 +123,9 @@ public class MainMenu extends MenuImp {
 
     @Override
     public void update() {
-        if (Objects.nonNull(state) && !state.equals(currentState)) {
+        if (Objects.nonNull(state) && !state.equals(currentState) && currentView.equals(MenuCard.MAIN_MENU)) {
+            log.info("STATE {}", currentState);
+            log.info("VIEW {}", currentView);
             updateLabel(playersDescriptionLabel, state);
             updateLabelDescription(playersBarLabel, state);
             currentState = state;
@@ -131,10 +146,10 @@ public class MainMenu extends MenuImp {
 
         switch (buttonName) {
             case "ChooseCharacter":
-                runMenu(CharacterMenu.getInstance());
+                runMenu(CharacterMenu.getInstance(), MenuCard.CHARACTER_MENU);
                 break;
             case "ControlSettings":
-                runMenu(ControlSettingsMenu.getInstance());
+                runMenu(ControlSettingsMenu.getInstance(), MenuCard.CONTROL_SETTINGS);
                 break;
             case "QuitGame":
                 stop();

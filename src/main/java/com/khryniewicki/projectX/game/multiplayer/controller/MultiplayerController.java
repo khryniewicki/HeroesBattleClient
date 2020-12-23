@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState.WAITING_FOR_SECOND_PLAYER;
+
 @Getter
 @Setter
 @Slf4j
@@ -24,7 +26,6 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
 
     public void execute() {
         begin();
-        log.info("{}",itsState);
         loop();
         restart();
     }
@@ -63,9 +64,11 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
                         break;
                 }
                 setItsState(state);
+                log.info("STATE: {}",itsState);
             }
-        } else if (propertyName.equals(timer)) {
+        } else if (itsState.equals(WAITING_FOR_SECOND_PLAYER) && propertyName.equals(timer)) {
             Long timeLeft = (Long) evt.getNewValue();
+            log.info("{}",timeLeft);
             execute(updateTime(timeLeft));
         }
     }
@@ -73,7 +76,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
     @Override
     public void restart() {
         itsState = MultiplayerState.NOT_CONNECTED;
-        log.info("Restart");
+        log.info("STATE: NOT CONNECTED");
     }
 
     public static MultiplayerController getMultiplayerInstance() {

@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
-import static org.lwjgl.opengl.GL11.*;
 
 @Getter
 @Slf4j
@@ -32,6 +31,7 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
     protected List<MenuSymbol> permanentImages = new ArrayList<>();
     private final MousePosition mousePosition;
     protected Subject subject;
+    protected static MenuCard currentView;
 
     public MenuImp() {
         mousePosition = new MousePosition();
@@ -59,7 +59,6 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
         buttons.forEach(button -> button.addPropertyChangeListener(this));
     }
 
-
     @Override
     public void addEventClick() {
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
@@ -67,8 +66,6 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
             if (key == 0 && action != GLFW_RELEASE) {
 
                 Position cursorPosition = mousePosition.getCursorPosition();
-                log.info("{}",cursorPosition);
-
                 buttons.stream()
                         .filter(btn -> mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1())
                         .filter(btn -> mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1())
@@ -109,9 +106,17 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
         setVolatileImages(menuSymbols);
         render();
     }
-    protected void runMenu(Menu menu) {
+
+    protected void runMenu(Menu menu, MenuCard menuCard) {
         menu.addEventClick();
         menu.render();
+        setCurrentView(menuCard);
     }
-
+    protected void setCurrentView(MenuCard menuCard){
+        currentView=menuCard;
+        log.info("CURRENT VIEW: {}",currentView);
+    }
+    public enum MenuCard {
+        START, CONTROL_SETTINGS, CHARACTER_MENU, MAIN_MENU;
+    }
 }

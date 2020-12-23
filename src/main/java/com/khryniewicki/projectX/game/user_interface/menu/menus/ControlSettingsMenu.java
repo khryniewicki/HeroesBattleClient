@@ -39,7 +39,7 @@ public class ControlSettingsMenu extends MenuImp {
 
         String btnName = (String) evt.getNewValue();
         if (btnName.equals("Return2")) {
-            runMenu(MainMenu.getInstance());
+            runMenu(MainMenu.getInstance(),MenuCard.MAIN_MENU);
         }
     }
 

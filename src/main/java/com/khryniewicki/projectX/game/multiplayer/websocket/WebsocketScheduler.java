@@ -86,6 +86,7 @@ public class WebsocketScheduler {
                     } else if (map.size() == 1) {
                         setServerState(ServerState.ONE_PLAYER);
                     } else if (map.size() == 2) {
+
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
                             HeroesRegistry instance = HeroesRegistry.getINSTANCE();
                             instance.setHeroesRegistryBook(map);
@@ -101,7 +102,7 @@ public class WebsocketScheduler {
             }
 
             private void initSessionId() {
-                if (!websocketInstance.getSessionId().isEmpty() && Objects.isNull(sessionId)) {
+                if (!websocketInstance.getSessionId().isEmpty()) {
                     sessionId = websocketInstance.getSessionId();
                 }
             }

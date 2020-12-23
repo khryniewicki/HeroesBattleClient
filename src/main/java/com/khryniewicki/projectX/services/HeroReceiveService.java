@@ -39,7 +39,7 @@ public class HeroReceiveService {
     private void createMockPosition(HeroDTO heroDTO) {
         Position tmp = new Position(heroDTO.getPositionX(), heroDTO.getPositionY());
 
-        if (MockPosition==null){
+        if (MockPosition == null) {
             MockPosition = tmp;
         }
         if (tmp.equals(MockPosition)) {
@@ -49,8 +49,13 @@ public class HeroReceiveService {
         }
 
         if (counter < 3) {
-            MockPosition=tmp;
+            MockPosition = tmp;
         }
+    }
+
+    public void reset() {
+        MockLife = null;
+        MockMana = null;
     }
 
     private static class HELPER {

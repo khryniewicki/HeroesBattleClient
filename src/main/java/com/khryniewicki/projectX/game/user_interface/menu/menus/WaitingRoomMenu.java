@@ -67,6 +67,7 @@ public class WaitingRoomMenu extends MenuImp {
                 if (waitingForPlayer) {
                     restart();
                     Game game = Game.getInstance();
+                    log.info("INITIALIZE GAME FROM WAITING ROOM");
                     game.initialize_game();
                     MultiplayerController.getMultiplayerInstance().stop();
                 }
@@ -76,10 +77,12 @@ public class WaitingRoomMenu extends MenuImp {
 
     @Override
     public void restart() {
+        log.info("waiting room restart");
         setWaitingForPlayer(false);
         TIMER.setTexture(MenuTextures.BLANK_TEXT_WINDOW);
         level = 4.5f;
         permanentImages = new ArrayList<>();
+        timeLeftToLogOut=null;
     }
 
 

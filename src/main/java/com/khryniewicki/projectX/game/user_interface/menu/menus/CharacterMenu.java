@@ -27,7 +27,7 @@ public class CharacterMenu extends MenuImp {
     private final TextureMenuFactory textureMenuFactory;
     private final KeyboardSettings keyboardSettings;
     private final ButtonsFactory buttonsFactory;
-    private final Animation animation;
+    private Animation animation;
     private MainMenu mainMenu;
     private volatile String chosenHero;
     private boolean activeWriting;
@@ -110,7 +110,7 @@ public class CharacterMenu extends MenuImp {
         updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
         removeButton(CHARACTER_SKILLS);
         setActiveWriting(false);
-        runMenu(MainMenu.getInstance());
+        runMenu(MainMenu.getInstance(), MenuCard.MAIN_MENU);
     }
 
     private void setHeroName(String name) {

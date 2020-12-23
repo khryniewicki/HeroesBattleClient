@@ -25,6 +25,7 @@ public class LifeBar extends GraphicLoader {
     private UltraHero ultraHero;
     float offsetPositionY = 0.5f;
     float offsetPositionX = -0.3f;
+    boolean notify;
 
     public LifeBar(Builder builder) {
         super(builder);
@@ -37,6 +38,13 @@ public class LifeBar extends GraphicLoader {
     @Override
     public void update() {
         updateLifeBar();
+        Integer life = ultraHero.getLife();
+        if (Objects.nonNull(life) && life == 0 && !notify) {
+            log.info("name:{} , life: {}, mana: {}",ultraHero.getName(), life,ultraHero.getMana());
+            Game game = Game.getInstance();
+            game.player_is_dead();
+            setNotify(true);
+        }
     }
 
     public void updateLifeBar() {
@@ -44,6 +52,7 @@ public class LifeBar extends GraphicLoader {
         setPositionY(ultraHero.getY() + offsetPositionY);
         this.greenMesh = getLifeBarMesh("green");
         this.blackMesh = getLifeBarMesh("black");
+
     }
 
     public VertexArray getLifeBarMesh(String color) {
@@ -63,10 +72,6 @@ public class LifeBar extends GraphicLoader {
             return 1f;
         } else {
             float life = ultraHero.getLife();
-            if (life == 0) {
-                Game game = Game.getInstance();
-                game.player_is_dead();
-            }
             return life < 0 ? 0 : life / 100f;
         }
     }

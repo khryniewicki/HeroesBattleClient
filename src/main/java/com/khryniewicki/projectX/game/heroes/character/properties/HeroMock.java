@@ -20,6 +20,7 @@ public class HeroMock extends SuperHero {
         super();
         addProperties(superHero);
         heroReceiveService = HeroReceiveService.getInstance();
+        checkLifeAndMana();
     }
 
     @Override

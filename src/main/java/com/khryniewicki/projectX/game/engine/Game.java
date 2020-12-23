@@ -2,12 +2,12 @@ package com.khryniewicki.projectX.game.engine;
 
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
+import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.RestartMenu;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +35,10 @@ public class Game extends GameLoopImp implements Runnable {
         loading_menu();
         initialize_game();
         loop();
+        restart_menu();
         terminate_game();
     }
+
 
     private void loading_menu() {
         LoadingMenu loadingMenu = LoadingMenu.getInstance();
@@ -58,6 +60,14 @@ public class Game extends GameLoopImp implements Runnable {
         multiplayerController.execute();
     }
 
+    private void restart_menu() {
+        if (state.equals(GameState.RESTART)) {
+            RestartMenu restartMenu = RestartMenu.getInstance();
+            restartMenu.execute();
+
+        }
+    }
+
     @Override
     protected void prepare() {
         create_board();
@@ -73,11 +83,16 @@ public class Game extends GameLoopImp implements Runnable {
         websocketController.start_sending_service();
     }
 
+
     @Override
     public void update() {
         glfwPollEvents();
-        if (state.equals(GameState.OK)) {
-            board.update();
+        board.update();
+        if (state.equals(GameState.PLAYER_IS_DEAD)) {
+            restart();
+            stop();
+            stop_websocket();
+
         }
     }
 
@@ -85,11 +100,6 @@ public class Game extends GameLoopImp implements Runnable {
     public void render() {
         clearBuffers();
         board.render();
-        if (state.equals(GameState.PLAYER_IS_DEAD)) {
-            RestartMenu restartMenu = RestartMenu.getInstance();
-            restartMenu.win_or_loose();
-            restartMenu.getButtons().forEach(MenuSymbol::render);
-        }
         swapBuffers();
     }
 

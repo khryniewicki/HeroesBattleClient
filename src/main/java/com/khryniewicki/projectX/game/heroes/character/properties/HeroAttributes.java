@@ -19,8 +19,8 @@ public class HeroAttributes implements Symbol {
     PlayerNameBar playerNameBar;
 
     public HeroAttributes(SuperHero superHero, String name) {
-        manaBar = initManaBar(superHero);
         lifeBar = initLifeBar(superHero);
+        manaBar = initManaBar(superHero);
         playerNameBar = initPlayerNameBar(superHero, name);
         symbols = new ArrayList<>(Arrays.asList(lifeBar, playerNameBar, manaBar));
     }
