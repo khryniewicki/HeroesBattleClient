@@ -54,9 +54,13 @@ public class HeroesInstances {
             superHero.setStartingPosition(MockStartingPosition.getInstance());
             superHero.setBasicSpell(new SpellMock(superHero.getBasicSpellInstance()));
             superHero.setUltimateSpell(new SpellMock(superHero.getUltimateSpellInstance()));
-            superHero.setHeroAttributes(new HeroAttributes(superHero, mockName));
+            superHero.setHeroAttributes(new HeroAttributes(superHero, mock_name()));
         }
         superHero.setMesh();
+    }
+
+    private String mock_name() {
+        return (Objects.nonNull(mockName)) ? mockName : "Player " + channels.getTopic();
     }
 
     private String hero_name() {

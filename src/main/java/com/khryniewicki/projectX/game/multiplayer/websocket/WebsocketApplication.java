@@ -43,15 +43,9 @@ public class WebsocketApplication implements Runnable {
     private static StompSession copy_session;
     public static StompSessionHandler sessionHandler;
 
-
-    public WebsocketApplication() {
-
-    }
-
     public synchronized static StompSession getSession() {
         return copy_session;
     }
-
 
     @Slf4j
     @Getter
@@ -145,8 +139,8 @@ public class WebsocketApplication implements Runnable {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
 
-                    MessageHandler instance = MessageHandler.getINSTANCE();
-                    instance.setChannelsAndStartingPositions((Message) payload);
+                    MessageHandler messageHandler = MessageHandler.getINSTANCE();
+                    messageHandler.setChannelsAndStartingPositions((Message) payload);
 
                     subscribeHero("/topic/hero/" + channels.getTopic(), session);
                     subscribeSpell("/topic/spell/" + channels.getTopic(), session);
