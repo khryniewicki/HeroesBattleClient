@@ -108,7 +108,7 @@ public class Collision {
             BoundaryCollisions[0] = true;
         } else if (bx <= -9.5f) {
             BoundaryCollisions[1] = true;
-        } else if (by >= 5.0f) {
+        } else if (by >= 4.6f) {
             BoundaryCollisions[2] = true;
         } else if (by <= -5.0f) {
             BoundaryCollisions[3] = true;

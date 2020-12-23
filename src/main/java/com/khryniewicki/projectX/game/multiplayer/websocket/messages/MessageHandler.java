@@ -64,7 +64,7 @@ public class MessageHandler {
         MockStartingPosition mockStartingPosition = MockStartingPosition.getInstance();
         Integer app = channels.getApp();
         Position A = new Position(4f, 4f);
-        Position B = new Position(-10f, -5.5f);
+        Position B = new Position(-10f, -5.0f);
         if (app == 1) {
             heroStartingPosition.setX_Y(A.getX(), A.getY());
             mockStartingPosition.setX_Y(B.getX(), B.getY());
