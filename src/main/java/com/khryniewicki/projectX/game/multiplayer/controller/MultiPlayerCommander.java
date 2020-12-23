@@ -56,8 +56,7 @@ public class MultiPlayerCommander extends GameLoopImp {
         return () -> {
             waitingRoomMenu.addText("Other player has joined game. Game is starting, get ready");
             stop();
-            heroesInstances.setHeroBasicProperties();
-            heroesInstances.setHeroMoveSetting();
+            heroesInstances.setHero();
             heroesInstances.setMock();
             try {
                 Thread.sleep(5000);

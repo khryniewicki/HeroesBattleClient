@@ -3,11 +3,14 @@ package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellMock;
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.MoveSettings;
-import com.khryniewicki.projectX.game.heroes.character.properties.*;
+import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
+import com.khryniewicki.projectX.game.heroes.character.properties.HeroMock;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
+import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Objects;
 
 
 @Service
@@ -25,18 +29,19 @@ public class HeroesInstances {
 
     private SuperHero hero;
     private SuperHero mock;
-    private String heroName="Player 1";
-    private String mockName="Player 2";
+    private String heroName;
+    private String mockName;
     private final HeroFactory heroFactory;
-
+    private final Channels channels;
 
     private HeroesInstances() {
         heroFactory = HeroFactory.getInstance();
+        channels = Channels.getINSTANCE();
     }
 
-    public void setHeroBasicProperties() {
+    public void setHero() {
         setBasicProperties(hero);
-        log.info("HERO BASIC PROPERTIES");
+        setHeroMoveSetting();
     }
 
     public void setBasicProperties(SuperHero superHero) {
@@ -44,7 +49,7 @@ public class HeroesInstances {
             superHero.setStartingPosition(HeroStartingPosition.getInstance());
             superHero.setBasicSpell(new Spell(superHero.getBasicSpellInstance()));
             superHero.setUltimateSpell(new Spell(superHero.getUltimateSpellInstance()));
-            superHero.setHeroAttributes(new HeroAttributes(superHero, heroName));
+            superHero.setHeroAttributes(new HeroAttributes(superHero, hero_name()));
         } else {
             superHero.setStartingPosition(MockStartingPosition.getInstance());
             superHero.setBasicSpell(new SpellMock(superHero.getBasicSpellInstance()));
@@ -52,6 +57,10 @@ public class HeroesInstances {
             superHero.setHeroAttributes(new HeroAttributes(superHero, mockName));
         }
         superHero.setMesh();
+    }
+
+    private String hero_name() {
+        return (Objects.nonNull(heroName)) ? heroName : "Player " + channels.getApp();
     }
 
     public void setHeroMoveSetting() {
@@ -81,8 +90,8 @@ public class HeroesInstances {
         hero = heroFactory.create(heroType);
     }
 
-    public void setMock(String mockName) {
-        mock = new HeroMock(heroFactory.create(mockName));
+    public void setMock(String mockType) {
+        mock = new HeroMock(heroFactory.create(mockType));
     }
 
     public static HeroesInstances getInstance() {

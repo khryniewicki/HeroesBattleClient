@@ -107,8 +107,8 @@ public class Board {
                 spell.render();
             }
         });
-        renderObstacles();
-        renderTerrains();
+//        renderObstacles();
+//        renderTerrains();
         if (collision.isTest_square()) {
             collision.getSquares().values().forEach(MenuSymbol::render);
         }
