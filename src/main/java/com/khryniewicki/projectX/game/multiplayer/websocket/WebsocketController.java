@@ -3,36 +3,39 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.services.SendingService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.util.Objects;
 import java.util.Optional;
+
 @Slf4j
 public class WebsocketController {
 
     private WebsocketApplication.MyStompSessionHandler handler;
-    private final static WebsocketController WEBSOCKET_INSTANCE = new WebsocketController();
-    private final SendingService sendingService;
+    private SendingService sendingService;
 
-
-
-    public void initializeWebsocket() {
-        WebsocketApplication websocketApplication = new WebsocketApplication();
-        websocketApplication.startWebsocket();
+    private WebsocketController() {
     }
 
+    public void initialize_websocket() {
+        StompSession session = WebsocketApplication.getSession();
+        if (Objects.nonNull(session) && session.isConnected()) {
+            session.disconnect();
+        }
+        new WebsocketApplication().startWebsocket();
+    }
 
-    public void registerHero() {
+    public void join_room() {
         handler = new WebsocketApplication.MyStompSessionHandler();
-        handler.register();
-        log.info("REGISTER HERO");
+        handler.join_room();
     }
 
-    public void disconnect() {
-        handler.leave();
+    public void leave_room() {
+        handler.leave_room();
     }
 
 
-    public String getSessionId() {
+    public String get_session_id() {
         Optional<String> sessionId = Optional.empty();
         if (Objects.nonNull(handler)) {
             sessionId = handler.getSessionId();
@@ -41,19 +44,25 @@ public class WebsocketController {
     }
 
     public void start_sending_service() {
-        Thread sender = new Thread(sendingService, "SendingService");
-        sender.start();
+        sendingService = new SendingService();
+        new Thread(sendingService, "SendingService").start();
     }
 
-    public void stop_sending_service() {
+    public void stop_websocket() {
+        if (!get_session_id().isEmpty()) {
+            leave_room();
+        }
+        stop_sending_service();
+    }
+
+    protected void stop_sending_service() {
         sendingService.stop();
     }
+
+    private final static WebsocketController WEBSOCKET_INSTANCE = new WebsocketController();
 
     public static WebsocketController getWebsocketInstance() {
         return WEBSOCKET_INSTANCE;
     }
 
-    private WebsocketController() {
-        sendingService = new SendingService();
-    }
 }

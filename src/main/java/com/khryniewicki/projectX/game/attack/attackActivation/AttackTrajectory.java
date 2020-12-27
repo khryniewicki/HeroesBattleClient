@@ -37,6 +37,7 @@ public class AttackTrajectory {
         this.spell = spell;
         this.spellInstance = spell.getSpellInstance();
         this.isSpellNotPrepared = true;
+        makeTargetNull();
     }
 
     public void castingSpell() {

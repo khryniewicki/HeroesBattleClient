@@ -1,10 +1,9 @@
 package com.khryniewicki.projectX.game.control_settings.mouse_settings;
 
-import com.khryniewicki.projectX.game.engine.Game;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
+import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.DTO.DTO;
@@ -24,15 +23,14 @@ public class MouseSettings {
 
     private final StackEvent stackEvent;
     private final MousePosition mousePosition;
-    private Position cursorPosition;
-    private SpellInstance spellInstance;
-    private SuperHero hero;
     private final SendingService sendingService;
+    private final UltraSpell basicSpell;
+    private final UltraSpell ultimateSpell;
+    private SuperHero hero;
+    private Position cursorPosition;
     private UltraSpell spell;
-    private UltraSpell basicSpell;
-    private UltraSpell ultimateSpell;
 
-    private MouseSettings() {
+    public MouseSettings() {
         this.stackEvent = StackEvent.getInstance();
         this.hero = HeroesInstances.getInstance().getHero();
         this.sendingService = new SendingService();
@@ -41,7 +39,7 @@ public class MouseSettings {
         this.mousePosition = new MousePosition();
     }
 
-    public void setMouseCallBack() {
+    public void cast_spells() {
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
             cursorPosition = mousePosition.getCursorPosition();
             if ((key == 0 || key == 1)) {
@@ -107,11 +105,4 @@ public class MouseSettings {
         heroDTOS.offerLast(new SpellDTO(spell.getName(), target.getX(), target.getY()));
     }
 
-    public static MouseSettings getInstance() {
-        return MouseSettings.HELPER.INSTANCE;
-    }
-
-    private static class HELPER {
-        private final static MouseSettings INSTANCE = new MouseSettings();
-    }
 }

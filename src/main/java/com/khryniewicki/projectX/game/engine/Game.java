@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.engine;
 
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
@@ -26,19 +25,14 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void start() {
         state = GameState.OK;
-        Thread game = new Thread(this, "Game");
-        game.start();
+        new Thread(this, "Game").start();
     }
 
     public void run() {
         init();
         loading_menu();
         initialize_game();
-        loop();
-        restart_menu();
-        terminate_game();
     }
-
 
     private void loading_menu() {
         LoadingMenu loadingMenu = LoadingMenu.getInstance();
@@ -47,15 +41,18 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void initialize_game() {
         main_menu();
-        start_multiplayer();
+        multiplayer();
+        loop();
+        restart_menu();
+        terminate_game();
     }
 
-    public void main_menu() {
+    private void main_menu() {
         MainMenu mainMenu = MainMenu.getInstance();
         mainMenu.execute();
     }
 
-    private void start_multiplayer() {
+    private void multiplayer() {
         MultiplayerController multiplayerController = MultiplayerController.getMultiplayerInstance();
         multiplayerController.execute();
     }
@@ -64,7 +61,6 @@ public class Game extends GameLoopImp implements Runnable {
         if (state.equals(GameState.RESTART)) {
             RestartMenu restartMenu = RestartMenu.getInstance();
             restartMenu.execute();
-
         }
     }
 
@@ -76,7 +72,7 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     private void create_board() {
-        board = Board.getInstance();
+        board = new Board();
     }
 
     private void start_sending_service() {
@@ -92,7 +88,6 @@ public class Game extends GameLoopImp implements Runnable {
             restart();
             stop();
             stop_websocket();
-
         }
     }
 
@@ -109,10 +104,7 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     public void stop_websocket() {
-        if (!websocketController.getSessionId().isEmpty()) {
-            websocketController.disconnect();
-        }
-        websocketController.stop_sending_service();
+        websocketController.stop_websocket();
     }
 
     private Game() {

@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellMock;
-import com.khryniewicki.projectX.game.control_settings.keyboard_settings.MoveSettings;
+import com.khryniewicki.projectX.game.control_settings.ControlSettings;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
@@ -13,6 +13,7 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.services.HeroReceiveService;
+import com.khryniewicki.projectX.services.SendingService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,10 @@ public class HeroesInstances {
         superHero.setMesh();
     }
 
+    public void setHeroMoveSetting() {
+        hero.setControlSettings(new ControlSettings());
+    }
+
     private String mock_name() {
         return (Objects.nonNull(mockName)) ? mockName : "Player " + channels.getTopic();
     }
@@ -68,13 +73,10 @@ public class HeroesInstances {
         return (Objects.nonNull(heroName)) ? heroName : "Player " + channels.getApp();
     }
 
-    public void setHeroMoveSetting() {
-        hero.setMoveSettings(MoveSettings.getInstance());
-    }
 
     public void setMock() {
         WebsocketController websocketInstance = WebsocketController.getWebsocketInstance();
-        String sessionId = websocketInstance.getSessionId();
+        String sessionId = websocketInstance.get_session_id();
         HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
         Map<String, Message> heroes = heroesRegistry.getHeroesRegistryBook();
 
@@ -90,7 +92,6 @@ public class HeroesInstances {
         }
     }
 
-
     public void setHero(String heroType) {
         hero = heroFactory.create(heroType);
     }
@@ -99,14 +100,15 @@ public class HeroesInstances {
         mock = new HeroMock(heroFactory.create(mockType));
     }
 
-    public static HeroesInstances getInstance() {
-        return HELPER.INSTANCE;
+    public void reset() {
+        mock = null;
+        hero = null;
+        HeroReceiveService heroReceiveService = HeroReceiveService.getInstance();
+        heroReceiveService.reset();
     }
 
-    public void reset() {
-        mock=null;
-        HeroReceiveService heroReceiveService=HeroReceiveService.getInstance();
-        heroReceiveService.reset();
+    public static HeroesInstances getInstance() {
+        return HELPER.INSTANCE;
     }
 
     private static class HELPER {

@@ -32,9 +32,9 @@ public class MultiPlayerCommander extends GameLoopImp {
     protected Command connect() {
         return () -> {
             waitingRoomMenu.addText("Waiting for connections...");
-            websocketController.initializeWebsocket();
+            websocketController.initialize_websocket();
             waitingRoomMenu.addText("Connection established");
-            websocketController.registerHero();
+            websocketController.join_room();
         };
     }
 

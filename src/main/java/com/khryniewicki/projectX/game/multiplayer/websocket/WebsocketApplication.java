@@ -47,6 +47,10 @@ public class WebsocketApplication implements Runnable {
         return copy_session;
     }
 
+    public void disconnect() {
+        session.disconnect();
+    }
+
     @Slf4j
     @Getter
     @Setter
@@ -79,7 +83,7 @@ public class WebsocketApplication implements Runnable {
             }
         }
 
-        public void register() {
+        public void join_room() {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             SuperHero superHero = heroesInstances.getHero();
             session.send("/app/room", new Message.Builder()
@@ -90,12 +94,13 @@ public class WebsocketApplication implements Runnable {
                     .build());
         }
 
-        public void leave() {
+        public void leave_room() {
             session.send("/app/room", new Message.Builder()
                     .status(ConnectionState.DISCONNECTED)
                     .sessionID(session.getSessionId())
                     .build());
         }
+
 
         public void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
@@ -139,7 +144,7 @@ public class WebsocketApplication implements Runnable {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
 
-                    MessageHandler messageHandler = MessageHandler.getINSTANCE();
+                    MessageHandler messageHandler = new MessageHandler();
                     messageHandler.setChannelsAndStartingPositions((Message) payload);
 
                     subscribeHero("/topic/hero/" + channels.getTopic(), session);

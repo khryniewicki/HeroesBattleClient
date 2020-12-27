@@ -41,6 +41,7 @@ public class WebsocketScheduler {
     private WebsocketScheduler() {
         websocketInstance = WebsocketController.getWebsocketInstance();
         support = new PropertyChangeSupport(this);
+
         timer = new Timer();
     }
 
@@ -72,6 +73,8 @@ public class WebsocketScheduler {
             public void run() {
                 HashMap<String, Message> map;
                 Long timeLeft;
+                HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
+
                 try {
                     map = playersInGame();
                     timeLeft = startCounter();
@@ -81,15 +84,13 @@ public class WebsocketScheduler {
                 }
                 if (Objects.nonNull(map)) {
                     initSessionId();
+                    heroesRegistry.setHeroesRegistryBook(map);
                     if (map.size() == 0) {
                         setServerState(ServerState.NO_PLAYERS);
                     } else if (map.size() == 1) {
                         setServerState(ServerState.ONE_PLAYER);
                     } else if (map.size() == 2) {
-
                         if (Objects.nonNull(sessionId) && map.containsKey(sessionId)) {
-                            HeroesRegistry instance = HeroesRegistry.getINSTANCE();
-                            instance.setHeroesRegistryBook(map);
                             setServerState(ServerState.JOIN_GAME);
                             setMultiplayerState(MultiplayerState.SECOND_PLAYER_REGISTERED);
                         } else {
@@ -102,8 +103,8 @@ public class WebsocketScheduler {
             }
 
             private void initSessionId() {
-                if (!websocketInstance.getSessionId().isEmpty()) {
-                    sessionId = websocketInstance.getSessionId();
+                if (!websocketInstance.get_session_id().isEmpty()) {
+                    sessionId = websocketInstance.get_session_id();
                 }
             }
         }, 0, period);

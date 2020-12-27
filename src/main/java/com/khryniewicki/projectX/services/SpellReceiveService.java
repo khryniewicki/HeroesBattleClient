@@ -20,10 +20,6 @@ public class SpellReceiveService {
     public static SpellInstance spellInstance;
     private static List<Spell> spellBook;
 
-    public SpellReceiveService() {
-
-    }
-
     public static void receiveSpellMock(SpellDTO spellDTO) {
         createSpellBook();
         spellInstance = spellAdapter(spellDTO.getName());

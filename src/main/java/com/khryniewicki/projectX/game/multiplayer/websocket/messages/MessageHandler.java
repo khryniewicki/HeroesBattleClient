@@ -19,7 +19,7 @@ public class MessageHandler {
 
     private MultiplayerState itState;
 
-    private MessageHandler() {
+    public MessageHandler() {
         channels = Channels.getINSTANCE();
         subject = new Subject();
         multiplayer = MultiplayerController.getMultiplayerInstance();
@@ -74,9 +74,5 @@ public class MessageHandler {
         }
     }
 
-    private final static MessageHandler INSTANCE = new MessageHandler();
 
-    public static MessageHandler getINSTANCE() {
-        return INSTANCE;
-    }
 }

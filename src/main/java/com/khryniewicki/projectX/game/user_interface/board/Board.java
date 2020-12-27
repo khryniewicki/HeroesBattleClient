@@ -10,9 +10,9 @@ import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
+import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
@@ -44,8 +44,9 @@ public class Board {
     private List<UltraHero> heroes;
     private List<BoardObjects> obstacles;
     private List<BoardObjects> terrains;
+    private boolean notify;
 
-    private Board() {
+    public Board() {
         createBackground();
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
@@ -55,6 +56,7 @@ public class Board {
 //        mousePosition = new MousePosition();
 //        addEventClick();
     }
+
 
     private void createBackground() {
         Symbol background = new GameSymbol.Builder(GameTextures.BACKGROUND, -10f, -10.0f * 9.0f / 16.0f)
@@ -106,71 +108,78 @@ public class Board {
                 spell.render();
             }
         });
-//        renderObstacles();
-//        renderTerrains();
+
+        isPlayerDead();
+
         if (collision.isTest_square()) {
             collision.getSquares().values().forEach(MenuSymbol::render);
         }
+
+        //        renderObstacles();
+//        renderTerrains();
     }
 
-    public void renderTerrains() {
-        Shader.TERRAIN.enable();
-        Terrain.getTexture().bind();
-
-        for (BoardObjects terrain : terrains) {
-            terrain.getMesh().bind();
-            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
-            terrain.getMesh().draw();
-            terrain.getMesh().unbind();
+    protected void isPlayerDead() {
+        boolean b = heroes.stream().anyMatch(ultraHero -> ultraHero.getLife() == 0);
+        if (b && !notify) {
+            Game game = Game.getInstance();
+            game.player_is_dead();
+            setNotify(true);
         }
-        Terrain.getTexture().unbind();
-        Shader.TERRAIN.disable();
     }
 
-    public void renderObstacles() {
-        Shader.OBSTACLE.enable();
-        Obstacle.getTexture().bind();
+//    public void renderTerrains() {
+//        Shader.TERRAIN.enable();
+//        Terrain.getTexture().bind();
+//
+//        for (BoardObjects terrain : terrains) {
+//            terrain.getMesh().bind();
+//            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
+//            terrain.getMesh().draw();
+//            terrain.getMesh().unbind();
+//        }
+//        Terrain.getTexture().unbind();
+//        Shader.TERRAIN.disable();
+//    }
+//
+//    public void renderObstacles() {
+//        Shader.OBSTACLE.enable();
+//        Obstacle.getTexture().bind();
+//
+//        for (BoardObjects obstacle : obstacles) {
+//            obstacle.getMesh().bind();
+//            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
+//            obstacle.getMesh().draw();
+//            obstacle.getMesh().unbind();
+//        }
+//
+//        Obstacle.getTexture().unbind();
+//        Shader.OBSTACLE.disable();
+//    }
+//
+//    public void addEventClick() {
+//        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
+//
+//            if (key == 0 && action != GLFW_RELEASE) {
+//
+//                Position cursorPosition = mousePosition.getCursorPosition();
+//                log.info("KURSOR: [{},  {}]", mousePosition.getWindowPositionX(), mousePosition.getWindowPositionY());
+//
+//                obstacles.stream()
+//                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
+//                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
+//                        .findFirst()
+//                        .ifPresent(obstacles -> System.out.println("OB " + obstacles.getName()));
+//
+//                terrains.stream()
+//                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
+//                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
+//                        .findFirst()
+//                        .ifPresent(obstacles -> System.out.println("TR " + obstacles.getName()));
+//            }
+//        });
+//    }
 
-        for (BoardObjects obstacle : obstacles) {
-            obstacle.getMesh().bind();
-            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
-            obstacle.getMesh().draw();
-            obstacle.getMesh().unbind();
-        }
 
-        Obstacle.getTexture().unbind();
-        Shader.OBSTACLE.disable();
-    }
-
-    public void addEventClick() {
-        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
-
-            if (key == 0 && action != GLFW_RELEASE) {
-
-                Position cursorPosition = mousePosition.getCursorPosition();
-                log.info("KURSOR: [{},  {}]", mousePosition.getWindowPositionX(), mousePosition.getWindowPositionY());
-
-                obstacles.stream()
-                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
-                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
-                        .findFirst()
-                        .ifPresent(obstacles -> System.out.println("OB " + obstacles.getName()));
-
-                terrains.stream()
-                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
-                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
-                        .findFirst()
-                        .ifPresent(obstacles -> System.out.println("TR " + obstacles.getName()));
-            }
-        });
-    }
-
-    public static Board getInstance() {
-        return HELPER.INSTANCE;
-    }
-
-    private static final class HELPER {
-        private final static Board INSTANCE = new Board();
-    }
 }
 

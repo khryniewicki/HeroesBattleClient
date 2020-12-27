@@ -25,7 +25,6 @@ public class LifeBar extends GraphicLoader {
     private UltraHero ultraHero;
     float offsetPositionY = 0.5f;
     float offsetPositionX = -0.3f;
-    boolean notify;
 
     public LifeBar(Builder builder) {
         super(builder);
@@ -39,12 +38,7 @@ public class LifeBar extends GraphicLoader {
     public void update() {
         updateLifeBar();
         Integer life = ultraHero.getLife();
-        if (Objects.nonNull(life) && life == 0 && !notify) {
-            log.info("name:{} , life: {}, mana: {}",ultraHero.getName(), life,ultraHero.getMana());
-            Game game = Game.getInstance();
-            game.player_is_dead();
-            setNotify(true);
-        }
+
     }
 
     public void updateLifeBar() {

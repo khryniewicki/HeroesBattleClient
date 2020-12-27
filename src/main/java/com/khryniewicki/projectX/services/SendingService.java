@@ -93,14 +93,11 @@ public class SendingService implements Runnable {
         }
     }
 
-
     private void action() {
         if (stackEvent.hasAction()) {
             updatePosition();
         }
-
     }
-
 
     private synchronized void send() {
         if (events != null && events.size() != 0) {
@@ -132,5 +129,6 @@ public class SendingService implements Runnable {
 
     public void stop() {
         setRunning(false);
+        log.info("SENDING SERVICE STOPPED");
     }
 }

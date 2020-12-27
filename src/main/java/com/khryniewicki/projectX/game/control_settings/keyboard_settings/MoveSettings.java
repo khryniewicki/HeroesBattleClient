@@ -1,9 +1,9 @@
 package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 
-import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.control_settings.collision.Collision;
-import com.khryniewicki.projectX.game.control_settings.mouse_settings.MouseSettings;
-import com.khryniewicki.projectX.game.heroes.character.properties.*;
+import com.khryniewicki.projectX.game.engine.Game;
+import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.utils.StackEvent;
@@ -18,14 +18,11 @@ public class MoveSettings {
     private final StackEvent stackEvent;
     private final HeroAttributes heroAttributes;
 
-    private MoveSettings() {
+    public MoveSettings() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         stackEvent = StackEvent.getInstance();
         heroAttributes = hero.getHeroAttributes();
-        MouseSettings mouseSettings = MouseSettings.getInstance();
-        mouseSettings.setMouseCallBack();
-        move();
     }
 
     public void move() {
@@ -65,21 +62,11 @@ public class MoveSettings {
     }
 
     private void sendMsg(float tmpX, float tmpY) {
-
         if (tmpX != hero.getPosition().x || tmpY != hero.getPosition().y) {
             stackEvent.setHasAction(true);
             hero.setMesh();
             heroAttributes.update();
         } else
             stackEvent.setHasAction(false);
-    }
-
-
-    public static MoveSettings getInstance() {
-        return HELPER.INSTANCE;
-    }
-
-    private static class HELPER {
-        private final static MoveSettings INSTANCE = new MoveSettings();
     }
 }

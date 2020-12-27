@@ -18,20 +18,15 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
 public class RestartMenu extends MenuImp {
-    private static final RestartMenu instance = new RestartMenu();
     private Board board;
-
-    public static RestartMenu getInstance() {
-        return instance;
-    }
-
+    private Game game;
     private boolean show;
 
     private RestartMenu() {
         super();
         start();
-
-        board = Board.getInstance();
+        game=Game.getInstance();
+        board = game.getBoard();
     }
 
     @Override
@@ -40,12 +35,16 @@ public class RestartMenu extends MenuImp {
         begin();
         addEventClick();
         loop();
-        HeroesInstances heroesInstances=HeroesInstances.getInstance();
-        heroesInstances.reset();
+        reset_heroes();
         log.info("RESTART MENU");
         if (Game.state.equals(GameState.OK)) {
-            Game.getInstance().initialize_game();
+            game.initialize_game();
         }
+    }
+
+    protected void reset_heroes() {
+        HeroesInstances heroesInstances=HeroesInstances.getInstance();
+        heroesInstances.reset();
     }
 
     @Override
@@ -71,9 +70,9 @@ public class RestartMenu extends MenuImp {
 
         String btnName = (String) evt.getNewValue();
         if (btnName.equals("main_menu")) {
-            Game.getInstance().ok();
+            game.ok();
         } else if (btnName.equals("quit")) {
-            Game.getInstance().finish_game();
+            game.finish_game();
         }
         stop();
     }
@@ -91,5 +90,11 @@ public class RestartMenu extends MenuImp {
                 show = true;
             }
         }
+    }
+
+
+    private static final RestartMenu instance = new RestartMenu();
+    public static RestartMenu getInstance() {
+        return instance;
     }
 }
