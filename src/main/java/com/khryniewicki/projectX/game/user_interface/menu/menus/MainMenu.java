@@ -105,7 +105,6 @@ public class MainMenu extends AbstractMenu {
 
     @Override
     public void prepare() {
-        log.info("PREPARE");
         addEventClick();
         currentState = null;
         setCurrentView(MenuCard.MAIN_MENU);

@@ -23,7 +23,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
         websocketScheduler.addPropertyChangeListener(this);
         restart();
     }
-
+    
     public void execute() {
         begin();
         loop();
@@ -63,12 +63,11 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
                         execute(second_player_registered());
                         break;
                 }
-                setItsState(state);
-                log.info("STATE: {}",itsState);
+                itsState = state;
+                log.info("STATE: {}", itsState);
             }
         } else if (itsState.equals(WAITING_FOR_SECOND_PLAYER) && propertyName.equals(timer)) {
             Long timeLeft = (Long) evt.getNewValue();
-            log.info("{}",timeLeft);
             execute(updateTime(timeLeft));
         }
     }
@@ -76,12 +75,10 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
     @Override
     public void restart() {
         itsState = MultiplayerState.NOT_CONNECTED;
-        log.info("STATE: NOT CONNECTED");
     }
 
     public static MultiplayerController getMultiplayerInstance() {
         return Instance;
     }
-
 
 }

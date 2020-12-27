@@ -18,11 +18,15 @@ public class WebsocketController {
     }
 
     public void initialize_websocket() {
+        disconnect();
+        new WebsocketApplication().startWebsocket();
+    }
+
+    protected void disconnect() {
         StompSession session = WebsocketApplication.getSession();
         if (Objects.nonNull(session) && session.isConnected()) {
             session.disconnect();
         }
-        new WebsocketApplication().startWebsocket();
     }
 
     public void join_room() {
@@ -31,9 +35,10 @@ public class WebsocketController {
     }
 
     public void leave_room() {
-        handler.leave_room();
+        if (Objects.nonNull(handler)) {
+            handler.leave_room();
+        }
     }
-
 
     public String get_session_id() {
         Optional<String> sessionId = Optional.empty();

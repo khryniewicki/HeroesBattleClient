@@ -35,7 +35,7 @@ public class WebsocketScheduler {
     private Integer period = 500;
 
     public volatile static ServerState serverState = ServerState.START;
-    public static MultiplayerState multiplayerState = MultiplayerState.NOT_CONNECTED;
+    public MultiplayerState multiplayerState = MultiplayerState.NOT_CONNECTED;
     private boolean hasStarted;
 
     private WebsocketScheduler() {
@@ -136,7 +136,7 @@ public class WebsocketScheduler {
         multiplayerState = multiplayerInstance.getItsState();
         if (multiplayerState.equals(MultiplayerState.WAITING_FOR_SECOND_PLAYER)) {
             support.firePropertyChange("multiplayer", multiplayerState, new_state);
-            WebsocketScheduler.multiplayerState = new_state;
+            multiplayerState = new_state;
         }
     }
 
