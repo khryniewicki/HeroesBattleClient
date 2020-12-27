@@ -178,9 +178,4 @@ public class SuperHero implements UltraHero {
         return heroAttributes.getManaBar();
     }
 
-    @Override
-    public PlayerNameBar getPlayerNameBar() {
-        return heroAttributes.getPlayerNameBar();
-    }
-
 }

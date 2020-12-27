@@ -17,7 +17,7 @@ import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
-public class RestartMenu extends MenuImp {
+public class RestartMenu extends AbstractMenu {
     private Board board;
     private Game game;
     private boolean show;
@@ -29,7 +29,7 @@ public class RestartMenu extends MenuImp {
         board = game.getBoard();
     }
 
-    @Override
+
     public void execute() {
         loop();
         reset_heroes();

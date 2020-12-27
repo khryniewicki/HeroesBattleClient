@@ -13,7 +13,7 @@ import java.util.Collections;
 @Slf4j
 @Getter
 @Setter
-public class ControlSettingsMenu extends MenuImp {
+public class ControlSettingsMenu extends AbstractMenu {
 
     private static final ControlSettingsMenu instance = new ControlSettingsMenu();
     private ControlSettingsMenuFactory factory;

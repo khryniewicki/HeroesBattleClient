@@ -31,7 +31,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Slf4j
 @Getter
 @Setter
-public class MainMenu extends MenuImp {
+public class MainMenu extends AbstractMenu {
 
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;

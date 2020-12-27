@@ -17,7 +17,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Slf4j
 @Getter
 @Setter
-public class LoadingMenu extends MenuImp {
+public class LoadingMenu extends AbstractMenu {
     private long duration;
     private long now;
     private boolean flag;

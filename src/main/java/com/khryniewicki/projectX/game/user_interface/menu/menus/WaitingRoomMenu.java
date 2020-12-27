@@ -22,7 +22,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Setter
 @Getter
 @Slf4j
-public class WaitingRoomMenu extends MenuImp {
+public class WaitingRoomMenu extends AbstractMenu {
     private float level = 4.5f;
     private boolean waitingForPlayer;
     protected Long timeLeftToLogOut;

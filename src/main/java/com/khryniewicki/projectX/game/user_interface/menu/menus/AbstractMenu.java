@@ -24,7 +24,7 @@ import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
 @Getter
 @Slf4j
 @Setter
-public abstract class MenuImp extends GameLoopImp implements PropertyChangeListener, Menu {
+public abstract class AbstractMenu extends GameLoopImp implements PropertyChangeListener, Menu {
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<MenuSymbol> buttons = new ArrayList<>();
     protected List<MenuSymbol> volatileImages = new ArrayList<>();
@@ -33,7 +33,7 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
     protected Subject subject;
     protected static MenuCard currentView;
 
-    public MenuImp() {
+    public AbstractMenu() {
         mousePosition = new MousePosition();
     }
 
@@ -65,7 +65,7 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
 
             if (key == 0 && action != GLFW_RELEASE) {
 
-                Position cursorPosition = mousePosition.getCursorPosition();
+                mousePosition.getCursorPosition();
                 buttons.stream()
                         .filter(btn -> mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1())
                         .filter(btn -> mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1())
@@ -117,6 +117,6 @@ public abstract class MenuImp extends GameLoopImp implements PropertyChangeListe
         log.info("CURRENT VIEW: {}",currentView);
     }
     public enum MenuCard {
-        START, CONTROL_SETTINGS, CHARACTER_MENU, MAIN_MENU;
+       CONTROL_SETTINGS, CHARACTER_MENU, MAIN_MENU
     }
 }

@@ -22,7 +22,7 @@ import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 @Slf4j
 @Getter
 @Setter
-public class CharacterMenu extends MenuImp {
+public class CharacterMenu extends AbstractMenu {
     private static final CharacterMenu instance = new CharacterMenu();
     private final HeroesInstances heroesInstances;
     private final TextureMenuFactory textureMenuFactory;
