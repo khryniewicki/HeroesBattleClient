@@ -48,7 +48,6 @@ public class Texture {
 
     private int load2(BufferedImage image) {
         int[] pixels;
-
         width = image.getWidth();
         height = image.getHeight();
         pixels = new int[width * height];

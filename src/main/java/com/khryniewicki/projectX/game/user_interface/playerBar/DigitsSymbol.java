@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Data
@@ -21,16 +23,15 @@ public class DigitsSymbol implements Symbol {
     private Integer number;
     private Position position;
     private Integer tmpNumber;
-    private Symbol hundred;
-    private Symbol dozen;
-    private Symbol unit;
     private Symbol numbers;
-
+    private Map<Integer, Texture> mapRegistry;
 
     public DigitsSymbol(String name) {
         this.name = name;
         this.hero = HeroesInstances.getInstance().getHero();
         this.position = getPosition(name);
+        mapRegistry = new HashMap<>();
+
         numbers = new GameSymbol.Builder(getTexture(), position.getX(), position.getY())
                 .withWidth(1f)
                 .withHeight(0.5f)
@@ -66,6 +67,13 @@ public class DigitsSymbol implements Symbol {
     }
 
     private Texture getTexture() {
-        return TextFactory.textInPlayerBar(getNumber().toString(), Color.WHITE);
+        Integer number = getNumber();
+        if (mapRegistry.containsKey(number)) {
+            return mapRegistry.get(number);
+        } else {
+            Texture textureWithNumber = TextFactory.textInPlayerBar(number.toString(), Color.WHITE);
+            mapRegistry.put(number, textureWithNumber);
+            return textureWithNumber;
+        }
     }
 }

@@ -32,6 +32,7 @@ public class HeroesInstances {
     private SuperHero hero;
     private SuperHero mock;
     private String heroName;
+    private String heroType;
     private String mockName;
     private final HeroFactory heroFactory;
     private final Channels channels;
@@ -93,6 +94,7 @@ public class HeroesInstances {
     }
 
     public void setHero(String heroType) {
+        this.heroType = heroType;
         hero = heroFactory.create(heroType);
     }
 

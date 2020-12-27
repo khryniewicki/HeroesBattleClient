@@ -160,7 +160,7 @@ public class MainMenu extends AbstractMenu {
                 } else if (state.equals(ServerState.TWO_PLAYERS)) {
                     showMessage(TEXT_ROOM_IS_FULL);
                 } else {
-                    if (Objects.nonNull(heroesInstances.getHero())) {
+                    if (Objects.nonNull(heroesInstances.getHeroType())) {
                         stop();
                         subject.setNews(MultiplayerState.CONNECT);
                     } else {

@@ -9,10 +9,8 @@ import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
-import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
+import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BAR;
+import static org.lwjgl.opengl.GL11.*;
 
 @Data
 @Slf4j
@@ -54,20 +56,7 @@ public class Board {
 
 
     private void createBackground() {
-        Symbol background = new GameSymbol.Builder(GameTextures.BACKGROUND, -10f, -10.0f * 9.0f / 16.0f)
-                .withVisibility(0.0f)
-                .withWidth(20f)
-                .withHeight(19 * 9.0f / 16.0f)
-                .build();
-
-        Symbol bar = new GameSymbol.Builder(GameTextures.BAR, -10f, 9.0f * 9.0f / 16.0f)
-                .withVisibility(0.9f)
-                .withWidth(20f)
-                .withHeight(9.0f / 16.0f)
-                .build();
-
-        Symbol playerBar = new PlayerBar();
-        symbols = new ArrayList<>(Arrays.asList(background, bar, playerBar));
+        symbols = new ArrayList<>(Arrays.asList(BACKGROUND, BAR, new PlayerBar()));
     }
 
     private void createCollision() {
@@ -96,6 +85,8 @@ public class Board {
     }
 
     public void render() {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         symbols.forEach(Symbol::render);
         heroes.forEach(Ultra::render);
         spells.forEach(spell -> {
@@ -109,8 +100,7 @@ public class Board {
         if (collision.isTest_square()) {
             collision.getSquares().values().forEach(MenuSymbol::render);
         }
-
-        //        renderObstacles();
+//        renderObstacles();
 //        renderTerrains();
     }
 

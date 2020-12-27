@@ -5,7 +5,8 @@ import com.khryniewicki.projectX.graphics.Texture;
 public class GameTextures {
 
     //GAME
-    public static final Texture BACKGROUND = new Texture("desertBackground.png");
+    public static final Texture LIGHT_BACKGROUND = new Texture("desertBackground.png");
+    public static final Texture SHADOW_BACKGROUND = new Texture("desertBackgroundSH.png");
     public static final Texture BAR = new Texture("bar.png");
 
     //PLAYER

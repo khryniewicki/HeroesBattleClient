@@ -23,7 +23,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
         websocketScheduler.addPropertyChangeListener(this);
         restart();
     }
-    
+
     public void execute() {
         begin();
         loop();
