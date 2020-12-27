@@ -124,8 +124,6 @@ public class MainMenu extends AbstractMenu {
     @Override
     public void update() {
         if (Objects.nonNull(state) && !state.equals(currentState) && currentView.equals(MenuCard.MAIN_MENU)) {
-            log.info("STATE {}", currentState);
-            log.info("VIEW {}", currentView);
             updateLabel(playersDescriptionLabel, state);
             updateLabelDescription(playersBarLabel, state);
             currentState = state;

@@ -32,7 +32,7 @@ public class WebsocketScheduler {
     private WaitingRoomMenu waitingRoomMenu;
     private String sessionId;
     private String path = GameUtil.serverUrl;
-    private Integer period = 500;
+    private Integer period = 200;
 
     public volatile static ServerState serverState = ServerState.START;
     public MultiplayerState multiplayerState = MultiplayerState.NOT_CONNECTED;

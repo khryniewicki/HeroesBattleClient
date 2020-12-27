@@ -92,6 +92,7 @@ public class SendingService implements Runnable {
             action();
             send();
         }
+        session.disconnect();
     }
 
     private void action() {
@@ -132,6 +133,7 @@ public class SendingService implements Runnable {
 
     public void stop() {
         setRunning(false);
+        events.clear();
         log.info("SENDING SERVICE STOPPED");
     }
 }
