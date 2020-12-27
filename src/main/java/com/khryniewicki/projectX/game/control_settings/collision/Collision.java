@@ -3,7 +3,6 @@ package com.khryniewicki.projectX.game.control_settings.collision;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
@@ -18,33 +17,30 @@ import java.util.*;
 @Data
 @Slf4j
 public class Collision {
-    private Board board;
+
+    private float hero_left_offset, hero_top_offset;
+    private float delta_x = 0.1f, delta_y = 0.1f;
+    private float bx, by, bx0, bx1, by0, by1, px0, px1, py0, py1;
+    private boolean isCollision;
+    //RIGHT | LEFT | UP | DOWN
+    public static Boolean[] collisions = new Boolean[4];
+    private static Boolean[] BoundaryCollisions = new Boolean[4];
+    private static Boolean[] ObstacleCollisions = new Boolean[4];
+    private static Boolean[] TerrainCollisions = new Boolean[4];
+    private HashMap<BoardObjects, List<Boolean>> mapObstaclesListHashMap;
     private SuperHero hero;
-    private float hero_left_offset;
-    private float hero_top_offset;
-    private float delta_x = 0.1f;
-    private float delta_y = 0.1f;
-    private Map<Position, MenuSymbol> squares=new HashMap<>();
-    private float bx, by, bx0, bx1, by0, by1;
-    private float px0, px1, py0, py1;
-    boolean test_square=true;
-
-    public static boolean collision_left, collision_right, collision_up, collision_down = false;
-    public static Boolean[] collisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
-    public static Boolean[] BoundaryCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
-    public static Boolean[] ObstacleCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
-    public static Boolean[] TerrainCollisions = new Boolean[]{collision_right, collision_left, collision_up, collision_down};
-    boolean isCollision;
-    HashMap<BoardObjects, List<Boolean>> mapObstaclesListHashMap;
-
+    
     private List<BoardObjects> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
     private List<BoardObjects> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
     private List<BoardObjects> obstacleList_TL = ObstacleStorage.getObstacleList_TL();
     private List<BoardObjects> obstacleList_TR = ObstacleStorage.getObstacleList_TR();
     private List<BoardObjects> terrainList = ObstacleStorage.getTerrainList();
 
+    private boolean test_square = true;
+    private Map<Position, MenuSymbol> squares = new HashMap<>();
+
     public MenuSymbol createSquare(Position position) {
-        System.out.println("SQUARES: "+squares.size());
+        System.out.println("SQUARES: " + squares.size());
 
         return new Button.Builder()
                 .withTexture(new Texture("red_square.png"))
@@ -58,19 +54,21 @@ public class Collision {
     }
 
     public void test() {
-        if (hero==null){
+        if (hero == null) {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             setHero(heroesInstances.getHero());
-            hero_top_offset=hero.getHero_top_offset();
-            hero_left_offset =hero.getHero_left_offset();
+            hero_top_offset = hero.getHero_top_offset();
+            hero_left_offset = hero.getHero_left_offset();
         }
-        bx = hero.getX();by = hero.getY();
+        bx = hero.getX();
+        by = hero.getY();
 
         obstacleCollision(checkInWhichQuerterIsHero());
         terrainCollision(terrainList);
         boundaryCollision();
         checkCollisionForSpecificDirection();
     }
+
     private MAP_QUARTERS checkInWhichQuerterIsHero() {
         MAP_QUARTERS quarter;
         if (bx > 0 && by > 0) {
@@ -87,14 +85,14 @@ public class Collision {
 
     private void checkCollisionForSpecificDirection() {
         Arrays.fill(collisions, false);
-        for (int i = 0; i <4 ; i++) {
-        if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
-            collisions[i] = true;
+        for (int i = 0; i < 4; i++) {
+            if (BoundaryCollisions[i] || ObstacleCollisions[i] || TerrainCollisions[i])
+                collisions[i] = true;
 //            log.info(Arrays.toString(collisions));
         }
 
         if (test_square) {
-            boolean b = new ArrayList<>(Arrays.asList(collisions)).stream().allMatch(c -> c.equals(true));
+            boolean b = Arrays.stream(collisions).allMatch(c -> c.equals(true));
             if (b) {
                 Position position = new Position(hero.getX(), hero.getY());
                 squares.put(position, createSquare(position));
@@ -136,7 +134,6 @@ public class Collision {
     }
 
 
-
     public void obstacleCollisionInQuarter(List<BoardObjects> mapObstacles) {
         checkConditionForObstacleOrTerrain(mapObstacles, ObstacleCollisions);
     }
@@ -146,7 +143,7 @@ public class Collision {
     }
 
     private void checkConditionForObstacleOrTerrain(List<BoardObjects> mapObstacles, Boolean[] obstacleOrTerrainCollisions) {
-        Arrays.fill(obstacleOrTerrainCollisions,false);
+        Arrays.fill(obstacleOrTerrainCollisions, false);
         if (collision(mapObstacles)) {
             mapObstaclesListHashMap.values().forEach(e -> {
                 for (int i = 0; i < e.size(); i++) {
@@ -165,7 +162,7 @@ public class Collision {
         by0 = by - hero.SIZE / 2.0f + hero_left_offset;
         by1 = by + hero.SIZE / 2.0f - hero_top_offset;
         isCollision = false;
-        mapObstaclesListHashMap=new HashMap<>();
+        mapObstaclesListHashMap = new HashMap<>();
         float proximtyValue;
 
         for (BoardObjects obstacle : obstacles) {
@@ -217,7 +214,8 @@ public class Collision {
         }
         return isCollision;
     }
-     enum MAP_QUARTERS {
-        BOTTOM_LEFT,BOTTOM_RIGHT,TOP_LEFT,TOP_RIGHT
+
+    enum MAP_QUARTERS {
+        BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT
     }
 }
