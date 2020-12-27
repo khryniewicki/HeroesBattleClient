@@ -17,12 +17,14 @@ public class MoveSettings {
     private final SuperHero hero;
     private final StackEvent stackEvent;
     private final HeroAttributes heroAttributes;
+    private final Collision collision;
 
     public MoveSettings() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         hero = heroesInstances.getHero();
         stackEvent = StackEvent.getInstance();
         heroAttributes = hero.getHeroAttributes();
+        collision = new Collision();
     }
 
     public void move() {

@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
@@ -160,7 +161,9 @@ public class MainMenu extends AbstractMenu {
                 } else if (state.equals(ServerState.TWO_PLAYERS)) {
                     showMessage(TEXT_ROOM_IS_FULL);
                 } else {
-                    if (Objects.nonNull(heroesInstances.getHeroType())) {
+                    String heroType = heroesInstances.getHeroType();
+                    if (Objects.nonNull(heroType)) {
+                        heroesInstances.set_hero_type(heroType);
                         stop();
                         subject.setNews(MultiplayerState.CONNECT);
                     } else {

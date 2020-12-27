@@ -96,7 +96,7 @@ public class CharacterMenu extends AbstractMenu {
                 addButton(CHARACTER_SKILLS);
                 updateImage(TABLE, getTextureFromTableFactory(btnName));
                 initAnimation(btnName);
-                setHero(chosenHero);
+                set_hero_type(chosenHero);
                 showMessageInMainMenu(chosenHero);
                 break;
         }
@@ -123,8 +123,8 @@ public class CharacterMenu extends AbstractMenu {
         render();
     }
 
-    private void setHero(String heroType) {
-        heroesInstances.setHero(heroType);
+    private void set_hero_type(String heroType) {
+        heroesInstances.set_hero_type(heroType);
     }
 
     private void showMessageInMainMenu(String btnName) {

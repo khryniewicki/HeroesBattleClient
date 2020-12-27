@@ -47,7 +47,7 @@ public class Board {
         createBackground();
         obstacles = ObstacleStorage.getObstacle();
         terrains = ObstacleStorage.getTerrainList();
-        createCollision();
+//        createCollision();
         createHeroes();
         createSpells();
 //        mousePosition = new MousePosition();
@@ -85,8 +85,6 @@ public class Board {
     }
 
     public void render() {
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         symbols.forEach(Symbol::render);
         heroes.forEach(Ultra::render);
         spells.forEach(spell -> {
@@ -97,9 +95,9 @@ public class Board {
 
         isPlayerDead();
 
-        if (collision.isTest_square()) {
-            collision.getSquares().values().forEach(MenuSymbol::render);
-        }
+//        if (collision.isTest_square()) {
+//            collision.getSquares().values().forEach(MenuSymbol::render);
+//        }
 //        renderObstacles();
 //        renderTerrains();
     }

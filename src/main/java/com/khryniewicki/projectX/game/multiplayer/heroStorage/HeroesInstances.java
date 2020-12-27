@@ -93,8 +93,12 @@ public class HeroesInstances {
         }
     }
 
-    public void setHero(String heroType) {
+    public void set_hero_type(String heroType) {
         this.heroType = heroType;
+        setHero(heroType);
+    }
+
+    public void setHero(String heroType) {
         hero = heroFactory.create(heroType);
     }
 
