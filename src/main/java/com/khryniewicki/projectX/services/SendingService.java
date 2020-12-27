@@ -101,6 +101,7 @@ public class SendingService implements Runnable {
     private synchronized void send() {
         if (events != null && events.size() != 0) {
             DTO dto = events.pop();
+            dto.setSessionId(session.getSessionId());
             try {
                 if (session.isConnected()) {
                     session.send(path(dto), dto);
