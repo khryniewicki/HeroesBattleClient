@@ -13,19 +13,20 @@ public class WebsocketController {
 
     private WebsocketApplication.MyStompSessionHandler handler;
     private SendingService sendingService;
-
+    private  WebsocketApplication websocketApplication;
     private WebsocketController() {
     }
 
     public void initialize_websocket() {
 //        disconnect();
-        new WebsocketApplication().startWebsocket();
+        websocketApplication = new WebsocketApplication();
+        websocketApplication.startWebsocket();
     }
 
-    protected void disconnect() {
+    public void disconnect() {
         StompSession session = WebsocketApplication.getSession();
         if (Objects.nonNull(session) && session.isConnected()) {
-            session.disconnect();
+            websocketApplication.disconnect();
         }
     }
 

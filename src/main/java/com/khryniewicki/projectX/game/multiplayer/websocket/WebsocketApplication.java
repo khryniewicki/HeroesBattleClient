@@ -42,6 +42,7 @@ public class WebsocketApplication implements Runnable {
     public static StompSession session;
     private static StompSession copy_session;
     public static StompSessionHandler sessionHandler;
+    private WebSocketStompClient stompClient;
 
     public synchronized static StompSession getSession() {
         return copy_session;
@@ -49,6 +50,10 @@ public class WebsocketApplication implements Runnable {
 
     public void disconnect() {
         session.disconnect();
+        if (stompClient.isRunning()) {
+            log.info("STOMP CLIENT STOPPED");
+            stompClient.stop();
+        }
     }
 
     @Slf4j

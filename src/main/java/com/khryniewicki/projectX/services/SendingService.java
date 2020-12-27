@@ -4,6 +4,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
+import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.services.DTO.DTO;
 import com.khryniewicki.projectX.services.DTO.HeroDTO;
@@ -93,9 +94,8 @@ public class SendingService implements Runnable {
             action();
             send();
         }
-        if (Objects.nonNull(session) && session.isConnected()) {
-            session.disconnect();
-        }
+        WebsocketController websocketController = WebsocketController.getWebsocketInstance();
+        websocketController.disconnect();
     }
 
     private void action() {
