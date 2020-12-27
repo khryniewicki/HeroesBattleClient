@@ -13,12 +13,13 @@ public class WebsocketController {
 
     private WebsocketApplication.MyStompSessionHandler handler;
     private SendingService sendingService;
-    private  WebsocketApplication websocketApplication;
+    private WebsocketApplication websocketApplication;
+
     private WebsocketController() {
     }
 
     public void initialize_websocket() {
-//        disconnect();
+        disconnect();
         websocketApplication = new WebsocketApplication();
         websocketApplication.startWebsocket();
     }

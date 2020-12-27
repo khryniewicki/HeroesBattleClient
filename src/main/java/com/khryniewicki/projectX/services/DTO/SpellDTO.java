@@ -13,6 +13,7 @@ public class SpellDTO implements Serializable,DTO {
     private String name;
     private Float targetSpellX;
     private Float targetSpellY;
+    private String sessionId;
 
     public SpellDTO(String name, Float targetSpellX, Float targetSpellY) {
         this.name = name;
@@ -27,6 +28,7 @@ public class SpellDTO implements Serializable,DTO {
                 "name='" + name + '\'' +
                 ", targetSpellX=" + targetSpellX +
                 ", targetSpellY=" + targetSpellY +
+                ", sessionId='" + sessionId + '\'' +
                 '}';
     }
 

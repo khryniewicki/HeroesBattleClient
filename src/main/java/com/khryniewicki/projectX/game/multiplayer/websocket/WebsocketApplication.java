@@ -50,10 +50,6 @@ public class WebsocketApplication implements Runnable {
 
     public void disconnect() {
         session.disconnect();
-        if (stompClient.isRunning()) {
-            log.info("STOMP CLIENT STOPPED");
-            stompClient.stop();
-        }
     }
 
     @Slf4j
@@ -118,7 +114,9 @@ public class WebsocketApplication implements Runnable {
                 @Override
                 public void handleFrame(StompHeaders headers,
                                         Object payload) {
-                    heroReceiveService.receivedMockDTO(((HeroDTO) payload));
+                    HeroDTO payload1 = (HeroDTO) payload;
+                    System.out.println(payload1);
+                    heroReceiveService.receivedMockDTO(payload1);
                 }
             });
         }
@@ -133,6 +131,8 @@ public class WebsocketApplication implements Runnable {
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
+                    SpellDTO payload1 = (SpellDTO) payload;
+                    System.out.println(payload1);
                     SpellReceiveService.receiveSpellMock((SpellDTO) payload);
                 }
             });

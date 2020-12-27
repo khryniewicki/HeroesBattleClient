@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.SendingService;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -18,15 +18,15 @@ public class AttackExecution {
     private final UltraSpell spell;
     private final SuperHero hero, mock;
     private final LifeBar lifeBar;
-    private final SendingService sendingService;
+    private final StackEvent stackEvent;
     private float ox0, ox1, oy0, oy1, oz0;
-    private float bx0,bx1,by0,by1;
+    private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated;
 
 
     public AttackExecution(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        this.sendingService = new SendingService();
+        stackEvent = StackEvent.getInstance();
         this.spell = spell;
         this.hero = heroesInstances.getHero();
         this.mock = heroesInstances.getMock();
@@ -42,6 +42,7 @@ public class AttackExecution {
         if (oz0 <= 0) {
             isSpellActivated = false;
             isAttackSucceeded = false;
+            stackEvent.setHasAction(false);
         } else {
             spellActivation();
         }
@@ -73,7 +74,7 @@ public class AttackExecution {
 
     private void updateLifeBar() {
         lifeBar.updateLifeBar();
-        sendingService.updateLife();
+        stackEvent.setHasAction(true);
     }
 
 

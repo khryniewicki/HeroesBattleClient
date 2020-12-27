@@ -1,11 +1,13 @@
 package com.khryniewicki.projectX.services.DTO;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class HeroDTO implements Serializable, DTO {
     private String heroType;
@@ -14,14 +16,7 @@ public class HeroDTO implements Serializable, DTO {
     private Float positionX;
     private Float positionY;
     private boolean isSpellDTO;
-
-    public HeroDTO(String heroType, Integer life, Integer mana, Float positionX, Float positionY) {
-        this.heroType = heroType;
-        this.life = life;
-        this.mana = mana;
-        this.positionX = positionX;
-        this.positionY = positionY;
-    }
+    private String sessionId;
 
     public HeroDTO(Builder builder) {
         this.heroType = builder.heroType;
@@ -38,7 +33,7 @@ public class HeroDTO implements Serializable, DTO {
         private Float positionX;
         private Float positionY;
 
-        public  Builder heroType(String heroType) {
+        public Builder heroType(String heroType) {
             this.heroType = heroType;
             return this;
         }
@@ -68,4 +63,16 @@ public class HeroDTO implements Serializable, DTO {
         }
     }
 
+    @Override
+    public String toString() {
+        return "HeroDTO{" +
+                "heroType='" + heroType + '\'' +
+                ", life=" + life +
+                ", mana=" + mana +
+                ", positionX=" + positionX +
+                ", positionY=" + positionY +
+                ", isSpellDTO=" + isSpellDTO +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
+    }
 }

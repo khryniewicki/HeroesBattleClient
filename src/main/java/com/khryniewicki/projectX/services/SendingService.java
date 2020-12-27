@@ -79,11 +79,6 @@ public class SendingService implements Runnable {
         }
     }
 
-    public synchronized void updateLife() {
-        getHeroInstance();
-        stackEvent.setHasAction(true);
-    }
-
 
     @Override
     public void run() {
@@ -94,8 +89,7 @@ public class SendingService implements Runnable {
             action();
             send();
         }
-        WebsocketController websocketController = WebsocketController.getWebsocketInstance();
-        websocketController.disconnect();
+
     }
 
     private void action() {
