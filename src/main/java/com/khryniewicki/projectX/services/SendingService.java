@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompSession;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 
@@ -92,7 +93,9 @@ public class SendingService implements Runnable {
             action();
             send();
         }
-        session.disconnect();
+        if (Objects.nonNull(session) && session.isConnected()) {
+            session.disconnect();
+        }
     }
 
     private void action() {

@@ -18,7 +18,7 @@ public class WebsocketController {
     }
 
     public void initialize_websocket() {
-        disconnect();
+//        disconnect();
         new WebsocketApplication().startWebsocket();
     }
 
@@ -57,9 +57,10 @@ public class WebsocketController {
         if (!get_session_id().isEmpty()) {
             leave_room();
         }
+        stop_sending_service();
     }
 
-    public void stop_sending_service() {
+    protected void stop_sending_service() {
         sendingService.stop();
     }
 
