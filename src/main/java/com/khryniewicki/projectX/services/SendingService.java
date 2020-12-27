@@ -10,6 +10,7 @@ import com.khryniewicki.projectX.services.DTO.HeroDTO;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -103,8 +104,10 @@ public class SendingService implements Runnable {
         if (events != null && events.size() != 0) {
             DTO dto = events.pop();
             try {
-                session.send(path(dto), dto);
-            } catch (IllegalStateException e) {
+                if (session.isConnected()) {
+                    session.send(path(dto), dto);
+                }
+            } catch (MessageDeliveryException e) {
                 e.printStackTrace();
             }
         }

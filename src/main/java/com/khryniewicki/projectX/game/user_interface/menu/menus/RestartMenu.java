@@ -33,7 +33,6 @@ public class RestartMenu extends AbstractMenu {
         start();
         game = Game.getInstance();
         board = game.getBoard();
-        updateImage(BACKGROUND, GameTextures.SHADOW_BACKGROUND);
     }
 
     public void execute() {
@@ -59,6 +58,7 @@ public class RestartMenu extends AbstractMenu {
 
     @Override
     public void prepare() {
+        updateImage(BACKGROUND, GameTextures.SHADOW_BACKGROUND);
         win_or_loose();
         begin();
         addEventClick();
@@ -72,11 +72,10 @@ public class RestartMenu extends AbstractMenu {
         }
     }
 
-
-
     @Override
     public void update() {
         glfwPollEvents();
+        board.update();
     }
 
     @Override

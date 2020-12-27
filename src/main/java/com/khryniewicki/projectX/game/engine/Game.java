@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.engine;
 
 
+import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
@@ -81,9 +82,11 @@ public class Game extends GameLoopImp implements Runnable {
 
     private void is_player_dead() {
         if (state.equals(GameState.PLAYER_IS_DEAD)) {
-            restart();
-            stop();
-            stop_websocket();
+            if (board.getSpells().stream().noneMatch(UltraSpell::isSpellActivated)) {
+                restart();
+                stop();
+                stop_websocket();
+            }
         }
     }
 
