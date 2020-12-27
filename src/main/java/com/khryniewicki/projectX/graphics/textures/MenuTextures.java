@@ -28,6 +28,13 @@ public class MenuTextures {
     public final static Texture HIDE_SKILLS = new Texture("hideskills.png");
     public final static Texture CONFIRM = new Texture("confirm.png");
     public final static Texture TYPE_NAME = new Texture("typeName.png");
+    //CONTROL_SETTINGS
+    public final static Texture MOUSE = new Texture("mouse.png");
+    public final static Texture UP_ARROW = new Texture("up_arrow.png");
+    public final static Texture DOWN_ARROW = new Texture("down_arrow.png");
+    public final static Texture RIGHT_ARROW = new Texture("right_arrow.png");
+    public final static Texture LEFT_ARROW = new Texture("left_arrow.png");
+
     //RESTART_GAME
     public static final Texture QUIT_TEXTURE = new Texture("quit.png");
     public static final Texture GO_TO_MAIN_MENU = new Texture("main_menu.png");

@@ -92,9 +92,7 @@ public class GameLoopImp implements GameLoop {
 
     private void setState(GameState game_state) {
         state = game_state;
-        log.info("{}", state);
     }
-
 
     @Override
     public void update() {
@@ -124,7 +122,6 @@ public class GameLoopImp implements GameLoop {
             finish_game();
         }
     }
-
 
     protected void terminateIfWindowShutDown() {
         if (state.equals(GameState.FINISH)) {

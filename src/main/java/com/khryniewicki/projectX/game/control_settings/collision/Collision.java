@@ -29,7 +29,7 @@ public class Collision {
     private static Boolean[] TerrainCollisions = new Boolean[4];
     private HashMap<BoardObjects, List<Boolean>> mapObstaclesListHashMap;
     private SuperHero hero;
-    
+
     private List<BoardObjects> obstacleList_BL = ObstacleStorage.getObstacleList_BL();
     private List<BoardObjects> obstacleList_BR = ObstacleStorage.getObstacleList_BR();
     private List<BoardObjects> obstacleList_TL = ObstacleStorage.getObstacleList_TL();

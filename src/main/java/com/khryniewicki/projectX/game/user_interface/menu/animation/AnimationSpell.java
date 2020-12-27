@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
+package com.khryniewicki.projectX.game.user_interface.menu.animation;
 
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
@@ -6,9 +6,12 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-@Data
+@Getter
+@Setter
 @Slf4j
 public class AnimationSpell extends Spell {
     private SuperHero superHero;

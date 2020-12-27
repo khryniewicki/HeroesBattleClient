@@ -56,8 +56,6 @@ public class Spell implements UltraSpell {
         setSpellDetails();
     }
 
-
-
     public VertexArray createMesh() {
         float[] vertices = new float[]{
                 0f + -SIZE / 2.0f, 0f + -SIZE / 2.0f, -0.1f,

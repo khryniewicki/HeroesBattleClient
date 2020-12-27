@@ -72,7 +72,4 @@ public class SpellTextures {
     public static final Texture PLASMAORB= new Texture("plasmaOrb.png");
     public static final Texture THUNDERORB= new Texture("thunderOrb.png");
 
-
-
-
 }

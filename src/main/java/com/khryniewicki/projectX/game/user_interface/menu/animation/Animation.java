@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
+package com.khryniewicki.projectX.game.user_interface.menu.animation;
 
 import com.khryniewicki.projectX.game.engine.GameLoopImp;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;

@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
+import com.khryniewicki.projectX.game.user_interface.menu.animation.Animation;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.*;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;

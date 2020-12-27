@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.BG_ANIMATION;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
+import static com.khryniewicki.projectX.graphics.textures.MenuTextures.START_BUTTON_TEXTURE;
 
 public class ControlSettingsMenuFactory {
     public List<MenuSymbol> listWithControlSettingsIcons;
@@ -33,7 +35,7 @@ public class ControlSettingsMenuFactory {
     }
 
     public static final MenuSymbol MOUSE = new Button.Builder()
-            .withPath("mouse.png")
+            .withTexture(MenuTextures.MOUSE)
             .withName("mouse")
             .withHeight(6f)
             .withWidth(3f)
@@ -41,7 +43,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(-2.0f)
             .build();
     public static final MenuSymbol UP = new Button.Builder()
-            .withPath("up_arrow.png")
+            .withTexture(MenuTextures.UP_ARROW)
             .withName("up_arrow")
             .withHeight(1f)
             .withWidth(1f)
@@ -49,7 +51,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(2.0f)
             .build();
     public static final MenuSymbol DOWN = new Button.Builder()
-            .withPath("down_arrow.png")
+            .withTexture(MenuTextures.DOWN_ARROW)
             .withName("down_arrow")
             .withHeight(1f)
             .withWidth(1f)
@@ -57,7 +59,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(0.8f)
             .build();
     public static final MenuSymbol RIGHT = new Button.Builder()
-            .withPath("right_arrow.png")
+            .withTexture(MenuTextures.RIGHT_ARROW)
             .withName("right_arrow")
             .withHeight(1f)
             .withWidth(1f)
@@ -65,7 +67,7 @@ public class ControlSettingsMenuFactory {
             .withPositionY(-0.4f)
             .build();
     public static final MenuSymbol LEFT = new Button.Builder()
-            .withPath("left_arrow.png")
+            .withTexture(MenuTextures.LEFT_ARROW)
             .withName("left_arrow")
             .withHeight(1f)
             .withWidth(1f)
