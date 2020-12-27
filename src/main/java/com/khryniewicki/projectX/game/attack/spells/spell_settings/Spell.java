@@ -42,7 +42,7 @@ public class Spell implements UltraSpell {
 
     private StackEvent stackEvent;
     private SpellInstance spellInstance;
-    private UltraHero ultraHero;
+    protected UltraHero hero;
     private AttackTrajectory attackTrajectory;
     private StartingPosition startingPosition;
 
@@ -52,7 +52,7 @@ public class Spell implements UltraSpell {
     public Spell(SpellInstance spellInstance) {
         createHero();
         this.spellInstance = spellInstance;
-        this.attackTrajectory = new AttackTrajectory(this, ultraHero);
+        this.attackTrajectory = new AttackTrajectory(this, hero);
         setSpellDetails();
     }
 
@@ -85,9 +85,9 @@ public class Spell implements UltraSpell {
 
     @Override
     public void createHero() {
-        if (ultraHero == null) {
+        if (hero == null) {
             HeroesInstances instance = HeroesInstances.getInstance();
-            ultraHero = instance.getHero();
+            hero = instance.getHero();
         }
     }
 
@@ -129,7 +129,7 @@ public class Spell implements UltraSpell {
 
 
     public void setPosition() {
-        startingPosition = ultraHero.getStartingPosition();
+        startingPosition = hero.getStartingPosition();
         setPositionX(startingPosition.getX());
         setPositionY(startingPosition.getY());
         setPositionZ(-0.1f);
@@ -137,12 +137,12 @@ public class Spell implements UltraSpell {
 
     @Override
     public Float getHeroPositionX() {
-        return ultraHero.getX();
+        return hero.getX();
     }
 
     @Override
     public Float getHeroPositionY() {
-        return ultraHero.getY();
+        return hero.getY();
     }
 
     @Override

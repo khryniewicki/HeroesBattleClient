@@ -37,8 +37,6 @@ public class LifeBar extends GraphicLoader {
     @Override
     public void update() {
         updateLifeBar();
-        Integer life = ultraHero.getLife();
-
     }
 
     public void updateLifeBar() {

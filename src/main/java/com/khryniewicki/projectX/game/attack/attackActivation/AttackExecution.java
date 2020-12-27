@@ -2,10 +2,8 @@ package com.khryniewicki.projectX.game.attack.attackActivation;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.user_interface.board.Board;
-import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
@@ -22,7 +20,7 @@ public class AttackExecution {
     private final LifeBar lifeBar;
     private final SendingService sendingService;
     private float ox0, ox1, oy0, oy1, oz0;
-    private float bx0, bx1, by0, by1;
+    private float bx0,bx1,by0,by1;
     private boolean isAttackSucceeded, isSpellActivated;
 
 
@@ -52,6 +50,7 @@ public class AttackExecution {
     private void spellActivation() {
         mock.updateManaBar();
         isAttackSucceeded();
+        reduceHeroLife();
     }
 
     private void isAttackSucceeded() {
@@ -60,7 +59,6 @@ public class AttackExecution {
                 isAttackSucceeded = true;
             }
         }
-        reduceHeroLife();
     }
 
     private void reduceHeroLife() {
@@ -80,12 +78,15 @@ public class AttackExecution {
 
 
     private void heroObjectDimenions() {
+        float bx = hero.getX();
+        float by = hero.getY();
+        float hero_top_offset = hero.getHero_top_offset();
+        float hero_left_offset = hero.getHero_left_offset();
 
-        bx0 = Board.collision.getBx0();
-        bx1 = Board.collision.getBx1();
-        by0 = Board.collision.getBy0();
-        by1 = Board.collision.getBy1();
-
+        bx0 = bx - hero.SIZE / 2.0f + hero_left_offset;
+        bx1 = bx + hero.SIZE / 2.0f - hero_left_offset;
+        by0 = by - hero.SIZE / 2.0f + hero_left_offset;
+        by1 = by + hero.SIZE / 2.0f - hero_top_offset;
     }
 
     private void spellObjectDimensions() {
@@ -96,6 +97,5 @@ public class AttackExecution {
         oy0 = position.y - spell.getSize() / 2.0f;
         oy1 = position.y + spell.getSize() / 2.0f;
         oz0 = position.z;
-
     }
 }

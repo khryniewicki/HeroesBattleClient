@@ -8,12 +8,10 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
 import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
@@ -22,9 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
 
 @Data
 @Slf4j

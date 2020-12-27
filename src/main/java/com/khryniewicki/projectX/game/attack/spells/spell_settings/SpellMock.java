@@ -3,32 +3,28 @@ package com.khryniewicki.projectX.game.attack.spells.spell_settings;
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackExecution;
 import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.SpellReceiveService;
 
 public class SpellMock extends Spell {
-
-    private Position tmp, spellTarget;
     private final AttackExecution attackExecution;
     private final AttackTrajectory attackTrajectory;
     private final SpellInstance spellInstance;
-    private UltraHero mock;
+    private Position tmp, spellTarget;
 
     public SpellMock(SpellInstance spellInstance) {
         super(spellInstance);
         this.spellInstance = spellInstance;
         createHero();
         attackExecution = new AttackExecution(this);
-        attackTrajectory = new AttackTrajectory(this, mock);
+        attackTrajectory = new AttackTrajectory(this, hero);
     }
-
 
     @Override
     public void createHero() {
-        mock = HeroesInstances.getInstance().getMock();
-        setUltraHero(mock);
+        HeroesInstances heroesInstances = HeroesInstances.getInstance();
+        setHero(heroesInstances.getMock());
     }
 
     @Override
@@ -67,9 +63,9 @@ public class SpellMock extends Spell {
     private void activateSpell() {
         UltraSpell spell;
         if (spellInstance.isBasic()) {
-            spell = mock.getBasicSpell();
+            spell = hero.getBasicSpell();
         } else {
-            spell = mock.getUltimateSpell();
+            spell = hero.getUltimateSpell();
         }
         spell.setSpellActivated(true);
     }
@@ -81,6 +77,5 @@ public class SpellMock extends Spell {
     private void executeSpell() {
         attackExecution.executeSpell();
     }
-
 
 }

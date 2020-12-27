@@ -25,25 +25,36 @@ public class RestartMenu extends MenuImp {
     private RestartMenu() {
         super();
         start();
-        game=Game.getInstance();
+        game = Game.getInstance();
         board = game.getBoard();
     }
 
     @Override
     public void execute() {
-        win_or_loose();
-        begin();
-        addEventClick();
         loop();
         reset_heroes();
-        log.info("RESTART MENU");
         if (Game.state.equals(GameState.OK)) {
             game.initialize_game();
         }
     }
 
+    @Override
+    public void prepare() {
+        win_or_loose();
+        begin();
+        addEventClick();
+    }
+
+    @Override
+    public void loop() {
+        if (state.equals(GameState.RESTART)) {
+            prepare();
+            insideLoop();
+        }
+    }
+
     protected void reset_heroes() {
-        HeroesInstances heroesInstances=HeroesInstances.getInstance();
+        HeroesInstances heroesInstances = HeroesInstances.getInstance();
         heroesInstances.reset();
     }
 
@@ -94,6 +105,7 @@ public class RestartMenu extends MenuImp {
 
 
     private static final RestartMenu instance = new RestartMenu();
+
     public static RestartMenu getInstance() {
         return instance;
     }

@@ -79,7 +79,6 @@ public class ManaBar extends GraphicLoader {
         if (Objects.isNull(start)) {
             start = System.currentTimeMillis();
         }
-
         if (System.currentTimeMillis() - start > superHero.getManaRenegeration()) {
             addMana();
             updateManaBar();

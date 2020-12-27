@@ -20,7 +20,7 @@ public class AnimationSpell extends Spell {
         this.animation_hero = animation_hero;
         createHero();
         super.setSpellInstance(superHero.getBasicSpellInstance());
-        super.setAttackTrajectory(new AttackTrajectory(this, super.getUltraHero()));
+        super.setAttackTrajectory(new AttackTrajectory(this, super.getHero()));
         super.createProperties();
         setMesh(createMesh());
     }
@@ -35,8 +35,8 @@ public class AnimationSpell extends Spell {
 
     @Override
     public void createHero() {
-        if (super.getUltraHero() == null) {
-            super.setUltraHero(superHero);
+        if (super.getHero() == null) {
+            super.setHero(superHero);
         }
     }
 

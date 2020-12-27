@@ -63,6 +63,7 @@ public class MultiPlayerCommander extends GameLoopImp {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            websocketController.start_sending_service();
             waitingRoomMenu.restart();
         };
     }

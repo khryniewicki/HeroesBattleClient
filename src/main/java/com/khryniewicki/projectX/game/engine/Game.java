@@ -58,16 +58,13 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     private void restart_menu() {
-        if (state.equals(GameState.RESTART)) {
-            RestartMenu restartMenu = RestartMenu.getInstance();
-            restartMenu.execute();
-        }
+        RestartMenu restartMenu = RestartMenu.getInstance();
+        restartMenu.execute();
     }
 
     @Override
     protected void prepare() {
         create_board();
-        start_sending_service();
         begin();
     }
 
@@ -75,15 +72,14 @@ public class Game extends GameLoopImp implements Runnable {
         board = new Board();
     }
 
-    private void start_sending_service() {
-        websocketController.start_sending_service();
-    }
-
-
     @Override
     public void update() {
         glfwPollEvents();
         board.update();
+        is_player_dead();
+    }
+
+    private void is_player_dead() {
         if (state.equals(GameState.PLAYER_IS_DEAD)) {
             restart();
             stop();
