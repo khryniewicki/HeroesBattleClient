@@ -35,6 +35,11 @@ public class MultiPlayerCommander extends GameLoopImp {
             websocketController.initialize_websocket();
             waitingRoomMenu.addText("Connection established");
             websocketController.start_sending_service();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             websocketController.join_room();
         };
     }

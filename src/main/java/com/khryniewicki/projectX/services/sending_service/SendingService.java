@@ -55,7 +55,7 @@ public class SendingService implements Runnable {
                 }
                 return counterHero < 4;
             case MESSAGE:
-                if (baseDto.getStatus().equals(ConnectionState.DISCONNECTED)){
+                if (baseDto.getStatus().equals(ConnectionState.DISCONNECTED)) {
                     setPlayer_left(true);
                 }
                 return true;
@@ -69,6 +69,7 @@ public class SendingService implements Runnable {
     @Override
     public void run() {
         session = WebsocketApplication.getSession();
+        stackEvent.setEvents(new ConcurrentLinkedDeque<>());
         running = true;
         while (running) {
             send();
@@ -87,7 +88,7 @@ public class SendingService implements Runnable {
             BaseDto baseDto = events.pop();
             try {
                 if (session.isConnected() && filter(baseDto)) {
-                    log.info("{}",baseDto);
+                    log.info("{}", baseDto);
                     String path = path(baseDto);
                     session.send(path, baseDto);
                 }
