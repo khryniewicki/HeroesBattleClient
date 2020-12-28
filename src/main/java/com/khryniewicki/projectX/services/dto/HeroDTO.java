@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.services.DTO;
+package com.khryniewicki.projectX.services.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class HeroDTO implements Serializable, DTO {
+public class HeroDto implements Serializable, BaseDto {
     private String heroType;
     private Integer life;
     private Integer mana;
@@ -18,7 +18,7 @@ public class HeroDTO implements Serializable, DTO {
     private boolean isSpellDTO;
     private String sessionId;
 
-    public HeroDTO(Builder builder) {
+    public HeroDto(Builder builder) {
         this.heroType = builder.heroType;
         this.life = builder.life;
         this.mana = builder.mana;
@@ -58,8 +58,8 @@ public class HeroDTO implements Serializable, DTO {
             return this;
         }
 
-        public HeroDTO build() {
-            return new HeroDTO(this);
+        public HeroDto build() {
+            return new HeroDto(this);
         }
     }
 

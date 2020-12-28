@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.services.HeroReceiveService;
+import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +14,14 @@ import java.util.Objects;
 public class HeroMock extends SuperHero {
     private Position tmp, finalPosition;
     private Integer tmpLife, tmpMana;
-    private final HeroReceiveService heroReceiveService;
+    private final ReceiveServiceSingleton receiveService;
     boolean isMovingLeft, isIdle;
     private Long now;
 
     public HeroMock(SuperHero superHero) {
         super();
         addProperties(superHero);
-        heroReceiveService = HeroReceiveService.getInstance();
+        receiveService = ReceiveServiceSingleton.getInstance();
         checkLifeAndMana();
     }
 
@@ -79,7 +79,7 @@ public class HeroMock extends SuperHero {
     }
 
     private Position getMockPosition() {
-        return heroReceiveService.getMockPosition();
+        return receiveService.get_hero_mock_position();
     }
 
     private void checkLifeAndMana() {
@@ -123,12 +123,12 @@ public class HeroMock extends SuperHero {
 
     @Override
     public Integer getLife() {
-        return Objects.isNull(heroReceiveService.getMockLife()) ? super.getLife() : heroReceiveService.getMockLife();
+        return Objects.isNull(receiveService.get_hero_mock_life()) ? super.getLife() : receiveService.get_hero_mock_life();
     }
 
     @Override
     public Integer getMana() {
-        return Objects.isNull(heroReceiveService.getMockMana()) ? super.getMana() : heroReceiveService.getMockMana();
+        return Objects.isNull(receiveService.get_hero_mock_mana()) ? super.getMana() : receiveService.get_hero_mock_mana();
     }
 
 

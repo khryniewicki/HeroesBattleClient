@@ -5,20 +5,21 @@ import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.services.SpellReceiveService;
+import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
 
 public class SpellMock extends Spell {
     private final AttackExecution attackExecution;
-    private final AttackTrajectory attackTrajectory;
     private final SpellInstance spellInstance;
+    private final ReceiveServiceSingleton receiveService;
     private Position tmp, spellTarget;
 
     public SpellMock(SpellInstance spellInstance) {
         super(spellInstance);
         this.spellInstance = spellInstance;
+        this.receiveService = ReceiveServiceSingleton.getInstance();
         createHero();
-        attackExecution = new AttackExecution(this);
-        attackTrajectory = new AttackTrajectory(this, hero);
+        this.attackExecution = new AttackExecution(this);
+        this.attackTrajectory = new AttackTrajectory(this, hero);
     }
 
     @Override
@@ -37,11 +38,7 @@ public class SpellMock extends Spell {
 
 
     private void getSpellType() {
-        if (spellInstance.isBasic()) {
-            spellTarget = SpellReceiveService.basicSpellTarget;
-        } else {
-            spellTarget = SpellReceiveService.ultimateSpellTarget;
-        }
+        spellTarget = receiveService.get_spell_mock_target(spellInstance.isBasic());
     }
 
     public void getSpellMock() {
@@ -61,12 +58,7 @@ public class SpellMock extends Spell {
     }
 
     private void activateSpell() {
-        UltraSpell spell;
-        if (spellInstance.isBasic()) {
-            spell = hero.getBasicSpell();
-        } else {
-            spell = hero.getUltimateSpell();
-        }
+        UltraSpell spell = spellInstance.isBasic() ? hero.getBasicSpell() : hero.getUltimateSpell();
         spell.setSpellActivated(true);
     }
 

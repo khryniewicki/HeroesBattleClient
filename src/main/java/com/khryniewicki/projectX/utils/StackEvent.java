@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.utils;
 
-import com.khryniewicki.projectX.services.DTO.DTO;
+import com.khryniewicki.projectX.services.dto.BaseDto;
 import lombok.Data;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Data
 public class StackEvent {
-    private ConcurrentLinkedDeque<DTO> events;
+    private ConcurrentLinkedDeque<BaseDto> events;
     private static StackEvent INSTANCE;
     private boolean hasAction;
 

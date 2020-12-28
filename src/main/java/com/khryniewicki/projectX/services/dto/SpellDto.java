@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.services.DTO;
+package com.khryniewicki.projectX.services.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,18 +9,17 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SpellDTO implements Serializable,DTO {
+public class SpellDto implements Serializable, BaseDto {
     private String name;
     private Float targetSpellX;
     private Float targetSpellY;
     private String sessionId;
 
-    public SpellDTO(String name, Float targetSpellX, Float targetSpellY) {
+    public SpellDto(String name, Float targetSpellX, Float targetSpellY) {
         this.name = name;
         this.targetSpellX = targetSpellX;
         this.targetSpellY = targetSpellY;
     }
-
 
     @Override
     public String toString() {

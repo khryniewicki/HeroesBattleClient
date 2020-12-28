@@ -7,10 +7,9 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
-import com.khryniewicki.projectX.services.DTO.HeroDTO;
-import com.khryniewicki.projectX.services.DTO.SpellDTO;
-import com.khryniewicki.projectX.services.HeroReceiveService;
-import com.khryniewicki.projectX.services.SpellReceiveService;
+import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.SpellDto;
+import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +56,7 @@ public class WebsocketApplication implements Runnable {
     @Setter
     public static class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
-        private final HeroReceiveService heroReceiveService;
+        private final ReceiveServiceSingleton receiveService;
         private final Channels channels;
         private static String sessionId;
 
@@ -66,7 +65,7 @@ public class WebsocketApplication implements Runnable {
         }
 
         public MyStompSessionHandler() {
-            heroReceiveService = HeroReceiveService.getInstance();
+            receiveService = ReceiveServiceSingleton.getInstance();
             channels = Channels.getINSTANCE();
         }
 
@@ -108,15 +107,13 @@ public class WebsocketApplication implements Runnable {
 
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
-                    return HeroDTO.class;
+                    return HeroDto.class;
                 }
 
                 @Override
-                public void handleFrame(StompHeaders headers,
-                                        Object payload) {
-                    HeroDTO payload1 = (HeroDTO) payload;
-                    System.out.println(payload1);
-                    heroReceiveService.receivedMockDTO(payload1);
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    HeroDto payload1 = (HeroDto) payload;
+                    receiveService.set_hero_mock(payload1);
                 }
             });
         }
@@ -126,14 +123,13 @@ public class WebsocketApplication implements Runnable {
 
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
-                    return SpellDTO.class;
+                    return SpellDto.class;
                 }
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
-                    SpellDTO payload1 = (SpellDTO) payload;
-                    System.out.println(payload1);
-                    SpellReceiveService.receiveSpellMock((SpellDTO) payload);
+                    SpellDto payload1 = (SpellDto) payload;
+                    receiveService.set_spell_mock(payload1);
                 }
             });
         }

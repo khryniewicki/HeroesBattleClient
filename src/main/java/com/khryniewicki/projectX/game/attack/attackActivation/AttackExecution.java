@@ -6,8 +6,8 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.DTO.DTO;
-import com.khryniewicki.projectX.services.DTO.HeroDTO;
+import com.khryniewicki.projectX.services.dto.BaseDto;
+import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,9 +77,9 @@ public class AttackExecution {
 
     private void updateLifeBar() {
         lifeBar.updateLifeBar();
-        ConcurrentLinkedDeque<DTO> events = stackEvent.getEvents();
+        ConcurrentLinkedDeque<BaseDto> events = stackEvent.getEvents();
 
-        HeroDTO heroDTO = new HeroDTO.Builder()
+        HeroDto heroDTO = new HeroDto.Builder()
                 .heroType(hero.getName())
                 .life(hero.getLife())
                 .mana(hero.getMana())

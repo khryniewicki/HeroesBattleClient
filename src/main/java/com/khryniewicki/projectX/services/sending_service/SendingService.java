@@ -1,20 +1,18 @@
-package com.khryniewicki.projectX.services;
+package com.khryniewicki.projectX.services.sending_service;
 
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
-import com.khryniewicki.projectX.services.DTO.DTO;
-import com.khryniewicki.projectX.services.DTO.HeroDTO;
+import com.khryniewicki.projectX.services.dto.BaseDto;
+import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompSession;
 
-import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 
@@ -23,11 +21,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class SendingService implements Runnable {
     private final Channels channel;
     private final StackEvent stackEvent;
-    private HeroDTO tmpHero;
+    private HeroDto tmpHero;
     private SuperHero hero;
     private HeroesInstances heroesInstances;
     private HeroStartingPosition heroStartingPosition;
-    private ConcurrentLinkedDeque<DTO> events;
+    private ConcurrentLinkedDeque<BaseDto> events;
     private int counter;
     private StompSession session;
     private boolean running;
@@ -54,8 +52,8 @@ public class SendingService implements Runnable {
         return hero.getY() == null ? heroStartingPosition.getY() : hero.getY();
     }
 
-    public HeroDTO getHeroDTO() {
-        return new HeroDTO.Builder()
+    public HeroDto getHeroDTO() {
+        return new HeroDto.Builder()
                 .heroType(hero.getName())
                 .life(hero.getLife())
                 .mana(hero.getMana())
@@ -66,7 +64,7 @@ public class SendingService implements Runnable {
 
     public synchronized void updatePosition() {
         getHeroInstance();
-        HeroDTO heroDTO = getHeroDTO();
+        HeroDto heroDTO = getHeroDTO();
 
         if (heroDTO.equals(tmpHero)) {
             counter++;
@@ -100,11 +98,11 @@ public class SendingService implements Runnable {
 
     private synchronized void send() {
         if (events != null && events.size() != 0) {
-            DTO dto = events.pop();
-            dto.setSessionId(session.getSessionId());
+            BaseDto baseDto = events.pop();
+            baseDto.setSessionId(session.getSessionId());
             try {
                 if (session.isConnected()) {
-                    session.send(path(dto), dto);
+                    session.send(path(baseDto), baseDto);
                 }
             } catch (MessageDeliveryException e) {
                 e.printStackTrace();
@@ -113,7 +111,7 @@ public class SendingService implements Runnable {
         sleep();
     }
 
-    private String path(DTO pop) {
+    private String path(BaseDto pop) {
         String path = "/app/hero/";
         if (pop.isSpellDTO()) {
             path = "/app/spell/";

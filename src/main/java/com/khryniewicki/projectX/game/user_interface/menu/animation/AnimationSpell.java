@@ -28,11 +28,15 @@ public class AnimationSpell extends Spell {
     }
 
     public void newSpell(int number) {
-        spell = number % 2 == 0 ? superHero.getBasicSpellInstance() : superHero.getUltimateSpellInstance();
+        toss_spell_instance(number);
         setSpellInstance(spell);
         attackTrajectory.setSpellInstance(spell);
         createProperties();
         setMesh();
+    }
+
+    protected void toss_spell_instance(int number) {
+        spell = number % 2 == 0 ? superHero.getBasicSpellInstance() : superHero.getUltimateSpellInstance();
     }
 
     @Override

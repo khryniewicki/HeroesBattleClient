@@ -1,8 +1,8 @@
-package com.khryniewicki.projectX.services;
+package com.khryniewicki.projectX.services.receive_services;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.services.DTO.HeroDTO;
+import com.khryniewicki.projectX.services.dto.HeroDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,32 +11,27 @@ import org.springframework.stereotype.Service;
 @Data
 @Slf4j
 public class HeroReceiveService {
-    private MockStartingPosition mockStartingPosition;
+    private int counter;
     private Position MockPosition;
     private Integer MockLife;
     private Integer MockMana;
-    private int counter;
+    private final MockStartingPosition mockStartingPosition;
 
-    private HeroReceiveService() {
-        mockStartingPosition = MockStartingPosition.getInstance();
+    public HeroReceiveService() {
+        this.mockStartingPosition = MockStartingPosition.getInstance();
     }
-
-    public static HeroReceiveService getInstance() {
-        return HELPER.INSTANCE;
-    }
-
 
     public Position getMockPosition() {
         return MockPosition == null ? new Position(mockStartingPosition.getX(), mockStartingPosition.getY()) : MockPosition;
     }
 
-    public void receivedMockDTO(HeroDTO heroDTO) {
-        createMockPosition(heroDTO);
+    public void set_hero_mock(HeroDto heroDTO) {
+        set_mock_position(heroDTO);
         MockLife = heroDTO.getLife();
         MockMana = heroDTO.getMana();
     }
 
-    private void createMockPosition(HeroDTO heroDTO) {
+    private void set_mock_position(HeroDto heroDTO) {
         Position tmp = new Position(heroDTO.getPositionX(), heroDTO.getPositionY());
 
         if (MockPosition == null) {
@@ -58,8 +53,6 @@ public class HeroReceiveService {
         MockMana = null;
     }
 
-    private static class HELPER {
-        private final static HeroReceiveService INSTANCE = new HeroReceiveService();
-    }
+
 
 }

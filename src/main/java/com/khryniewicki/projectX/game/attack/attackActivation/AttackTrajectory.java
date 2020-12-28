@@ -6,9 +6,8 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.SendingService;
+import com.khryniewicki.projectX.services.sending_service.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -126,7 +125,6 @@ public class AttackTrajectory {
     public void prepareSpell() {
         if (isSpellNotPrepared) {
             hero.setHeroAttack();
-            log.info("[x:{} , y:{}]", spell.getHeroPositionX(), spell.getHeroPositionY());
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
 
             spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
@@ -134,7 +132,6 @@ public class AttackTrajectory {
             iceball_exception();
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));
             setSpellNotPrepared(false);
-            log.info("Target[{}],[{}]", target.getX(), target.getY());
         }
     }
 

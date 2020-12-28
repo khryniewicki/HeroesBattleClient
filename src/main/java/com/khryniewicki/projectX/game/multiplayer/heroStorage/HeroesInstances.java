@@ -12,9 +12,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStar
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
-import com.khryniewicki.projectX.services.HeroReceiveService;
-import com.khryniewicki.projectX.services.SendingService;
-import com.khryniewicki.projectX.services.SpellReceiveService;
+import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -110,9 +108,8 @@ public class HeroesInstances {
     public void reset() {
         mock = null;
         hero = null;
-        HeroReceiveService heroReceiveService = HeroReceiveService.getInstance();
-        heroReceiveService.reset();
-        SpellReceiveService.reset();
+        ReceiveServiceSingleton receiveServiceSingleton=ReceiveServiceSingleton.getInstance();
+        receiveServiceSingleton.reset();
     }
 
     public static HeroesInstances getInstance() {

@@ -1,6 +1,6 @@
-package com.khryniewicki.projectX.services.DTO;
+package com.khryniewicki.projectX.services.dto;
 
-public interface DTO {
+public interface BaseDto {
     Float getPositionX();
     Float getPositionY();
     boolean isSpellDTO();
