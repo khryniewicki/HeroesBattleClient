@@ -53,4 +53,8 @@ public class SpellReceiveService {
         return spellInstance;
     }
 
+    public static void reset(){
+        basicSpellTarget=null;
+        ultimateSpellTarget=null;
+    }
 }

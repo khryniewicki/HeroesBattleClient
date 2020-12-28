@@ -88,10 +88,10 @@ public class WebsocketApplication implements Runnable {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             SuperHero superHero = heroesInstances.getHero();
             session.send("/app/room", new Message.Builder()
-                    .heroType(superHero.getName())
-                    .playerName(heroesInstances.getHeroName())
                     .status(ConnectionState.CONNECTED)
                     .sessionID(session.getSessionId())
+                    .heroType(superHero.getName())
+                    .playerName(heroesInstances.getHeroName())
                     .build());
         }
 

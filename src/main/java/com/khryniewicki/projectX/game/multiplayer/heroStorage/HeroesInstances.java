@@ -14,6 +14,7 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
 import com.khryniewicki.projectX.services.HeroReceiveService;
 import com.khryniewicki.projectX.services.SendingService;
+import com.khryniewicki.projectX.services.SpellReceiveService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -111,6 +112,7 @@ public class HeroesInstances {
         hero = null;
         HeroReceiveService heroReceiveService = HeroReceiveService.getInstance();
         heroReceiveService.reset();
+        SpellReceiveService.reset();
     }
 
     public static HeroesInstances getInstance() {

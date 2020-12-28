@@ -71,7 +71,7 @@ public class SpellMock extends Spell {
     }
 
     private void castingSpell() {
-        attackTrajectory.castingSpell();
+        attackTrajectory.casting_spell();
     }
 
     private void executeSpell() {

@@ -5,7 +5,6 @@ import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstanc
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,24 +21,24 @@ public class AnimationSpell extends Spell {
         this.superHero = superHero;
         this.animation_hero = animation_hero;
         createHero();
-        super.setSpellInstance(superHero.getBasicSpellInstance());
-        super.setAttackTrajectory(new AttackTrajectory(this, super.getHero()));
-        super.createProperties();
-        setMesh(createMesh());
+        setSpellInstance(superHero.getBasicSpellInstance());
+        setAttackTrajectory(new AttackTrajectory(this, hero));
+        createProperties();
+        setMesh();
     }
 
     public void newSpell(int number) {
         spell = number % 2 == 0 ? superHero.getBasicSpellInstance() : superHero.getUltimateSpellInstance();
-        super.setSpellInstance(spell);
-        super.getAttackTrajectory().setSpellInstance(spell);
-        super.createProperties();
-        super.setMesh(createMesh());
+        setSpellInstance(spell);
+        attackTrajectory.setSpellInstance(spell);
+        createProperties();
+        setMesh();
     }
 
     @Override
     public void createHero() {
-        if (super.getHero() == null) {
-            super.setHero(superHero);
+        if (hero == null) {
+            setHero(superHero);
         }
     }
 

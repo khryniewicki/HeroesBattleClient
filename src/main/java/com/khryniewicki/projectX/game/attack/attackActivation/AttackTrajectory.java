@@ -9,6 +9,8 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -17,15 +19,16 @@ import static com.khryniewicki.projectX.graphics.textures.SpellTextures.ICEBALL_
 import static com.khryniewicki.projectX.graphics.textures.SpellTextures.ICEBALL_UP;
 
 @Slf4j
-@Data
+@Getter
+@Setter
 public class AttackTrajectory {
 
-    private UltraHero hero;
     private Position distance, target;
     private boolean isSpellNotPrepared;
     private int counter;
 
-    private SpellInstance spellInstance;
+    private final UltraHero hero;
+    private  SpellInstance spellInstance;
     private final UltraSpell spell;
     private final SendingService sendingService;
     private final StackEvent stackEvent;
@@ -40,16 +43,16 @@ public class AttackTrajectory {
         makeTargetNull();
     }
 
-    public void castingSpell() {
+    public void casting_spell() {
         target = spell.getTarget();
         if (Objects.nonNull(target)) {
             prepareSpell();
-            calculateTrajectory();
+            calculate_trajectory();
         }
         spellDuration();
     }
 
-    public void calculateTrajectory() {
+    public void calculate_trajectory() {
         Vector position = spell.getPosition();
         Float velocity = spellInstance.getCastingSpeed();
         float half_velocity = velocity / 2;
@@ -67,7 +70,7 @@ public class AttackTrajectory {
                     spell.setPositionY(position.y + Math.signum(distance.getY()) * velocity);
                 }
             }
-            catchSpellBeyondScreen();
+            catch_spell_beyond_screen();
             if (Math.abs(position.x - target.getX()) <= half_velocity && Math.abs(position.y - target.getY()) <= half_velocity) {
                 targetReached();
             }
@@ -76,7 +79,7 @@ public class AttackTrajectory {
         }
     }
 
-    private void catchSpellBeyondScreen() {
+    private void catch_spell_beyond_screen() {
         if (distance.getX() > 20 || distance.getY() > 10) {
             counter++;
             if (counter > 10) {
