@@ -95,7 +95,7 @@ public class WebsocketApplication implements Runnable {
                     .heroType(superHero.getName())
                     .playerName(heroesInstances.getHeroName())
                     .build());
-
+            log.info("added");
         }
 
         public void leave_room() {

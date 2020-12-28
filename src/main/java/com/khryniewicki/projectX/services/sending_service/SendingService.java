@@ -7,15 +7,18 @@ import com.khryniewicki.projectX.services.dto.BaseDto;
 import com.khryniewicki.projectX.services.dto.BaseDtoType;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompSession;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 
-@Data
+@Getter
+@Setter
 @Slf4j
 public class SendingService implements Runnable {
     private final Channels channel;
@@ -32,7 +35,7 @@ public class SendingService implements Runnable {
     public SendingService() {
         this.channel = Channels.getINSTANCE();
         this.stackEvent = StackEvent.getInstance();
-        this.events = stackEvent.getEvents();
+
     }
 
     public boolean filter(BaseDto baseDto) {
@@ -68,8 +71,8 @@ public class SendingService implements Runnable {
 
     @Override
     public void run() {
-        session = WebsocketApplication.getSession();
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
+        this.events = stackEvent.getEvents();
         running = true;
         while (running) {
             send();
@@ -87,6 +90,9 @@ public class SendingService implements Runnable {
         if (events != null && events.size() != 0) {
             BaseDto baseDto = events.pop();
             try {
+                if (Objects.isNull(session)) {
+                    session = WebsocketApplication.getSession();
+                }
                 if (session.isConnected() && filter(baseDto)) {
                     log.info("{}", baseDto);
                     String path = path(baseDto);
