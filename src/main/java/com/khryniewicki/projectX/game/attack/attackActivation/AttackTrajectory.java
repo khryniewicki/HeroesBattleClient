@@ -7,7 +7,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.sending_service.SendingService;
-import com.khryniewicki.projectX.utils.StackEvent;
+import com.khryniewicki.projectX.services.sending_service.StackEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

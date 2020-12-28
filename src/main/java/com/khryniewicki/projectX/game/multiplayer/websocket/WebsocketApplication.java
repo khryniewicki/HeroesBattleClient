@@ -10,7 +10,7 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionSta
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
-import com.khryniewicki.projectX.utils.StackEvent;
+import com.khryniewicki.projectX.services.sending_service.StackEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

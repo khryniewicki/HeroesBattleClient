@@ -6,13 +6,10 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.dto.BaseDto;
-import com.khryniewicki.projectX.services.dto.HeroDto;
-import com.khryniewicki.projectX.utils.StackEvent;
+import com.khryniewicki.projectX.services.sending_service.StackEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 @Slf4j

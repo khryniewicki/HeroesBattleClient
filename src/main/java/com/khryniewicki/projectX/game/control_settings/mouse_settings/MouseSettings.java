@@ -7,10 +7,9 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.dto.BaseDto;
-import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.sending_service.SendingService;
-import com.khryniewicki.projectX.utils.StackEvent;
+import com.khryniewicki.projectX.services.sending_service.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
