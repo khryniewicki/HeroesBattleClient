@@ -1,8 +1,11 @@
 package com.khryniewicki.projectX.services.dto;
 
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
+
 public interface BaseDto {
-    Float getPositionX();
-    Float getPositionY();
-    boolean isSpellDTO();
-    void setSessionId(String sessionId);
+    BaseDtoType getType();
+
+    default ConnectionState getStatus() {
+        return ConnectionState.CONNECTED;
+    }
 }

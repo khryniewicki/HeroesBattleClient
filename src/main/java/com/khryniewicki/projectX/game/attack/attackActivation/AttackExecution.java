@@ -26,7 +26,6 @@ public class AttackExecution {
     private float bx0, bx1, by0, by1;
     private boolean isAttackSucceeded, isSpellActivated;
 
-
     public AttackExecution(UltraSpell spell) {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         stackEvent = StackEvent.getInstance();
@@ -45,7 +44,6 @@ public class AttackExecution {
         if (oz0 <= 0) {
             isSpellActivated = false;
             isAttackSucceeded = false;
-            stackEvent.setHasAction(false);
         } else {
             spellActivation();
         }
@@ -77,17 +75,8 @@ public class AttackExecution {
 
     private void updateLifeBar() {
         lifeBar.updateLifeBar();
-        ConcurrentLinkedDeque<BaseDto> events = stackEvent.getEvents();
 
-        HeroDto heroDTO = new HeroDto.Builder()
-                .heroType(hero.getName())
-                .life(hero.getLife())
-                .mana(hero.getMana())
-                .positionX(hero.getX())
-                .positionY(hero.getY())
-                .build();
-
-        events.offerLast(heroDTO);
+        stackEvent.addHeroDto();
     }
 
 

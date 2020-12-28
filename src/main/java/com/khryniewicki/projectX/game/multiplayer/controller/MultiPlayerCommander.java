@@ -34,6 +34,7 @@ public class MultiPlayerCommander extends GameLoopImp {
             waitingRoomMenu.addText("Waiting for connections...");
             websocketController.initialize_websocket();
             waitingRoomMenu.addText("Connection established");
+            websocketController.start_sending_service();
             websocketController.join_room();
         };
     }
@@ -63,7 +64,6 @@ public class MultiPlayerCommander extends GameLoopImp {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            websocketController.start_sending_service();
             waitingRoomMenu.restart();
         };
     }

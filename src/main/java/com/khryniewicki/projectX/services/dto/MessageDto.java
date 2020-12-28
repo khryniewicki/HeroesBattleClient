@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.multiplayer.websocket.messages;
+package com.khryniewicki.projectX.services.dto;
 
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import lombok.Getter;
@@ -11,23 +11,23 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Message implements Serializable {
+public class MessageDto implements Serializable, BaseDto {
     private String channel;
     private String content;
     private String sessionID;
     private String playerName;
     private ConnectionState status;
+    private BaseDtoType type;
 
-    public Message(Builder builder) {
-        this.channel = builder.channel;
+    public MessageDto(Builder builder) {
         this.content = builder.content;
         this.sessionID = builder.sessionID;
         this.playerName = builder.playerName;
         this.status = builder.status;
+        this.type = BaseDtoType.MESSAGE;
     }
 
     public static class Builder {
-        private String channel;
         private String content;
         private String sessionID;
         private String playerName;
@@ -53,8 +53,8 @@ public class Message implements Serializable {
             return this;
         }
 
-        public Message build() {
-            return new Message(this);
+        public MessageDto build() {
+            return new MessageDto(this);
         }
     }
 

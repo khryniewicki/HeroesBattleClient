@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
-import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
@@ -50,8 +50,8 @@ public class WebsocketScheduler {
         requestScheduler();
     }
 
-    public HashMap<String, Message> playersInGame() {
-        ParameterizedTypeReference<HashMap<String, Message>> responseType = new ParameterizedTypeReference<>() {
+    public HashMap<String, MessageDto> playersInGame() {
+        ParameterizedTypeReference<HashMap<String, MessageDto>> responseType = new ParameterizedTypeReference<>() {
         };
         return new RestTemplate().exchange(request("/map"), responseType).getBody();
     }
@@ -71,7 +71,7 @@ public class WebsocketScheduler {
         timer.schedule(new TimerTask() {
 
             public void run() {
-                HashMap<String, Message> map;
+                HashMap<String, MessageDto> map;
                 Long timeLeft;
                 HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
 

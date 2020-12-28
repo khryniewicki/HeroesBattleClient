@@ -7,6 +7,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.dto.BaseDto;
+import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.sending_service.SendingService;
 import com.khryniewicki.projectX.utils.StackEvent;
@@ -75,7 +76,6 @@ public class MouseSettings {
         float finalX = (float) (cursorPosition.getPositionXD() - Game.width / 2) / (Game.width / 20f);
         float finalY = (float) ((Game.height / 2 - cursorPosition.getPositionYD()) * factor) / (Game.height / 10f);
         ultraSpell.setTarget(new Position(finalX, finalY));
-        log.info("Y:{}", cursorPosition.getPositionYD());
     }
 
     private void consumeSpellMana() {
@@ -85,8 +85,9 @@ public class MouseSettings {
         ManaBar manaBar = hero.getManaBar();
         manaBar.updateManaBar();
 
-        sendingService.updatePosition();
+        stackEvent.addHeroDto();
     }
+
 
     private boolean isEnoughManaToCast() {
         return hero.getMana() >= spell.getManaConsumed();

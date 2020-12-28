@@ -4,12 +4,13 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
-import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
+import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,7 @@ public class WebsocketApplication implements Runnable {
     public static class MyStompSessionHandler
             extends StompSessionHandlerAdapter {
         private final ReceiveServiceSingleton receiveService;
+        private final StackEvent stackEvent;
         private final Channels channels;
         private static String sessionId;
 
@@ -67,6 +69,7 @@ public class WebsocketApplication implements Runnable {
         public MyStompSessionHandler() {
             receiveService = ReceiveServiceSingleton.getInstance();
             channels = Channels.getINSTANCE();
+            stackEvent = StackEvent.getInstance();
         }
 
 
@@ -86,16 +89,17 @@ public class WebsocketApplication implements Runnable {
         public void join_room() {
             HeroesInstances heroesInstances = HeroesInstances.getInstance();
             SuperHero superHero = heroesInstances.getHero();
-            session.send("/app/room", new Message.Builder()
+            stackEvent.addDto(new MessageDto.Builder()
                     .status(ConnectionState.CONNECTED)
                     .sessionID(session.getSessionId())
                     .heroType(superHero.getName())
                     .playerName(heroesInstances.getHeroName())
                     .build());
+
         }
 
         public void leave_room() {
-            session.send("/app/room", new Message.Builder()
+            stackEvent.addDto(new MessageDto.Builder()
                     .status(ConnectionState.DISCONNECTED)
                     .sessionID(session.getSessionId())
                     .build());
@@ -139,14 +143,14 @@ public class WebsocketApplication implements Runnable {
 
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
-                    return Message.class;
+                    return MessageDto.class;
                 }
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
 
                     MessageHandler messageHandler = new MessageHandler();
-                    messageHandler.setChannelsAndStartingPositions((Message) payload);
+                    messageHandler.setChannelsAndStartingPositions((MessageDto) payload);
 
                     subscribeHero("/topic/hero/" + channels.getTopic(), session);
                     subscribeSpell("/topic/spell/" + channels.getTopic(), session);

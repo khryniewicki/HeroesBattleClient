@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -14,11 +15,29 @@ public class SpellDto implements Serializable, BaseDto {
     private Float targetSpellX;
     private Float targetSpellY;
     private String sessionId;
+    private BaseDtoType type;
 
     public SpellDto(String name, Float targetSpellX, Float targetSpellY) {
         this.name = name;
         this.targetSpellX = targetSpellX;
         this.targetSpellY = targetSpellY;
+        this.type = BaseDtoType.SPELL;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SpellDto spellDto = (SpellDto) o;
+        return Objects.equals(name, spellDto.name) &&
+                Objects.equals(targetSpellX, spellDto.targetSpellX) &&
+                Objects.equals(targetSpellY, spellDto.targetSpellY) &&
+                type == spellDto.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, targetSpellX, targetSpellY, type);
     }
 
     @Override
@@ -31,18 +50,5 @@ public class SpellDto implements Serializable, BaseDto {
                 '}';
     }
 
-    @Override
-    public Float getPositionX() {
-        return targetSpellX;
-    }
 
-    @Override
-    public Float getPositionY() {
-        return targetSpellY;
-    }
-
-    @Override
-    public boolean isSpellDTO() {
-        return true;
-    }
 }

@@ -11,7 +11,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStar
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
-import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
 import lombok.Getter;
 import lombok.Setter;
@@ -78,15 +78,15 @@ public class HeroesInstances {
         WebsocketController websocketInstance = WebsocketController.getWebsocketInstance();
         String sessionId = websocketInstance.get_session_id();
         HeroesRegistry heroesRegistry = HeroesRegistry.getINSTANCE();
-        Map<String, Message> heroes = heroesRegistry.getHeroesRegistryBook();
+        Map<String, MessageDto> heroes = heroesRegistry.getHeroesRegistryBook();
 
-        for (Map.Entry<String, Message> hero : heroes.entrySet()) {
+        for (Map.Entry<String, MessageDto> hero : heroes.entrySet()) {
             String key = hero.getKey();
             if (!key.equals(sessionId)) {
-                Message message = hero.getValue();
-                String heroType = message.getContent();
+                MessageDto messageDto = hero.getValue();
+                String heroType = messageDto.getContent();
                 setMock(heroType);
-                setMockName(message.getPlayerName());
+                setMockName(messageDto.getPlayerName());
                 setBasicProperties(mock);
             }
         }

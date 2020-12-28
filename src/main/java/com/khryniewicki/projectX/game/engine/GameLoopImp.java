@@ -31,7 +31,6 @@ public class GameLoopImp implements GameLoop {
     public static int bar = 40;
     protected static GameState state;
 
-
     public void loop() {
         if (!state.equals(GameState.FINISH)) {
             prepare();
@@ -92,6 +91,7 @@ public class GameLoopImp implements GameLoop {
 
     private void setState(GameState game_state) {
         state = game_state;
+        log.info("GAME STATE: {}",state);
     }
 
     @Override

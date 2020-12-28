@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,8 +49,9 @@ public class ManaBar extends GraphicLoader {
         setPositionY(superHero.getY() + offsetPositionY);
         this.blueMesh = getManaBarMesh("blue");
         this.blackMesh = getManaBarMesh("black");
-        stackEvent.setHasAction(true);
+        stackEvent.addHeroDto();
     }
+
 
     private VertexArray getManaBarMesh(String color) {
         float factor = getManaFactor(color);

@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStar
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
+import com.khryniewicki.projectX.services.dto.MessageDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +16,7 @@ public class MessageHandler {
     private final Channels channels;
     private final Subject subject;
     private final MultiplayerController multiplayer;
-    private Message message;
+    private MessageDto messageDto;
 
     private MultiplayerState itState;
 
@@ -26,9 +27,9 @@ public class MessageHandler {
         subject.addPropertyChangeListener(multiplayer);
     }
 
-    public void setChannelsAndStartingPositions(Message message) {
-        if (validate(message.getChannel())) {
-            this.message = message;
+    public void setChannelsAndStartingPositions(MessageDto messageDto) {
+        if (validate(messageDto.getChannel())) {
+            this.messageDto = messageDto;
             setChannelsAndStartingPositions();
         }
     }
@@ -38,7 +39,7 @@ public class MessageHandler {
     }
 
     private void setChannelsAndStartingPositions() {
-        int appDTO = Integer.parseInt(message.getChannel());
+        int appDTO = Integer.parseInt(messageDto.getChannel());
         itState = multiplayer.getItsState();
 
         if ((appDTO == 1 || appDTO == 2) && itState.equals(MultiplayerState.CONNECT)) {

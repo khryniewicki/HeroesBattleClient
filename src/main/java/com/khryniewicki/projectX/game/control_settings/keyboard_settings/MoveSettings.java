@@ -6,9 +6,9 @@ import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
+import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.utils.StackEvent;
 
-import static com.khryniewicki.projectX.game.user_interface.board.Board.collision;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class MoveSettings {
@@ -65,10 +65,19 @@ public class MoveSettings {
 
     private void sendMsg(float tmpX, float tmpY) {
         if (tmpX != hero.getPosition().x || tmpY != hero.getPosition().y) {
-            stackEvent.setHasAction(true);
             hero.setMesh();
             heroAttributes.update();
-        } else
-            stackEvent.setHasAction(false);
+            stackEvent.addHeroDto();
+        }
+    }
+
+    public HeroDto getHeroDTO() {
+        return new HeroDto.Builder()
+                .heroType(hero.getName())
+                .life(hero.getLife())
+                .mana(hero.getMana())
+                .positionX(hero.getX())
+                .positionY(hero.getY())
+                .build();
     }
 }

@@ -5,8 +5,11 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.BaseDto;
+import com.khryniewicki.projectX.services.dto.BaseDtoType;
 import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -21,88 +24,75 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class SendingService implements Runnable {
     private final Channels channel;
     private final StackEvent stackEvent;
-    private HeroDto tmpHero;
-    private SuperHero hero;
-    private HeroesInstances heroesInstances;
-    private HeroStartingPosition heroStartingPosition;
     private ConcurrentLinkedDeque<BaseDto> events;
-    private int counter;
+    private int counterHero;
+    private int counterSpell;
     private StompSession session;
     private boolean running;
+    private BaseDto tmpHero = new HeroDto();
+    private BaseDto tmpSpell = new SpellDto();
+    private boolean player_left;
 
     public SendingService() {
-        channel = Channels.getINSTANCE();
-        stackEvent = StackEvent.getInstance();
+        this.channel = Channels.getINSTANCE();
+        this.stackEvent = StackEvent.getInstance();
+        this.events = stackEvent.getEvents();
     }
 
-    private void getHeroInstance() {
-        if (hero == null) {
-            this.heroStartingPosition = HeroStartingPosition.getInstance();
-            this.heroesInstances = HeroesInstances.getInstance();
-            this.hero = heroesInstances.getHero();
-            this.events = stackEvent.getEvents();
+    public boolean filter(BaseDto baseDto) {
+
+        switch (baseDto.getType()) {
+            case HERO:
+                if (baseDto.equals(tmpHero)) {
+                    counterHero++;
+                } else {
+                    tmpHero = baseDto;
+                    counterHero = 0;
+                }
+                return counterHero < 4;
+            case SPELL:
+                if (baseDto.equals(tmpSpell)) {
+                    counterSpell++;
+                } else {
+                    tmpSpell = baseDto;
+                    counterSpell = 0;
+                }
+                return counterHero < 4;
+            case MESSAGE:
+                if (baseDto.getStatus().equals(ConnectionState.DISCONNECTED)){
+                    setPlayer_left(true);
+                }
+                return true;
+            default:
+                return false;
         }
-    }
 
-    public Float getHeroPositionX() {
-        return hero.getX() == null ? heroStartingPosition.getX() : hero.getX();
-    }
-
-    public Float getHeroPositionY() {
-        return hero.getY() == null ? heroStartingPosition.getY() : hero.getY();
-    }
-
-    public HeroDto getHeroDTO() {
-        return new HeroDto.Builder()
-                .heroType(hero.getName())
-                .life(hero.getLife())
-                .mana(hero.getMana())
-                .positionX(getHeroPositionX())
-                .positionY(getHeroPositionY())
-                .build();
-    }
-
-    public synchronized void updatePosition() {
-        getHeroInstance();
-        HeroDto heroDTO = getHeroDTO();
-
-        if (heroDTO.equals(tmpHero)) {
-            counter++;
-        } else {
-            tmpHero = heroDTO;
-            counter = 0;
-        }
-        if (counter < 4) {
-            events.offerLast(heroDTO);
-        }
     }
 
 
     @Override
     public void run() {
-        stackEvent.setEvents(new ConcurrentLinkedDeque<>());
         session = WebsocketApplication.getSession();
         running = true;
         while (running) {
-            action();
             send();
+            is_player_left();
         }
-
     }
 
-    private void action() {
-        if (stackEvent.hasAction()) {
-            updatePosition();
+    private void is_player_left() {
+        if (player_left) {
+            stop();
         }
     }
 
     private synchronized void send() {
         if (events != null && events.size() != 0) {
             BaseDto baseDto = events.pop();
-            baseDto.setSessionId(session.getSessionId());
             try {
-                if (session.isConnected()) {
-                    session.send(path(baseDto), baseDto);
+                if (session.isConnected() && filter(baseDto)) {
+                    String path = path(baseDto);
+                    session.send(path, baseDto);
                 }
             } catch (MessageDeliveryException e) {
                 e.printStackTrace();
@@ -112,11 +102,15 @@ public class SendingService implements Runnable {
     }
 
     private String path(BaseDto pop) {
-        String path = "/app/hero/";
-        if (pop.isSpellDTO()) {
-            path = "/app/spell/";
+        BaseDtoType type = pop.getType();
+        switch (type) {
+            case HERO:
+                return "/app/hero/" + channel.getApp();
+            case SPELL:
+                return "/app/spell/" + channel.getApp();
+            default:
+                return "/app/room";
         }
-        return path + channel.getApp();
     }
 
     private void sleep() {

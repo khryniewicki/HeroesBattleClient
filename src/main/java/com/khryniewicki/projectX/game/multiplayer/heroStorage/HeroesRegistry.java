@@ -1,20 +1,20 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 
-import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Message;
+import com.khryniewicki.projectX.services.dto.MessageDto;
 import java.util.Map;
 
 public class HeroesRegistry {
-    private Map<String, Message> heroesRegistryBook;
+    private Map<String, MessageDto> heroesRegistryBook;
 
     private HeroesRegistry() {
     }
 
-    public Map<String, Message> getHeroesRegistryBook() {
+    public Map<String, MessageDto> getHeroesRegistryBook() {
         return heroesRegistryBook;
     }
 
-    public void setHeroesRegistryBook(Map<String, Message> heroesRegistryBook) {
+    public void setHeroesRegistryBook(Map<String, MessageDto> heroesRegistryBook) {
         this.heroesRegistryBook = heroesRegistryBook;
     }
 
