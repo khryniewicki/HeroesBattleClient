@@ -22,6 +22,7 @@ public class WebsocketController {
         disconnect();
         websocketApplication = new WebsocketApplication();
         websocketApplication.startWebsocket();
+        handler = new WebsocketApplication.MyStompSessionHandler();
     }
 
     public void disconnect() {
@@ -31,16 +32,6 @@ public class WebsocketController {
         }
     }
 
-    public void join_room() {
-        handler = new WebsocketApplication.MyStompSessionHandler();
-        handler.join_room();
-    }
-
-    public void leave_room() {
-        if (Objects.nonNull(handler)) {
-            handler.leave_room();
-        }
-    }
 
     public String get_session_id() {
         Optional<String> sessionId = Optional.empty();
@@ -57,7 +48,7 @@ public class WebsocketController {
 
     public void stop_websocket() {
         if (!get_session_id().isEmpty()) {
-            leave_room();
+            sendingService.leave_room();
         }
     }
 

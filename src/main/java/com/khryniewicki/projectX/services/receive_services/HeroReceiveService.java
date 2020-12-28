@@ -51,6 +51,7 @@ public class HeroReceiveService {
     public void reset() {
         MockLife = null;
         MockMana = null;
+        MockPosition=null;
     }
 
 

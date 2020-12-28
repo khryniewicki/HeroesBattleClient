@@ -99,12 +99,16 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void terminate_game() {
         stop_websocket();
+        stop_sending_service();
         terminateIfWindowShutDown();
+    }
+
+    protected void stop_sending_service() {
+        websocketController.stop_sending_service();
     }
 
     public void stop_websocket() {
         websocketController.stop_websocket();
-        websocketController.stop_sending_service();
     }
 
     private Game() {

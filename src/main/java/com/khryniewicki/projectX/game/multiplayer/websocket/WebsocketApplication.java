@@ -1,16 +1,13 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
-import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
-import com.khryniewicki.projectX.utils.StackEvent;
+import com.khryniewicki.projectX.services.sending_service.StackEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -85,26 +82,6 @@ public class WebsocketApplication implements Runnable {
                 System.err.println();
             }
         }
-
-        public void join_room() {
-            HeroesInstances heroesInstances = HeroesInstances.getInstance();
-            SuperHero superHero = heroesInstances.getHero();
-            stackEvent.addDto(new MessageDto.Builder()
-                    .status(ConnectionState.CONNECTED)
-                    .sessionID(session.getSessionId())
-                    .heroType(superHero.getName())
-                    .playerName(heroesInstances.getHeroName())
-                    .build());
-
-        }
-
-        public void leave_room() {
-            stackEvent.addDto(new MessageDto.Builder()
-                    .status(ConnectionState.DISCONNECTED)
-                    .sessionID(session.getSessionId())
-                    .build());
-        }
-
 
         public void subscribeHero(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {

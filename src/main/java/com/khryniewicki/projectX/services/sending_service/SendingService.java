@@ -1,8 +1,5 @@
 package com.khryniewicki.projectX.services.sending_service;
 
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
@@ -10,7 +7,6 @@ import com.khryniewicki.projectX.services.dto.BaseDto;
 import com.khryniewicki.projectX.services.dto.BaseDtoType;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
-import com.khryniewicki.projectX.utils.StackEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageDeliveryException;
@@ -38,6 +34,9 @@ public class SendingService implements Runnable {
         this.stackEvent = StackEvent.getInstance();
         this.events = stackEvent.getEvents();
     }
+    public void leave_room(){
+        stackEvent.leave_room();
+    }
 
     public boolean filter(BaseDto baseDto) {
 
@@ -59,9 +58,6 @@ public class SendingService implements Runnable {
                 }
                 return counterHero < 4;
             case MESSAGE:
-                if (baseDto.getStatus().equals(ConnectionState.DISCONNECTED)){
-                    setPlayer_left(true);
-                }
                 return true;
             default:
                 return false;
@@ -74,6 +70,8 @@ public class SendingService implements Runnable {
     public void run() {
         session = WebsocketApplication.getSession();
         running = true;
+        stackEvent.setEvents(new ConcurrentLinkedDeque<>());
+        stackEvent.join_room();
         while (running) {
             send();
             is_player_left();
@@ -91,14 +89,23 @@ public class SendingService implements Runnable {
             BaseDto baseDto = events.pop();
             try {
                 if (session.isConnected() && filter(baseDto)) {
+                    log.info("{}",baseDto);
                     String path = path(baseDto);
                     session.send(path, baseDto);
+                    stop_sending(baseDto);
                 }
             } catch (MessageDeliveryException e) {
                 e.printStackTrace();
             }
         }
         sleep();
+    }
+
+    private void stop_sending(BaseDto baseDto) {
+        if (baseDto.getStatus().equals(ConnectionState.DISCONNECTED)){
+            System.out.println(baseDto);
+            setPlayer_left(true);
+        }
     }
 
     private String path(BaseDto pop) {
