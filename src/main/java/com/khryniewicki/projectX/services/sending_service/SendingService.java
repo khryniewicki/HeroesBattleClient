@@ -87,6 +87,7 @@ public class SendingService implements Runnable {
             BaseDto baseDto = events.pop();
             try {
                 if (session.isConnected() && filter(baseDto)) {
+                    log.info("{}",baseDto);
                     String path = path(baseDto);
                     session.send(path, baseDto);
                 }

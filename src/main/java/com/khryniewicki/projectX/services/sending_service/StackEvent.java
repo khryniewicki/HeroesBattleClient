@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 @Getter
 @Setter
 public class StackEvent {
-    private ConcurrentLinkedDeque<BaseDto> events;
+    private ConcurrentLinkedDeque<BaseDto> events=new ConcurrentLinkedDeque<>();
 
     private static StackEvent INSTANCE;
 

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class HeroDto implements Serializable, BaseDto {
     private Integer mana;
     private Float positionX;
     private Float positionY;
-    private boolean isSpellDTO;
+    private BaseDtoType type;
     private String sessionId;
 
     public HeroDto(Builder builder) {
@@ -24,6 +25,7 @@ public class HeroDto implements Serializable, BaseDto {
         this.mana = builder.mana;
         this.positionX = builder.positionX;
         this.positionY = builder.positionY;
+        this.type = BaseDtoType.HERO;
     }
 
     public static class Builder {
@@ -64,14 +66,32 @@ public class HeroDto implements Serializable, BaseDto {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HeroDto heroDto = (HeroDto) o;
+        return Objects.equals(heroType, heroDto.heroType) &&
+                Objects.equals(life, heroDto.life) &&
+                Objects.equals(mana, heroDto.mana) &&
+                Objects.equals(positionX, heroDto.positionX) &&
+                Objects.equals(positionY, heroDto.positionY) &&
+                type == heroDto.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(heroType, life, mana, positionX, positionY, type);
+    }
+
+    @Override
     public String toString() {
-        return "HeroDTO{" +
+        return "HeroDto{" +
                 "heroType='" + heroType + '\'' +
                 ", life=" + life +
                 ", mana=" + mana +
                 ", positionX=" + positionX +
                 ", positionY=" + positionY +
-                ", isSpellDTO=" + isSpellDTO +
+                ", type='" + type + '\'' +
                 ", sessionId='" + sessionId + '\'' +
                 '}';
     }
