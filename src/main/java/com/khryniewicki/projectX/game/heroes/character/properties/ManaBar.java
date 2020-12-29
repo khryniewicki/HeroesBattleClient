@@ -73,7 +73,7 @@ public class ManaBar extends GraphicLoader {
             return 1f;
         } else {
             float mana = hero.getMana();
-            return mana < 0 ? 0 : mana / 100f;
+            return mana < 0 ? 0 : mana / maxMana;
         }
     }
 

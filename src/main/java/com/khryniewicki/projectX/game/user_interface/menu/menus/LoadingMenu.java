@@ -8,9 +8,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOADING;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOGO;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_GREEN;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
@@ -32,7 +34,7 @@ public class LoadingMenu extends AbstractMenu {
 
     @Override
     public void init() {
-        setVolatileImages(Collections.singletonList(LOADING));
+        setVolatileImages(Arrays.asList(LOADING,LOGO));
     }
 
     @Override

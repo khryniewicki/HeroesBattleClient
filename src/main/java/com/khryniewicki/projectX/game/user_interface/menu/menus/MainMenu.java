@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOGO;
 import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
@@ -95,7 +96,7 @@ public class MainMenu extends AbstractMenu {
         setVolatileImages(textureMenuFactory.getListWithTextMainMenuSymbols());
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
-        setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE)));
+        setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE,LOGO)));
     }
 
     @Override

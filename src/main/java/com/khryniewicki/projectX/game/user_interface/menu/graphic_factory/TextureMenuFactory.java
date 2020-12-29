@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
+import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 
 import java.util.*;
 
@@ -145,9 +146,18 @@ public class TextureMenuFactory {
             .withPositionX(-7f)
             .withPositionY(-4.5f)
             .build();
-
+    public static final MenuSymbol LOGO = new MenuSymbol.Builder()
+            .withTexture(LOGO_TEXTURE)
+            .withName("logo")
+            .withDisabled(false)
+            .withVisibility(0f)
+            .withHeight(0.9168f)
+            .withWidth(2.4144f)
+            .withPositionX(-9.6f)
+            .withPositionY(-5.5f)
+            .build();
     public static final MenuSymbol TABLE = new MenuSymbol.Builder()
-            .withTexture(BLANK_TEXT_WINDOW)
+            .withTexture(BLANK_TABLE_WINDOW)
             .withDisabled(true)
             .withName("table")
             .withVisibility(1f)
@@ -170,7 +180,7 @@ public class TextureMenuFactory {
             .withTexture(BLANK_TEXT_WINDOW)
             .withDisabled(false)
             .withName("label")
-            .withHeight(2.5f)
+            .withHeight(2.007f)
             .withWidth(3f)
             .withPositionX(5.4f)
             .withPositionY(3.0f)

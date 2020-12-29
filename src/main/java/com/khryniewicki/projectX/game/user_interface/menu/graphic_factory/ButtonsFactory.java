@@ -49,7 +49,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)
-            .withPositionY(-1.4f)
+            .withPositionY(-0.9f)
             .build();
 
     public static final MenuSymbol CHOOSE_CHARACTER = new Button.Builder()
@@ -58,7 +58,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)
-            .withPositionY(-2.6f)
+            .withPositionY(-2.1f)
             .build();
     public static final MenuSymbol CONTROL_SETTINGS = new Button.Builder()
             .withTexture(CONTROL_SETTINGS_TEXTURE)
@@ -66,7 +66,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)
-            .withPositionY(-3.8f)
+            .withPositionY(-3.3f)
             .build();
     public static final MenuSymbol QUIT_BUTTON = new Button.Builder()
             .withTexture(QUIT_GAME_TEXTURE)
@@ -74,7 +74,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)
-            .withPositionY(-5.0f)
+            .withPositionY(-4.5f)
             .build();
 
     public static final MenuSymbol FIRE_WIZARD_BUTTON = new Button.Builder()
