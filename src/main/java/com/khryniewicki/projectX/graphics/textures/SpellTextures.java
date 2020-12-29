@@ -42,7 +42,7 @@ public class SpellTextures {
     public static final Texture STORMICON = new Texture("stormIcon.png");
     public static final Texture STORMICONFADED = new Texture("stormIconFaded.png");
 
-    public static final Texture WINDATTACK = new Texture("windAttack.png");
+    public static final Texture WINDATTACK = new Texture("windAttack2.png");
     public static final Texture WINDICON = new Texture("windIcon.png");
     public static final Texture WINDICONFADED = new Texture("windIconFaded.png");
 

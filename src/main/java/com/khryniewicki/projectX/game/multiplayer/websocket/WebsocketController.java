@@ -16,6 +16,7 @@ public class WebsocketController {
     private WebsocketApplication websocketApplication;
 
     private WebsocketController() {
+        sendingService = new SendingService();
     }
 
     public void initialize_websocket() {
@@ -51,7 +52,6 @@ public class WebsocketController {
     }
 
     public void start_sending_service() {
-        sendingService = new SendingService();
         new Thread(sendingService, "SendingService").start();
     }
 

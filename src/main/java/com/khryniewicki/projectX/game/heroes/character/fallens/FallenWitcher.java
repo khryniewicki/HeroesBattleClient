@@ -2,8 +2,8 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.Storm;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.Wind;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.ElectricShock;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.witcher.ElectricBomb;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
@@ -20,8 +20,8 @@ public class FallenWitcher extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Storm()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new Wind()));
+        setBasicSpellInstance(new BasicSpellInstance(new ElectricShock()));
+        setUltimateSpellInstance(new UltimateSpellInstance(new ElectricBomb()));
     }
 
     @Override
@@ -43,9 +43,10 @@ public class FallenWitcher extends SuperHero {
         setHero_right_offset(0.2f);
         setHero_bottom_offset(0.2f);
         setHero_top_offset(0.5f);
-        setMana(100);
-        setLife(100);
+        setMana(80f);
+        setLife(160);
         setSIZE(1.1F);
+        setManaRegeneration(0.5f);
     }
 
 

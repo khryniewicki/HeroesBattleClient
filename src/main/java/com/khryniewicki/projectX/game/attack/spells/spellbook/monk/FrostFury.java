@@ -5,20 +5,20 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
-public class BlueOrb extends Spell {
+public class FrostFury extends Spell {
 
-    public BlueOrb() {
+    public FrostFury() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("BlueOrbBall");
+        setName("Frost Fury");
         setBasic(true);
-        setCastingSpeed(0.3f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
+        setCastingSpeed(0.25f);
+        setSpellDuration(4000L);
+        setPowerAttack(13);
         setManaConsumed(10);
     }
 

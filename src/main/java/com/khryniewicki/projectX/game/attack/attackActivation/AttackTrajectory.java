@@ -136,7 +136,7 @@ public class AttackTrajectory {
     }
 
     private void iceball_exception() {
-        if (spellInstance.getName().equals("IceBerg") || spellInstance.getName().equals("IceBolt")) {
+        if (spellInstance.getName().equals("Ice Berg") || spellInstance.getName().equals("Ice Bolt")) {
             float size = spellInstance.getThrowingSpellTexture().getSize();
             if (Math.abs(distance.getY()) < 1) {
                 spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), new SpellTexture(ICEBALL_SIDE, size * 1.2f));
@@ -147,7 +147,7 @@ public class AttackTrajectory {
     }
 
     private void skull_spell_exception() {
-        if (spellInstance.getName().equals("Skull")) {
+        if (spellInstance.getName().equals("Skull Curse")) {
             spell.setImage(Math.signum(1), (-Math.signum(distance.getX())) * (-Math.signum(distance.getY())), spellInstance.getThrowingSpellTexture());
         }
     }

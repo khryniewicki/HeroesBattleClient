@@ -13,7 +13,7 @@ import java.util.Objects;
 public class HeroDto implements Serializable, BaseDto {
     private String heroType;
     private Integer life;
-    private Integer mana;
+    private Float mana;
     private Float positionX;
     private Float positionY;
     private BaseDtoType type;
@@ -31,7 +31,7 @@ public class HeroDto implements Serializable, BaseDto {
     public static class Builder {
         private String heroType;
         private Integer life;
-        private Integer mana;
+        private Float mana;
         private Float positionX;
         private Float positionY;
 
@@ -45,7 +45,7 @@ public class HeroDto implements Serializable, BaseDto {
             return this;
         }
 
-        public Builder mana(Integer mana) {
+        public Builder mana(Float mana) {
             this.mana = mana;
             return this;
         }

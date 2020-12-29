@@ -1,33 +1,34 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook.ice;
+package com.khryniewicki.projectX.game.attack.spells.spellbook.thunder;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
-public class IceBerg extends Spell {
+public class Lightning extends Spell {
 
-    public IceBerg() {
+    public Lightning() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("Ice Berg");
+        setName("Lightning");
         setBasic(false);
         setCastingSpeed(0.25f);
         setSpellDuration(6000L);
-        setPowerAttack(21);
+        setSIZE(0.9f);
+        setPowerAttack(22);
         setManaConsumed(15);
     }
 
     @Override
     public void setTexture() {
-        setMissleSpell(new SpellTexture(SpellTextures.ICEBALL, 1.2f));
-        setExecutedSpell(new SpellTexture(SpellTextures.ICEBERG, 1.2f));
-        setIcon(SpellTextures.ICEBERGICON);
-        setFadedIcon(SpellTextures.ICEBERGFADED);
+        setMissleSpell(new SpellTexture(SpellTextures.THUNDERBALL2, 1.5f));
+        setExecutedSpell(new SpellTexture(SpellTextures.THUNDER, 1.7f));
+        setIcon(SpellTextures.THUNDERICON);
+        setFadedIcon(SpellTextures.THUNDERICONFADED);
     }
 
 }

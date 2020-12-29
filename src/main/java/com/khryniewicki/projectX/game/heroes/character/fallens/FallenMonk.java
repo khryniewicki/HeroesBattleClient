@@ -2,8 +2,8 @@ package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.BlueOrb;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.RedOrb;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.FrostFury;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.monk.BloodyWhip;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
@@ -20,8 +20,8 @@ public class FallenMonk extends SuperHero {
 
     @Override
     public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new BlueOrb()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new RedOrb()));
+        setBasicSpellInstance(new BasicSpellInstance(new FrostFury()));
+        setUltimateSpellInstance(new UltimateSpellInstance(new BloodyWhip()));
     }
 
     @Override
@@ -43,9 +43,11 @@ public class FallenMonk extends SuperHero {
         setHero_top_offset(0.5f);
         setHero_right_offset(0.2f);
         setHero_bottom_offset(0.2f);
-        setMana(100);
-        setLife(100);
+        setMana(120f);
+        setLife(120);
         setSIZE(1.1F);
+        setManaRegeneration(0.75f);
+
     }
 
 

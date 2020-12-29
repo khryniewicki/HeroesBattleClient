@@ -74,6 +74,7 @@ public class AttackExecution {
         lifeBar.updateLifeBar();
 
         stackEvent.addHeroDto();
+        log.info("attack execution");
     }
 
 

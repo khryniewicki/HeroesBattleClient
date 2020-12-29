@@ -29,8 +29,8 @@ public class SuperHero implements UltraHero {
     protected HeroAttributes heroAttributes;
     private String name;
     private Integer life;
-    private Integer mana;
-    private Long manaRenegeration = 1000L;
+    private Float mana;
+    private Float manaRegeneration;
 
     public static float hero_positionX0;
     public static float hero_positionY0;
@@ -62,6 +62,7 @@ public class SuperHero implements UltraHero {
         this.hero_top_offset = superHero.hero_top_offset;
         this.basicSpellInstance = superHero.basicSpellInstance;
         this.ultimateSpellInstance = superHero.ultimateSpellInstance;
+        this.manaRegeneration =superHero.manaRegeneration;
         this.mana = superHero.mana;
         this.life = superHero.life;
         this.SIZE = superHero.SIZE;

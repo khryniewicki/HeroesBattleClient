@@ -30,7 +30,7 @@ public class SendingService implements Runnable {
     private boolean running;
     private BaseDto tmpHero = new HeroDto();
     private BaseDto tmpSpell = new SpellDto();
-    private boolean player_left;
+    private boolean disconnected;
 
     public SendingService() {
         this.channel = Channels.getINSTANCE();
@@ -38,7 +38,7 @@ public class SendingService implements Runnable {
 
     }
 
-    public boolean filter(BaseDto baseDto) {
+    public boolean no_duplicates_filter(BaseDto baseDto) {
 
         switch (baseDto.getType()) {
             case HERO:
@@ -59,7 +59,7 @@ public class SendingService implements Runnable {
                 return counterHero < 4;
             case MESSAGE:
                 if (baseDto.getStatus().equals(ConnectionState.DISCONNECTED)) {
-                    setPlayer_left(true);
+                    setDisconnected(true);
                 }
                 return true;
             default:
@@ -76,12 +76,12 @@ public class SendingService implements Runnable {
         running = true;
         while (running) {
             send();
-            is_player_left();
+            is_player_disconnected();
         }
     }
 
-    private void is_player_left() {
-        if (player_left) {
+    private void is_player_disconnected() {
+        if (disconnected) {
             stop();
         }
     }
@@ -93,8 +93,7 @@ public class SendingService implements Runnable {
                 if (Objects.isNull(session)) {
                     session = WebsocketApplication.getSession();
                 }
-                if (session.isConnected() && filter(baseDto)) {
-                    log.info("{}", baseDto);
+                if (session.isConnected() && no_duplicates_filter(baseDto)) {
                     String path = path(baseDto);
                     session.send(path, baseDto);
                 }
@@ -126,8 +125,9 @@ public class SendingService implements Runnable {
     }
 
     public void stop() {
-        setRunning(false);
-        events.clear();
-        log.info("SENDING SERVICE STOPPED");
+        if (running) {
+            setRunning(false);
+            stackEvent.reset();
+        }
     }
 }

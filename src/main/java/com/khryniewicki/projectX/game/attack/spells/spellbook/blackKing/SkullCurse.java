@@ -5,20 +5,20 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
-public class Skull extends Spell {
+public class SkullCurse extends Spell {
 
-    public Skull() {
+    public SkullCurse() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("Skull");
+        setName("Skull Curse");
         setBasic(false);
         setCastingSpeed(0.25f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
+        setSpellDuration(8000L);
+        setPowerAttack(18);
         setManaConsumed(15);
     }
 

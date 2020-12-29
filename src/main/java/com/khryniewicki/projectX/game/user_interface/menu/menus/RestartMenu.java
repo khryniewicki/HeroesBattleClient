@@ -37,8 +37,8 @@ public class RestartMenu extends AbstractMenu {
 
     public void execute() {
         loop();
-        reset();
         if (Game.state.equals(GameState.OK)) {
+            reset();
             game.initialize_game();
         }
     }

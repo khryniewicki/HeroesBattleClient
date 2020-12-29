@@ -20,6 +20,11 @@ public class StackEvent {
         events.add(baseDto);
     }
 
+    public void reset() {
+        events.clear();
+        stackEventSupport.setHero(null);
+    }
+
     public void addHeroDto() {
         addDto(stackEventSupport.addHeroDto());
     }

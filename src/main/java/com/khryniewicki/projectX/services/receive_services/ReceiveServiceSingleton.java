@@ -22,7 +22,7 @@ public class ReceiveServiceSingleton {
         return heroReceiveService.getMockLife();
     }
 
-    public Integer get_hero_mock_mana() {
+    public Float get_hero_mock_mana() {
         return heroReceiveService.getMockMana();
     }
 

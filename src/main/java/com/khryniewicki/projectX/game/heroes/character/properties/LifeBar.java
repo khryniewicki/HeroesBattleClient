@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.graphics.GraphicLoader;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -25,12 +24,14 @@ public class LifeBar extends GraphicLoader {
     private UltraHero ultraHero;
     float offsetPositionY = 0.5f;
     float offsetPositionX = -0.3f;
+    private Integer maxLife;
 
     public LifeBar(Builder builder) {
         super(builder);
         this.ultraHero = builder.ultraHero;
         this.blackBarTexture = builder.blackBarTexture;
         this.greenBarTexture = builder.greenBarTexture;
+        this.maxLife = builder.maxLife;
         update();
     }
 
@@ -64,7 +65,7 @@ public class LifeBar extends GraphicLoader {
             return 1f;
         } else {
             float life = ultraHero.getLife();
-            return life < 0 ? 0 : life / 100f;
+            return life < 0 ? 0 : life / maxLife;
         }
     }
 
@@ -90,7 +91,7 @@ public class LifeBar extends GraphicLoader {
         private UltraHero ultraHero;
         private Texture blackBarTexture;
         private Texture greenBarTexture;
-
+        private Integer maxLife;
 
         public LifeBar.Builder withHero(UltraHero ultraHero) {
             this.ultraHero = ultraHero;
@@ -104,6 +105,11 @@ public class LifeBar extends GraphicLoader {
 
         public LifeBar.Builder withGreenBarTexture(Texture texture) {
             this.greenBarTexture = texture;
+            return this;
+        }
+
+        public LifeBar.Builder withMaxLife(Integer maxLife) {
+            this.maxLife = maxLife;
             return this;
         }
 

@@ -78,13 +78,13 @@ public class MouseSettings {
     }
 
     private void consumeSpellMana() {
-        Integer heroMana = hero.getMana();
+        Float heroMana = hero.getMana();
         hero.setMana(heroMana - spell.getManaConsumed());
 
         ManaBar manaBar = hero.getManaBar();
         manaBar.updateManaBar();
-
         stackEvent.addHeroDto();
+
     }
 
 

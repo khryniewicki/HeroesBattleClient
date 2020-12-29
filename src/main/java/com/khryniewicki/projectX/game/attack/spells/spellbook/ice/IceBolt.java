@@ -14,11 +14,11 @@ public class IceBolt extends Spell {
 
     @Override
     public void setProperties() {
-        setName("IceBolt");
+        setName("Ice Bolt");
         setBasic(true);
-        setCastingSpeed(0.25f);
+        setCastingSpeed(0.3f);
         setSpellDuration(3000L);
-        setPowerAttack(10);
+        setPowerAttack(14);
         setManaConsumed(10);
     }
 

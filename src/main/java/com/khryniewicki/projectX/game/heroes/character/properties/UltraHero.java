@@ -20,11 +20,11 @@ public interface UltraHero extends Ultra {
     Integer getLife();
     default void setLife(Integer mana){}
     ManaBar getManaBar();
-    Long getManaRenegeration();
-    void setManaRenegeration(Long manaRenegeration);
+    Float getManaRegeneration();
+    void setManaRegeneration(Float manaRegeneration);
 
-    Integer getMana();
-    default void setMana(Integer mana){}
+    Float getMana();
+    default void setMana(Float mana){}
 
     UltraSpell getBasicSpell();
     void setBasicSpell(UltraSpell ultraSpell);
@@ -40,5 +40,4 @@ public interface UltraHero extends Ultra {
     default void setHeroRun(){}
     default void setHeroAttack(){}
     default void updateManaBar(){}
-
 }

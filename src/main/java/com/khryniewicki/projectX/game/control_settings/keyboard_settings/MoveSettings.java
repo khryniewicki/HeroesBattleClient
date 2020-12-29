@@ -8,9 +8,10 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.sending_service.StackEvent;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.lwjgl.glfw.GLFW.*;
-
+@Slf4j
 public class MoveSettings {
 
     private Vector position;
@@ -68,16 +69,8 @@ public class MoveSettings {
             hero.setMesh();
             heroAttributes.update();
             stackEvent.addHeroDto();
+            log.info("move");
         }
     }
 
-    public HeroDto getHeroDTO() {
-        return new HeroDto.Builder()
-                .heroType(hero.getName())
-                .life(hero.getLife())
-                .mana(hero.getMana())
-                .positionX(hero.getX())
-                .positionY(hero.getY())
-                .build();
-    }
 }

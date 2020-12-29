@@ -41,17 +41,18 @@ public class TableFactory {
         bufferedImage();
         g2d.setColor(Color.BLUE);
 
-        String[] heroHeader = {"Life", "Mana", "Speed", "Basic Attack", "Ultimate Attack"};
-        String[] heroData = {superHero.getLife().toString(), superHero.getMana().toString(), "20", basic.getName(), ultimate.getName()};
-        String[] spellsHeader = {"Spell", "Damage", "Mana Cost", "Speed", "Casting speed"};
+        String[] heroHeader = {"Life", "Mana", "Mana Recovery", "Basic Attack", "Ultimate Attack"};
+        Float mana_reg = superHero.getManaRegeneration();
+        String[] heroData = {superHero.getLife().toString(), fmt(superHero.getMana()), String.format(fmt(mana_reg) +" / sec", mana_reg), basic.getName(), ultimate.getName()};
+        String[] spellsHeader = {"Spell", "Damage", "Mana Cost", "Spell Speed", "Cooldown"};
         String[] spelldata1 = {basic.getName(), basic.getPowerAttack().toString(), basic.getManaConsumed().toString(), String.valueOf(basic.getCastingSpeed() * 10), String.format("%d sec", basic.getSpellDuration() / 1000)};
         String[] spelldata2 = {ultimate.getName(), ultimate.getPowerAttack().toString(), ultimate.getManaConsumed().toString(), String.valueOf((ultimate.getCastingSpeed() * 10)), String.format("%d sec", ultimate.getSpellDuration() / 1000)};
 
         for (int i = 0; i < heroHeader.length; i++) {
             int y = 20 + i * 40;
             int x = 170;
-            int x2 = 360;
-            int x3 = 500;
+            int x2 = 350;
+            int x3 = 520;
             int positionX = 10;
             int positionY = y + 30;
             g2d.setColor(BRIGHT_BLUE);
@@ -61,8 +62,8 @@ public class TableFactory {
                 g2d.draw(new Line2D.Float((float) x + x3, 30f, (float) x + x3, 215f));
 
             } else {
-                g2d.draw(new Line2D.Float(0f, (float) y, 300, (float) y));
-                g2d.draw(new Line2D.Float(x2, (float) y, x3 + 300, (float) y));
+                g2d.draw(new Line2D.Float(0f, (float) y, 320, (float) y));
+                g2d.draw(new Line2D.Float(x2+30, (float) y, x3 + 320, (float) y));
             }
 
             AttributedString header = new AttributedString(heroHeader[i]);
@@ -71,7 +72,7 @@ public class TableFactory {
 
             AttributedString spellHeader = new AttributedString(spellsHeader[i]);
             spellHeader.addAttribute(TextAttribute.FONT, font);
-            g2d.drawString(spellHeader.getIterator(), x2 + positionX, positionY);
+            g2d.drawString(spellHeader.getIterator(), x2 + positionX+30, positionY);
 
             g2d.setColor(BRIGHT_YELLOW);
 
@@ -99,6 +100,13 @@ public class TableFactory {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+    }
+    public static String fmt(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return String.format("%s",d);
     }
 }
 

@@ -18,7 +18,7 @@ public class Fire extends Spell {
         setBasic(true);
         setCastingSpeed(0.3f);
         setSpellDuration(3000L);
-        setPowerAttack(10);
+        setPowerAttack(16);
         setManaConsumed(10);
     }
 

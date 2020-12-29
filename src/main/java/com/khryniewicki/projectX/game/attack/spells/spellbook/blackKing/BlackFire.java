@@ -14,11 +14,11 @@ public class BlackFire extends Spell {
 
     @Override
     public void setProperties() {
-        setName("BlackFireBall");
+        setName("Black Fire");
         setBasic(true);
-        setCastingSpeed(0.3f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
+        setCastingSpeed(0.25f);
+        setSpellDuration(4000L);
+        setPowerAttack(12);
         setManaConsumed(10);
     }
 

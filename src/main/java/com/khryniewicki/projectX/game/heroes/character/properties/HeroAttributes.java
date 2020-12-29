@@ -25,12 +25,13 @@ public class HeroAttributes implements Symbol {
         symbols = new ArrayList<>(Arrays.asList(lifeBar, playerNameBar, manaBar));
     }
 
-    private ManaBar initManaBar(SuperHero superHero) {
+    private ManaBar initManaBar(UltraHero ultraHero) {
         return new ManaBar.Builder()
-                .withHero(superHero)
+                .withHero(ultraHero)
                 .withHeight(0.07f)
                 .withWidth(0.65f)
                 .withVisibility(0.8f)
+                .withMaxMana(ultraHero.getMana())
                 .withBlueBarTexture(GameTextures.MANA)
                 .withBlackBarTexture(GameTextures.EMPTY)
                 .build();
@@ -39,6 +40,7 @@ public class HeroAttributes implements Symbol {
     private LifeBar initLifeBar(UltraHero ultraHero) {
         return new LifeBar.Builder()
                 .withHero(ultraHero)
+                .withMaxLife(ultraHero.getLife())
                 .withHeight(0.07f)
                 .withWidth(0.65f)
                 .withVisibility(0.8f)

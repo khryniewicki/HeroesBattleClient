@@ -23,32 +23,33 @@ public class ManaBar extends GraphicLoader {
     private Vector position = new Vector();
     private Texture blueBarTexture, blackBarTexture;
     private VertexArray blueMesh, blackMesh;
-
-    private SuperHero superHero;
+    private Long manaRegenaration = 1000L;
+    private UltraHero hero;
     private Long start;
     private StackEvent stackEvent;
-
+    private Float maxMana;
 
     public ManaBar(Builder builder) {
         super(builder);
-        this.superHero = builder.superHero;
+        this.hero = builder.hero;
         this.blackBarTexture = builder.blackBarTexture;
         this.blueBarTexture = builder.blueBarTexture;
+        this.maxMana = builder.maxMana;
         stackEvent = StackEvent.getInstance();
-        update();
+        updateManaBar();
     }
 
     @Override
     public void update() {
         updateManaBar();
+        renegerateMana();
     }
 
     public void updateManaBar() {
-        setPositionX(superHero.getX() + offsetPositionX);
-        setPositionY(superHero.getY() + offsetPositionY);
+        setPositionX(hero.getX() + offsetPositionX);
+        setPositionY(hero.getY() + offsetPositionY);
         this.blueMesh = getManaBarMesh("blue");
         this.blackMesh = getManaBarMesh("black");
-        stackEvent.addHeroDto();
     }
 
 
@@ -68,10 +69,10 @@ public class ManaBar extends GraphicLoader {
     }
 
     private Float getManaFactor() {
-        if (Objects.isNull(superHero.getMana())) {
+        if (Objects.isNull(hero.getMana())) {
             return 1f;
         } else {
-            float mana = superHero.getMana();
+            float mana = hero.getMana();
             return mana < 0 ? 0 : mana / 100f;
         }
     }
@@ -80,20 +81,19 @@ public class ManaBar extends GraphicLoader {
         if (Objects.isNull(start)) {
             start = System.currentTimeMillis();
         }
-        if (System.currentTimeMillis() - start > superHero.getManaRenegeration()) {
-            addMana();
-            updateManaBar();
+        if (System.currentTimeMillis() - start > manaRegenaration) {
             start = null;
+            addMana();
+            stackEvent.addHeroDto();
         }
     }
 
     private void addMana() {
-        Integer mana = superHero.getMana();
-        if (mana <= 98) {
-            superHero.setMana(mana + 2);
-        } else if (mana == 99) {
-            superHero.setMana(mana + 1);
-        }
+        Float mana = hero.getMana();
+        if (mana <= maxMana - hero.getManaRegeneration()) {
+            hero.setMana(mana + hero.getManaRegeneration());
+        } else
+            hero.setMana(maxMana);
     }
 
     @Override
@@ -108,13 +108,13 @@ public class ManaBar extends GraphicLoader {
     }
 
     public static class Builder extends GraphicLoader.Builder<Builder> {
-        private SuperHero superHero;
+        private UltraHero hero;
         private Texture blackBarTexture;
         private Texture blueBarTexture;
+        private Float maxMana;
 
-
-        public ManaBar.Builder withHero(SuperHero superHero) {
-            this.superHero = superHero;
+        public ManaBar.Builder withHero(UltraHero hero) {
+            this.hero = hero;
             return this;
         }
 
@@ -125,6 +125,11 @@ public class ManaBar extends GraphicLoader {
 
         public ManaBar.Builder withBlueBarTexture(Texture texture) {
             this.blueBarTexture = texture;
+            return this;
+        }
+
+        public ManaBar.Builder withMaxMana(Float maxMana) {
+            this.maxMana = maxMana;
             return this;
         }
 

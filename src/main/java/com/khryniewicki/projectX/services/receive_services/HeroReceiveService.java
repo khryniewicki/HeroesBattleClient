@@ -14,7 +14,7 @@ public class HeroReceiveService {
     private int counter;
     private Position MockPosition;
     private Integer MockLife;
-    private Integer MockMana;
+    private Float MockMana;
     private final MockStartingPosition mockStartingPosition;
 
     public HeroReceiveService() {

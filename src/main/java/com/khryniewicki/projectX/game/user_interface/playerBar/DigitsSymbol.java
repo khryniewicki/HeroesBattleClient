@@ -41,7 +41,7 @@ public class DigitsSymbol implements Symbol {
 
 
     private Integer getNumber() {
-        return name.equals("life") ? hero.getLife() : hero.getMana();
+        return name.equals("life") ? hero.getLife() : Math.round(hero.getMana());
     }
 
     private Position getPosition(String name) {

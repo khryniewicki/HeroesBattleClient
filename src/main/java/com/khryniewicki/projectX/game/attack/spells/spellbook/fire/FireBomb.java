@@ -5,21 +5,21 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
-public class UltimateFire extends Spell {
+public class FireBomb extends Spell {
 
-    public UltimateFire() {
+    public FireBomb() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("FireBall");
+        setName("Fire Bomb");
         setBasic(false);
-        setCastingSpeed(0.2f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
-        setManaConsumed(10);
+        setCastingSpeed(0.25f);
+        setSpellDuration(6000L);
+        setPowerAttack(24);
+        setManaConsumed(15);
     }
 
     @Override

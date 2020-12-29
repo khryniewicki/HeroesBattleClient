@@ -5,21 +5,21 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
-public class Wind extends Spell {
+public class ElectricBomb extends Spell {
 
-    public Wind() {
+    public ElectricBomb() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("WindBall");
+        setName("Electric Bomb");
         setBasic(false);
         setCastingSpeed(0.20f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
-        setManaConsumed(10);
+        setSpellDuration(8000L);
+        setPowerAttack(16);
+        setManaConsumed(15);
     }
 
     @Override

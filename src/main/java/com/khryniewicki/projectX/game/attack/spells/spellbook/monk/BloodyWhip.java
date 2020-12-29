@@ -5,21 +5,21 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 
-public class RedOrb extends Spell {
+public class BloodyWhip extends Spell {
 
-    public RedOrb() {
+    public BloodyWhip() {
         setProperties();
         setTexture();
     }
 
     @Override
     public void setProperties() {
-        setName("RedOrbBall");
+        setName("Bloody Whip");
         setBasic(false);
-        setCastingSpeed(0.25f);
-        setSpellDuration(3000L);
-        setPowerAttack(10);
-        setManaConsumed(10);
+        setCastingSpeed(0.2f);
+        setSpellDuration(8000L);
+        setPowerAttack(20);
+        setManaConsumed(15);
     }
 
     @Override

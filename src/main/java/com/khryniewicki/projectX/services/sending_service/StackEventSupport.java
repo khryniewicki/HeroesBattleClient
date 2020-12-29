@@ -6,11 +6,14 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStar
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.MessageDto;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 import static com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication.session;
-
+@Getter
+@Setter
 public class StackEventSupport {
     private final HeroesInstances heroesInstances;
     private final HeroStartingPosition heroStartingPosition;
@@ -20,6 +23,7 @@ public class StackEventSupport {
         heroesInstances = HeroesInstances.getInstance();
         heroStartingPosition = HeroStartingPosition.getInstance();
     }
+
 
 
     public HeroDto addHeroDto() {
