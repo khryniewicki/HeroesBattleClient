@@ -29,13 +29,11 @@ public class AttackTrajectory {
     private final UltraHero hero;
     private  SpellInstance spellInstance;
     private final UltraSpell spell;
-    private final SendingService sendingService;
     private final StackEvent stackEvent;
 
     public AttackTrajectory(UltraSpell spell, UltraHero hero) {
         this.hero = hero;
         this.stackEvent = StackEvent.getInstance();
-        this.sendingService = new SendingService();
         this.spell = spell;
         this.spellInstance = spell.getSpellInstance();
         this.isSpellNotPrepared = true;

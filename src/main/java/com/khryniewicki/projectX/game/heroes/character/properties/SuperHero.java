@@ -12,12 +12,15 @@ import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @Slf4j
 @Service
 public class SuperHero implements UltraHero {
@@ -179,4 +182,14 @@ public class SuperHero implements UltraHero {
         return heroAttributes.getManaBar();
     }
 
+    @Override
+    public String toString() {
+        return "SuperHero{" +
+                "texture=" + texture +
+                ", name='" + name +
+                ", life=" + life +
+                ", mana=" + mana +
+                ", position=" + position +
+                '}';
+    }
 }

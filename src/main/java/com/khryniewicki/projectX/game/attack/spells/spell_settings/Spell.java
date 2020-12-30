@@ -41,7 +41,7 @@ public class Spell implements UltraSpell {
     private Integer manaConsumed;
 
     private StackEvent stackEvent;
-    private SpellInstance spellInstance;
+    protected SpellInstance spellInstance;
     protected UltraHero hero;
     protected AttackTrajectory attackTrajectory;
     private StartingPosition startingPosition;

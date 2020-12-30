@@ -18,5 +18,4 @@ public interface SpellInstance  {
     String getName();
     boolean isBasic();
 
-
 }

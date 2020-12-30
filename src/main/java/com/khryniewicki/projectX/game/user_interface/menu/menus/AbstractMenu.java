@@ -46,7 +46,10 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
         clearBuffers();
         buttons.forEach(MenuSymbol::render);
         permanentImages.forEach(MenuSymbol::render);
-        animationSymbols.forEach(Symbol::render);
+        animationSymbols.stream()
+                .filter(symbol -> !symbol.isDisabled())
+                .collect(Collectors.toList())
+                .forEach(Symbol::render);
         volatileImages.stream()
                 .filter(menuSymbol -> !menuSymbol.isDisabled())
                 .collect(Collectors.toList())

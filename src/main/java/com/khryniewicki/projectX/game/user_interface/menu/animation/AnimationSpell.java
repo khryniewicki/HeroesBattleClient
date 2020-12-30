@@ -14,12 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AnimationSpell extends Spell {
     private SuperHero superHero;
-    private MenuSymbol animation_hero;
-    private SpellInstance spell;
+    private AnimationHero animationHero;
 
-    public AnimationSpell(SuperHero superHero, MenuSymbol animation_hero) {
+    public AnimationSpell(SuperHero superHero, AnimationHero animationHero) {
         this.superHero = superHero;
-        this.animation_hero = animation_hero;
+        this.animationHero = animationHero;
         createHero();
         setSpellInstance(superHero.getBasicSpellInstance());
         setAttackTrajectory(new AttackTrajectory(this, hero));
@@ -28,15 +27,14 @@ public class AnimationSpell extends Spell {
     }
 
     public void newSpell(int number) {
-        toss_spell_instance(number);
-        setSpellInstance(spell);
-        attackTrajectory.setSpellInstance(spell);
+        setSpellInstance(toss_spell_instance(number));
+        attackTrajectory.setSpellInstance(spellInstance);
         createProperties();
         setMesh();
     }
 
-    protected void toss_spell_instance(int number) {
-        spell = number % 2 == 0 ? superHero.getBasicSpellInstance() : superHero.getUltimateSpellInstance();
+    protected SpellInstance toss_spell_instance(int number) {
+        return spellInstance = number % 2 == 0 ? superHero.getBasicSpellInstance() : superHero.getUltimateSpellInstance();
     }
 
     @Override
@@ -46,22 +44,24 @@ public class AnimationSpell extends Spell {
         }
     }
 
-
     @Override
     public Float getHeroPositionX() {
-        return animation_hero.getPosition().x;
+        return animationHero.getPositionX();
     }
 
     @Override
     public Float getHeroPositionY() {
-        return animation_hero.getPositionY() + 0.1f;
+        return animationHero.getPositionY();
     }
-
 
     @Override
     public void setPosition() {
-        setPositionX(animation_hero.getPosition().x);
-        setPositionY(animation_hero.getPositionY());
+        setPositionX(getHeroPositionX());
+        setPositionY(getHeroPositionY());
         setPositionZ(-0.1f);
+    }
+
+    public void disappear(){
+        setPositionZ(-1f);
     }
 }

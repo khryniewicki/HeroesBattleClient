@@ -83,7 +83,7 @@ public class CharacterMenu extends AbstractMenu {
                 break;
             case "showTable":
                 boolean disabled = TABLE.isDisabled();
-                toggleImage(TABLE, !disabled);
+                animation.toggle_table(!disabled);
                 updateButtonText(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SKILLS);
                 break;
             case "typeYourName":
@@ -94,7 +94,6 @@ public class CharacterMenu extends AbstractMenu {
             default:
                 setChosenHero(btnName);
                 addButton(CHARACTER_SKILLS);
-                updateImage(TABLE, getTextureFromTableFactory(btnName));
                 initAnimation(btnName);
                 set_hero_type(chosenHero);
                 showMessageInMainMenu(chosenHero);
@@ -105,7 +104,7 @@ public class CharacterMenu extends AbstractMenu {
     @Override
     public void restart() {
         animation.stop();
-        toggleImage(TABLE, true);
+        animation.toggle_table(true);
         toggleImage(HERO_NAME, true);
         updateButtonText(CHARACTER_SKILLS, SKILLS);
         updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
@@ -133,10 +132,9 @@ public class CharacterMenu extends AbstractMenu {
     }
 
     public void initAnimation(String character) {
-        animation.removeSpellIfExists();
-        animation.play(character);
+        animation.remove_spell_if_exists();
+        animation.execute(character);
     }
-
 
     public void removeButton(MenuSymbol symbol) {
         symbol.removePropertyChangeListener(this);
@@ -157,7 +155,5 @@ public class CharacterMenu extends AbstractMenu {
         return TextFactory.textToImageWithLine(name, 35);
     }
 
-    private Texture getTextureFromTableFactory(String btnName) {
-        return TableFactory.tableImage(btnName);
-    }
+
 }

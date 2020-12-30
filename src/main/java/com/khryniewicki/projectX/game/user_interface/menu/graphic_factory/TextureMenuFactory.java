@@ -30,7 +30,7 @@ public class TextureMenuFactory {
 
     public List<MenuSymbol> getListWithCharacterMenuMessages() {
         if (Objects.isNull(listWithCharacterMenuMessages)) {
-            listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, BG_ANIMATION, TABLE));
+            listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, BG_ANIMATION));
         }
         return listWithCharacterMenuMessages;
     }
@@ -170,20 +170,20 @@ public class TextureMenuFactory {
     public static final MenuSymbol PLAYERS_DESCRIPTION_LABEL = new Button.Builder()
             .withTexture(BLANK_TEXT_WINDOW)
             .withDisabled(false)
-            .withName("label")
-            .withHeight(1f)
-            .withWidth(5f)
-            .withPositionX(5.55f)
+            .withName("description_label")
+            .withHeight(0.75f)
+            .withWidth(6.5f)
+            .withPositionX(4.7f)
             .withPositionY(3.2f)
             .build();
     public static final MenuSymbol PLAYERS_BAR_LABEL = new Button.Builder()
-            .withTexture(BLANK_TEXT_WINDOW)
+            .withTexture(BLANK_BAR_LABEL_WINDOW)
             .withDisabled(false)
             .withName("label")
-            .withHeight(2.007f)
-            .withWidth(3f)
-            .withPositionX(5.4f)
-            .withPositionY(3.0f)
+            .withHeight(2.675f)
+            .withWidth(4f)
+            .withPositionX(4.4f)
+            .withPositionY(2.9f)
             .build();
     public static final MenuSymbol LOADING = new Button.Builder()
             .withTexture(BLANK_TEXT_WINDOW)

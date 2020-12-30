@@ -13,18 +13,18 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.text.AttributedString;
 
-import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
-import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
+import static com.khryniewicki.projectX.graphics.Colors.*;
 
 @Slf4j
 public class TableFactory {
 
-   static Graphics2D g2d;
-    public static Texture tableImage(String heroName) {
+    static Graphics2D g2d;
+
+    public static Texture tableImage(String heroName, int spell_instance_number) {
         HeroFactory heroFactory = HeroFactory.getInstance();
         SuperHero superHero = heroFactory.create(heroName);
         BufferedImage image = createBlankImage().getImage();
-        createTableImage(image, superHero);
+        createTableImage(image, superHero, spell_instance_number);
         return new Texture(image);
     }
 
@@ -33,7 +33,7 @@ public class TableFactory {
         return new Texture(path);
     }
 
-    public static void createTableImage(BufferedImage image, SuperHero superHero) {
+    public static void createTableImage(BufferedImage image, SuperHero superHero, int spell_instance_number) {
         BasicSpellInstance basic = superHero.getBasicSpellInstance();
         UltimateSpellInstance ultimate = superHero.getUltimateSpellInstance();
         Font font = new Font("Open Sans", Font.BOLD, 20);
@@ -43,7 +43,7 @@ public class TableFactory {
 
         String[] heroHeader = {"Life", "Mana", "Mana Recovery", "Basic Attack", "Ultimate Attack"};
         Float mana_reg = superHero.getManaRegeneration();
-        String[] heroData = {superHero.getLife().toString(), fmt(superHero.getMana()), String.format(fmt(mana_reg) +" / sec", mana_reg), basic.getName(), ultimate.getName()};
+        String[] heroData = {superHero.getLife().toString(), fmt(superHero.getMana()), fmt(mana_reg) + " / sec", basic.getName(), ultimate.getName()};
         String[] spellsHeader = {"Spell", "Damage", "Mana Cost", "Spell Speed", "Cooldown"};
         String[] spelldata1 = {basic.getName(), basic.getPowerAttack().toString(), basic.getManaConsumed().toString(), String.valueOf(basic.getCastingSpeed() * 10), String.format("%d sec", basic.getSpellDuration() / 1000)};
         String[] spelldata2 = {ultimate.getName(), ultimate.getPowerAttack().toString(), ultimate.getManaConsumed().toString(), String.valueOf((ultimate.getCastingSpeed() * 10)), String.format("%d sec", ultimate.getSpellDuration() / 1000)};
@@ -63,7 +63,7 @@ public class TableFactory {
 
             } else {
                 g2d.draw(new Line2D.Float(0f, (float) y, 320, (float) y));
-                g2d.draw(new Line2D.Float(x2+30, (float) y, x3 + 320, (float) y));
+                g2d.draw(new Line2D.Float(x2 + 30, (float) y, x3 + 320, (float) y));
             }
 
             AttributedString header = new AttributedString(heroHeader[i]);
@@ -72,7 +72,7 @@ public class TableFactory {
 
             AttributedString spellHeader = new AttributedString(spellsHeader[i]);
             spellHeader.addAttribute(TextAttribute.FONT, font);
-            g2d.drawString(spellHeader.getIterator(), x2 + positionX+30, positionY);
+            g2d.drawString(spellHeader.getIterator(), x2 + positionX + 30, positionY);
 
             g2d.setColor(BRIGHT_YELLOW);
 
@@ -80,10 +80,20 @@ public class TableFactory {
             content.addAttribute(TextAttribute.FONT, font);
             g2d.drawString(content.getIterator(), x + positionX, positionY);
 
-
+            if (spell_instance_number != 0 && spell_instance_number % 2 == 0) {
+                g2d.setColor(BRIGHT_RED);
+            } else {
+                g2d.setColor(BRIGHT_YELLOW);
+            }
             AttributedString spellresponse1 = new AttributedString(spelldata1[i]);
             spellresponse1.addAttribute(TextAttribute.FONT, font);
             g2d.drawString(spellresponse1.getIterator(), x2 + x + positionX, positionY);
+
+            if (spell_instance_number % 2 == 1) {
+                g2d.setColor(BRIGHT_RED);
+            } else {
+                g2d.setColor(BRIGHT_YELLOW);
+            }
             AttributedString spellresponse2 = new AttributedString(spelldata2[i]);
             spellresponse2.addAttribute(TextAttribute.FONT, font);
             g2d.drawString(spellresponse2.getIterator(), x3 + x + positionX, positionY);
@@ -101,12 +111,13 @@ public class TableFactory {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
     }
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
+
+    public static String fmt(double d) {
+        if (d == (long) d)
+            return String.format("%d", (long) d);
         else
-            return String.format("%s",d);
+            return String.format("%s", d);
     }
+
 }
 

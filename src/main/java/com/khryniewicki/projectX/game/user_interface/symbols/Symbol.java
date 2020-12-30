@@ -14,5 +14,10 @@ public interface Symbol {
     default void setTexture(Texture texture) {
     }
 
-    default void update(){}
+    default void update() {
+    }
+
+    default boolean isDisabled() {
+        return false;
+    }
 }

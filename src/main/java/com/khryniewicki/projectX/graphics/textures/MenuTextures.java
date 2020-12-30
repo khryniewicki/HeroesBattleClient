@@ -45,6 +45,7 @@ public class MenuTextures {
 
     //OTHER
     public static final Texture BLANK_TEXT_WINDOW = new Texture("blankTextWindow.png");
+    public static final Texture BLANK_BAR_LABEL_WINDOW= new Texture("blankBarLabelWindow.png");
     public static final Texture BLANK_TABLE_WINDOW = new Texture("blankTableWindow.png");
     public static final Texture BLANK_TEXT_WINDOW_WITH_LINE = new Texture("blankTextWindowWithLine.png");
     public static final Texture MENU_IMAGE_TEXTURE = new Texture("wizard2.png");
