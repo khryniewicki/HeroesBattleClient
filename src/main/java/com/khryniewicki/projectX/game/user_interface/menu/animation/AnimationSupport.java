@@ -110,15 +110,15 @@ public class AnimationSupport extends GameLoopImp {
     }
 
     protected void reset_table() {
-        setSymbols(table.update(this.symbols, superHero, 0));
+        setSymbols(table.update( superHero, 0));
     }
 
     protected void highlight_table() {
-        setSymbols(table.update(this.symbols, superHero, random_number));
+        setSymbols(table.update( superHero, random_number));
     }
 
     public void toggle_table(boolean disabled) {
-        setSymbols(table.toggle(this.symbols, disabled));
+        setSymbols(table.toggle(disabled));
     }
 
 

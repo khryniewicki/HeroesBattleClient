@@ -1,17 +1,25 @@
 package com.khryniewicki.projectX.game.user_interface.menu.animation;
 
+import com.khryniewicki.projectX.game.user_interface.menu.menus.CharacterMenu;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 public abstract class AnimationObject {
     protected final MenuSymbol  symbol;
+    protected final CharacterMenu characterMenu;
+    protected List<Symbol> animationSymbols;
 
     public AnimationObject(MenuSymbol symbol) {
         this.symbol = symbol;
+        this.characterMenu=CharacterMenu.getInstance();
+        this.animationSymbols=characterMenu.getAnimationSymbols();
     }
 
     protected void turnLeft(boolean b) {

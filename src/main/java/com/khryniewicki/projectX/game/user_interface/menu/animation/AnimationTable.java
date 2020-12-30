@@ -10,12 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AnimationTable extends AnimationObject {
-
     public AnimationTable(MenuSymbol symbol) {
         super(symbol);
     }
 
-    public List<Symbol> update(List<Symbol> animationSymbols, SuperHero superHero, int spell_instance_number) {
+    public List<Symbol> update(SuperHero superHero, int spell_instance_number) {
         return animationSymbols.stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
@@ -25,7 +24,7 @@ public class AnimationTable extends AnimationObject {
                 .collect(Collectors.toList());
     }
 
-    public List<Symbol> toggle(List<Symbol> animationSymbols, boolean disabled) {
+    public List<Symbol> toggle(boolean disabled) {
         return animationSymbols.stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {

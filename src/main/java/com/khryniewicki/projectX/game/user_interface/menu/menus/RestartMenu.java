@@ -48,7 +48,10 @@ public class RestartMenu extends AbstractMenu {
     protected void reset() {
         reset_heroes();
         reset_background();
+        reset_result();
     }
+
+
     protected void reset_heroes() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
         heroesInstances.reset();
@@ -57,6 +60,8 @@ public class RestartMenu extends AbstractMenu {
     private void reset_background() {
         updateImage(BACKGROUND, GameTextures.LIGHT_BACKGROUND);
     }
+
+    private void reset_result() { permanentImages = new ArrayList<>(); }
 
     @Override
     public void prepare() {
@@ -85,6 +90,7 @@ public class RestartMenu extends AbstractMenu {
         clearBuffers();
         board.render();
         buttons.forEach(MenuSymbol::render);
+        permanentImages.forEach(MenuSymbol::render);
         swapBuffers();
     }
 
