@@ -40,9 +40,10 @@ public class AnimationSupport extends GameLoopImp {
     protected AnimationTable table;
 
     protected void initCharacterMenu() {
-        characterMenu = CharacterMenu.getInstance();
+        if (Objects.isNull(characterMenu)) {
+            characterMenu = CharacterMenu.getInstance();
+        }
     }
-
     protected void add_dummy() {
         dummy.add_dummy(animationHero.getPositionX());
         add_symbol(dummy);

@@ -15,7 +15,8 @@ public class AnimationTable extends AnimationObject {
     }
 
     public List<Symbol> update(SuperHero superHero, int spell_instance_number) {
-        return animationSymbols.stream()
+        initCharacterMenu();
+        return characterMenu.getAnimationSymbols().stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
                         symbol.setTexture(texture_from_table_factory(superHero, spell_instance_number));
@@ -25,7 +26,7 @@ public class AnimationTable extends AnimationObject {
     }
 
     public List<Symbol> toggle(boolean disabled) {
-        return animationSymbols.stream()
+        return characterMenu.getAnimationSymbols().stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
                         symbol.setDisabled(disabled);
