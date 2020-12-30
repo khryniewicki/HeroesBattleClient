@@ -19,7 +19,7 @@ public class KeyboardSettings {
             if (characterMenu.isActiveWriting()) {
                 if (key >= 65 && key <= 90 && action != GLFW_RELEASE) {
                     String letter = Character.toString((char) key);
-                    if (sb.length() <= 10) {
+                    if (sb.length() <= 8) {
                         sb.append(letter);
                     }
                     heroName.setAction(sb.toString());

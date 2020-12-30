@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Colors;
@@ -67,7 +67,6 @@ public class WaitingRoomMenu extends AbstractMenu {
                 if (waitingForPlayer) {
                     restart();
                     Game game = Game.getInstance();
-                    log.info("INITIALIZE GAME FROM WAITING ROOM");
                     game.initialize_game();
                     MultiplayerController.getMultiplayerInstance().stop();
                 }
@@ -77,7 +76,6 @@ public class WaitingRoomMenu extends AbstractMenu {
 
     @Override
     public void restart() {
-        log.info("waiting room restart");
         setWaitingForPlayer(false);
         TIMER.setTexture(MenuTextures.BLANK_TEXT_WINDOW);
         level = 4.5f;

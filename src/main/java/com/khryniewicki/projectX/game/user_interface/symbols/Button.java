@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.user_interface.menu.buttons;
+package com.khryniewicki.projectX.game.user_interface.symbols;
 
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 

@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.MAIN_MENU;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.QUIT;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.YOU_LOSE;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.YOU_WIN;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
@@ -109,9 +111,11 @@ public class RestartMenu extends AbstractMenu {
             Integer herolife = heroesInstances.getHero().getLife();
             if (!show) {
                 if (herolife == 0) {
-                    log.info("YOU LOST");
+                    log.info("YOU LOSE");
+                    permanentImages.add(YOU_LOSE);
                 } else {
                     log.info("YOU WIN");
+                    permanentImages.add(YOU_WIN);
                 }
                 show = true;
             }

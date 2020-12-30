@@ -142,8 +142,7 @@ public class CharacterMenu extends AbstractMenu {
     }
 
     public void addButton(MenuSymbol symbol) {
-        boolean exist = buttons.stream()
-                .anyMatch(menuSymbol -> menuSymbol.equals(symbol));
+        boolean exist = buttons.stream().anyMatch(menuSymbol -> menuSymbol.equals(symbol));
         if (!exist) {
             buttons.add(symbol);
             symbol.addPropertyChangeListener(this);
@@ -152,7 +151,7 @@ public class CharacterMenu extends AbstractMenu {
 
 
     private Texture getTextureFromTextFactory(String name) {
-        return TextFactory.textToImageWithLine(name, 35);
+        return TextFactory.textToImageWithLine(name, 43);
     }
 
 

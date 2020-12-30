@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 
@@ -12,7 +12,6 @@ import java.util.List;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.BG_ANIMATION;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
-import static com.khryniewicki.projectX.graphics.textures.MenuTextures.START_BUTTON_TEXTURE;
 
 public class ControlSettingsMenuFactory {
     public List<MenuSymbol> listWithControlSettingsIcons;

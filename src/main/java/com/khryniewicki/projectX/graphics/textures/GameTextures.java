@@ -8,6 +8,8 @@ public class GameTextures {
     public static final Texture LIGHT_BACKGROUND = new Texture("desertBackground.png");
     public static final Texture SHADOW_BACKGROUND = new Texture("desertBackgroundSH.png");
     public static final Texture BAR = new Texture("bar.png");
+    public static final Texture YOU_WIN_TEXTURE = new Texture("YOU_WIN.png");
+    public static final Texture YOU_LOSE_TEXTURE = new Texture("YOU_LOSE.png");
 
     //PLAYER
     public static final Texture LIFE = new Texture("lifeBar.png");

@@ -4,7 +4,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.ObstacleStorage;

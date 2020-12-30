@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import lombok.Data;
 

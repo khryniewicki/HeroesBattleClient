@@ -1,12 +1,12 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.graphics.Texture;
-import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 
 import java.util.*;
 
+import static com.khryniewicki.projectX.graphics.textures.GameTextures.YOU_LOSE_TEXTURE;
+import static com.khryniewicki.projectX.graphics.textures.GameTextures.YOU_WIN_TEXTURE;
 import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 
 
@@ -228,7 +228,7 @@ public class TextureMenuFactory {
             .withName("HeroName")
             .withDisabled(true)
             .withHeight(1.25f)
-            .withWidth(5f)
+            .withWidth(3.61f)
             .withPositionX(-5.5f)
             .withPositionY(-5f)
             .build();
@@ -241,5 +241,24 @@ public class TextureMenuFactory {
             .withPositionX(6f)
             .withPositionY(4.5f)
             .withVisibility(1.0f)
+            .build();
+
+    public static final MenuSymbol YOU_WIN = new MenuSymbol.Builder()
+            .withTexture(YOU_WIN_TEXTURE)
+            .withName("victory")
+            .withHeight(1f)
+            .withWidth(6f)
+            .withPositionX(-3f)
+            .withPositionY(1f)
+            .withVisibility(1f)
+            .build();
+    public static final MenuSymbol YOU_LOSE = new MenuSymbol.Builder()
+            .withTexture(YOU_LOSE_TEXTURE)
+            .withName("failure")
+            .withHeight(1f)
+            .withWidth(6f)
+            .withPositionX(-3f)
+            .withPositionY(1f)
+            .withVisibility(1f)
             .build();
 }

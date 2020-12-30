@@ -30,7 +30,6 @@ public abstract class AnimationObject {
     protected void setPosition(float v) {
         symbol.setPositionX(v);
     }
-
     protected boolean isTurningLeft() {
         return symbol.isTurningLeft();
     }
