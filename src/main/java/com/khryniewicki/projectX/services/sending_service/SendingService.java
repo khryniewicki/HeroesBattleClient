@@ -74,6 +74,7 @@ public class SendingService implements Runnable {
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
         this.events = stackEvent.getEvents();
         running = true;
+        log.info("STARTED SENDING SERVICE LOOP");
         while (running) {
             send();
             is_player_disconnected();
@@ -89,6 +90,8 @@ public class SendingService implements Runnable {
     private synchronized void send() {
         if (events != null && events.size() != 0) {
             BaseDto baseDto = events.pop();
+            if (baseDto.getStatus().equals(ConnectionState.CONNECTED)){
+            }
             try {
                 if (Objects.isNull(session)) {
                     session = WebsocketApplication.getSession();

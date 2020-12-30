@@ -95,7 +95,6 @@ public class WebsocketApplication implements Runnable {
                     .heroType(superHero.getName())
                     .playerName(heroesInstances.getHeroName())
                     .build());
-            log.info("added");
         }
 
         public void leave_room() {
@@ -210,7 +209,6 @@ public class WebsocketApplication implements Runnable {
             session = stompClient.connect(url, sessionHandler)
                     .get();
             copy_session = session;
-
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

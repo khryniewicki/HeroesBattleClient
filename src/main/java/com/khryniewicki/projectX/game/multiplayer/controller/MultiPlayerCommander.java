@@ -8,12 +8,14 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerSt
 import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
 @Getter
 @Setter
+@Slf4j
 public class MultiPlayerCommander extends GameLoopImp {
     protected final WaitingRoomMenu waitingRoomMenu;
     protected final HeroesInstances heroesInstances;
@@ -35,11 +37,6 @@ public class MultiPlayerCommander extends GameLoopImp {
             websocketController.initialize_websocket();
             waitingRoomMenu.addText("Connection established");
             websocketController.start_sending_service();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             websocketController.join_room();
         };
     }

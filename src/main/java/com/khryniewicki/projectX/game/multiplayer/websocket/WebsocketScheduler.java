@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
@@ -34,7 +35,6 @@ public class WebsocketScheduler {
     private String path = GameUtil.serverUrl;
     private Integer period = 200;
 
-    public volatile static ServerState serverState = ServerState.START;
     public MultiplayerState multiplayerState = MultiplayerState.NOT_CONNECTED;
     private boolean hasStarted;
 
@@ -127,8 +127,9 @@ public class WebsocketScheduler {
     }
 
     public void setServerState(ServerState new_state) {
-        support.firePropertyChange("sever", null, new_state);
-        serverState = new_state;
+        MainMenu mainMenu = MainMenu.getInstance();
+        ServerState state = mainMenu.getState();
+        support.firePropertyChange("sever", state, new_state);
     }
 
     public void setMultiplayerState(MultiplayerState new_state) {

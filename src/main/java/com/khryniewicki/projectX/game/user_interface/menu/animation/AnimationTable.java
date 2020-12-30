@@ -26,6 +26,7 @@ public class AnimationTable extends AnimationObject {
     }
 
     public List<Symbol> toggle(boolean disabled) {
+        initCharacterMenu();
         return characterMenu.getAnimationSymbols().stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {

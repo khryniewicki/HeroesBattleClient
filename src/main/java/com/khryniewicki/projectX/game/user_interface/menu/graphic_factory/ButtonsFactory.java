@@ -174,7 +174,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(-2f)
-            .withPositionY(0f)
+            .withPositionY(-1f)
             .build();
     public static final MenuSymbol QUIT = new Button.Builder()
             .withTexture(QUIT_TEXTURE)
@@ -182,7 +182,7 @@ public class ButtonsFactory {
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(-2f)
-            .withPositionY(-1.2f)
+            .withPositionY(-2.2f)
             .build();
 
 

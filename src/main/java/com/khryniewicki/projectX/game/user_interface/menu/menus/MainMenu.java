@@ -82,6 +82,7 @@ public class MainMenu extends AbstractMenu {
                             setSubscribed(false);
                         } else {
                             state = serverState;
+                            log.info("{}",serverState);
                         }
                     }
                 }

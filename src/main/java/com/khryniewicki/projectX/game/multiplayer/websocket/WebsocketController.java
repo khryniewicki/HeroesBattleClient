@@ -16,7 +16,6 @@ public class WebsocketController {
     private WebsocketApplication websocketApplication;
 
     private WebsocketController() {
-        sendingService = new SendingService();
     }
 
     public void initialize_websocket() {
@@ -34,7 +33,24 @@ public class WebsocketController {
 
     public void join_room() {
         handler = new WebsocketApplication.MyStompSessionHandler();
-        handler.join_room();
+        boolean running = true;
+
+        while (running) {
+            if (sendingService.isRunning()) {
+                sleep(100);
+                handler.join_room();
+                running = false;
+            }
+            sleep(500);
+        }
+    }
+
+    protected void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void leave_room() {
@@ -52,6 +68,7 @@ public class WebsocketController {
     }
 
     public void start_sending_service() {
+        sendingService = new SendingService();
         new Thread(sendingService, "SendingService").start();
     }
 
