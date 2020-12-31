@@ -11,13 +11,10 @@ import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.VertexArray;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -65,7 +62,7 @@ public class SuperHero implements UltraHero {
         this.hero_top_offset = superHero.hero_top_offset;
         this.basicSpellInstance = superHero.basicSpellInstance;
         this.ultimateSpellInstance = superHero.ultimateSpellInstance;
-        this.manaRegeneration =superHero.manaRegeneration;
+        this.manaRegeneration = superHero.manaRegeneration;
         this.mana = superHero.mana;
         this.life = superHero.life;
         this.SIZE = superHero.SIZE;
@@ -108,14 +105,7 @@ public class SuperHero implements UltraHero {
 //    }
 
     public void update() {
-        regenerateMana();
-    }
-
-    private void regenerateMana() {
-        if (Objects.isNull(manaBar)) {
-            manaBar = getManaBar();
-        }
-        manaBar.renegerateMana();
+        heroAttributes.update();
     }
 
 

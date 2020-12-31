@@ -85,6 +85,7 @@ public class ManaBar extends GraphicLoader {
             start = null;
             addMana();
             stackEvent.addHeroDto();
+            log.info("MANA");
         }
     }
 

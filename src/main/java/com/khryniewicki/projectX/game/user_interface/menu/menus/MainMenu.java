@@ -81,8 +81,8 @@ public class MainMenu extends AbstractMenu {
                             websocketScheduler.removePropertyChangeListener(this);
                             setSubscribed(false);
                         } else {
-                            state = serverState;
-                            log.info("{}",serverState);
+                            setState(serverState);
+                            log.info("{}", serverState);
                         }
                     }
                 }
@@ -97,7 +97,7 @@ public class MainMenu extends AbstractMenu {
         setVolatileImages(textureMenuFactory.getListWithTextMainMenuSymbols());
         playersBarLabel = PLAYERS_BAR_LABEL;
         playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
-        setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE,LOGO)));
+        setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE, LOGO)));
     }
 
     @Override
@@ -219,4 +219,7 @@ public class MainMenu extends AbstractMenu {
         setPermanentImages(menuSymbols);
     }
 
+    public synchronized void setState(ServerState state) {
+        this.state = state;
+    }
 }

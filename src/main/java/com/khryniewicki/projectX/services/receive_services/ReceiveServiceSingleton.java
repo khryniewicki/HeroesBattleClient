@@ -3,12 +3,18 @@ package com.khryniewicki.projectX.services.receive_services;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.dto.HeroDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ReceiveServiceSingleton {
-    private final HeroReceiveService heroReceiveService;
-    private final SpellReceiveService spellReceiveService;
+    private  HeroReceiveService heroReceiveService;
+    private  SpellReceiveService spellReceiveService;
 
     private ReceiveServiceSingleton() {
+        reset();
+    }
+
+    public void reset() {
         this.heroReceiveService = new HeroReceiveService();
         this.spellReceiveService = new SpellReceiveService();
     }
@@ -28,6 +34,7 @@ public class ReceiveServiceSingleton {
 
     public void set_hero_mock(HeroDto heroDTO) {
         heroReceiveService.set_hero_mock(heroDTO);
+        log.info("{}",heroDTO);
     }
 
     //spell receive service
@@ -45,11 +52,6 @@ public class ReceiveServiceSingleton {
 
     public void set_spell_mock(SpellDto spell_dto) {
         spellReceiveService.set_spell_mock(spell_dto);
-    }
-
-    public void reset() {
-        heroReceiveService.reset();
-        spellReceiveService.reset();
     }
 
 
