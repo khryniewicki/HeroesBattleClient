@@ -51,6 +51,7 @@ public class GameLoopImp implements GameLoop {
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
+        terminateIfWindowShutDown();
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -70,7 +71,6 @@ public class GameLoopImp implements GameLoop {
             }
             windowsShouldClose();
         }
-
     }
 
     public void player_is_dead() {
@@ -125,7 +125,6 @@ public class GameLoopImp implements GameLoop {
 
     protected void terminateIfWindowShutDown() {
         if (state.equals(GameState.FINISH)) {
-            setRunning(false);
             glfwDestroyWindow(window);
             glfwTerminate();
             WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();

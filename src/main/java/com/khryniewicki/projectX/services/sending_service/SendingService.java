@@ -98,6 +98,7 @@ public class SendingService implements Runnable {
                 }
                 if (session.isConnected() && no_duplicates_filter(baseDto)) {
                     String path = path(baseDto);
+                    log.info("{}",baseDto);
                     session.send(path, baseDto);
                 }
             } catch (MessageDeliveryException e) {

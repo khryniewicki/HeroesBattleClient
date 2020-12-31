@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.engine.GameState;
+import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
@@ -14,7 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
@@ -61,7 +61,9 @@ public class RestartMenu extends AbstractMenu {
         updateImage(BACKGROUND, GameTextures.LIGHT_BACKGROUND);
     }
 
-    private void reset_result() { permanentImages = new ArrayList<>(); }
+    private void reset_result() {
+        permanentImages = new ArrayList<>();
+    }
 
     @Override
     public void prepare() {
@@ -113,19 +115,19 @@ public class RestartMenu extends AbstractMenu {
 
     public void win_or_loose() {
         HeroesInstances heroesInstances = HeroesInstances.getInstance();
-        if (Objects.nonNull(heroesInstances.getHero())) {
-            Integer herolife = heroesInstances.getHero().getLife();
-            if (!show) {
-                if (herolife == 0) {
-                    log.info("YOU LOSE");
-                    permanentImages.add(YOU_LOSE);
-                } else {
-                    log.info("YOU WIN");
-                    permanentImages.add(YOU_WIN);
-                }
-                show = true;
+        SuperHero hero = heroesInstances.getHero();
+        Integer herolife = hero.getLife();
+        if (!show) {
+            if (herolife == 0) {
+                log.info("YOU LOSE");
+                permanentImages.add(YOU_LOSE);
+            } else {
+                log.info("YOU WIN");
+                permanentImages.add(YOU_WIN);
             }
+            show = true;
         }
+
     }
 
     public void updateImage(Symbol symbol, Texture texture) {

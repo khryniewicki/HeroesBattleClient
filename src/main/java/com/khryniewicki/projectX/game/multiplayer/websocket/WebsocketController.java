@@ -79,7 +79,9 @@ public class WebsocketController {
     }
 
     public void stop_sending_service() {
-        sendingService.stop();
+        if (Objects.nonNull(sendingService)) {
+            sendingService.stop();
+        }
     }
 
     private final static WebsocketController WEBSOCKET_INSTANCE = new WebsocketController();

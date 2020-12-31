@@ -3,15 +3,10 @@ package com.khryniewicki.projectX.services.sending_service;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
-import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.HeroDto;
-import com.khryniewicki.projectX.services.dto.MessageDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
-
-import static com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketApplication.session;
 @Getter
 @Setter
 public class StackEventSupport {
@@ -24,12 +19,10 @@ public class StackEventSupport {
         heroStartingPosition = HeroStartingPosition.getInstance();
     }
 
-
-
     public HeroDto addHeroDto() {
-        if (Objects.isNull(hero)) {
-            this.hero = heroesInstances.getHero();
-        }
+
+        this.hero = heroesInstances.getHero();
+
         return new HeroDto.Builder()
                 .heroType(this.hero.getName())
                 .life(this.hero.getLife())
