@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.engine.GameState;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
+import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
@@ -49,7 +50,7 @@ public class RestartMenu extends AbstractMenu {
         reset_heroes();
         reset_background();
         reset_result();
-        show=false;
+        show = false;
     }
 
 
@@ -91,7 +92,8 @@ public class RestartMenu extends AbstractMenu {
     @Override
     public void render() {
         clearBuffers();
-        board.render();
+        board.getSymbols().forEach(Symbol::render);
+        board.getHeroes().forEach(Ultra::render);
         buttons.forEach(MenuSymbol::render);
         permanentImages.forEach(MenuSymbol::render);
         swapBuffers();
