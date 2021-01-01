@@ -31,6 +31,7 @@ public class GameLoopImp implements GameLoop {
     public static int bar = 40;
     protected static GameState state;
     private volatile boolean loopTerminated;
+
     public void loop() {
         if (!state.equals(GameState.FINISH)) {
             prepare();
@@ -130,7 +131,6 @@ public class GameLoopImp implements GameLoop {
             glfwTerminate();
             WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
             websocketScheduler.cancelTimer();
-            log.info("FINISH GAME");
         }
     }
 

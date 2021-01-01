@@ -105,7 +105,6 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void stop_websocket() {
         websocketController.stop_websocket();
-        log.info("STOP WEBSOCKET");
     }
 
     private Game() {
