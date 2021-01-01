@@ -34,7 +34,6 @@ public class ReceiveServiceSingleton {
 
     public void set_hero_mock(HeroDto heroDTO) {
         heroReceiveService.set_hero_mock(heroDTO);
-        log.info("{}",heroDTO);
     }
 
     //spell receive service

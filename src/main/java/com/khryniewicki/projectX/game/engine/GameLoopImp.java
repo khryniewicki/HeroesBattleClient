@@ -24,13 +24,13 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 @Service
 @Slf4j
 public class GameLoopImp implements GameLoop {
-    protected boolean running;
+    protected volatile boolean running;
     public static long window;
     public static int width = 1600;
     public static int height = 800;
     public static int bar = 40;
     protected static GameState state;
-
+    private volatile boolean loopTerminated;
     public void loop() {
         if (!state.equals(GameState.FINISH)) {
             prepare();
@@ -52,6 +52,7 @@ public class GameLoopImp implements GameLoop {
         int updates = 0;
         int frames = 0;
         terminateIfWindowShutDown();
+        setLoopTerminated(false);
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -70,7 +71,9 @@ public class GameLoopImp implements GameLoop {
                 frames = 0;
             }
             windowsShouldClose();
-        }
+        }   setLoopTerminated(true);
+
+        log.info("FINISHED LOOP");
     }
 
     public void player_is_dead() {
@@ -125,6 +128,9 @@ public class GameLoopImp implements GameLoop {
 
     protected void terminateIfWindowShutDown() {
         if (state.equals(GameState.FINISH)) {
+            while (!loopTerminated) {
+                Thread.onSpinWait();
+            }
             glfwDestroyWindow(window);
             glfwTerminate();
             WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();

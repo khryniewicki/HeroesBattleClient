@@ -96,9 +96,9 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     public void terminate_game() {
+        terminateIfWindowShutDown();
         stop_websocket();
         stop_sending_service();
-        terminateIfWindowShutDown();
     }
 
     protected void stop_sending_service() {
@@ -107,6 +107,7 @@ public class Game extends GameLoopImp implements Runnable {
 
     public void stop_websocket() {
         websocketController.stop_websocket();
+        log.info("STOP WEBSOCKET");
     }
 
     private Game() {
