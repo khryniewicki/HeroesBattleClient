@@ -160,7 +160,6 @@ public class CharacterMenu extends AbstractMenu {
         }
     }
 
-
     private Texture getTextureFromTextFactory(String name) {
         return TextFactory.textToImageWithLine(name, 43);
     }

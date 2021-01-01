@@ -49,6 +49,7 @@ public class RestartMenu extends AbstractMenu {
         reset_heroes();
         reset_background();
         reset_result();
+        show=false;
     }
 
 
