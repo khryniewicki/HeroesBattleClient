@@ -71,9 +71,8 @@ public class GameLoopImp implements GameLoop {
                 frames = 0;
             }
             windowsShouldClose();
-            terminateIfWindowShutDown();
         }
-
+        terminateIfWindowShutDown();
     }
 
     public void player_is_dead() {
@@ -128,7 +127,6 @@ public class GameLoopImp implements GameLoop {
 
     protected void terminateIfWindowShutDown() {
         if (state.equals(GameState.FINISH)) {
-            glfwDestroyWindow(window);
             glfwTerminate();
             WebsocketScheduler websocketScheduler = WebsocketScheduler.getInstance();
             websocketScheduler.cancelTimer();
