@@ -84,12 +84,12 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
         subscribe();
     }
 
-    public void toggleImage(MenuSymbol symbol, boolean state) {
+    public void toggleImage(MenuSymbol symbol, boolean disabled) {
         List<MenuSymbol> menuSymbols = volatileImages
                 .stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.equals(symbol)) {
-                        menuSymbol.setDisabled(state);
+                        menuSymbol.setDisabled(disabled);
                     }
                 })
                 .collect(Collectors.toList());

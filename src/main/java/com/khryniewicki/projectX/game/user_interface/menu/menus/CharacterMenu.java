@@ -3,7 +3,9 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.menu.animation.Animation;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.*;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
+import java.util.Objects;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.CHARACTER_SKILLS;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.TYPE_YOUR_NAME;
@@ -87,7 +90,7 @@ public class CharacterMenu extends AbstractMenu {
                 updateButtonText(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SKILLS);
                 break;
             case "typeYourName":
-                toggleImage(HERO_NAME, activeWriting);
+                toggleImage(HERO_NAME, false);
                 this.activeWriting = !activeWriting;
                 updateButtonText(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
@@ -105,7 +108,7 @@ public class CharacterMenu extends AbstractMenu {
     public void restart() {
         animation.stop();
         animation.toggle_table(true);
-        toggleImage(HERO_NAME, true);
+        toggleImage(HERO_NAME, !verify_hero_name());
         updateButtonText(CHARACTER_SKILLS, SKILLS);
         updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
         removeButton(CHARACTER_SKILLS);
@@ -117,13 +120,21 @@ public class CharacterMenu extends AbstractMenu {
         heroesInstances.setHeroName(name);
     }
 
-    private void updateButtonText(MenuSymbol characterSkills, Texture tex) {
-        characterSkills.setTexture(tex);
-        render();
+    private boolean verify_hero_name() {
+        return Objects.nonNull(getHeroName()) && !getHeroName().isEmpty();
+    }
+
+    private String getHeroName() {
+        return heroesInstances.getHeroName();
     }
 
     private void set_hero_type(String heroType) {
         heroesInstances.set_hero_type(heroType);
+    }
+
+    private void updateButtonText(MenuSymbol characterSkills, Texture tex) {
+        characterSkills.setTexture(tex);
+        render();
     }
 
     private void showMessageInMainMenu(String btnName) {
