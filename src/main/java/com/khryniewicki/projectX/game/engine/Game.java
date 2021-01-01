@@ -82,11 +82,11 @@ public class Game extends GameLoopImp implements Runnable {
 
     private void is_player_dead() {
         if (state.equals(GameState.PLAYER_IS_DEAD)) {
-            if (board.getSpells().stream().noneMatch(UltraSpell::isSpellActivated)) {
+//            if (board.getSpells().stream().noneMatch(UltraSpell::isSpellActivated)) {
                 restart();
                 stop();
                 stop_websocket();
-            }
+//            }
         }
     }
 
