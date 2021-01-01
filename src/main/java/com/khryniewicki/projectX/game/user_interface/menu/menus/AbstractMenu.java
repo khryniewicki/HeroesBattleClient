@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.*;
 
 @Getter
 @Slf4j
@@ -76,6 +75,8 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
                         .ifPresent(btn -> btn.setNews(btn.getName()));
             }
         });
+        glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
+        });
     }
 
     @Override
@@ -115,11 +116,13 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
         menu.render();
         setCurrentView(menuCard);
     }
-    protected void setCurrentView(MenuCard menuCard){
-        currentView=menuCard;
-        log.info("CURRENT VIEW: {}",currentView);
+
+    protected void setCurrentView(MenuCard menuCard) {
+        currentView = menuCard;
+        log.info("CURRENT VIEW: {}", currentView);
     }
+
     public enum MenuCard {
-       CONTROL_SETTINGS, CHARACTER_MENU, MAIN_MENU
+        CONTROL_SETTINGS, CHARACTER_MENU, MAIN_MENU
     }
 }

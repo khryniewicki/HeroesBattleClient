@@ -23,19 +23,19 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class SendingService implements Runnable {
     private final Channels channel;
     private final StackEvent stackEvent;
-    private ConcurrentLinkedDeque<BaseDto> events;
+
     private int counterHero;
     private int counterSpell;
-    private StompSession session;
     private boolean running;
+    private boolean disconnected;
+    private ConcurrentLinkedDeque<BaseDto> events;
+    private StompSession session;
     private BaseDto tmpHero = new HeroDto();
     private BaseDto tmpSpell = new SpellDto();
-    private boolean disconnected;
 
     public SendingService() {
         this.channel = Channels.getINSTANCE();
         this.stackEvent = StackEvent.getInstance();
-
     }
 
     public boolean no_duplicates_filter(BaseDto baseDto) {
@@ -74,7 +74,6 @@ public class SendingService implements Runnable {
         stackEvent.setEvents(new ConcurrentLinkedDeque<>());
         this.events = stackEvent.getEvents();
         running = true;
-        log.info("STARTED SENDING SERVICE LOOP");
         while (running) {
             send();
             is_player_disconnected();
@@ -90,15 +89,12 @@ public class SendingService implements Runnable {
     private synchronized void send() {
         if (events != null && events.size() != 0) {
             BaseDto baseDto = events.pop();
-            if (baseDto.getStatus().equals(ConnectionState.CONNECTED)){
-            }
             try {
                 if (Objects.isNull(session)) {
                     session = WebsocketApplication.getSession();
                 }
                 if (session.isConnected() && no_duplicates_filter(baseDto)) {
                     String path = path(baseDto);
-                    log.info("{}",baseDto);
                     session.send(path, baseDto);
                 }
             } catch (MessageDeliveryException e) {

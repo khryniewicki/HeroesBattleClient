@@ -82,6 +82,7 @@ public class GameLoopImp implements GameLoop {
     }
 
     public void finish_game() {
+        stop();
         setState(GameState.FINISH);
     }
 
@@ -118,7 +119,6 @@ public class GameLoopImp implements GameLoop {
 
     protected void windowsShouldClose() {
         if (glfwWindowShouldClose(window)) {
-            setRunning(false);
             finish_game();
         }
     }
