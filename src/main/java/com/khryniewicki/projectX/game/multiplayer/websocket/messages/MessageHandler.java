@@ -5,7 +5,8 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStar
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
-import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
+import com.khryniewicki.projectX.game.user_interface.subjects.Subject;
+import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
 import com.khryniewicki.projectX.services.dto.MessageDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MessageHandler {
     private final Channels channels;
-    private final Subject subject;
+    private final Subject subjectMultiplayerState;
     private final MultiplayerController multiplayer;
     private MessageDto messageDto;
 
@@ -22,9 +23,9 @@ public class MessageHandler {
 
     public MessageHandler() {
         channels = Channels.getINSTANCE();
-        subject = new Subject();
+        subjectMultiplayerState = new SubjectMultiplayerState();
         multiplayer = MultiplayerController.getMultiplayerInstance();
-        subject.addPropertyChangeListener(multiplayer);
+        subjectMultiplayerState.addPropertyChangeListener(multiplayer);
     }
 
     public void setChannelsAndStartingPositions(MessageDto messageDto) {
@@ -45,7 +46,7 @@ public class MessageHandler {
         if ((appDTO == 1 || appDTO == 2) && itState.equals(MultiplayerState.CONNECT)) {
             setChannels(appDTO);
             setHeroesStartingPositions();
-            subject.setNews(MultiplayerState.WAITING_FOR_SECOND_PLAYER);
+            subjectMultiplayerState.setNews(MultiplayerState.WAITING_FOR_SECOND_PLAYER);
             log.info("APP:" + channels.getApp() + " TOPIC:" + channels.getTopic());
         }
 

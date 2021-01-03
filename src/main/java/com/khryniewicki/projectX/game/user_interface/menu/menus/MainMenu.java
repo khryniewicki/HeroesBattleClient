@@ -5,11 +5,12 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects;
-import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
+import com.khryniewicki.projectX.game.user_interface.subjects.Subjects;
+import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -55,8 +56,8 @@ public class MainMenu extends AbstractMenu {
     }
 
     private void addObserver() {
-        subject = new Subject();
-        subject.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
+        subjectMultiplayerState = new SubjectMultiplayerState();
+        subjectMultiplayerState.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
     }
 
     private void subscribePlayersInGame() {
@@ -121,26 +122,21 @@ public class MainMenu extends AbstractMenu {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        String buttonName = (String) evt.getNewValue();
-        click_button(buttonName);
-    }
-
-    private void click_button(String buttonName) {
         //disable all messages
         disable_all_messages();
-
+        Buttons buttonName = (Buttons) evt.getNewValue();
         switch (buttonName) {
-            case "ChooseCharacter":
+            case SELECT_CHARACTER:
                 runMenu(CharacterMenu.getInstance(), MenuCard.CHARACTER_MENU);
                 break;
-            case "ControlSettings":
+            case CONTROL_SETTINGS:
                 runMenu(ControlSettingsMenu.getInstance(), MenuCard.CONTROL_SETTINGS);
                 break;
-            case "QuitGame":
+            case QUIT:
                 stop();
                 finish_game();
                 break;
-            case "Start":
+            case START:
                 if (state.equals(ServerState.SERVER_OFFLINE)) {
                     enable_message(TEXT_SERVER_OFFLINE);
                 } else if (state.equals(ServerState.TWO_PLAYERS)) {
@@ -150,7 +146,7 @@ public class MainMenu extends AbstractMenu {
                     if (Objects.nonNull(heroType)) {
                         heroesInstances.set_hero_type(heroType);
                         stop();
-                        subject.setNews(MultiplayerState.CONNECT);
+                        subjectMultiplayerState.setNews(MultiplayerState.CONNECT);
                     } else {
                         enable_message(TEXT_NO_HERO);
                     }
@@ -165,11 +161,11 @@ public class MainMenu extends AbstractMenu {
         render();
     }
     private void disable_all_messages() {
-        volatileImages.forEach(images -> update_volatiles(images, true));
+        volatileImages.forEach(images -> update_volatile(images, true));
     }
 
     public void enable_message(MenuSymbol symbol) {
-        update_volatiles(symbol, false);
+        update_volatile(symbol, false);
     }
 
     public synchronized void setState(ServerState state) {

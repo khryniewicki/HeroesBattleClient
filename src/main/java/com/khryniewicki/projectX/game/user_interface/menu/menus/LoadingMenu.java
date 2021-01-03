@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOADING;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOGO;
@@ -80,7 +79,7 @@ public class LoadingMenu extends AbstractMenu {
         long result = difference / 50;
         long progress = result < 100 ? result : 100;
         String text = "Loading " + progress + "%";
-        update_volatiles(LOADING, getTextureForLoading(text));
+        update_volatile(LOADING, getTextureForLoading(text));
         render();
     }
 

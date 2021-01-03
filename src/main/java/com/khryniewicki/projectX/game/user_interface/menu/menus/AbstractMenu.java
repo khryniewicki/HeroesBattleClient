@@ -3,10 +3,9 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.engine.GameLoopImp;
-import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
-import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
+import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,24 +18,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.PLAYERS_BAR_LABEL;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.PLAYERS_DESCRIPTION_LABEL;
 import static org.lwjgl.glfw.GLFW.*;
 
 @Getter
 @Slf4j
 @Setter
 public abstract class AbstractMenu extends GameLoopImp implements PropertyChangeListener, Menu {
+
     protected List<Symbol> animationSymbols = new ArrayList<>();
-    protected List<MenuSymbol> buttons = new ArrayList<>();
     protected List<Symbol> volatileImages = new ArrayList<>();
     protected List<Symbol> permanentImages = new ArrayList<>();
+    protected List<Button> buttons = new ArrayList<>();
 
     private final MousePosition mousePosition;
     protected final CollectionManager manager;
 
-    protected Subject subject;
-    protected static MenuCard currentView;
+    protected SubjectMultiplayerState subjectMultiplayerState;
+    protected MenuCard currentView;
 
     public AbstractMenu() {
         mousePosition = new MousePosition();
@@ -44,13 +42,11 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-    }
+    public  void propertyChange(PropertyChangeEvent evt){}
 
     @Override
     public void render() {
         clearBuffers();
-
         Stream.of(buttons, permanentImages).flatMap(Collection::stream)
                 .forEach(Symbol::render);
         Stream.of(animationSymbols, volatileImages).flatMap(Collection::stream)
@@ -69,15 +65,15 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
         glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
 
             if (key == 0 && action != GLFW_RELEASE) {
-
                 mousePosition.getCursorPosition();
                 buttons.stream()
                         .filter(btn -> mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1())
                         .filter(btn -> mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1())
                         .findFirst()
-                        .ifPresent(btn -> btn.setNews(btn.getName()));
+                        .ifPresent(btn -> btn.setNews(btn.getButtonName()));
             }
         });
+
         glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
         });
     }
@@ -88,24 +84,18 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
         subscribe();
     }
 
-    protected void update_volatiles(Symbol symbol, Texture texture) {
+    protected void update_volatile(Symbol symbol, Texture texture) {
         this.volatileImages = manager.update_texture(volatileImages, symbol, texture);
         render();
     }
 
-    protected void update_volatiles(Symbol symbol, boolean disabled) {
+    protected void update_volatile(Symbol symbol, boolean disabled) {
         this.volatileImages = manager.toggle_image(volatileImages, symbol, disabled);
         render();
     }
 
-    protected List<Symbol> update_symbols(List<Symbol> symbols, Symbol symbol, Texture texture) {
-        return manager.update_texture(symbols, symbol, texture);
-    }
-
-
-
-    protected void update_button(MenuSymbol menuSymbol, Texture tex) {
-        menuSymbol.setTexture(tex);
+    protected void update_button(Button button, Texture tex) {
+        button.setTexture(tex);
         render();
     }
 

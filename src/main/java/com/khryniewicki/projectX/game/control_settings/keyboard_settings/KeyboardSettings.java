@@ -22,11 +22,11 @@ public class KeyboardSettings {
                     if (sb.length() <= 8) {
                         sb.append(letter);
                     }
-                    heroName.setAction(sb.toString());
+                    heroName.setNews(sb.toString());
                 } else if (key == 259 && action != GLFW_RELEASE) {
                     if (sb.length() > 0) {
                         sb.deleteCharAt(sb.length() - 1);
-                        heroName.setAction(sb.toString());
+                        heroName.setNews(sb.toString());
                     }
                 }
             }

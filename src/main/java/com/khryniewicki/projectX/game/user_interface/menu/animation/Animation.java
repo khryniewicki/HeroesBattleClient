@@ -33,6 +33,7 @@ public class Animation extends AnimationSupport {
         begin();
         initCharacterMenu();
         setSuperHero(heroFactory.create(hero));
+        remove_spell_if_exists();
         setSpell(new AnimationSpell(superHero, animationHero));
         add_symbol(animationHero);
         add_symbol(table);
@@ -86,13 +87,12 @@ public class Animation extends AnimationSupport {
     public void render() {
         characterMenu.render();
     }
-
     @Override
-    public void stop() {
-        super.stop();
+    public void restart(){
+        stop();
         initCharacterMenu();
         characterMenu.setAnimationSymbols(new ArrayList<>());
+        toggle_table(true);
     }
-
 
 }

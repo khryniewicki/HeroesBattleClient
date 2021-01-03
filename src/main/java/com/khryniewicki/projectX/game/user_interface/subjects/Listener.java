@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.user_interface.symbols.observers;
+package com.khryniewicki.projectX.game.user_interface.subjects;
 
 import java.beans.PropertyChangeListener;
 

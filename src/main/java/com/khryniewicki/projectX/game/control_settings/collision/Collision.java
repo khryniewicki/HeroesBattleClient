@@ -4,7 +4,6 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.board.BoardObjects;
-import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
@@ -42,7 +41,7 @@ public class Collision {
     public MenuSymbol createSquare(Position position) {
         System.out.println("SQUARES: " + squares.size());
 
-        return new Button.Builder()
+        return new MenuSymbol.Builder()
                 .withTexture(new Texture("red_square.png"))
                 .withName("text")
                 .withHeight(0.2f)

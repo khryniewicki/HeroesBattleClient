@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -32,12 +33,13 @@ public class RestartMenu extends AbstractMenu {
     private Board board;
     private Game game;
     private boolean show;
-
+    private HeroesInstances heroesInstances;
     private RestartMenu() {
         super();
         start();
         game = Game.getInstance();
         board = game.getBoard();
+        heroesInstances = HeroesInstances.getInstance();
     }
 
     public void execute() {
@@ -57,7 +59,6 @@ public class RestartMenu extends AbstractMenu {
 
 
     protected void reset_heroes() {
-        HeroesInstances heroesInstances = HeroesInstances.getInstance();
         heroesInstances.reset();
     }
 
@@ -78,7 +79,8 @@ public class RestartMenu extends AbstractMenu {
     }
 
     private void update_background(Texture texture) {
-        board.setSymbols(update_symbols(board.getSymbols(), BACKGROUND, texture));
+        List<Symbol> symbols = manager.update_texture(board.getSymbols(), BACKGROUND, texture);
+        board.setSymbols(symbols);
     }
 
     @Override
@@ -111,18 +113,17 @@ public class RestartMenu extends AbstractMenu {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        Buttons buttonName = (Buttons) evt.getNewValue();
 
-        String btnName = (String) evt.getNewValue();
-        if (btnName.equals("main_menu")) {
+        if (buttonName.equals(Buttons.RESTART_GO_TO_MAIN_MENU)) {
             game.ok();
-        } else if (btnName.equals("quit")) {
+        } else if (buttonName.equals(Buttons.RESTART_QUIT)) {
             game.finish_game();
         }
         stop();
     }
 
     public void win_or_loose() {
-        HeroesInstances heroesInstances = HeroesInstances.getInstance();
         SuperHero hero = heroesInstances.getHero();
         Integer herolife = hero.getLife();
         if (!show) {
@@ -135,7 +136,6 @@ public class RestartMenu extends AbstractMenu {
             }
             show = true;
         }
-
     }
 
     private static final RestartMenu instance = new RestartMenu();

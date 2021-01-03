@@ -24,7 +24,7 @@ public class MenuTextures {
     public static final Texture FALLEN_WITCHER_BUTTON_TEXTURE = new Texture("FallenWitcherBtn.png");
     public static final Texture FALLEN_MONK_BUTTON_TEXTURE = new Texture("FallenMonkBtn.png");
 
-    public final static Texture SKILLS = new Texture("skills.png");
+    public final static Texture SHOW_SKILLS = new Texture("skills.png");
     public final static Texture HIDE_SKILLS = new Texture("hideskills.png");
     public final static Texture CONFIRM = new Texture("confirm.png");
     public final static Texture TYPE_NAME = new Texture("typeName.png");

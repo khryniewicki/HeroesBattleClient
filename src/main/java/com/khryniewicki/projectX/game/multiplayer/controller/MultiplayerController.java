@@ -9,8 +9,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import static com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState.WAITING_FOR_SECOND_PLAYER;
-import static com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects.MULTIPLAYER;
-import static com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects.TIME_TO_LOG_OUT;
+import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.MULTIPLAYER;
+import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.TIME_TO_LOG_OUT;
 
 @Getter
 @Setter

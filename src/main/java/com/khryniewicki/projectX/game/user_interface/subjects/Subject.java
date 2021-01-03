@@ -1,13 +1,11 @@
-package com.khryniewicki.projectX.game.user_interface.symbols.observers;
-
-import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
+package com.khryniewicki.projectX.game.user_interface.subjects;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Subject implements Listener {
+public abstract class Subject implements Listener {
 
-    private PropertyChangeSupport support;
+    protected PropertyChangeSupport support;
 
     public Subject() {
         this.support = new PropertyChangeSupport(this);
@@ -21,12 +19,8 @@ public class Subject implements Listener {
     @Override
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
-
     }
 
     @Override
-    public void setNews(Object news) {
-        MultiplayerState news1 = (MultiplayerState) news;
-        support.firePropertyChange("multiplayer", null, news1);
-    }
+    public abstract void setNews(Object news);
 }

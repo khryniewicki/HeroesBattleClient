@@ -3,10 +3,11 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.control_settings.keyboard_settings.KeyboardSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.menu.animation.Animation;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,7 +64,7 @@ public class CharacterMenu extends AbstractMenu {
     public void initVolatiles() {
         HERO_NAME.addPropertyChangeListener(evt -> {
             String newValue = (String) evt.getNewValue();
-            update_volatiles(HERO_NAME, getTextureFromTextFactory(newValue));
+            update_volatile(HERO_NAME, getTextureFromTextFactory(newValue));
             set_hero_name(newValue);
         });
         setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
@@ -78,40 +79,39 @@ public class CharacterMenu extends AbstractMenu {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        String btnName = (String) evt.getNewValue();
+        Buttons button = (Buttons) evt.getNewValue();
         mainMenu = MainMenu.getInstance();
-        switch (btnName) {
-            case "Return":
+        switch (button) {
+            case SELECT_CHARACTER_RETURN:
                 restart();
                 break;
-            case "showTable":
+            case TABLE_WITH_SKILLS:
                 boolean disabled = TABLE.isDisabled();
                 animation.toggle_table(!disabled);
-                update_button(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SKILLS);
+                update_button(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SHOW_SKILLS);
                 break;
-            case "typeYourName":
-                update_volatiles(HERO_NAME, false);
+            case WRITE_HERO_NAME:
+                update_volatile(HERO_NAME, false);
                 this.activeWriting = !activeWriting;
                 update_button(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
             default:
-                setChosenHero(btnName);
-                addButton(CHARACTER_SKILLS);
-                initAnimation(btnName);
+                setChosenHero(button.getName());
+                add_button(CHARACTER_SKILLS);
+                start_animation(button.getName());
                 set_hero_type(chosenHero);
-                showMessageInMainMenu(chosenHero);
+                show_message_in_main_menu(chosenHero);
                 break;
         }
     }
 
     @Override
     public void restart() {
-        animation.stop();
-        animation.toggle_table(true);
-        update_volatiles(HERO_NAME, !verify_hero_name());
-        update_button(CHARACTER_SKILLS, SKILLS);
+        animation.restart();
+        update_volatile(HERO_NAME, !verify_hero_name());
+        update_button(CHARACTER_SKILLS, SHOW_SKILLS);
         update_button(TYPE_YOUR_NAME, TYPE_NAME);
-        removeButton(CHARACTER_SKILLS);
+        remove_button(CHARACTER_SKILLS);
         setActiveWriting(false);
         runMenu(MainMenu.getInstance(), MenuCard.MAIN_MENU);
     }
@@ -130,26 +130,24 @@ public class CharacterMenu extends AbstractMenu {
     }
 
 
-    private void showMessageInMainMenu(String btnName) {
-        MenuSymbol text = textureMenuFactory.getText(btnName);
-        mainMenu.enable_message(text);
+    private void show_message_in_main_menu(String btnName) {
+        mainMenu.enable_message(textureMenuFactory.getText(btnName));
     }
 
-    public void initAnimation(String character) {
-        animation.remove_spell_if_exists();
+    public void start_animation(String character) {
         animation.execute(character);
     }
 
-    public void removeButton(MenuSymbol symbol) {
-        symbol.removePropertyChangeListener(this);
-        buttons.removeIf(s -> symbol.getName().equals(s.getName()));
+    public void remove_button(Button button) {
+        button.removePropertyChangeListener(this);
+        buttons.removeIf(b -> button.getName().equals(b.getName()));
     }
 
-    public void addButton(MenuSymbol symbol) {
-        boolean exist = buttons.stream().anyMatch(menuSymbol -> menuSymbol.equals(symbol));
+    public void add_button(Button button) {
+        boolean exist = buttons.stream().anyMatch(b -> b.equals(button));
         if (!exist) {
-            buttons.add(symbol);
-            symbol.addPropertyChangeListener(this);
+            buttons.add(button);
+            button.addPropertyChangeListener(this);
         }
     }
 

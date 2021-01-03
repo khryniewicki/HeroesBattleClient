@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects.*;
+import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.*;
 import static com.khryniewicki.projectX.utils.GameUtil.*;
 
 @Data

@@ -1,6 +1,5 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
-import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 
@@ -170,27 +169,24 @@ public class TextureMenuFactory {
             .withPositionY(-2.5f)
             .build();
 
-    public static final MenuSymbol PLAYERS_DESCRIPTION_LABEL = new Button.Builder()
+    public static final MenuSymbol PLAYERS_DESCRIPTION_LABEL = new MenuSymbol.Builder()
             .withTexture(BLANK_TEXT_WINDOW)
-            .withDisabled(false)
             .withName("description_label")
             .withHeight(0.75f)
             .withWidth(6.5f)
             .withPositionX(4.7f)
             .withPositionY(3.2f)
             .build();
-    public static final MenuSymbol PLAYERS_BAR_LABEL = new Button.Builder()
+    public static final MenuSymbol PLAYERS_BAR_LABEL = new MenuSymbol.Builder()
             .withTexture(BLANK_BAR_LABEL_WINDOW)
-            .withDisabled(false)
             .withName("label")
             .withHeight(2.675f)
             .withWidth(4f)
             .withPositionX(4.4f)
             .withPositionY(2.9f)
             .build();
-    public static final MenuSymbol LOADING = new Button.Builder()
+    public static final MenuSymbol LOADING = new MenuSymbol.Builder()
             .withTexture(BLANK_TEXT_WINDOW)
-            .withDisabled(false)
             .withName("loading")
             .withHeight(1f)
             .withWidth(4f)
@@ -198,17 +194,15 @@ public class TextureMenuFactory {
             .withPositionY(0.0f)
             .build();
 
-    public static final MenuSymbol ANIMATION_HERO = new Button.Builder()
+    public static final MenuSymbol ANIMATION_HERO = new MenuSymbol.Builder()
             .withTexture(BLANK_TEXT_WINDOW)
             .isSizeKnown(true)
-            .withDisabled(false)
             .withName("animation")
             .withPositionX(-1.0f)
             .withPositionY(2.8f)
             .build();
-    public static final MenuSymbol BG_ANIMATION = new Button.Builder()
+    public static final MenuSymbol BG_ANIMATION = new MenuSymbol.Builder()
             .withTexture(BG_ANIMATION_TEXTURE)
-            .withDisabled(false)
             .withName("bg_animation")
             .withHeight(11f)
             .withWidth(20f)
@@ -216,19 +210,17 @@ public class TextureMenuFactory {
             .withPositionX(-10f)
             .withPositionY(-5.5f)
             .build();
-    public static final MenuSymbol ANIMATION_DUMMY = new Button.Builder()
+    public static final MenuSymbol ANIMATION_DUMMY = new MenuSymbol.Builder()
             .withTexture(TRAINING_DUMMY)
             .isSizeKnown(true)
-            .withDisabled(false)
             .withSize(2f)
             .withName("dummy")
             .withPositionX(4f)
             .withPositionY(2.8f)
             .withVisibility(0f)
             .build();
-    public static final MenuSymbol HERO_NAME = new Button.Builder()
+    public static final MenuSymbol HERO_NAME = new MenuSymbol.Builder()
             .withTexture(BLANK_TEXT_WINDOW_WITH_LINE)
-            .withName("HeroName")
             .withDisabled(true)
             .withHeight(1.25f)
             .withWidth(3.61f)

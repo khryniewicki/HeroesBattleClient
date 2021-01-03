@@ -1,61 +1,44 @@
 package com.khryniewicki.projectX.game.user_interface.symbols;
 
-import com.khryniewicki.projectX.game.user_interface.symbols.observers.MenuSymbolListener;
+import com.khryniewicki.projectX.game.user_interface.subjects.Listener;
+import com.khryniewicki.projectX.game.user_interface.subjects.Subject;
+import com.khryniewicki.projectX.game.user_interface.subjects.SubjectHeroName;
 import com.khryniewicki.projectX.graphics.GraphicLoader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 @Getter
 @Setter
 @Slf4j
-public class MenuSymbol extends GraphicLoader implements MenuSymbolListener {
+public class MenuSymbol extends GraphicLoader implements Listener {
 
-    private float positionX0, positionX1;
-    private float positionY0,positionY1;
     private boolean disabled;
     private String name;
-    private String oldText;
-
-    private PropertyChangeSupport support;
+    private Subject subject;
 
     public MenuSymbol(Builder builder) {
         super(builder);
         this.name = builder.name;
         this.disabled = builder.disabled;
-        setButtonPositions();
-        support = new PropertyChangeSupport(this);
-    }
-
-    private void setButtonPositions() {
-        positionX0 = getPositionX();
-        positionX1 = positionX0 + getWidth();
-        positionY0 = getPositionY();
-        positionY1 = positionY0  + getHeight();
+        subject = new SubjectHeroName();
     }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
+        subject.addPropertyChangeListener(pcl);
     }
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
+        subject.removePropertyChangeListener(pcl);
     }
 
     @Override
-    public void setAction(String text) {
-        support.firePropertyChange("heroName", oldText, text);
-        oldText = text;
-    }
-
-    @Override
-    public void setNews(Object value) {
-        support.firePropertyChange("news", null,  value);
+    public void setNews(Object text) {
+        subject.setNews(text);
     }
 
     @Override

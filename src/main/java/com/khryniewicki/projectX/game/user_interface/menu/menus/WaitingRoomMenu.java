@@ -3,7 +3,6 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
-import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Colors;
@@ -12,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +32,7 @@ public class WaitingRoomMenu extends AbstractMenu {
         super();
     }
 
+
     public void addTimer() {
         permanentImages.add(TIMER);
     }
@@ -48,7 +49,7 @@ public class WaitingRoomMenu extends AbstractMenu {
     }
 
     public MenuSymbol createText(String text) {
-        return new Button.Builder()
+        return new MenuSymbol.Builder()
                 .withTexture(TextFactory.textInConnectionWindow(text))
                 .withName(text)
                 .withHeight(0.8f)
