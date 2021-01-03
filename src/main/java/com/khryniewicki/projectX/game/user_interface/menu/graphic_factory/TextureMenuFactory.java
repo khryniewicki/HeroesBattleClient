@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class TextureMenuFactory {
 
 
     public static Map<String, MenuSymbol> TEXT_FACTORY;
-    public List<MenuSymbol> listWithCharacterMenuMessages;
+    public List<Symbol> listWithCharacterMenuMessages;
 
     public static TextureMenuFactory getInstance() {
         return TextureMenuFactory.HELPER.INSTANCE;
@@ -28,7 +29,7 @@ public class TextureMenuFactory {
         private final static TextureMenuFactory INSTANCE = new TextureMenuFactory();
     }
 
-    public List<MenuSymbol> getListWithCharacterMenuMessages() {
+    public List<Symbol> getListWithCharacterMenuMessages() {
         if (Objects.isNull(listWithCharacterMenuMessages)) {
             listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, BG_ANIMATION));
         }
@@ -50,7 +51,7 @@ public class TextureMenuFactory {
         return TEXT_FACTORY.get(text);
     }
 
-    public List<MenuSymbol> getListWithTextMainMenuSymbols() {
+    public List<Symbol> getListWithTextMainMenuSymbols() {
         return new ArrayList<>(Arrays.asList(TEXT_NO_HERO, TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD,
                 TEXT_ICEWIZARD, TEXT_THUNDERWIZARD, TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL));
     }

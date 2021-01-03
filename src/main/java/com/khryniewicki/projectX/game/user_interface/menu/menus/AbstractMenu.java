@@ -28,12 +28,14 @@ import static org.lwjgl.glfw.GLFW.*;
 public abstract class AbstractMenu extends GameLoopImp implements PropertyChangeListener, Menu {
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<MenuSymbol> buttons = new ArrayList<>();
-    protected List<MenuSymbol> volatileImages = new ArrayList<>();
+    protected List<Symbol> volatileImages = new ArrayList<>();
     protected List<MenuSymbol> permanentImages = new ArrayList<>();
+
     private final MousePosition mousePosition;
+    private final CollectionManager manager;
+
     protected Subject subject;
     protected static MenuCard currentView;
-    private CollectionManager manager;
 
     public AbstractMenu() {
         mousePosition = new MousePosition();
@@ -54,9 +56,9 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
                 .collect(Collectors.toList())
                 .forEach(Symbol::render);
         volatileImages.stream()
-                .filter(menuSymbol -> !menuSymbol.isDisabled())
+                .filter(symbol -> !symbol.isDisabled())
                 .collect(Collectors.toList())
-                .forEach(MenuSymbol::render);
+                .forEach(Symbol::render);
         swapBuffers();
     }
 
@@ -100,7 +102,7 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
     }
 
     protected List<Symbol> update_symbols(List<Symbol> symbols, Symbol symbol, Texture texture) {
-        return manager.update_texture_symbols(symbols, symbol, texture);
+        return manager.update_texture(symbols, symbol, texture);
     }
 
     protected void update_label(ServerState serverState) {

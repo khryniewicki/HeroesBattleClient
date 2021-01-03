@@ -2,8 +2,6 @@ package com.khryniewicki.projectX.game.user_interface.symbols;
 
 import com.khryniewicki.projectX.graphics.Texture;
 
-import java.beans.PropertyChangeListener;
-
 public interface Symbol {
     void render();
 
@@ -20,4 +18,8 @@ public interface Symbol {
     default boolean isDisabled() {
         return false;
     }
+
+    default void setDisabled(boolean disabled) {
+    }
+
 }

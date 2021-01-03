@@ -2,6 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 
 import java.awt.*;
@@ -14,7 +15,7 @@ import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
 
 public class ControlSettingsMenuFactory {
-    public List<MenuSymbol> listWithControlSettingsIcons;
+    public List<Symbol> listWithControlSettingsIcons;
 
     public static ControlSettingsMenuFactory getInstance() {
         return ControlSettingsMenuFactory.HELPER.INSTANCE;
@@ -25,7 +26,7 @@ public class ControlSettingsMenuFactory {
     }
 
     private void fill() {
-        listWithControlSettingsIcons = new ArrayList<>(Arrays.asList(BG_ANIMATION,MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT,
+        listWithControlSettingsIcons = new ArrayList<>(Arrays.asList(BG_ANIMATION, MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT,
                 TEXT_UP, BASIC_ATTACK, ULTIMATE_ATTACK));
     }
 

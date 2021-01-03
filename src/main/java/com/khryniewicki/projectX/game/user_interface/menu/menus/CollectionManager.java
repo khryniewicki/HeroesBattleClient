@@ -16,7 +16,7 @@ import static com.khryniewicki.projectX.graphics.textures.MenuTextures.SERVER_OF
 
 public class CollectionManager {
 
-    public List<MenuSymbol> update_texture(List<MenuSymbol> volatileImages, Symbol symbol, Texture texture) {
+    public List<Symbol> update_texture(List<Symbol> volatileImages, Symbol symbol, Texture texture) {
        return volatileImages
                 .stream()
                 .peek(menuSymbol -> {
@@ -26,17 +26,8 @@ public class CollectionManager {
                 })
                 .collect(Collectors.toList());
     }
-    public List<Symbol> update_texture_symbols(List<Symbol> volatileImages, Symbol symbol, Texture texture) {
-        return volatileImages
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(texture);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
-    public List<MenuSymbol> toggle_image(List<MenuSymbol> volatileImages, Symbol symbol, boolean disabled) {
+
+    public List<Symbol> toggle_image(List<Symbol> volatileImages, Symbol symbol, boolean disabled) {
         return volatileImages
                 .stream()
                 .peek(menuSymbol -> {

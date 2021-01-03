@@ -30,8 +30,8 @@ public class ControlSettingsMenu extends AbstractMenu {
 
     @Override
     public void init() {
-        super.setVolatileImages(factory.listWithControlSettingsIcons);
-        super.setButtons(new ArrayList<>(Collections.singletonList(ButtonsFactory.RETURN_BUTTON2)));
+        setVolatileImages(factory.listWithControlSettingsIcons);
+        setButtons(new ArrayList<>(Collections.singletonList(ButtonsFactory.RETURN_BUTTON2)));
     }
 
     @Override
