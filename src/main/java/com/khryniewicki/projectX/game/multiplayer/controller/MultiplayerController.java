@@ -9,14 +9,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import static com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState.WAITING_FOR_SECOND_PLAYER;
+import static com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects.MULTIPLAYER;
+import static com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects.TIME_TO_LOG_OUT;
 
 @Getter
 @Setter
 @Slf4j
 public class MultiplayerController extends MultiPlayerCommander implements PropertyChangeListener {
     private static final MultiplayerController Instance = new MultiplayerController();
-    public static final String multiplayer = "multiplayer";
-    public static final String timer = "timeLeftToLogOut";
 
     private MultiplayerController() {
         super();
@@ -48,7 +48,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
     public void propertyChange(PropertyChangeEvent evt) {
         String propertyName = evt.getPropertyName();
 
-        if (propertyName.equals(multiplayer)) {
+        if (propertyName.equals(MULTIPLAYER.getName())) {
             MultiplayerState state = (MultiplayerState) evt.getNewValue();
 
             if (!itsState.equals(state)) {
@@ -66,7 +66,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
                 itsState = state;
                 log.info("STATE: {}", itsState);
             }
-        } else if (itsState.equals(WAITING_FOR_SECOND_PLAYER) && propertyName.equals(timer)) {
+        } else if (itsState.equals(WAITING_FOR_SECOND_PLAYER) && propertyName.equals(TIME_TO_LOG_OUT.getName())) {
             Long timeLeft = (Long) evt.getNewValue();
             execute(updateTime(timeLeft));
         }

@@ -4,10 +4,10 @@ package com.khryniewicki.projectX.game.multiplayer.websocket;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
-import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
 import com.khryniewicki.projectX.services.sending_service.StackEvent;
@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import static com.khryniewicki.projectX.utils.GameUtil.serverUrl;
+import static com.khryniewicki.projectX.utils.GameUtil.WEBSOCKET_PATH;
 
 
 @Getter
@@ -199,14 +199,12 @@ public class WebsocketApplication implements Runnable {
                 new WebSocketStompClient(sockJsClient);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
-        String url = serverUrl + "/websocket-example";
-
 
         sessionHandler = new MyStompSessionHandler();
         session = null;
 
         try {
-            session = stompClient.connect(url, sessionHandler)
+            session = stompClient.connect(WEBSOCKET_PATH, sessionHandler)
                     .get();
             copy_session = session;
         } catch (InterruptedException | ExecutionException e) {

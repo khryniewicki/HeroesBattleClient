@@ -53,18 +53,18 @@ public class CharacterMenu extends AbstractMenu {
     @Override
     public void init() {
         initButtons();
-        initMessages();
+        initVolatiles();
     }
 
     public void initButtons() {
         super.setButtons(buttonsFactory.getListWithCharacterMenuButtons());
     }
 
-    public void initMessages() {
+    public void initVolatiles() {
         HERO_NAME.addPropertyChangeListener(evt -> {
             String newValue = (String) evt.getNewValue();
-            updateImage(HERO_NAME, getTextureFromTextFactory(newValue));
-            setHeroName(newValue);
+            update_volatiles(HERO_NAME, getTextureFromTextFactory(newValue));
+            set_hero_name(newValue);
         });
         setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
     }
@@ -87,12 +87,12 @@ public class CharacterMenu extends AbstractMenu {
             case "showTable":
                 boolean disabled = TABLE.isDisabled();
                 animation.toggle_table(!disabled);
-                updateButtonText(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SKILLS);
+                update_button(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SKILLS);
                 break;
             case "typeYourName":
-                toggleImage(HERO_NAME, false);
+                update_volatiles(HERO_NAME, false);
                 this.activeWriting = !activeWriting;
-                updateButtonText(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
+                update_button(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
             default:
                 setChosenHero(btnName);
@@ -108,38 +108,31 @@ public class CharacterMenu extends AbstractMenu {
     public void restart() {
         animation.stop();
         animation.toggle_table(true);
-        toggleImage(HERO_NAME, !verify_hero_name());
-        updateButtonText(CHARACTER_SKILLS, SKILLS);
-        updateButtonText(TYPE_YOUR_NAME, TYPE_NAME);
+        update_volatiles(HERO_NAME, !verify_hero_name());
+        update_button(CHARACTER_SKILLS, SKILLS);
+        update_button(TYPE_YOUR_NAME, TYPE_NAME);
         removeButton(CHARACTER_SKILLS);
         setActiveWriting(false);
         runMenu(MainMenu.getInstance(), MenuCard.MAIN_MENU);
     }
 
-    private void setHeroName(String name) {
+    private void set_hero_name(String name) {
         heroesInstances.setHeroName(name);
     }
 
     private boolean verify_hero_name() {
-        return Objects.nonNull(getHeroName()) && !getHeroName().isEmpty();
-    }
-
-    private String getHeroName() {
-        return heroesInstances.getHeroName();
+        String heroName = heroesInstances.getHeroName();
+        return Objects.nonNull(heroName) && !heroName.isEmpty();
     }
 
     private void set_hero_type(String heroType) {
         heroesInstances.set_hero_type(heroType);
     }
 
-    private void updateButtonText(MenuSymbol characterSkills, Texture tex) {
-        characterSkills.setTexture(tex);
-        render();
-    }
 
     private void showMessageInMainMenu(String btnName) {
         MenuSymbol text = textureMenuFactory.getText(btnName);
-        mainMenu.showMessage(text);
+        mainMenu.enable_message(text);
     }
 
     public void initAnimation(String character) {

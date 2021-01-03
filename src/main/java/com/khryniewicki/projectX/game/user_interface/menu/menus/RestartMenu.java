@@ -60,7 +60,7 @@ public class RestartMenu extends AbstractMenu {
     }
 
     private void reset_background() {
-        updateImage(BACKGROUND, GameTextures.LIGHT_BACKGROUND);
+        update_background(GameTextures.LIGHT_BACKGROUND);
     }
 
     private void reset_result() {
@@ -69,10 +69,14 @@ public class RestartMenu extends AbstractMenu {
 
     @Override
     public void prepare() {
-        updateImage(BACKGROUND, GameTextures.SHADOW_BACKGROUND);
+        update_background(GameTextures.SHADOW_BACKGROUND);
         win_or_loose();
         begin();
         addEventClick();
+    }
+
+    private void update_background(Texture shadowBackground) {
+        board.setSymbols(update_symbols(board.getSymbols(),BACKGROUND,shadowBackground));
     }
 
     @Override
@@ -131,18 +135,6 @@ public class RestartMenu extends AbstractMenu {
             show = true;
         }
 
-    }
-
-    public void updateImage(Symbol symbol, Texture texture) {
-        List<Symbol> symbols = board.getSymbols()
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(texture);
-                    }
-                })
-                .collect(Collectors.toList());
-        board.setSymbols(symbols);
     }
 
     private static final RestartMenu instance = new RestartMenu();

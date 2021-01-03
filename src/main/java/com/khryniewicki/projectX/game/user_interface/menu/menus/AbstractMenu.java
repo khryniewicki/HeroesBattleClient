@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.engine.GameLoopImp;
-import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
+import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.PLAYERS_BAR_LABEL;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.PLAYERS_DESCRIPTION_LABEL;
 import static org.lwjgl.glfw.GLFW.*;
 
 @Getter
@@ -31,9 +33,11 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
     private final MousePosition mousePosition;
     protected Subject subject;
     protected static MenuCard currentView;
+    private CollectionManager manager;
 
     public AbstractMenu() {
         mousePosition = new MousePosition();
+        manager = new CollectionManager();
     }
 
     @Override
@@ -85,29 +89,28 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
         subscribe();
     }
 
-    public void toggleImage(MenuSymbol symbol, boolean disabled) {
-        List<MenuSymbol> menuSymbols = volatileImages
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        menuSymbol.setDisabled(disabled);
-                    }
-                })
-                .collect(Collectors.toList());
-        setVolatileImages(menuSymbols);
+    protected void update_volatiles(Symbol symbol, Texture texture) {
+        this.volatileImages = manager.update_texture(volatileImages, symbol, texture);
         render();
     }
 
-    public void updateImage(MenuSymbol symbol, Texture texture) {
-        List<MenuSymbol> menuSymbols = volatileImages
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.equals(symbol)) {
-                        symbol.setTexture(texture);
-                    }
-                })
-                .collect(Collectors.toList());
-        setVolatileImages(menuSymbols);
+    protected void update_volatiles(Symbol symbol, boolean disabled) {
+        this.volatileImages = manager.toggle_image(volatileImages, symbol, disabled);
+        render();
+    }
+
+    protected List<Symbol> update_symbols(List<Symbol> symbols, Symbol symbol, Texture texture) {
+        return manager.update_texture_symbols(symbols, symbol, texture);
+    }
+
+    protected void update_label(ServerState serverState) {
+        this.permanentImages = manager.update_label(permanentImages, PLAYERS_BAR_LABEL, serverState);
+        this.permanentImages = manager.update_label_description(permanentImages, PLAYERS_DESCRIPTION_LABEL, serverState);
+        render();
+    }
+
+    protected void update_button(MenuSymbol menuSymbol, Texture tex) {
+        menuSymbol.setTexture(tex);
         render();
     }
 

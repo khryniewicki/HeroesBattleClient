@@ -80,7 +80,7 @@ public class LoadingMenu extends AbstractMenu {
         long result = difference / 50;
         long progress = result < 100 ? result : 100;
         String text = "Loading " + progress + "%";
-        updateImage(LOADING, getTextureForLoading(text));
+        update_volatiles(LOADING, getTextureForLoading(text));
         render();
     }
 

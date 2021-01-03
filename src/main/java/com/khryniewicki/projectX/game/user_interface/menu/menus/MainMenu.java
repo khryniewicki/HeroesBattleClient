@@ -1,33 +1,26 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subjects;
 import com.khryniewicki.projectX.game.user_interface.symbols.observers.Subject;
-import com.khryniewicki.projectX.graphics.Colors;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOGO;
-import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
@@ -40,16 +33,12 @@ public class MainMenu extends AbstractMenu {
     private final TextureMenuFactory textureMenuFactory;
     private final ButtonsFactory buttonsFactory;
     private final WebsocketScheduler websocketScheduler;
+
     private MenuSymbol noHero;
-    private MenuSymbol playersDescriptionLabel;
-    private MenuSymbol playersBarLabel;
-    private volatile ServerState state;
     private ServerState currentState;
+    private volatile ServerState state;
     private boolean subscribed;
 
-    public static MainMenu getInstance() {
-        return instance;
-    }
 
     private MainMenu() {
         super();
@@ -63,6 +52,10 @@ public class MainMenu extends AbstractMenu {
         websocketScheduler.observePlayers();
     }
 
+    public static MainMenu getInstance() {
+        return instance;
+    }
+
     private void addObserver() {
         subject = new Subject();
         subject.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
@@ -74,9 +67,8 @@ public class MainMenu extends AbstractMenu {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     String propertyName = evt.getPropertyName();
-                    if (propertyName.equals("sever")) {
+                    if (propertyName.equals(Subjects.SERVER.getName())) {
                         ServerState serverState = (ServerState) evt.getNewValue();
-//                        log.info("{}", serverState);
                         if (serverState == ServerState.JOIN_GAME) {
                             websocketScheduler.removePropertyChangeListener(this);
                             setSubscribed(false);
@@ -95,9 +87,7 @@ public class MainMenu extends AbstractMenu {
     public void init() {
         setButtons(buttonsFactory.getListWithMainMenuButtons());
         setVolatileImages(textureMenuFactory.getListWithTextMainMenuSymbols());
-        playersBarLabel = PLAYERS_BAR_LABEL;
-        playersDescriptionLabel = PLAYERS_DESCRIPTION_LABEL;
-        setPermanentImages(new ArrayList<>(Arrays.asList(playersBarLabel, playersDescriptionLabel, BG_ANIMATION, MENU_IMAGE, LOGO)));
+        setPermanentImages(new ArrayList<>(Arrays.asList(PLAYERS_BAR_LABEL, PLAYERS_DESCRIPTION_LABEL, BG_ANIMATION, MENU_IMAGE, LOGO)));
     }
 
     @Override
@@ -126,10 +116,8 @@ public class MainMenu extends AbstractMenu {
     @Override
     public void update() {
         if (Objects.nonNull(state) && !state.equals(currentState) && currentView.equals(MenuCard.MAIN_MENU)) {
-            updateLabel(playersDescriptionLabel, state);
-            updateLabelDescription(playersBarLabel, state);
+            update_label(state);
             currentState = state;
-            render();
         }
         glfwPollEvents();
     }
@@ -142,7 +130,7 @@ public class MainMenu extends AbstractMenu {
 
     private void showMenu(String buttonName) {
         //disable all messages
-        volatileImages.forEach(s -> toggleImage(s, true));
+        disable_all_messages();
 
         switch (buttonName) {
             case "ChooseCharacter":
@@ -157,9 +145,9 @@ public class MainMenu extends AbstractMenu {
                 break;
             case "Start":
                 if (state.equals(ServerState.SERVER_OFFLINE)) {
-                    showMessage(TEXT_SERVER_OFFLINE);
+                    enable_message(TEXT_SERVER_OFFLINE);
                 } else if (state.equals(ServerState.TWO_PLAYERS)) {
-                    showMessage(TEXT_ROOM_IS_FULL);
+                    enable_message(TEXT_ROOM_IS_FULL);
                 } else {
                     String heroType = heroesInstances.getHeroType();
                     if (Objects.nonNull(heroType)) {
@@ -167,56 +155,19 @@ public class MainMenu extends AbstractMenu {
                         stop();
                         subject.setNews(MultiplayerState.CONNECT);
                     } else {
-                        showMessage(TEXT_NO_HERO);
+                        enable_message(TEXT_NO_HERO);
                     }
                 }
                 break;
         }
     }
 
-    public void showMessage(MenuSymbol symbol) {
-        toggleImage(symbol, false);
+    private void disable_all_messages() {
+        volatileImages.forEach(images -> update_volatiles(images, true));
     }
 
-    public void updateLabel(MenuSymbol symbol, ServerState state) {
-        List<MenuSymbol> menuSymbols = permanentImages
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.getName().equals(symbol.getName())) {
-                        Color color = Colors.BRIGHT_YELLOW;
-                        if (state.equals(ServerState.SERVER_OFFLINE)) {
-                            color = Colors.BRIGHT_RED;
-                        }
-                        symbol.setTexture(TextFactory.textInPlayersMenuToImage(state.getTitle(), color));
-                    }
-                })
-                .collect(Collectors.toList());
-        setPermanentImages(menuSymbols);
-    }
-
-    public void updateLabelDescription(MenuSymbol symbol, ServerState state) {
-        List<MenuSymbol> menuSymbols = permanentImages
-                .stream()
-                .peek(menuSymbol -> {
-                    if (menuSymbol.getName().equals(symbol.getName())) {
-                        switch (state) {
-                            case NO_PLAYERS:
-                                symbol.setTexture(SERVER_EMPTY);
-                                break;
-                            case ONE_PLAYER:
-                                symbol.setTexture(SERVER_HALF_FULL);
-                                break;
-                            case TWO_PLAYERS:
-                                symbol.setTexture(SERVER_FULL);
-                                break;
-                            case SERVER_OFFLINE:
-                                symbol.setTexture(SERVER_OFFLINE);
-                                break;
-                        }
-                    }
-                })
-                .collect(Collectors.toList());
-        setPermanentImages(menuSymbols);
+    public void enable_message(MenuSymbol symbol) {
+        update_volatiles(symbol, false);
     }
 
     public synchronized void setState(ServerState state) {
