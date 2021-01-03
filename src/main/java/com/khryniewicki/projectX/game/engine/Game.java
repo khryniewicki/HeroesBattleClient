@@ -2,7 +2,6 @@ package com.khryniewicki.projectX.game.engine;
 
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
@@ -21,7 +20,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 public class Game extends GameLoopImp implements Runnable {
 
     private Board board;
-    private WebsocketController websocketController;
+    private MultiplayerController multiplayerController;
 
     public void start() {
         state = GameState.OK;
@@ -53,7 +52,6 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     private void multiplayer() {
-        MultiplayerController multiplayerController = MultiplayerController.getMultiplayerInstance();
         multiplayerController.execute();
     }
 
@@ -80,10 +78,10 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     private void is_player_dead() {
-        if (state.equals(GameState.PLAYER_IS_DEAD)) {
-                restart();
-                stop();
-                stop_websocket();
+        if (board.player_dead()) {
+            restart();
+            stop();
+            stop_websocket();
         }
     }
 
@@ -100,15 +98,15 @@ public class Game extends GameLoopImp implements Runnable {
     }
 
     protected void stop_sending_service() {
-        websocketController.stop_sending_service();
+        multiplayerController.stop_sending_service();
     }
 
     public void stop_websocket() {
-        websocketController.stop_websocket();
+        multiplayerController.stop_websocket();
     }
 
     private Game() {
-        websocketController = WebsocketController.getWebsocketInstance();
+        multiplayerController = MultiplayerController.getMultiplayerInstance();
     }
 
     public static Game getInstance() {

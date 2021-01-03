@@ -75,6 +75,12 @@ public class MultiPlayerCommander extends GameLoopImp {
         itsCommands.add(command);
     }
 
+    public void stop_sending_service() {
+        websocketController.stop_sending_service();
+    }
+    public void stop_websocket() {
+        websocketController.stop_websocket();
+    }
     protected interface Command {
         void execute();
     }

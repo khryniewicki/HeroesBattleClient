@@ -76,10 +76,6 @@ public class GameLoopImp implements GameLoop {
         terminateIfWindowShutDown();
     }
 
-    public void player_is_dead() {
-        setState(GameState.PLAYER_IS_DEAD);
-    }
-
     public void restart() {
         setState(GameState.RESTART);
     }

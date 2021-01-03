@@ -3,13 +3,11 @@ package com.khryniewicki.projectX.game.user_interface.board;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.control_settings.collision.Collision;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
-import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
@@ -21,7 +19,6 @@ import java.util.List;
 
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BAR;
-import static org.lwjgl.opengl.GL11.*;
 
 @Data
 @Slf4j
@@ -39,28 +36,16 @@ public class Board {
     private List<Symbol> symbols;
     private List<UltraSpell> spells;
     private List<UltraHero> heroes;
-    private List<BoardObjects> obstacles;
-    private List<BoardObjects> terrains;
     private boolean notify;
 
     public Board() {
         createBackground();
-        obstacles = ObstacleStorage.getObstacle();
-        terrains = ObstacleStorage.getTerrainList();
-//        createCollision();
         createHeroes();
         createSpells();
-//        mousePosition = new MousePosition();
-//        addEventClick();
     }
-
 
     private void createBackground() {
         symbols = new ArrayList<>(Arrays.asList(BACKGROUND, BAR, new PlayerBar()));
-    }
-
-    private void createCollision() {
-        collision = new Collision();
     }
 
     private void createHeroes() {
@@ -93,76 +78,11 @@ public class Board {
             }
         });
 
-        isPlayerDead();
-
-//        if (collision.isTest_square()) {
-//            collision.getSquares().values().forEach(MenuSymbol::render);
-//        }
-//        renderObstacles();
-//        renderTerrains();
     }
 
-    protected void isPlayerDead() {
-        boolean b = heroes.stream().anyMatch(ultraHero -> ultraHero.getLife() == 0);
-        if (b && !notify) {
-            Game game = Game.getInstance();
-            game.player_is_dead();
-            setNotify(true);
-        }
+    public boolean player_dead() {
+        return heroes.stream().anyMatch(ultraHero -> ultraHero.getLife() == 0);
     }
-
-//    public void renderTerrains() {
-//        Shader.TERRAIN.enable();
-//        Terrain.getTexture().bind();
-//
-//        for (BoardObjects terrain : terrains) {
-//            terrain.getMesh().bind();
-//            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
-//            terrain.getMesh().draw();
-//            terrain.getMesh().unbind();
-//        }
-//        Terrain.getTexture().unbind();
-//        Shader.TERRAIN.disable();
-//    }
-//
-//    public void renderObstacles() {
-//        Shader.OBSTACLE.enable();
-//        Obstacle.getTexture().bind();
-//
-//        for (BoardObjects obstacle : obstacles) {
-//            obstacle.getMesh().bind();
-//            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
-//            obstacle.getMesh().draw();
-//            obstacle.getMesh().unbind();
-//        }
-//
-//        Obstacle.getTexture().unbind();
-//        Shader.OBSTACLE.disable();
-//    }
-//
-//    public void addEventClick() {
-//        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
-//
-//            if (key == 0 && action != GLFW_RELEASE) {
-//
-//                Position cursorPosition = mousePosition.getCursorPosition();
-//                log.info("KURSOR: [{},  {}]", mousePosition.getWindowPositionX(), mousePosition.getWindowPositionY());
-//
-//                obstacles.stream()
-//                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
-//                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
-//                        .findFirst()
-//                        .ifPresent(obstacles -> System.out.println("OB " + obstacles.getName()));
-//
-//                terrains.stream()
-//                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
-//                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
-//                        .findFirst()
-//                        .ifPresent(obstacles -> System.out.println("TR " + obstacles.getName()));
-//            }
-//        });
-//    }
-
 
 }
 
