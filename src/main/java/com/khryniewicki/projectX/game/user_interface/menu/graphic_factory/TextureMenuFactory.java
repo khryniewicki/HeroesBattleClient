@@ -36,6 +36,15 @@ public class TextureMenuFactory {
         return listWithCharacterMenuMessages;
     }
 
+    public List<Symbol> getListWithTextMainMenuSymbols() {
+        return new ArrayList<>(Arrays.asList(TEXT_NO_HERO, TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD,
+                TEXT_ICEWIZARD, TEXT_THUNDERWIZARD, TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL));
+    }
+
+    public List<Symbol> getListWithPermamentMainMenuSymbols() {
+        return new ArrayList<>(Arrays.asList(PLAYERS_BAR_LABEL, PLAYERS_DESCRIPTION_LABEL, BG_ANIMATION, MENU_IMAGE, LOGO));
+    }
+
     private void fill() {
         TEXT_FACTORY = new HashMap<>();
         TEXT_FACTORY.put("FallenMonk", TEXT_FALLENMONK);
@@ -49,11 +58,6 @@ public class TextureMenuFactory {
 
     public MenuSymbol getText(String text) {
         return TEXT_FACTORY.get(text);
-    }
-
-    public List<Symbol> getListWithTextMainMenuSymbols() {
-        return new ArrayList<>(Arrays.asList(TEXT_NO_HERO, TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD,
-                TEXT_ICEWIZARD, TEXT_THUNDERWIZARD, TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL));
     }
 
     public static final MenuSymbol TEXT_NO_HERO = new MenuSymbol.Builder()
@@ -140,7 +144,6 @@ public class TextureMenuFactory {
     public static final MenuSymbol MENU_IMAGE = new MenuSymbol.Builder()
             .withTexture(MENU_IMAGE_TEXTURE)
             .withName("menu_image")
-            .withDisabled(false)
             .withVisibility(0f)
             .withHeight(9.5f)
             .withWidth(9.5f)
@@ -150,7 +153,6 @@ public class TextureMenuFactory {
     public static final MenuSymbol LOGO = new MenuSymbol.Builder()
             .withTexture(LOGO_TEXTURE)
             .withName("logo")
-            .withDisabled(false)
             .withVisibility(0f)
             .withHeight(0.9168f)
             .withWidth(2.4144f)

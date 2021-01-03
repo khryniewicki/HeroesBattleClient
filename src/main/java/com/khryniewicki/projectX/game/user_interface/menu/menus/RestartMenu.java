@@ -15,8 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.MAIN_MENU;
@@ -75,8 +77,8 @@ public class RestartMenu extends AbstractMenu {
         addEventClick();
     }
 
-    private void update_background(Texture shadowBackground) {
-        board.setSymbols(update_symbols(board.getSymbols(),BACKGROUND,shadowBackground));
+    private void update_background(Texture texture) {
+        board.setSymbols(update_symbols(board.getSymbols(), BACKGROUND, texture));
     }
 
     @Override
@@ -96,10 +98,9 @@ public class RestartMenu extends AbstractMenu {
     @Override
     public void render() {
         clearBuffers();
-        board.getSymbols().forEach(Symbol::render);
-        board.getHeroes().forEach(Ultra::render);
-        buttons.forEach(MenuSymbol::render);
-        permanentImages.forEach(MenuSymbol::render);
+        Stream.of(board.getSymbols(), board.getHeroes(), buttons, permanentImages)
+                .flatMap(Collection::stream)
+                .forEach(Symbol::render);
         swapBuffers();
     }
 

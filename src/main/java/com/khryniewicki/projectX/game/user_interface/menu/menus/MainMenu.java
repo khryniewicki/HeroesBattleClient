@@ -16,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
@@ -74,7 +72,6 @@ public class MainMenu extends AbstractMenu {
                             setSubscribed(false);
                         } else {
                             setState(serverState);
-                            log.info("{}", serverState);
                         }
                     }
                 }
@@ -87,7 +84,7 @@ public class MainMenu extends AbstractMenu {
     public void init() {
         setButtons(buttonsFactory.getListWithMainMenuButtons());
         setVolatileImages(textureMenuFactory.getListWithTextMainMenuSymbols());
-        setPermanentImages(new ArrayList<>(Arrays.asList(PLAYERS_BAR_LABEL, PLAYERS_DESCRIPTION_LABEL, BG_ANIMATION, MENU_IMAGE, LOGO)));
+        setPermanentImages(textureMenuFactory.getListWithPermamentMainMenuSymbols());
     }
 
     @Override
@@ -125,10 +122,10 @@ public class MainMenu extends AbstractMenu {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String buttonName = (String) evt.getNewValue();
-        showMenu(buttonName);
+        click_button(buttonName);
     }
 
-    private void showMenu(String buttonName) {
+    private void click_button(String buttonName) {
         //disable all messages
         disable_all_messages();
 
@@ -162,6 +159,11 @@ public class MainMenu extends AbstractMenu {
         }
     }
 
+    private void update_label(ServerState serverState) {
+        this.permanentImages = manager.update_label(permanentImages, PLAYERS_BAR_LABEL, serverState);
+        this.permanentImages = manager.update_label_description(permanentImages, PLAYERS_DESCRIPTION_LABEL, serverState);
+        render();
+    }
     private void disable_all_messages() {
         volatileImages.forEach(images -> update_volatiles(images, true));
     }
@@ -172,5 +174,6 @@ public class MainMenu extends AbstractMenu {
 
     public synchronized void setState(ServerState state) {
         this.state = state;
+        log.info("{}", state);
     }
 }

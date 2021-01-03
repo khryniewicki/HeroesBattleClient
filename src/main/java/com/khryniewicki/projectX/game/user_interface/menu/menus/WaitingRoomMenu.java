@@ -2,9 +2,10 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
+import com.khryniewicki.projectX.game.user_interface.symbols.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Colors;
 import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 import lombok.Getter;
@@ -86,7 +87,7 @@ public class WaitingRoomMenu extends AbstractMenu {
 
     public void changeTime(MenuSymbol symbol, Long timeLeftToLogOut) {
         glfwPollEvents();
-        List<MenuSymbol> collect = permanentImages.stream()
+        List<Symbol> collect = permanentImages.stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
                         String text = "Logout in: " + timeLeftToLogOut.toString() + " sec.";

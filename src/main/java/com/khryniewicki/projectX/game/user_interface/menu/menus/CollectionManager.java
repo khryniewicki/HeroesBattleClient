@@ -38,7 +38,7 @@ public class CollectionManager {
                 .collect(Collectors.toList());
     }
 
-    public List<MenuSymbol> update_label_description(List<MenuSymbol> permamentImages,MenuSymbol symbol, ServerState state) {
+    public List<Symbol> update_label_description(List<Symbol> permamentImages,MenuSymbol symbol, ServerState state) {
         return permamentImages
                 .stream()
                 .peek(menuSymbol -> {
@@ -53,7 +53,7 @@ public class CollectionManager {
                 .collect(Collectors.toList());
     }
 
-    public List<MenuSymbol> update_label(List<MenuSymbol> permamentImages, MenuSymbol symbol, ServerState state) {
+    public List<Symbol> update_label(List<Symbol> permamentImages, MenuSymbol symbol, ServerState state) {
         return permamentImages
                 .stream()
                 .peek(menuSymbol -> {
