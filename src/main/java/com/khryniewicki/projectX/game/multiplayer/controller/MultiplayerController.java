@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.multiplayer.controller;
 
+import com.khryniewicki.projectX.game.engine.Command;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,8 +34,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
     @Override
     public void update() {
         if (itsCommands.size() > 0) {
-            Command c = itsCommands.getFirst();
-            itsCommands.removeFirst();
+            Command c = itsCommands.removeFirst();
             c.execute();
         }
     }

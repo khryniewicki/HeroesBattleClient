@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
+import com.khryniewicki.projectX.game.engine.Application;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
@@ -134,7 +135,7 @@ public class MainMenu extends AbstractMenu {
                 break;
             case QUIT:
                 stop();
-                finish_game();
+                Application.finish_game();
                 break;
             case START:
                 if (state.equals(ServerState.SERVER_OFFLINE)) {

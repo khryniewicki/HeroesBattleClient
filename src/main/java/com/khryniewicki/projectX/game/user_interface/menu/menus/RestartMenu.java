@@ -1,13 +1,12 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
+import com.khryniewicki.projectX.game.engine.Application;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.engine.GameState;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.textures.GameTextures;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
@@ -34,40 +32,29 @@ public class RestartMenu extends AbstractMenu {
     private Game game;
     private boolean show;
     private HeroesInstances heroesInstances;
+
     private RestartMenu() {
         super();
         start();
         game = Game.getInstance();
-        board = game.getBoard();
         heroesInstances = HeroesInstances.getInstance();
     }
 
+    @Override
     public void execute() {
         loop();
-        if (Game.state.equals(GameState.OK)) {
-            reset();
-            game.initialize_game();
+        if (Application.state.equals(GameState.OK)) {
+            restart();
+            Application.restart();
         }
     }
 
-    protected void reset() {
-        reset_heroes();
-        reset_background();
-        reset_result();
-        show = false;
-    }
-
-
-    protected void reset_heroes() {
-        heroesInstances.reset();
-    }
-
-    private void reset_background() {
-        update_background(GameTextures.LIGHT_BACKGROUND);
-    }
-
-    private void reset_result() {
-        permanentImages = new ArrayList<>();
+    @Override
+    public void loop() {
+        if (Application.state.equals(GameState.RESTART)) {
+            prepare();
+            insideLoop();
+        }
     }
 
     @Override
@@ -76,19 +63,6 @@ public class RestartMenu extends AbstractMenu {
         win_or_loose();
         begin();
         addEventClick();
-    }
-
-    private void update_background(Texture texture) {
-        List<Symbol> symbols = manager.update_texture(board.getSymbols(), BACKGROUND, texture);
-        board.setSymbols(symbols);
-    }
-
-    @Override
-    public void loop() {
-        if (state.equals(GameState.RESTART)) {
-            prepare();
-            insideLoop();
-        }
     }
 
     @Override
@@ -107,6 +81,33 @@ public class RestartMenu extends AbstractMenu {
     }
 
     @Override
+    public void restart() {
+        reset_heroes();
+        reset_background();
+        reset_result();
+        show = false;
+    }
+
+    protected void reset_heroes() {
+        heroesInstances.reset();
+    }
+
+    private void reset_background() {
+        update_background(GameTextures.LIGHT_BACKGROUND);
+    }
+
+    private void reset_result() {
+        permanentImages = new ArrayList<>();
+    }
+
+    private void update_background(Texture texture) {
+        board = game.getBoard();
+        List<Symbol> symbols = manager.update_texture(board.getSymbols(), BACKGROUND, texture);
+        board.setSymbols(symbols);
+    }
+
+
+    @Override
     public void init() {
         super.setButtons(new ArrayList<>(Arrays.asList(QUIT, MAIN_MENU)));
     }
@@ -116,9 +117,9 @@ public class RestartMenu extends AbstractMenu {
         Buttons buttonName = (Buttons) evt.getNewValue();
 
         if (buttonName.equals(Buttons.RESTART_GO_TO_MAIN_MENU)) {
-            game.ok();
+            Application.ok();
         } else if (buttonName.equals(Buttons.RESTART_QUIT)) {
-            game.finish_game();
+            Application.finish_game();
         }
         stop();
     }

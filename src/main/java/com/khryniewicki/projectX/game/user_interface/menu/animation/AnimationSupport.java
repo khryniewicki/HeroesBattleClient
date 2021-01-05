@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.animation;
 
-import com.khryniewicki.projectX.game.engine.GameLoopImp;
+import com.khryniewicki.projectX.game.engine.LifeCycle;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.factory.HeroFactory;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
@@ -18,7 +18,7 @@ import java.util.Random;
 @Slf4j
 @Getter
 @Setter
-public class AnimationSupport extends GameLoopImp {
+public abstract class AnimationSupport extends LifeCycle {
 
     public static final float LEFT_BOUNDARY = -6.5f;
     public static final float RIGHT_BOUNDARY = 3.0f;
@@ -44,6 +44,7 @@ public class AnimationSupport extends GameLoopImp {
             characterMenu = CharacterMenu.getInstance();
         }
     }
+
     protected void add_dummy() {
         dummy.add_dummy(animationHero.getPositionX());
         add_symbol(dummy);
@@ -75,6 +76,7 @@ public class AnimationSupport extends GameLoopImp {
             animationHero.turnLeft(tmpHeroSide);
         }
     }
+
     protected void reset_loop_counter() {
         this.loopCycles = 0;
     }
@@ -111,11 +113,11 @@ public class AnimationSupport extends GameLoopImp {
     }
 
     protected void reset_table() {
-        setSymbols(table.update( superHero, 0));
+        setSymbols(table.update(superHero, 0));
     }
 
     protected void highlight_table() {
-        setSymbols(table.update( superHero, random_number));
+        setSymbols(table.update(superHero, random_number));
     }
 
     public void toggle_table(boolean disabled) {

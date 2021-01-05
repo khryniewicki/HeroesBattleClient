@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.multiplayer.controller;
 
-import com.khryniewicki.projectX.game.engine.GameLoopImp;
+import com.khryniewicki.projectX.game.engine.Command;
+import com.khryniewicki.projectX.game.engine.LifeCycle;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
@@ -16,7 +17,7 @@ import java.util.LinkedList;
 @Getter
 @Setter
 @Slf4j
-public class MultiPlayerCommander extends GameLoopImp {
+public abstract class MultiPlayerCommander extends LifeCycle {
     protected final WaitingRoomMenu waitingRoomMenu;
     protected final HeroesInstances heroesInstances;
     protected final WebsocketController websocketController;
@@ -71,18 +72,17 @@ public class MultiPlayerCommander extends GameLoopImp {
     }
 
 
-    protected void execute(Command command) {
-        itsCommands.add(command);
+    protected void execute(Command Command) {
+        itsCommands.add(Command);
     }
 
     public void stop_sending_service() {
         websocketController.stop_sending_service();
     }
+
     public void stop_websocket() {
         websocketController.stop_websocket();
     }
-    protected interface Command {
-        void execute();
-    }
+
 
 }

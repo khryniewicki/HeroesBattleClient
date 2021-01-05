@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.engine.Game;
-import com.khryniewicki.projectX.game.engine.GameLoopImp;
+import com.khryniewicki.projectX.game.engine.LifeCycle;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
@@ -23,7 +23,7 @@ import static org.lwjgl.glfw.GLFW.*;
 @Getter
 @Slf4j
 @Setter
-public abstract class AbstractMenu extends GameLoopImp implements PropertyChangeListener, Menu {
+public abstract class AbstractMenu extends LifeCycle implements PropertyChangeListener, Menu {
 
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<Symbol> volatileImages = new ArrayList<>();
@@ -108,6 +108,11 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
     protected void setCurrentView(MenuCard menuCard) {
         currentView = menuCard;
         log.info("CURRENT VIEW: {}", currentView);
+    }
+
+    @Override
+    public void execute() {
+
     }
 
     public enum MenuCard {

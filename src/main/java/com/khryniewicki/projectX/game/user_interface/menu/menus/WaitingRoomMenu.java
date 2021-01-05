@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.engine.Game;
+import com.khryniewicki.projectX.game.engine.Application;
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -68,8 +67,7 @@ public class WaitingRoomMenu extends AbstractMenu {
             } else {
                 if (waitingForPlayer) {
                     restart();
-                    Game game = Game.getInstance();
-                    game.initialize_game();
+                    Application.restart();
                     MultiplayerController.getMultiplayerInstance().stop();
                 }
             }
@@ -85,6 +83,11 @@ public class WaitingRoomMenu extends AbstractMenu {
         timeLeftToLogOut = null;
     }
 
+
+    @Override
+    public void execute() {
+
+    }
 
     public void changeTime(MenuSymbol symbol, Long timeLeftToLogOut) {
         glfwPollEvents();
@@ -102,6 +105,7 @@ public class WaitingRoomMenu extends AbstractMenu {
     public static WaitingRoomMenu getWaitingRoomMenu() {
         return HELPER.WAITING_ROOM_MENU;
     }
+
 
     private static class HELPER {
         private final static WaitingRoomMenu WAITING_ROOM_MENU = new WaitingRoomMenu();

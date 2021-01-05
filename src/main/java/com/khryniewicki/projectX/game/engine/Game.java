@@ -17,48 +17,10 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Getter
 @Setter
 @Slf4j
-public class Game extends GameLoopImp implements Runnable {
+public class Game extends LifeCycle {
 
     private Board board;
     private MultiplayerController multiplayerController;
-
-    public void start() {
-        state = GameState.OK;
-        new Thread(this, "Game").start();
-    }
-
-    public void run() {
-        init();
-        loading_menu();
-        initialize_game();
-    }
-
-    private void loading_menu() {
-        LoadingMenu loadingMenu = LoadingMenu.getInstance();
-        loadingMenu.execute();
-    }
-
-    public void initialize_game() {
-        main_menu();
-        multiplayer();
-        loop();
-        restart_menu();
-        terminate_game();
-    }
-
-    private void main_menu() {
-        MainMenu mainMenu = MainMenu.getInstance();
-        mainMenu.execute();
-    }
-
-    private void multiplayer() {
-        multiplayerController.execute();
-    }
-
-    private void restart_menu() {
-        RestartMenu restartMenu = RestartMenu.getInstance();
-        restartMenu.execute();
-    }
 
     @Override
     protected void prepare() {
@@ -79,7 +41,7 @@ public class Game extends GameLoopImp implements Runnable {
 
     private void is_player_dead() {
         if (board.player_dead()) {
-            restart();
+            Application.restart_game();
             stop();
             stop_websocket();
         }
@@ -92,13 +54,9 @@ public class Game extends GameLoopImp implements Runnable {
         swapBuffers();
     }
 
-    public void terminate_game() {
-        stop_websocket();
-        stop_sending_service();
-    }
+    @Override
+    public void init() {
 
-    protected void stop_sending_service() {
-        multiplayerController.stop_sending_service();
     }
 
     public void stop_websocket() {
@@ -111,6 +69,11 @@ public class Game extends GameLoopImp implements Runnable {
 
     public static Game getInstance() {
         return Game.HELPER.WAITING_ROOM_MENU;
+    }
+
+    @Override
+    public void execute() {
+        loop();
     }
 
     private static class HELPER {
