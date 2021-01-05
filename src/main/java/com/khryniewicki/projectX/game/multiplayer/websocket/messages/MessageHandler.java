@@ -24,7 +24,7 @@ public class MessageHandler {
     public MessageHandler() {
         channels = Channels.getINSTANCE();
         subjectMultiplayerState = new SubjectMultiplayerState();
-        multiplayer = MultiplayerController.getMultiplayerInstance();
+        multiplayer = MultiplayerController.getInstance();
         subjectMultiplayerState.addPropertyChangeListener(multiplayer);
     }
 

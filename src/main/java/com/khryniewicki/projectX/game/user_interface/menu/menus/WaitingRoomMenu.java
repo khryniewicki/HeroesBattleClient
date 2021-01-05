@@ -68,7 +68,7 @@ public class WaitingRoomMenu extends AbstractMenu {
                 if (waitingForPlayer) {
                     restart();
                     Application.restart();
-                    MultiplayerController.getMultiplayerInstance().stop();
+                    MultiplayerController.getInstance().stop();
                 }
             }
         }

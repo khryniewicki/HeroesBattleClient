@@ -58,7 +58,7 @@ public class MainMenu extends AbstractMenu {
 
     private void addObserver() {
         subjectMultiplayerState = new SubjectMultiplayerState();
-        subjectMultiplayerState.addPropertyChangeListener(MultiplayerController.getMultiplayerInstance());
+        subjectMultiplayerState.addPropertyChangeListener(MultiplayerController.getInstance());
     }
 
     private void subscribePlayersInGame() {

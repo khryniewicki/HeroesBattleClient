@@ -77,7 +77,7 @@ public class MultiplayerController extends MultiPlayerCommander implements Prope
         itsState = MultiplayerState.NOT_CONNECTED;
     }
 
-    public static MultiplayerController getMultiplayerInstance() {
+    public static MultiplayerController getInstance() {
         return Instance;
     }
 

@@ -36,12 +36,12 @@ public class Application implements Runnable {
 
     public static void restart() {
         COMMANDS.add(MainMenu.getInstance());
-        COMMANDS.add(MultiplayerController.getMultiplayerInstance());
+        COMMANDS.add(MultiplayerController.getInstance());
         COMMANDS.add(Game.getInstance());
         COMMANDS.add(RestartMenu.getInstance());
         COMMANDS.add(() -> {
             if (state.equals(GameState.FINISH)) {
-                MultiplayerController multiplayerInstance = MultiplayerController.getMultiplayerInstance();
+                MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
                 multiplayerInstance.stop_websocket();
                 multiplayerInstance.stop_sending_service();
             }

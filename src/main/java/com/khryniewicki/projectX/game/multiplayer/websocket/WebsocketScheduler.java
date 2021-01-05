@@ -136,7 +136,7 @@ public class WebsocketScheduler {
     }
 
     public void setMultiplayerState(MultiplayerState new_state) {
-        MultiplayerController multiplayerInstance = MultiplayerController.getMultiplayerInstance();
+        MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
         multiplayerState = multiplayerInstance.getItsState();
         if (multiplayerState.equals(MultiplayerState.WAITING_FOR_SECOND_PLAYER)) {
             support.firePropertyChange(MULTIPLAYER.getName(), multiplayerState, new_state);

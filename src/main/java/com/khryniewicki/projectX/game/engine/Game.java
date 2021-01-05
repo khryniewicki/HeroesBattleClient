@@ -3,9 +3,6 @@ package com.khryniewicki.projectX.game.engine;
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.RestartMenu;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -54,21 +51,17 @@ public class Game extends LifeCycle {
         swapBuffers();
     }
 
-    @Override
-    public void init() {
-
-    }
 
     public void stop_websocket() {
         multiplayerController.stop_websocket();
     }
 
     private Game() {
-        multiplayerController = MultiplayerController.getMultiplayerInstance();
+        multiplayerController = MultiplayerController.getInstance();
     }
 
     public static Game getInstance() {
-        return Game.HELPER.WAITING_ROOM_MENU;
+        return Game.HELPER.INSTANCE;
     }
 
     @Override
@@ -77,7 +70,7 @@ public class Game extends LifeCycle {
     }
 
     private static class HELPER {
-        private final static Game WAITING_ROOM_MENU = new Game();
+        private final static Game INSTANCE = new Game();
     }
 
 }
