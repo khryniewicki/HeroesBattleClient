@@ -67,10 +67,10 @@ public abstract class AbstractMenu extends GameLoopImp implements PropertyChange
             if (key == 0 && action != GLFW_RELEASE) {
                 mousePosition.getCursorPosition();
                 buttons.stream()
-                        .filter(btn -> mousePosition.getWindowPositionX() > btn.getPositionX0() && mousePosition.getWindowPositionX() < btn.getPositionX1())
-                        .filter(btn -> mousePosition.getWindowPositionY() > btn.getPositionY0() && mousePosition.getWindowPositionY() < btn.getPositionY1())
+                        .filter(b -> mousePosition.getWindowPositionX() > b.getPositionX0() && mousePosition.getWindowPositionX() < b.getPositionX1())
+                        .filter(b -> mousePosition.getWindowPositionY() > b.getPositionY0() && mousePosition.getWindowPositionY() < b.getPositionY1())
                         .findFirst()
-                        .ifPresent(btn -> btn.setNews(btn.getButtonName()));
+                        .ifPresent(b -> b.setNews(b.getButtonName()));
             }
         });
 
