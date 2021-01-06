@@ -28,12 +28,12 @@ public class HeroFactory {
 
     public void initMap() {
         new SuperHero();
-        heroesFactory.put("FireWizard", FireWizard::new);
-        heroesFactory.put("IceWizard", IceWizard::new);
-        heroesFactory.put("ThunderWizard", ThunderWizard::new);
-        heroesFactory.put("FallenWitcher", FallenWitcher::new);
-        heroesFactory.put("FallenMonk", FallenMonk::new);
-        heroesFactory.put("FallenKing", FallenKing::new);
+        heroesFactory.put("Fire Wizard", FireWizard::new);
+        heroesFactory.put("Ice Wizard", IceWizard::new);
+        heroesFactory.put("Thunder Wizard", ThunderWizard::new);
+        heroesFactory.put("Fallen Witcher", FallenWitcher::new);
+        heroesFactory.put("Fallen Monk", FallenMonk::new);
+        heroesFactory.put("Fallen King", FallenKing::new);
     }
 
     public SuperHero create(String character) {
