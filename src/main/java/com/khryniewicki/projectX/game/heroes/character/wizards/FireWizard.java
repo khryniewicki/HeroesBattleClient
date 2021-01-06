@@ -38,7 +38,7 @@ public class FireWizard extends SuperHero {
 
     @Override
     public void setProperties() {
-        setName("FireWizard");
+        setName("Fire Wizard");
         setHero_left_offset(0.2f);
         setHero_top_offset(0.5f);
         setMana(140f);

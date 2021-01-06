@@ -91,7 +91,6 @@ public class MainMenu extends AbstractMenu {
 
     @Override
     public void execute() {
-        prepare();
         loop();
     }
 

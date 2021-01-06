@@ -45,7 +45,7 @@ public class DigitsSymbol implements Symbol {
     }
 
     private Position getPosition(String name) {
-        return new Position(name.equals("life") ? -7.6f : -6.1f, 5.1f);
+        return new Position(name.equals("life") ? -7.1f : -5.6f, 5.1f);
     }
 
     @Override

@@ -46,12 +46,12 @@ public class TextureMenuFactory {
 
     private void fill() {
         TEXT_FACTORY = new HashMap<>();
-        TEXT_FACTORY.put("FallenMonk", TEXT_FALLENMONK);
-        TEXT_FACTORY.put("FallenWitcher", TEXT_FALLENWITCHER);
-        TEXT_FACTORY.put("FallenKing", TEXT_FALLENKING);
-        TEXT_FACTORY.put("ThunderWizard", TEXT_THUNDERWIZARD);
-        TEXT_FACTORY.put("IceWizard", TEXT_ICEWIZARD);
-        TEXT_FACTORY.put("FireWizard", TEXT_FIREWIZARD);
+        TEXT_FACTORY.put("Fallen Monk", TEXT_FALLENMONK);
+        TEXT_FACTORY.put("Fallen Witcher", TEXT_FALLENWITCHER);
+        TEXT_FACTORY.put("Fallen King", TEXT_FALLENKING);
+        TEXT_FACTORY.put("Thunder Wizard", TEXT_THUNDERWIZARD);
+        TEXT_FACTORY.put("Ice Wizard", TEXT_ICEWIZARD);
+        TEXT_FACTORY.put("Fire Wizard", TEXT_FIREWIZARD);
         TEXT_FACTORY.put("NoHero", TEXT_NO_HERO);
     }
 

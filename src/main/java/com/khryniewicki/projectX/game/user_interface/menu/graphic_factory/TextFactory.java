@@ -53,6 +53,12 @@ public class TextFactory {
         setImage(text, font, color, image);
         return new Texture(image);
     }
+    public static Texture textInPlayerBarHeroName(String text, Color color) {
+        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW_FOR_HER0_NAME).getImage();
+        Font font = new Font("Arial", Font.BOLD, 25);
+        setImage(text, font, color, image);
+        return new Texture(image);
+    }
 
     public static Texture textInControlSettingsToImage(String text, Color color) {
         BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
@@ -119,9 +125,11 @@ public class TextFactory {
         }
     }
 
+
+
     enum BLANK_IMAGES {
         BLANK_WINDOW("blankTextWindow.png"), BLANK_WINDOW_WITH_LINE("blankTextWindowWithLine.png"),
-        BLANK_WINDOW_FOR_NUMBER("blankTextWindowNumber.png"), BLANK_WINDOW_CONNECTION("blankTextWindowConnection.png");
+        BLANK_WINDOW_FOR_NUMBER("blankTextWindowNumber.png"), BLANK_WINDOW_FOR_HER0_NAME("blankTextWindowHeroName.png"),BLANK_WINDOW_CONNECTION("blankTextWindowConnection.png");
 
         private String path;
 
