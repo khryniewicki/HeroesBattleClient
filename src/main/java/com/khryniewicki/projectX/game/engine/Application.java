@@ -18,23 +18,18 @@ public class Application implements Runnable {
     }
 
     public void run() {
-        play();
-        execute();
-    }
-
-    public void execute() {
-        while (COMMANDS.size() > 0) {
-            Command command = COMMANDS.removeFirst();
-            command.execute();
-        }
-    }
-
-    private static void play() {
-        COMMANDS.add(LoadingMenu.getInstance());
+        prepare();
+        init();
         restart();
     }
 
-    public static void restart() {
+    private static void init() {
+        Command command = COMMANDS.removeFirst();
+        command.execute();
+    }
+
+    public static void prepare() {
+        COMMANDS.add(LoadingMenu.getInstance());
         COMMANDS.add(MainMenu.getInstance());
         COMMANDS.add(MultiplayerController.getInstance());
         COMMANDS.add(Game.getInstance());
@@ -46,6 +41,10 @@ public class Application implements Runnable {
                 multiplayerInstance.stop_sending_service();
             }
         });
+    }
+
+    public static void restart() {
+        COMMANDS.forEach(Command::execute);
     }
 
     public static void restart_game() {

@@ -69,7 +69,6 @@ public class MoveSettings {
             hero.setMesh();
             heroAttributes.update();
             stackEvent.addHeroDto();
-            log.info("move");
         }
     }
 

@@ -87,7 +87,6 @@ public class AttackTrajectory {
     }
 
     private void targetReached() {
-        log.info("Target reached: {}", target);
         spell.setImage(1f, 1f, spellInstance.getConsumedSpellTexture());
         spell.setPosition(new Vector(target.getX(), target.getY(), 1f));
         restartSpell();

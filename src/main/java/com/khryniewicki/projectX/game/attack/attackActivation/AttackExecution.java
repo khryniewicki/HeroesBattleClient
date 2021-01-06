@@ -72,9 +72,7 @@ public class AttackExecution {
 
     private void updateLifeBar() {
         lifeBar.updateLifeBar();
-
         stackEvent.addHeroDto();
-        log.info("attack execution");
     }
 
 
