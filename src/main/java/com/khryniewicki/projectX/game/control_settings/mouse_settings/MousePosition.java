@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.control_settings.mouse_settings;
 import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
+import com.khryniewicki.projectX.utils.GameUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.BufferUtils;
@@ -25,7 +26,7 @@ public class MousePosition {
     public Position getCursorPosition() {
         DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
         DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
-        glfwGetCursorPos(LoadingMenu.window, xBuffer, yBuffer);
+        glfwGetCursorPos(GameUtil.window, xBuffer, yBuffer);
         double x = xBuffer.get(0);
         double y = yBuffer.get(0);
         setWindowPositions(x, y);

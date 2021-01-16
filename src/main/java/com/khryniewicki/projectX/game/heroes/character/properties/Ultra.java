@@ -4,7 +4,6 @@ import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface Ultra extends Symbol {
-    void update();
     void setPositionX(Float positionX);
     void setPositionY(Float positionY);
 

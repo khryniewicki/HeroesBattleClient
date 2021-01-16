@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.engine;
 
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
+import com.khryniewicki.projectX.utils.GameUtil;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -12,7 +12,8 @@ public interface LifeCycle extends Command {
     int height = 800;
     int bar = 40;
 
-    default void prepare(){}
+    default void prepare() {
+    }
 
     void setRunning(boolean sth);
 
@@ -35,6 +36,7 @@ public interface LifeCycle extends Command {
         int frames = 0;
         terminateIfWindowShutDown();
         while (isRunning()) {
+
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -62,7 +64,9 @@ public interface LifeCycle extends Command {
             System.out.println(error);
         glfwSwapBuffers(getWindow());
     }
-    default void init(){}
+
+    default void init() {
+    }
 
     default void update() {
     }
@@ -101,7 +105,7 @@ public interface LifeCycle extends Command {
     }
 
     default long getWindow() {
-        return LoadingMenu.window;
+        return GameUtil.window;
     }
 
 }

@@ -9,6 +9,8 @@ import java.beans.PropertyChangeListener;
 
 @Component
 public interface Menu extends PropertyChangeListener, LifeCycle {
+
+
     void addEventClick();
     void start();
     void subscribe();

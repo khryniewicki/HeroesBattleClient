@@ -1,16 +1,16 @@
 package com.khryniewicki.projectX.game.control_settings.keyboard_settings;
 
 import com.khryniewicki.projectX.game.control_settings.collision.Collision;
-import com.khryniewicki.projectX.game.engine.Game;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.sending_service.StackEvent;
+import com.khryniewicki.projectX.utils.GameUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import static org.lwjgl.glfw.GLFW.*;
+
 @Slf4j
 public class MoveSettings {
 
@@ -30,7 +30,7 @@ public class MoveSettings {
 
     public void move() {
 
-        glfwSetKeyCallback(LoadingMenu.window, (window, key, scancode, action, mods) -> {
+        glfwSetKeyCallback(GameUtil.window, (window, key, scancode, action, mods) -> {
             float tmpX = hero.getX();
             float tmpY = hero.getY();
             position = hero.getPosition();

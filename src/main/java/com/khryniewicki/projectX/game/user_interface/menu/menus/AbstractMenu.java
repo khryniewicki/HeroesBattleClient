@@ -21,7 +21,7 @@ import static org.lwjgl.glfw.GLFW.*;
 @Slf4j
 @Setter
 public abstract class AbstractMenu implements Menu {
-    protected boolean running;
+    protected volatile boolean running;
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<Symbol> volatileImages = new ArrayList<>();
     protected List<Symbol> permanentImages = new ArrayList<>();

@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFa
 import com.khryniewicki.projectX.graphics.GameShaders;
 import com.khryniewicki.projectX.graphics.Shader;
 import com.khryniewicki.projectX.graphics.Texture;
+import com.khryniewicki.projectX.utils.GameUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 @Getter
 @Setter
 public class LoadingMenu extends AbstractMenu {
-    public static long window;
+
     private long duration;
     private long now;
     private boolean flag;
@@ -62,12 +63,12 @@ public class LoadingMenu extends AbstractMenu {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         // Create the window
-        window = glfwCreateWindow(width, height + bar, "Heroes Battle", NULL, NULL);
-        if (window == NULL)
+        GameUtil.window = glfwCreateWindow(width, height + bar, "Heroes Battle", NULL, NULL);
+        if (GameUtil.window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+        glfwSetKeyCallback(GameUtil.window, (window, key, scancode, action, mods) -> {
             if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
                 glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
         });
@@ -77,22 +78,22 @@ public class LoadingMenu extends AbstractMenu {
             IntBuffer pHeight = stack.mallocInt(1); // int*
 
             // Get the window size passed to glfwCreateWindow
-            glfwGetWindowSize(window, pWidth, pHeight);
+            glfwGetWindowSize(GameUtil.window, pWidth, pHeight);
 
             // Get the resolution of the primary monitor
             GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
             // Center the window
             glfwSetWindowPos(
-                    window,
+                    GameUtil.window,
                     (vidmode.width() - pWidth.get(0)) / 2,
                     (vidmode.height() - pHeight.get(0)) / 2
             );
         }
 
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(GameUtil.window);
 
-        glfwShowWindow(window);
+        glfwShowWindow(GameUtil.window);
         GL.createCapabilities();
         glEnable(GL_DEPTH_TEST);
         glActiveTexture(GL_TEXTURE1);
@@ -102,7 +103,7 @@ public class LoadingMenu extends AbstractMenu {
 
         Shader.loadAll();
         GameShaders.loadAll();
-        glfwShowWindow(window);
+        glfwShowWindow(GameUtil.window);
     }
 
     @Override
