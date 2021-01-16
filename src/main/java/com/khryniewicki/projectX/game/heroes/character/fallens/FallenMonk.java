@@ -39,10 +39,9 @@ public class FallenMonk extends SuperHero {
     @Override
     public void setProperties() {
         setName("Fallen Monk");
-        setHero_left_offset(0.4f);
+        setHero_left_offset(0.2f);
         setHero_top_offset(0.5f);
         setHero_right_offset(0.2f);
-        setHero_bottom_offset(0.2f);
         setMana(120f);
         setLife(120);
         setSIZE(1.1F);

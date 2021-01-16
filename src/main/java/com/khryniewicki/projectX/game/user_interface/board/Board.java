@@ -32,7 +32,8 @@ public class Board {
     private UltraSpell basicSpellMock;
     private UltraSpell ultimateSpellMock;
     private MousePosition mousePosition;
-
+    private List<BoardObjects> obstacles;
+    private List<BoardObjects> terrains;
     private List<Symbol> symbols;
     private List<UltraSpell> spells;
     private List<UltraHero> heroes;
@@ -42,6 +43,12 @@ public class Board {
         createBackground();
         createHeroes();
         createSpells();
+        obstacles = ObstacleStorage.getObstacle();
+        terrains = ObstacleStorage.getTerrainList();
+//        collision = new Collision();
+
+//        mousePosition = new MousePosition();
+//        addEventClick();
     }
 
     private void createBackground() {
@@ -77,12 +84,68 @@ public class Board {
                 spell.render();
             }
         });
-
+//        if (collision.isTest_square()) {
+//            collision.getSquares().values().forEach(MenuSymbol::render);
+//        }
+//        renderTerrains();
+//        renderObstacles();
     }
 
     public boolean player_dead() {
         return heroes.stream().anyMatch(ultraHero -> ultraHero.getLife() == 0);
     }
+
+//    public void addEventClick() {
+//        glfwSetMouseButtonCallback(GameUtil.window, (window, key, action, mods) -> {
+//
+//            if (key == 0 && action != GLFW_RELEASE) {
+//
+//                Position cursorPosition = mousePosition.getCursorPosition();
+//                log.info("KURSOR: [{},  {}]", mousePosition.getWindowPositionX(), mousePosition.getWindowPositionY());
+//
+//                obstacles.stream()
+//                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
+//                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
+//                        .findFirst()
+//                        .ifPresent(obstacles -> System.out.println("OB " + obstacles.getName()));
+//
+//                terrains.stream()
+//                        .filter(obstacles -> mousePosition.getWindowPositionX() > obstacles.getObstacle_positionX0() && mousePosition.getWindowPositionX() < obstacles.getObstacle_positionX1())
+//                        .filter(obstacles -> mousePosition.getWindowPositionY() > obstacles.getObstacle_positionY0() && mousePosition.getWindowPositionY() < obstacles.getObstacle_positionY1())
+//                        .findFirst()
+//                        .ifPresent(obstacles -> System.out.println("TR " + obstacles.getName()));
+//            }
+//        });
+//    }
+//
+//    public void renderTerrains() {
+//        Shader.TERRAIN.enable();
+//        Terrain.getTexture().bind();
+//
+//        for (BoardObjects terrain : terrains) {
+//            terrain.getMesh().bind();
+//            Shader.TERRAIN.setUniformMat4f("ml_matrix", terrain.getModelMatrix());
+//            terrain.getMesh().draw();
+//            terrain.getMesh().unbind();
+//        }
+//        Terrain.getTexture().unbind();
+//        Shader.TERRAIN.disable();
+//    }
+//
+//    public void renderObstacles() {
+//        Shader.OBSTACLE.enable();
+//        Obstacle.getTexture().bind();
+//
+//        for (BoardObjects obstacle : obstacles) {
+//            obstacle.getMesh().bind();
+//            Shader.OBSTACLE.setUniformMat4f("ml_matrix", obstacle.getModelMatrix());
+//            obstacle.getMesh().draw();
+//            obstacle.getMesh().unbind();
+//        }
+//
+//        Obstacle.getTexture().unbind();
+//        Shader.OBSTACLE.disable();
+//    }
 
 }
 

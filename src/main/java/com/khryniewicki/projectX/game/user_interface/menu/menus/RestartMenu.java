@@ -45,9 +45,11 @@ public class RestartMenu extends AbstractMenu {
         loop();
         if (Application.state.equals(GameState.OK)) {
             restart();
-            Application.restart();
+            Application.play();
+        }else if (Application.state.equals(GameState.RESTART)){
+            Application.finish_game();
+            Application.play();
         }
-
     }
 
     @Override
@@ -70,10 +72,6 @@ public class RestartMenu extends AbstractMenu {
     public void update() {
         glfwPollEvents();
         board.update();
-        if (Application.state.equals(GameState.FINISH)) {
-            log.info("STOP IN UPDATE");
-            stop();
-        }
     }
 
     @Override
@@ -124,7 +122,7 @@ public class RestartMenu extends AbstractMenu {
         if (buttonName.equals(ButtonsFactory.RESTART_GO_TO_MAIN_MENU)) {
             Application.ok();
         } else if (buttonName.equals(ButtonsFactory.RESTART_QUIT)) {
-            Application.finish_game();
+            Application.restart_game();
         }
         log.info("STOP IN PROPERTY");
         stop();

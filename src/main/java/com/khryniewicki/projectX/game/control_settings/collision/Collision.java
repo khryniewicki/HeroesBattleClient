@@ -48,7 +48,7 @@ public class Collision {
                 .withWidth(0.2f)
                 .withPositionX(position.getX())
                 .withPositionY(position.getY())
-                .withVisibility(1f)
+                .withVisibility(1.5f)
                 .build();
     }
 

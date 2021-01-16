@@ -1,6 +1,7 @@
 package com.khryniewicki.projectX.game.engine;
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.BlankMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.RestartMenu;
@@ -13,6 +14,7 @@ public class Application implements Runnable {
     private static final ConcurrentLinkedDeque<Command> COMMANDS = new ConcurrentLinkedDeque<>();
     public static GameState state = GameState.OK;
 
+
     public void start() {
         new Thread(this, "Game").start();
     }
@@ -20,7 +22,17 @@ public class Application implements Runnable {
     public void run() {
         prepare();
         init();
-        restart();
+        play();
+    }
+
+    public static void prepare() {
+        COMMANDS.add(LoadingMenu.getInstance());
+        COMMANDS.add(BlankMenu.getInstance());
+        COMMANDS.add(MainMenu.getInstance());
+        COMMANDS.add(MultiplayerController.getInstance());
+        COMMANDS.add(Game.getInstance());
+        COMMANDS.add(RestartMenu.getInstance());
+        COMMANDS.add(terminate());
     }
 
     private static void init() {
@@ -28,24 +40,19 @@ public class Application implements Runnable {
         command.execute();
     }
 
-    public static void prepare() {
-        COMMANDS.add(LoadingMenu.getInstance());
-        COMMANDS.add(MainMenu.getInstance());
-        COMMANDS.add(MultiplayerController.getInstance());
-        COMMANDS.add(Game.getInstance());
-        COMMANDS.add(RestartMenu.getInstance());
-        COMMANDS.add(() -> {
+    public static void play() {
+        COMMANDS.forEach(Command::execute);
+    }
+
+    private static Command terminate() {
+        return () -> {
+            log.info("TERMINATE");
             if (state.equals(GameState.FINISH)) {
-                log.info("FINISH GAME");
                 MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
                 multiplayerInstance.stop_websocket();
                 multiplayerInstance.stop_sending_service();
             }
-        });
-    }
-
-    public static void restart() {
-        COMMANDS.forEach(Command::execute);
+        };
     }
 
     public static void restart_game() {

@@ -39,10 +39,9 @@ public class FallenKing extends SuperHero {
     @Override
     public void setProperties() {
         setName("Fallen King");
-        setHero_left_offset(0.4f);
+        setHero_left_offset(0.2f);
         setHero_top_offset(0.5f);
         setHero_right_offset(0.2f);
-        setHero_bottom_offset(0.2f);
         setMana(100f);
         setLife(150);
         setSIZE(1.1F);
