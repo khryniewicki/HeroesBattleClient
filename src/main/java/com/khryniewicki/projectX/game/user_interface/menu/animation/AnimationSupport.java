@@ -18,8 +18,8 @@ import java.util.Random;
 @Slf4j
 @Getter
 @Setter
-public abstract class AnimationSupport extends LifeCycle {
-
+public abstract class AnimationSupport implements LifeCycle {
+    protected boolean running;
     public static final float LEFT_BOUNDARY = -6.5f;
     public static final float RIGHT_BOUNDARY = 3.0f;
 

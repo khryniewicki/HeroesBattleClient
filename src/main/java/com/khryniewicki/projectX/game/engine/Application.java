@@ -36,6 +36,7 @@ public class Application implements Runnable {
         COMMANDS.add(RestartMenu.getInstance());
         COMMANDS.add(() -> {
             if (state.equals(GameState.FINISH)) {
+                log.info("FINISH GAME");
                 MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
                 multiplayerInstance.stop_websocket();
                 multiplayerInstance.stop_sending_service();

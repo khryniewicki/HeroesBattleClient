@@ -6,18 +6,20 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.Menu;
 import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.beans.PropertyChangeListener;
 import java.util.Deque;
 import java.util.LinkedList;
 
 @Getter
 @Setter
 @Slf4j
-public abstract class MultiPlayerCommander extends LifeCycle {
+public abstract class MultiPlayerCommander implements LifeCycle, PropertyChangeListener {
     protected final WaitingRoomMenu waitingRoomMenu;
     protected final HeroesInstances heroesInstances;
     protected final WebsocketController websocketController;

@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 @Getter
 @Setter
 public class Button extends GraphicLoader implements Listener {
-    private Buttons buttonName;
+    private ButtonsFactory buttonName;
     private float positionX0, positionX1;
     private float positionY0, positionY1;
     private SubjectButton subjectButton;
@@ -46,9 +46,9 @@ public class Button extends GraphicLoader implements Listener {
     }
 
     public static class Builder extends GraphicLoader.Builder<Builder> {
-        private Buttons buttonName;
+        private ButtonsFactory buttonName;
 
-        public Builder withButtonName(Buttons button) {
+        public Builder withButtonName(ButtonsFactory button) {
             this.buttonName = button;
 
             return this;

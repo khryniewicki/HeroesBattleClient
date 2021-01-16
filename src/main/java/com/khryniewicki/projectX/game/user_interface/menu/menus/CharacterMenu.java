@@ -4,8 +4,7 @@ import com.khryniewicki.projectX.game.control_settings.keyboard_settings.Keyboar
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.menu.animation.Animation;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.graphics.Texture;
@@ -31,7 +30,7 @@ public class CharacterMenu extends AbstractMenu {
     private final HeroesInstances heroesInstances;
     private final TextureMenuFactory textureMenuFactory;
     private final KeyboardSettings keyboardSettings;
-    private final ButtonsFactory buttonsFactory;
+    private final com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory buttonsFactory;
     private Animation animation;
     private MainMenu mainMenu;
     private volatile String chosenHero;
@@ -45,7 +44,7 @@ public class CharacterMenu extends AbstractMenu {
         super();
         heroesInstances = HeroesInstances.getInstance();
         textureMenuFactory = TextureMenuFactory.getInstance();
-        buttonsFactory = ButtonsFactory.getInstance();
+        buttonsFactory = com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.getInstance();
         keyboardSettings = new KeyboardSettings();
         animation = new Animation();
         start();
@@ -79,9 +78,9 @@ public class CharacterMenu extends AbstractMenu {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Buttons button = (Buttons) evt.getNewValue();
+        ButtonsFactory buttonFactory = (ButtonsFactory) evt.getNewValue();
         mainMenu = MainMenu.getInstance();
-        switch (button) {
+        switch (buttonFactory) {
             case SELECT_CHARACTER_RETURN:
                 restart();
                 break;
@@ -96,9 +95,9 @@ public class CharacterMenu extends AbstractMenu {
                 update_button(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
             default:
-                setChosenHero(button.getName());
+                setChosenHero(buttonFactory.getName());
                 add_button(CHARACTER_SKILLS);
-                start_animation(button.getName());
+                start_animation(buttonFactory.getName());
                 set_hero_type(chosenHero);
                 show_message_in_main_menu(chosenHero);
                 break;
@@ -140,7 +139,7 @@ public class CharacterMenu extends AbstractMenu {
 
     public void remove_button(Button button) {
         button.removePropertyChangeListener(this);
-        buttons.removeIf(b -> button.getName().equals(b.getName()));
+        buttons.removeIf(b -> button.getButtonName().equals(b.getButtonName()));
     }
 
     public void add_button(Button button) {

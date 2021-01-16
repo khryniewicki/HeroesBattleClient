@@ -1,18 +1,15 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
-import com.khryniewicki.projectX.game.engine.Game;
-import com.khryniewicki.projectX.game.engine.LifeCycle;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
+import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,8 +20,8 @@ import static org.lwjgl.glfw.GLFW.*;
 @Getter
 @Slf4j
 @Setter
-public abstract class AbstractMenu extends LifeCycle implements PropertyChangeListener, Menu {
-
+public abstract class AbstractMenu implements Menu {
+    protected boolean running;
     protected List<Symbol> animationSymbols = new ArrayList<>();
     protected List<Symbol> volatileImages = new ArrayList<>();
     protected List<Symbol> permanentImages = new ArrayList<>();
@@ -42,11 +39,13 @@ public abstract class AbstractMenu extends LifeCycle implements PropertyChangeLi
     }
 
     @Override
-    public  void propertyChange(PropertyChangeEvent evt){}
+    public void propertyChange(PropertyChangeEvent evt) {
+    }
 
     @Override
     public void render() {
         clearBuffers();
+
         Stream.of(buttons, permanentImages).flatMap(Collection::stream)
                 .forEach(Symbol::render);
         Stream.of(animationSymbols, volatileImages).flatMap(Collection::stream)
@@ -62,7 +61,7 @@ public abstract class AbstractMenu extends LifeCycle implements PropertyChangeLi
 
     @Override
     public void addEventClick() {
-        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
+        glfwSetMouseButtonCallback(getWindow(), (window, key, action, mods) -> {
 
             if (key == 0 && action != GLFW_RELEASE) {
                 mousePosition.getCursorPosition();
@@ -74,7 +73,7 @@ public abstract class AbstractMenu extends LifeCycle implements PropertyChangeLi
             }
         });
 
-        glfwSetKeyCallback(Game.window, (window, key, scancode, action, mods) -> {
+        glfwSetKeyCallback(getWindow(), (window, key, scancode, action, mods) -> {
         });
     }
 

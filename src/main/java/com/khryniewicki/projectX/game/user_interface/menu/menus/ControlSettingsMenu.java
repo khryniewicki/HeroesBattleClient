@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.menus;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ControlSettingsMenuFactory;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons.CONROL_SETTINGS_RETURN;
+import static com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory.CONROL_SETTINGS_RETURN;
 
 @Slf4j
 @Getter
@@ -34,13 +33,13 @@ public class ControlSettingsMenu extends AbstractMenu {
     @Override
     public void init() {
         setVolatileImages(factory.get_list_with_icons());
-        setButtons(new ArrayList<>(Collections.singletonList(ButtonsFactory.RETURN_BUTTON2)));
+        setButtons(new ArrayList<>(Collections.singletonList(com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.RETURN_BUTTON2)));
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        Buttons btnName = (Buttons) evt.getNewValue();
+        ButtonsFactory btnName = (ButtonsFactory) evt.getNewValue();
         if (btnName.equals(CONROL_SETTINGS_RETURN)) {
             runMenu(MainMenu.getInstance(), MenuCard.MAIN_MENU);
         }

@@ -1,7 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.Button;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons.*;
+import static com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory.*;
 import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
 
 @Data
@@ -23,7 +22,7 @@ public class ButtonsFactory {
     }
 
     public static ButtonsFactory getInstance() {
-        return ButtonsFactory.HELPER.INSTANCE;
+        return com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.HELPER.INSTANCE;
     }
 
     private static class HELPER {
@@ -64,7 +63,7 @@ public class ButtonsFactory {
             .build();
     public static final Button CONTROL_SETTINGS = new Button.Builder()
             .withTexture(CONTROL_SETTINGS_TEXTURE)
-            .withButtonName(Buttons.CONTROL_SETTINGS)
+            .withButtonName(com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory.CONTROL_SETTINGS)
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)
@@ -72,7 +71,7 @@ public class ButtonsFactory {
             .build();
     public static final Button QUIT_BUTTON = new Button.Builder()
             .withTexture(QUIT_GAME_TEXTURE)
-            .withButtonName(Buttons.QUIT)
+            .withButtonName(com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory.QUIT)
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)

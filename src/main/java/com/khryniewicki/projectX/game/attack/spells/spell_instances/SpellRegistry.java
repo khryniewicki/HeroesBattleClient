@@ -1,8 +1,8 @@
 package com.khryniewicki.projectX.game.attack.spells.spell_instances;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing.BlackFire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.blackKing.SkullCurse;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.king.BlackFire;
+import com.khryniewicki.projectX.game.attack.spells.spellbook.king.SkullCurse;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.FireBomb;
 import com.khryniewicki.projectX.game.attack.spells.spellbook.ice.IceBerg;

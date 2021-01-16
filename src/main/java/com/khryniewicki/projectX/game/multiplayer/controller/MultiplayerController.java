@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import static com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState.WAITING_FOR_SECOND_PLAYER;
 import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.MULTIPLAYER;
@@ -16,8 +15,9 @@ import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.TI
 @Getter
 @Setter
 @Slf4j
-public class MultiplayerController extends MultiPlayerCommander implements PropertyChangeListener {
+public class MultiplayerController extends MultiPlayerCommander {
     private static final MultiplayerController Instance = new MultiplayerController();
+    private boolean running;
 
     private MultiplayerController() {
         super();

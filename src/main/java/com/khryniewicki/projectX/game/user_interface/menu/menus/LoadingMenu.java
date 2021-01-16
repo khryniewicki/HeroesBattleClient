@@ -21,9 +21,7 @@ import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOGO;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_GREEN;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.system.MemoryStack.stackPush;
@@ -33,6 +31,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 @Getter
 @Setter
 public class LoadingMenu extends AbstractMenu {
+    public static long window;
     private long duration;
     private long now;
     private boolean flag;
@@ -113,8 +112,8 @@ public class LoadingMenu extends AbstractMenu {
     }
 
     @Override
-    protected void prepare() {
-        setVolatileImages(Arrays.asList(LOADING,LOGO));
+    public void prepare() {
+        setVolatileImages(Arrays.asList(LOADING, LOGO));
         duration = 5000L;
         now = System.currentTimeMillis();
         flag = true;

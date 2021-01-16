@@ -6,8 +6,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketScheduler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.subjects.Subjects;
@@ -31,7 +30,7 @@ public class MainMenu extends AbstractMenu {
     private static final MainMenu instance = new MainMenu();
     private final HeroesInstances heroesInstances;
     private final TextureMenuFactory textureMenuFactory;
-    private final ButtonsFactory buttonsFactory;
+    private final com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory buttonsFactory;
     private final WebsocketScheduler websocketScheduler;
 
     private MenuSymbol noHero;
@@ -44,7 +43,7 @@ public class MainMenu extends AbstractMenu {
         super();
         heroesInstances = HeroesInstances.getInstance();
         textureMenuFactory = TextureMenuFactory.getInstance();
-        buttonsFactory = ButtonsFactory.getInstance();
+        buttonsFactory = com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.getInstance();
         websocketScheduler = WebsocketScheduler.getInstance();
         start();
         addObserver();
@@ -124,7 +123,7 @@ public class MainMenu extends AbstractMenu {
     public void propertyChange(PropertyChangeEvent evt) {
         //disable all messages
         disable_all_messages();
-        Buttons buttonName = (Buttons) evt.getNewValue();
+        ButtonsFactory buttonName = (ButtonsFactory) evt.getNewValue();
         switch (buttonName) {
             case SELECT_CHARACTER:
                 runMenu(CharacterMenu.getInstance(), MenuCard.CHARACTER_MENU);

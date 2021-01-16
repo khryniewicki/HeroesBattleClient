@@ -14,13 +14,13 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 @Getter
 @Setter
 @Slf4j
-public class Game extends LifeCycle {
-
+public class Game implements LifeCycle {
+    private boolean running;
     private Board board;
     private MultiplayerController multiplayerController;
 
     @Override
-    protected void prepare() {
+    public void prepare() {
         create_board();
         begin();
     }

@@ -6,6 +6,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.ManaBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
+import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
 import com.khryniewicki.projectX.services.dto.BaseDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.sending_service.SendingService;
@@ -40,7 +41,7 @@ public class MouseSettings {
     }
 
     public void cast_spells() {
-        glfwSetMouseButtonCallback(Game.window, (window, key, action, mods) -> {
+        glfwSetMouseButtonCallback(LoadingMenu.window, (window, key, action, mods) -> {
             cursorPosition = mousePosition.getCursorPosition();
             if ((key == 0 || key == 1)) {
                 getHeroInstance();

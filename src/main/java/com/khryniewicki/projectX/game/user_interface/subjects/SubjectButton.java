@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.user_interface.subjects;
 
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory;
 
 import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.BUTTONS;
 
@@ -12,7 +12,7 @@ public class SubjectButton extends Subject {
 
     @Override
     public void setNews(Object news) {
-        Buttons button = (Buttons) news;
+        ButtonsFactory button = (ButtonsFactory) news;
         support.firePropertyChange(BUTTONS.getName(), null, button);
     }
 }

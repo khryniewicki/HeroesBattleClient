@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.game.engine.GameState;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.board.Board;
-import com.khryniewicki.projectX.game.user_interface.menu.buttons.Buttons;
+import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.Texture;
 import com.khryniewicki.projectX.graphics.textures.GameTextures;
@@ -114,11 +114,11 @@ public class RestartMenu extends AbstractMenu {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Buttons buttonName = (Buttons) evt.getNewValue();
+        ButtonsFactory buttonName = (ButtonsFactory) evt.getNewValue();
 
-        if (buttonName.equals(Buttons.RESTART_GO_TO_MAIN_MENU)) {
+        if (buttonName.equals(ButtonsFactory.RESTART_GO_TO_MAIN_MENU)) {
             Application.ok();
-        } else if (buttonName.equals(Buttons.RESTART_QUIT)) {
+        } else if (buttonName.equals(ButtonsFactory.RESTART_QUIT)) {
             Application.finish_game();
         }
         stop();
