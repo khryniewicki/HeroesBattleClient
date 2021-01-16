@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.services.sending_service;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStartingPosition;
-import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.HeroesDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,11 +19,11 @@ public class StackEventSupport {
         heroStartingPosition = HeroStartingPosition.getInstance();
     }
 
-    public HeroDto addHeroDto() {
+    public HeroesDto addHeroDto() {
 
         this.hero = heroesInstances.getHero();
 
-        return new HeroDto.Builder()
+        return new HeroesDto.Builder()
                 .heroType(this.hero.getName())
                 .life(this.hero.getLife())
                 .mana(this.hero.getMana())

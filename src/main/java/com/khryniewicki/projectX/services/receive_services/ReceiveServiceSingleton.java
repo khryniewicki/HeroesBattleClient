@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.services.receive_services;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.HeroesDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,8 +32,8 @@ public class ReceiveServiceSingleton {
         return heroReceiveService.getMockMana();
     }
 
-    public void set_hero_mock(HeroDto heroDTO) {
-        heroReceiveService.set_hero_mock(heroDTO);
+    public void set_hero_mock(HeroesDto heroesDTO) {
+        heroReceiveService.set_hero_mock(heroesDTO);
     }
 
     //spell receive service

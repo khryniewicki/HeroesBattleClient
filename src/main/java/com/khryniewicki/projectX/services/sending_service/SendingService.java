@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
 import com.khryniewicki.projectX.services.dto.BaseDto;
 import com.khryniewicki.projectX.services.dto.BaseDtoType;
-import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.HeroesDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +30,7 @@ public class SendingService implements Runnable {
     private boolean disconnected;
     private ConcurrentLinkedDeque<BaseDto> events;
     private StompSession session;
-    private BaseDto tmpHero = new HeroDto();
+    private BaseDto tmpHero = new HeroesDto();
     private BaseDto tmpSpell = new SpellDto();
 
     public SendingService() {

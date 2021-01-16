@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.MessageHandler;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ConnectionState;
-import com.khryniewicki.projectX.services.dto.HeroDto;
+import com.khryniewicki.projectX.services.dto.HeroesDto;
 import com.khryniewicki.projectX.services.dto.MessageDto;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
@@ -110,12 +110,12 @@ public class WebsocketApplication implements Runnable {
 
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
-                    return HeroDto.class;
+                    return HeroesDto.class;
                 }
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
-                    HeroDto payload1 = (HeroDto) payload;
+                    HeroesDto payload1 = (HeroesDto) payload;
                     receiveService.set_hero_mock(payload1);
                 }
             });

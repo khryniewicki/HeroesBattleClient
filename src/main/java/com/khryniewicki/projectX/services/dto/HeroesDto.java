@@ -10,7 +10,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-public class HeroDto implements Serializable, BaseDto {
+public class HeroesDto implements Serializable, BaseDto {
     private String heroType;
     private Integer life;
     private Float mana;
@@ -19,7 +19,7 @@ public class HeroDto implements Serializable, BaseDto {
     private BaseDtoType type;
     private String sessionId;
 
-    public HeroDto(Builder builder) {
+    public HeroesDto(Builder builder) {
         this.heroType = builder.heroType;
         this.life = builder.life;
         this.mana = builder.mana;
@@ -60,8 +60,8 @@ public class HeroDto implements Serializable, BaseDto {
             return this;
         }
 
-        public HeroDto build() {
-            return new HeroDto(this);
+        public HeroesDto build() {
+            return new HeroesDto(this);
         }
     }
 
@@ -69,13 +69,13 @@ public class HeroDto implements Serializable, BaseDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HeroDto heroDto = (HeroDto) o;
-        return Objects.equals(heroType, heroDto.heroType) &&
-                Objects.equals(life, heroDto.life) &&
-                Objects.equals(mana, heroDto.mana) &&
-                Objects.equals(positionX, heroDto.positionX) &&
-                Objects.equals(positionY, heroDto.positionY) &&
-                type == heroDto.type;
+        HeroesDto heroesDto = (HeroesDto) o;
+        return Objects.equals(heroType, heroesDto.heroType) &&
+                Objects.equals(life, heroesDto.life) &&
+                Objects.equals(mana, heroesDto.mana) &&
+                Objects.equals(positionX, heroesDto.positionX) &&
+                Objects.equals(positionY, heroesDto.positionY) &&
+                type == heroesDto.type;
     }
 
     @Override
