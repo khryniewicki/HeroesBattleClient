@@ -13,17 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Data
 @Slf4j
 public class DigitsSymbol implements Symbol {
+    private int tmpNumber = 0;
     private String name;
     private UltraHero hero;
-    private Integer number;
     private Position position;
-    private Integer tmpNumber;
-    private Symbol numbers;
+    private GameSymbol number;
     private Map<Integer, Texture> mapRegistry;
 
     public DigitsSymbol(String name) {
@@ -32,41 +30,27 @@ public class DigitsSymbol implements Symbol {
         this.position = getPosition(name);
         mapRegistry = new HashMap<>();
 
-        numbers = new GameSymbol.Builder(getTexture(), position.getX(), position.getY())
+        number = new GameSymbol.Builder(take_texture(), position.getX(), position.getY())
                 .withWidth(1f)
                 .withHeight(0.5f)
                 .withVisibility(1f)
                 .build();
     }
 
-
-    private Integer getNumber() {
-        return name.equals("life") ? hero.getLife() : Math.round(hero.getMana());
-    }
-
-    private Position getPosition(String name) {
-        return new Position(name.equals("life") ? -7.1f : -5.6f, 5.1f);
-    }
-
     @Override
     public void update() {
-        updateNumber();
+        update_number();
     }
 
-    @Override
-    public void render() {
-        numbers.render();
-    }
-
-    private void updateNumber() {
-        if (Objects.nonNull(tmpNumber) && tmpNumber.equals(getNumber())) {
-            return;
+    private void update_number() {
+        if (getNumber() != tmpNumber) {
+            number.setTexture(take_texture());
+            number.update_mesh();
+            tmpNumber = getNumber();
         }
-        numbers.setTexture(getTexture());
-        tmpNumber = number;
     }
 
-    private Texture getTexture() {
+    private Texture take_texture() {
         Integer number = getNumber();
         if (mapRegistry.containsKey(number)) {
             return mapRegistry.get(number);
@@ -76,4 +60,20 @@ public class DigitsSymbol implements Symbol {
             return textureWithNumber;
         }
     }
+
+    private Integer getNumber() {
+        return name.equals("life") ? hero.getLife() : Math.round(hero.getMana());
+    }
+
+    private Position getPosition(String name) {
+        return new Position(name.equals("life") ? -7.0f : -5.6f, 5.1f);
+    }
+
+
+    @Override
+    public void render() {
+        number.render();
+    }
+
+
 }

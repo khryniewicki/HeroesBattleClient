@@ -30,7 +30,7 @@ public class PlayerBar implements Symbol {
 
         Symbol basicSpell = new SpellSymbol(hero.getBasicSpell());
         Symbol ultimateSpell = new SpellSymbol(hero.getUltimateSpell());
-        symbolList = new ArrayList<>(Arrays.asList(heroName,manaSymbol, lifeSymbol,  basicSpell, ultimateSpell));
+        symbolList = new ArrayList<>(Arrays.asList(heroName, manaSymbol, lifeAsNumber,manaAsNumber,lifeSymbol, basicSpell, ultimateSpell));
     }
 
     @Override

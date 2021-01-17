@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @RequiredArgsConstructor
 public class GameSymbol implements Symbol {
-    private final VertexArray mesh;
+    private VertexArray mesh;
     private final Vector position;
     private final Float x, y;
     private Texture texture;
@@ -63,7 +63,11 @@ public class GameSymbol implements Symbol {
         Shader.SYMBOL.disable();
     }
 
-    public static class Builder{
+    public void update_mesh() {
+        this.mesh = createVertexArray();
+    }
+
+    public static class Builder {
         private final Texture texture;
         private final Vector position;
         private final Float x, y;
@@ -74,9 +78,9 @@ public class GameSymbol implements Symbol {
             this.position = new Vector();
             this.x = x;
             this.y = y;
-            this.width=0.3f;
-            this.height=0.3f;
-            this.visibility=1.0f;
+            this.width = 0.3f;
+            this.height = 0.3f;
+            this.visibility = 1.0f;
         }
 
         public Builder withWidth(Float width) {

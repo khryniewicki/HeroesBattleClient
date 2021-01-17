@@ -19,7 +19,7 @@ public class SpellSymbol implements Symbol {
     private final GameSymbol spellTexture;
     private List<Symbol> symbolList;
     private Position spellPositionPlayerBar;
-
+    private boolean spell_activated;
 
     public SpellSymbol(UltraSpell spell) {
         this.ultraSpell = spell;
@@ -39,8 +39,9 @@ public class SpellSymbol implements Symbol {
                 .build();
         symbolList = new ArrayList<>(Arrays.asList(frame, this.spellTexture));
     }
+
     @Override
-    public void update(){
+    public void update() {
         isFaded();
     }
 
@@ -50,7 +51,10 @@ public class SpellSymbol implements Symbol {
     }
 
     private void isFaded() {
-        spellTexture.setTexture(ultraSpell.isSpellActivated() ? spellInstance.getFadedIcon() : spellInstance.getIcon());
+        if (ultraSpell.isSpellActivated() != spell_activated) {
+            spell_activated = ultraSpell.isSpellActivated();
+            spellTexture.setTexture(spell_activated ? spellInstance.getFadedIcon() : spellInstance.getIcon());
+        }
     }
 
     public void getPositionPlayerBar(boolean isBasic) {
