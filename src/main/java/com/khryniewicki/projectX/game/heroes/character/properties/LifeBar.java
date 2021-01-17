@@ -25,6 +25,9 @@ public class LifeBar extends GraphicLoader {
     float offsetPositionY = 0.5f;
     float offsetPositionX = -0.3f;
     private Integer maxLife;
+    private int tmpLife = 0;
+    private float tmpHeroX = 0F;
+    private float tmpHeroY = 0F;
 
     public LifeBar(Builder builder) {
         super(builder);
@@ -37,7 +40,9 @@ public class LifeBar extends GraphicLoader {
 
     @Override
     public void update() {
-        updateLifeBar();
+        if (ultraHero.getX() != tmpHeroX || ultraHero.getY() != tmpHeroY || ultraHero.getLife() != tmpLife) {
+            updateLifeBar();
+        }
     }
 
     public void updateLifeBar() {
@@ -45,8 +50,11 @@ public class LifeBar extends GraphicLoader {
         setPositionY(ultraHero.getY() + offsetPositionY);
         this.greenMesh = getLifeBarMesh("green");
         this.blackMesh = getLifeBarMesh("black");
-
+        this.tmpLife = ultraHero.getLife();
+        this.tmpHeroX = ultraHero.getX();
+        this.tmpHeroY = ultraHero.getY();
     }
+
 
     public VertexArray getLifeBarMesh(String color) {
         float factor = getLifeFactor(color);
@@ -87,39 +95,39 @@ public class LifeBar extends GraphicLoader {
     }
 
 
-    public static class Builder extends GraphicLoader.Builder<Builder> {
-        private UltraHero ultraHero;
-        private Texture blackBarTexture;
-        private Texture greenBarTexture;
-        private Integer maxLife;
+public static class Builder extends GraphicLoader.Builder<Builder> {
+    private UltraHero ultraHero;
+    private Texture blackBarTexture;
+    private Texture greenBarTexture;
+    private Integer maxLife;
 
-        public LifeBar.Builder withHero(UltraHero ultraHero) {
-            this.ultraHero = ultraHero;
-            return this;
-        }
-
-        public LifeBar.Builder withBlackBarTexture(Texture texture) {
-            this.blackBarTexture = texture;
-            return this;
-        }
-
-        public LifeBar.Builder withGreenBarTexture(Texture texture) {
-            this.greenBarTexture = texture;
-            return this;
-        }
-
-        public LifeBar.Builder withMaxLife(Integer maxLife) {
-            this.maxLife = maxLife;
-            return this;
-        }
-
-        public Builder() {
-        }
-
-        public LifeBar build() {
-            return new LifeBar(this);
-        }
+    public LifeBar.Builder withHero(UltraHero ultraHero) {
+        this.ultraHero = ultraHero;
+        return this;
     }
+
+    public LifeBar.Builder withBlackBarTexture(Texture texture) {
+        this.blackBarTexture = texture;
+        return this;
+    }
+
+    public LifeBar.Builder withGreenBarTexture(Texture texture) {
+        this.greenBarTexture = texture;
+        return this;
+    }
+
+    public LifeBar.Builder withMaxLife(Integer maxLife) {
+        this.maxLife = maxLife;
+        return this;
+    }
+
+    public Builder() {
+    }
+
+    public LifeBar build() {
+        return new LifeBar(this);
+    }
+}
 }
 
 

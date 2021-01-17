@@ -77,14 +77,11 @@ public class GraphicLoader implements Symbol {
     }
 
     public void render() {
-        texture.bind();
         Shader.TEXT.enable();
-        mesh.bind();
         Shader.TEXT.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
-        mesh.draw();
+        texture.bind();
         mesh.render();
         Shader.TEXT.disable();
-        texture.unbind();
     }
 
     public float getRatio() {

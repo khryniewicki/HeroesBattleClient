@@ -28,6 +28,9 @@ public class ManaBar extends GraphicLoader {
     private Long start;
     private StackEvent stackEvent;
     private Float maxMana;
+    private int tmpMana = 0;
+    private float tmpHeroX = 0F;
+    private float tmpHeroY = 0F;
 
     public ManaBar(Builder builder) {
         super(builder);
@@ -41,8 +44,11 @@ public class ManaBar extends GraphicLoader {
 
     @Override
     public void update() {
-        updateManaBar();
         renegerateMana();
+        if (hero.getX() != tmpHeroX || hero.getY() != tmpHeroY || hero.getMana() != tmpMana) {
+            updateManaBar();
+        }
+
     }
 
     public void updateManaBar() {
@@ -50,8 +56,10 @@ public class ManaBar extends GraphicLoader {
         setPositionY(hero.getY() + offsetPositionY);
         this.blueMesh = getManaBarMesh("blue");
         this.blackMesh = getManaBarMesh("black");
+        this.tmpMana = hero.getLife();
+        this.tmpHeroX = hero.getX();
+        this.tmpHeroY = hero.getY();
     }
-
 
     private VertexArray getManaBarMesh(String color) {
         float factor = getManaFactor(color);

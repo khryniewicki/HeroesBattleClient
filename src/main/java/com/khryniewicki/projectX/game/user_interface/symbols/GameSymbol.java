@@ -56,12 +56,10 @@ public class GameSymbol implements Symbol {
 
     public void render() {
         Shader.SYMBOL.enable();
-        texture.bind();
-        mesh.bind();
         Shader.SYMBOL.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
-        mesh.draw();
-        mesh.unbind();
-        texture.unbind();
+
+        texture.bind();
+        mesh.render();
         Shader.SYMBOL.disable();
     }
 
