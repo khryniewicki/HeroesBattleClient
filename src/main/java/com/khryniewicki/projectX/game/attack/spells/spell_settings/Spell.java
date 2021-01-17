@@ -14,6 +14,8 @@ import com.khryniewicki.projectX.math.Vector;
 import com.khryniewicki.projectX.services.sending_service.StackEvent;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 public class Spell implements UltraSpell {
 
@@ -26,7 +28,6 @@ public class Spell implements UltraSpell {
     private SpellTexture missleSpell, executedSpell;
     private Texture icon, fadedIcon;
     private Float castingSpeed;
-    private SpellTexture spellTexture;
 
     private Long startingTimeSpell = 0L;
     private Long spellDuration;
@@ -107,6 +108,20 @@ public class Spell implements UltraSpell {
         texture.bind();
         mesh.render();
         Shader.SPELL.disable();
+    }
+
+    @Override
+    public void reload() {
+        this.texture.reload();
+        if (Objects.nonNull(this.fadedIcon)) {
+            this.fadedIcon.reload();
+        }
+        if (Objects.nonNull(this.icon)) {
+            this.icon.reload();
+        }
+        this.missleSpell.getTexture().reload();
+        this.executedSpell.getTexture().reload();
+
     }
 
     protected void createProperties() {

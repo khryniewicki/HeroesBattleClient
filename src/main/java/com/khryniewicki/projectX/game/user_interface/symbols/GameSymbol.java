@@ -65,6 +65,11 @@ public class GameSymbol implements Symbol {
         Shader.SYMBOL.disable();
     }
 
+    @Override
+    public void reload() {
+        this.texture.reload();
+    }
+
     public static class Builder{
         private final Texture texture;
         private final Vector position;

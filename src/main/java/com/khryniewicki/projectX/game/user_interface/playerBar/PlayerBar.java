@@ -42,4 +42,9 @@ public class PlayerBar implements Symbol {
     public void render() {
         symbolList.forEach(Symbol::render);
     }
+
+    @Override
+    public void reload() {
+        this.symbolList.forEach(Symbol::reload);
+    }
 }

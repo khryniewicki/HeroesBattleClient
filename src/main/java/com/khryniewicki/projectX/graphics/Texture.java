@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -19,15 +20,27 @@ public class Texture {
     private int width, height;
     private int texture;
     private BufferedImage image;
+    private BufferedImage argument;
+    private String path;
 
     public Texture(String path) {
-        texture = load(path);
+        this.texture = load(path);
+        this.path = path;
     }
 
     public Texture(BufferedImage image) {
         this.texture = load2(image);
+        this.argument = image;
     }
 
+    public void reload() {
+        if (Objects.nonNull(path)) {
+            this.texture = load(path);
+        }
+        if (Objects.nonNull(argument)) {
+            this.texture = load2(argument);
+        }
+    }
 
     private int load(String path) {
         int[] pixels = null;

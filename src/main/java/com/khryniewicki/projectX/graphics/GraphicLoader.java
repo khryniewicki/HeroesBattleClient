@@ -25,7 +25,7 @@ public class GraphicLoader implements Symbol {
     protected float height;
     protected boolean isSizeKnown;
     protected boolean isTurningLeft;
-
+    protected String name;
 
     public GraphicLoader(Builder<?> builder) {
         this.path = builder.path;
@@ -37,6 +37,7 @@ public class GraphicLoader implements Symbol {
         this.width = builder.width;
         this.height = builder.height;
         this.isSizeKnown = builder.isSizeKnown;
+        this.name = builder.name;
         if (Objects.nonNull(path)) {
             this.texture = new Texture(path);
         }
@@ -87,11 +88,11 @@ public class GraphicLoader implements Symbol {
         texture.unbind();
     }
 
-    public float getRatio() {
-        float height = texture.getHeight();
-        float weight = texture.getWidth();
-        return weight / height;
+    @Override
+    public void reload() {
+        this.texture.reload();
     }
+
 
     @SuppressWarnings("unchecked")
     public static class Builder<T extends Builder<T>> {
@@ -104,17 +105,17 @@ public class GraphicLoader implements Symbol {
         private float height;
         boolean isSizeKnown;
         private float visibility = 1f;
+        private String name;
+
+        public Builder(String name) {
+            this.name = name;
+        }
 
         public Builder() {
         }
 
         public T isSizeKnown(boolean isSizeKnown) {
             this.isSizeKnown = isSizeKnown;
-            return (T) this;
-        }
-
-        public T withPath(String path) {
-            this.path = path;
             return (T) this;
         }
 

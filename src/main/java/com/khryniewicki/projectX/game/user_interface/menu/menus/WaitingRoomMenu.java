@@ -48,9 +48,8 @@ public class WaitingRoomMenu extends AbstractMenu {
     }
 
     public MenuSymbol createText(String text) {
-        return new MenuSymbol.Builder()
+        return new MenuSymbol.Builder(text)
                 .withTexture(TextFactory.textInConnectionWindow(text))
-                .withName(text)
                 .withHeight(0.8f)
                 .withWidth(10f)
                 .withPositionX(-9.5f)

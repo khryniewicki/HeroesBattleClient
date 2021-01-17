@@ -30,6 +30,11 @@ public class Game implements LifeCycle {
     }
 
     @Override
+    public void reload() {
+        board.reload();
+    }
+
+    @Override
     public void update() {
         glfwPollEvents();
         board.update();

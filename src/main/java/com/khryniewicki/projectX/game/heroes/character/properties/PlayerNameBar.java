@@ -33,7 +33,8 @@ public class PlayerNameBar extends GraphicLoader {
         }
 
 
-        public Builder() {
+        public Builder(String name) {
+            super(name);
         }
 
         public PlayerNameBar build() {

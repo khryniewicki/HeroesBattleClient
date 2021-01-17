@@ -74,6 +74,7 @@ public class LoadingMenu extends AbstractMenu {
         });
         // Get the thread stack and push a new frame
         try (MemoryStack stack = stackPush()) {
+
             IntBuffer pWidth = stack.mallocInt(1); // int*
             IntBuffer pHeight = stack.mallocInt(1); // int*
 

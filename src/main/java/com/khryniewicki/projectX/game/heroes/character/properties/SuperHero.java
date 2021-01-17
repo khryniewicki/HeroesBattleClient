@@ -118,6 +118,17 @@ public class SuperHero implements UltraHero {
         heroAttributes.render();
     }
 
+    @Override
+    public void reload() {
+        this.texture.reload();
+        this.heroIdle.reload();
+        this.heroUp.reload();
+        this.heroDown.reload();
+        this.heroRight.reload();
+        this.heroLeft.reload();
+        this.heroAttack.reload();
+    }
+
 
     public synchronized Float getX() {
         return position.x;

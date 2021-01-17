@@ -39,7 +39,11 @@ public class LifeBar extends GraphicLoader {
     public void update() {
         updateLifeBar();
     }
-
+    @Override
+    public void reload(){
+        this.blackBarTexture.reload();
+        this.greenBarTexture.reload();
+    }
     public void updateLifeBar() {
         setPositionX(ultraHero.getX() + offsetPositionX);
         setPositionY(ultraHero.getY() + offsetPositionY);
@@ -113,7 +117,8 @@ public class LifeBar extends GraphicLoader {
             return this;
         }
 
-        public Builder() {
+        public Builder(String name) {
+            super(name);
         }
 
         public LifeBar build() {

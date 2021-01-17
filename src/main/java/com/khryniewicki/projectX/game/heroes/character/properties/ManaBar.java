@@ -44,7 +44,11 @@ public class ManaBar extends GraphicLoader {
         updateManaBar();
         renegerateMana();
     }
-
+    @Override
+    public void reload(){
+        this.blackBarTexture.reload();
+        this.blueBarTexture.reload();
+    }
     public void updateManaBar() {
         setPositionX(hero.getX() + offsetPositionX);
         setPositionY(hero.getY() + offsetPositionY);
@@ -133,7 +137,8 @@ public class ManaBar extends GraphicLoader {
             return this;
         }
 
-        public Builder() {
+        public Builder(String name) {
+            super(name);
         }
 
         public ManaBar build() {

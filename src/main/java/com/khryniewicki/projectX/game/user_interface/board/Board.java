@@ -4,7 +4,6 @@ import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
 import com.khryniewicki.projectX.game.control_settings.collision.Collision;
 import com.khryniewicki.projectX.game.control_settings.mouse_settings.MousePosition;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
-import com.khryniewicki.projectX.game.heroes.character.properties.Ultra;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
@@ -38,7 +37,6 @@ public class Board {
     private List<UltraSpell> spells;
     private List<UltraHero> heroes;
     private boolean notify;
-
     public Board() {
         createBackground();
         createHeroes();
@@ -71,19 +69,34 @@ public class Board {
     }
 
     public void update() {
-        heroes.forEach(Ultra::update);
-        spells.forEach(Ultra::update);
+        heroes.forEach(Symbol::update);
+        spells.forEach(Symbol::update);
         symbols.forEach(Symbol::update);
     }
 
+    public void reload() {
+        symbols.forEach(Symbol::reload);
+        heroes.forEach(Symbol::reload);
+        spells.forEach(Symbol::reload);
+    }
+
     public void render() {
-        symbols.forEach(Symbol::render);
-        heroes.forEach(Ultra::render);
+
+        symbols.forEach(symbol -> {
+            symbol.getName();
+            symbol.render();
+        });
+        heroes.forEach(symbol -> {
+            symbol.getName();
+            symbol.render();
+        });
         spells.forEach(spell -> {
             if (spell.isSpellActivated()) {
+                spell.getName();
                 spell.render();
             }
         });
+
 //        if (collision.isTest_square()) {
 //            collision.getSquares().values().forEach(MenuSymbol::render);
 //        }

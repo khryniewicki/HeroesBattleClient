@@ -41,9 +41,8 @@ public class Collision {
     public MenuSymbol createSquare(Position position) {
         System.out.println("SQUARES: " + squares.size());
 
-        return new MenuSymbol.Builder()
+        return new MenuSymbol.Builder("text")
                 .withTexture(new Texture("red_square.png"))
-                .withName("text")
                 .withHeight(0.2f)
                 .withWidth(0.2f)
                 .withPositionX(position.getX())

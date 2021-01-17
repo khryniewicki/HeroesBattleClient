@@ -26,7 +26,7 @@ public class HeroAttributes implements Symbol {
     }
 
     private ManaBar initManaBar(UltraHero ultraHero) {
-        return new ManaBar.Builder()
+        return new ManaBar.Builder("Mana Bar")
                 .withHero(ultraHero)
                 .withHeight(0.07f)
                 .withWidth(0.65f)
@@ -38,7 +38,7 @@ public class HeroAttributes implements Symbol {
     }
 
     private LifeBar initLifeBar(UltraHero ultraHero) {
-        return new LifeBar.Builder()
+        return new LifeBar.Builder("Life Bar")
                 .withHero(ultraHero)
                 .withMaxLife(ultraHero.getLife())
                 .withHeight(0.07f)
@@ -50,7 +50,7 @@ public class HeroAttributes implements Symbol {
     }
 
     private PlayerNameBar initPlayerNameBar(UltraHero ultraHero, String name) {
-        return new PlayerNameBar.Builder()
+        return new PlayerNameBar.Builder("PlayerNameBar")
                 .withHero(ultraHero)
                 .withHeight(0.5f)
                 .withWidth(2f)
@@ -67,5 +67,10 @@ public class HeroAttributes implements Symbol {
     @Override
     public void render() {
         symbols.forEach(Symbol::render);
+    }
+
+    @Override
+    public void reload() {
+        this.symbols.forEach(Symbol::reload);
     }
 }

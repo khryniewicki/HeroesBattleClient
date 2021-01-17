@@ -58,6 +58,11 @@ public class DigitsSymbol implements Symbol {
         numbers.render();
     }
 
+    @Override
+    public void reload() {
+        this.mapRegistry.clear();
+    }
+
     private void updateNumber() {
         if (Objects.nonNull(tmpNumber) && tmpNumber.equals(getNumber())) {
             return;

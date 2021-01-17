@@ -16,12 +16,11 @@ import java.beans.PropertyChangeListener;
 public class MenuSymbol extends GraphicLoader implements Listener {
 
     private boolean disabled;
-    private String name;
+
     private Subject subject;
 
     public MenuSymbol(Builder builder) {
         super(builder);
-        this.name = builder.name;
         this.disabled = builder.disabled;
         subject = new SubjectHeroName();
     }
@@ -47,20 +46,17 @@ public class MenuSymbol extends GraphicLoader implements Listener {
     }
 
     public static class Builder extends GraphicLoader.Builder<Builder> {
-        private String name;
+
         private boolean disabled;
 
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
 
         public Builder withDisabled(Boolean disabled) {
             this.disabled = disabled;
             return this;
         }
 
-        public Builder() {
+        public Builder(String name) {
+            super(name);
         }
 
         public MenuSymbol build() {

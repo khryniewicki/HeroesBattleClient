@@ -49,6 +49,11 @@ public class SpellSymbol implements Symbol {
         symbolList.forEach(Symbol::render);
     }
 
+    @Override
+    public void reload() {
+        this.spellTexture.reload();
+    }
+
     private void isFaded() {
         spellTexture.setTexture(ultraSpell.isSpellActivated() ? spellInstance.getFadedIcon() : spellInstance.getIcon());
     }
