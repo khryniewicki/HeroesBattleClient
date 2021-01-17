@@ -15,11 +15,12 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @RequiredArgsConstructor
 public class GameSymbol implements Symbol {
-    private final VertexArray mesh;
+    private  VertexArray mesh;
     private final Vector position;
     private final Float x, y;
     private Texture texture;
     private Float width, height, visibility;
+    private String name;
 
     private GameSymbol(Builder builder) {
         this.position = builder.position;
@@ -30,6 +31,7 @@ public class GameSymbol implements Symbol {
         this.height = builder.height;
         this.visibility = builder.visibility;
         this.mesh = createVertexArray();
+        this.name = builder.name;
     }
 
     public VertexArray createVertexArray() {
@@ -68,22 +70,25 @@ public class GameSymbol implements Symbol {
     @Override
     public void reload() {
         this.texture.reload();
+        this.mesh=createVertexArray();
     }
 
-    public static class Builder{
+    public static class Builder {
         private final Texture texture;
         private final Vector position;
         private final Float x, y;
         private Float width, height, visibility;
+        private final String name;
 
-        public Builder(Texture texture, Float x, Float y) {
+        public Builder(String name, Texture texture, Float x, Float y) {
+            this.name = name;
             this.texture = texture;
             this.position = new Vector();
             this.x = x;
             this.y = y;
-            this.width=0.3f;
-            this.height=0.3f;
-            this.visibility=1.0f;
+            this.width = 0.3f;
+            this.height = 0.3f;
+            this.visibility = 1.0f;
         }
 
         public Builder withWidth(Float width) {

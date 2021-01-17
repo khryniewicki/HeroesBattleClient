@@ -107,6 +107,8 @@ public class Spell implements UltraSpell {
         Shader.SPELL.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
         texture.bind();
         mesh.render();
+        mesh.unbind();
+        texture.unbind();
         Shader.SPELL.disable();
     }
 
@@ -121,7 +123,7 @@ public class Spell implements UltraSpell {
         }
         this.missleSpell.getTexture().reload();
         this.executedSpell.getTexture().reload();
-
+        setMesh();
     }
 
     protected void createProperties() {

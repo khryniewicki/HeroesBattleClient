@@ -91,6 +91,7 @@ public class GraphicLoader implements Symbol {
     @Override
     public void reload() {
         this.texture.reload();
+        updateMesh();
     }
 
 

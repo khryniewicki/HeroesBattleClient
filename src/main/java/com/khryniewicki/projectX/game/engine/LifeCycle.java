@@ -55,19 +55,19 @@ public interface LifeCycle extends Command {
             delta += (now - lastTime) / ns;
             lastTime = now;
             if (delta >= 1.0) {
+                if (index > 500) {
+                    init_window();
+                    reload();
+                    index = 0;
+                    System.out.println("RELOAD + "+reload_counter);
+                    reload_counter++;
+                }
                 update();
                 updates++;
                 delta--;
                 index++;
             }
-            if (index > 500) {
-                glfwDestroyWindow(GameUtil.window);
-                init_window();
-                reload();
-                index = 0;
-                System.out.println("RELOAD + "+reload_counter);
-                reload_counter++;
-            }
+
             render();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {

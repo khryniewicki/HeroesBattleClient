@@ -39,17 +39,19 @@ public class LifeBar extends GraphicLoader {
     public void update() {
         updateLifeBar();
     }
+
     @Override
-    public void reload(){
+    public void reload() {
         this.blackBarTexture.reload();
         this.greenBarTexture.reload();
+        updateLifeBar();
     }
+
     public void updateLifeBar() {
         setPositionX(ultraHero.getX() + offsetPositionX);
         setPositionY(ultraHero.getY() + offsetPositionY);
         this.greenMesh = getLifeBarMesh("green");
         this.blackMesh = getLifeBarMesh("black");
-
     }
 
     public VertexArray getLifeBarMesh(String color) {
@@ -86,7 +88,11 @@ public class LifeBar extends GraphicLoader {
         greenBarTexture.bind();
         greenMesh.render();
         blackBarTexture.bind();
+        greenMesh.unbind();
+        greenBarTexture.unbind();
         blackMesh.render();
+        blackMesh.unbind();
+        blackBarTexture.unbind();
         Shader.STRIP.disable();
     }
 

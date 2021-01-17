@@ -44,11 +44,14 @@ public class ManaBar extends GraphicLoader {
         updateManaBar();
         renegerateMana();
     }
+
     @Override
-    public void reload(){
+    public void reload() {
         this.blackBarTexture.reload();
         this.blueBarTexture.reload();
+        updateManaBar();
     }
+
     public void updateManaBar() {
         setPositionX(hero.getX() + offsetPositionX);
         setPositionY(hero.getY() + offsetPositionY);
@@ -106,8 +109,12 @@ public class ManaBar extends GraphicLoader {
         Shader.STRIP.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
         blueBarTexture.bind();
         blueMesh.render();
+        blueMesh.unbind();
+        blueBarTexture.unbind();
         blackBarTexture.bind();
         blackMesh.render();
+        blackMesh.unbind();
+        blackBarTexture.unbind();
         Shader.STRIP.disable();
     }
 

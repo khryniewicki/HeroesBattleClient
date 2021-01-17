@@ -23,6 +23,7 @@ public class HeroAttributes implements Symbol {
         manaBar = initManaBar(superHero);
         playerNameBar = initPlayerNameBar(superHero, name);
         symbols = new ArrayList<>(Arrays.asList(lifeBar, playerNameBar, manaBar));
+
     }
 
     private ManaBar initManaBar(UltraHero ultraHero) {
@@ -72,5 +73,12 @@ public class HeroAttributes implements Symbol {
     @Override
     public void reload() {
         this.symbols.forEach(Symbol::reload);
+    }
+
+    @Override
+    public String getName() {
+        StringBuilder sb = new StringBuilder();
+        this.symbols.forEach(symbol -> sb.append(symbol.getName()).append("\n"));
+        return sb.toString();
     }
 }

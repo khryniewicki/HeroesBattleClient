@@ -18,12 +18,12 @@ public class PlayerBar implements Symbol {
 
     public PlayerBar() {
         UltraHero hero = HeroesInstances.getInstance().getHero();
-        Symbol heroName = new GameSymbol.Builder(TextFactory.textInPlayerBarHeroName(hero.getName(), Color.WHITE), -9.8f, 5.15f)
+        Symbol heroName = new GameSymbol.Builder("Hero Name",TextFactory.textInPlayerBarHeroName(hero.getName(), Color.WHITE), -9.8f, 5.15f)
                 .withWidth(2.4f)
                 .withHeight(0.4f)
                 .build();
-        Symbol manaSymbol = new GameSymbol.Builder(GameTextures.MANASYMBOL, -5.8f, 5.2f).build();
-        Symbol lifeSymbol = new GameSymbol.Builder(GameTextures.LIFESYMBOL, -7.3f, 5.2f).build();
+        Symbol manaSymbol = new GameSymbol.Builder("MANA SYMBOL",GameTextures.MANASYMBOL, -5.8f, 5.2f).build();
+        Symbol lifeSymbol = new GameSymbol.Builder("LIFE SYMBOL",GameTextures.LIFESYMBOL, -7.3f, 5.2f).build();
 
         Symbol lifeAsNumber = new DigitsSymbol("life");
         Symbol manaAsNumber = new DigitsSymbol("mana");
@@ -46,5 +46,12 @@ public class PlayerBar implements Symbol {
     @Override
     public void reload() {
         this.symbolList.forEach(Symbol::reload);
+    }
+
+    @Override
+    public String getName() {
+        StringBuilder sb = new StringBuilder();
+        this.symbolList.forEach(symbol->sb.append(symbol.getName()).append("\n"));
+        return sb.toString();
     }
 }

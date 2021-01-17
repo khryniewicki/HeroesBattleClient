@@ -27,13 +27,13 @@ public class SpellSymbol implements Symbol {
         float offset = 0.03f;
         getPositionPlayerBar(spellInstance.isBasic());
 
-        GameSymbol frame = new GameSymbol.Builder(GameTextures.FRAME, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
+        GameSymbol frame = new GameSymbol.Builder("frame",GameTextures.FRAME, spellPositionPlayerBar.getX(), spellPositionPlayerBar.getY())
                 .withWidth(0.62f)
                 .withHeight(0.465f)
                 .withVisibility(0.95f)
                 .build();
 
-        this.spellTexture = new GameSymbol.Builder(spellInstance.getIcon(), offset + spellPositionPlayerBar.getX(), offset + spellPositionPlayerBar.getY())
+        this.spellTexture = new GameSymbol.Builder("icon",spellInstance.getIcon(), offset + spellPositionPlayerBar.getX(), offset + spellPositionPlayerBar.getY())
                 .withWidth(0.56f)
                 .withHeight(0.40f)
                 .build();
@@ -51,7 +51,14 @@ public class SpellSymbol implements Symbol {
 
     @Override
     public void reload() {
-        this.spellTexture.reload();
+        this.symbolList.forEach(Symbol::reload);
+    }
+
+    @Override
+    public String getName() {
+        StringBuilder sb = new StringBuilder();
+        this.symbolList.forEach(symbol->sb.append(symbol.getName()).append("\n"));
+        return sb.toString();
     }
 
     private void isFaded() {

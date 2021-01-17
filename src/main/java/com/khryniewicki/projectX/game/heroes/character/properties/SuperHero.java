@@ -114,6 +114,8 @@ public class SuperHero implements UltraHero {
         Shader.HERO.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
         texture.bind();
         mesh.render();
+        mesh.unbind();
+        texture.unbind();
         Shader.HERO.disable();
         heroAttributes.render();
     }
@@ -127,6 +129,8 @@ public class SuperHero implements UltraHero {
         this.heroRight.reload();
         this.heroLeft.reload();
         this.heroAttack.reload();
+        this.heroAttributes.reload();
+        setMesh();
     }
 
 

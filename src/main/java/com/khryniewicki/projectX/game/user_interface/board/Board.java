@@ -7,7 +7,9 @@ import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.user_interface.playerBar.PlayerBar;
+import com.khryniewicki.projectX.game.user_interface.symbols.GameSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.utils.GameUtil;
 import com.khryniewicki.projectX.utils.ObstacleStorage;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,8 @@ import java.util.List;
 
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BACKGROUND;
 import static com.khryniewicki.projectX.game.user_interface.board.GameFactory.BAR;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.opengl.GL11.*;
 
 @Data
 @Slf4j
@@ -37,6 +41,8 @@ public class Board {
     private List<UltraSpell> spells;
     private List<UltraHero> heroes;
     private boolean notify;
+    private GameSymbol gameSymbol;
+
     public Board() {
         createBackground();
         createHeroes();
@@ -78,24 +84,57 @@ public class Board {
         symbols.forEach(Symbol::reload);
         heroes.forEach(Symbol::reload);
         spells.forEach(Symbol::reload);
+        special_render();
     }
 
-    public void render() {
+    public void special_render() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        System.out.println("SYMBOLS");
         symbols.forEach(symbol -> {
-            symbol.getName();
+            System.out.println(symbol.getName());
             symbol.render();
         });
+        swap();
+        System.out.println("..............................................................");
+        System.out.println("HEROES");
         heroes.forEach(symbol -> {
-            symbol.getName();
+            System.out.println(symbol.getName());
             symbol.render();
         });
+        swap();
+        System.out.println("..............................................................");
+        System.out.println("SPELLS");
         spells.forEach(spell -> {
             if (spell.isSpellActivated()) {
-                spell.getName();
+                System.out.println(spell.getName());
                 spell.render();
             }
         });
+        System.out.println("..............................................................");
+        swap();
+//        if (collision.isTest_square()) {
+//            collision.getSquares().values().forEach(MenuSymbol::render);
+//        }
+//        renderTerrains();
+//        renderObstacles();
+    }
+
+    public void swap() {
+        int error = glGetError();
+        if (error != GL_NO_ERROR)
+            System.out.println(error);
+        glfwSwapBuffers(GameUtil.window);
+    }
+
+    public void render() {
+        symbols.forEach(Symbol::render);
+        heroes.forEach(Symbol::render);
+//        spells.forEach(spell -> {
+//            if (spell.isSpellActivated()) {
+//               spell.render();
+//            }
+//        });
 
 //        if (collision.isTest_square()) {
 //            collision.getSquares().values().forEach(MenuSymbol::render);

@@ -5,9 +5,8 @@ import com.khryniewicki.projectX.graphics.Texture;
 public interface Symbol {
     void render();
     void reload();
-    default String getName() {
-        return "";
-    }
+    String getName() ;
+
 
     default void setTexture(Texture texture) {
     }

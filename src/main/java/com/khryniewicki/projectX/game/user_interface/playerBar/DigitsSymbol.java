@@ -23,7 +23,7 @@ public class DigitsSymbol implements Symbol {
     private Integer number;
     private Position position;
     private Integer tmpNumber;
-    private Symbol numbers;
+    private GameSymbol numbers;
     private Map<Integer, Texture> mapRegistry;
 
     public DigitsSymbol(String name) {
@@ -32,7 +32,7 @@ public class DigitsSymbol implements Symbol {
         this.position = getPosition(name);
         mapRegistry = new HashMap<>();
 
-        numbers = new GameSymbol.Builder(getTexture(), position.getX(), position.getY())
+        numbers = new GameSymbol.Builder("number", getTexture(), position.getX(), position.getY())
                 .withWidth(1f)
                 .withHeight(0.5f)
                 .withVisibility(1f)
@@ -61,6 +61,7 @@ public class DigitsSymbol implements Symbol {
     @Override
     public void reload() {
         this.mapRegistry.clear();
+        this.numbers.reload();
     }
 
     private void updateNumber() {
