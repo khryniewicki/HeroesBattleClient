@@ -86,5 +86,7 @@ public abstract class MultiPlayerCommander implements LifeCycle, PropertyChangeL
         websocketController.stop_websocket();
     }
 
-
+    public void kill_process(){
+        Runtime.getRuntime().halt(0);
+    }
 }

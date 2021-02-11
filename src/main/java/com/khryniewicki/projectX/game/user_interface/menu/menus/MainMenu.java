@@ -32,7 +32,7 @@ public class MainMenu extends AbstractMenu {
     private final TextureMenuFactory textureMenuFactory;
     private final com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory buttonsFactory;
     private final WebsocketScheduler websocketScheduler;
-
+    int counter = 0;
     private MenuSymbol noHero;
     private ServerState currentState;
     private volatile ServerState state;
@@ -159,6 +159,7 @@ public class MainMenu extends AbstractMenu {
         this.permanentImages = manager.update_label_description(permanentImages, PLAYERS_DESCRIPTION_LABEL, serverState);
         render();
     }
+
     private void disable_all_messages() {
         volatileImages.forEach(images -> update_volatile(images, true));
     }

@@ -51,6 +51,7 @@ public class Application implements Runnable {
                 MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
                 multiplayerInstance.stop_websocket();
                 multiplayerInstance.stop_sending_service();
+                multiplayerInstance.kill_process();
             }
         };
     }

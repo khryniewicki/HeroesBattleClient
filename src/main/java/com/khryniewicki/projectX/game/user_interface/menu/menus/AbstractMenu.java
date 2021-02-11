@@ -31,7 +31,7 @@ public abstract class AbstractMenu implements Menu {
     protected final CollectionManager manager;
 
     protected SubjectMultiplayerState subjectMultiplayerState;
-    protected MenuCard currentView;
+    protected static MenuCard currentView;
 
     public AbstractMenu() {
         mousePosition = new MousePosition();
