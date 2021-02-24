@@ -1,7 +1,6 @@
 ### Heroes Battle Client [PL]
 
-***Heroes Battle Clients*** to aplikacja kliencka gry Heroes Battle. Apiikacja została napisana z użycie Javy 11, biblioteki LWJGL oraz WebSocket.   
-Aplikacja jest przeznaczona na system operacyjny Windows 10 oraz Linux.
+***Heroes Battle Clients*** to aplikacja kliencka gry Heroes Battle. Apiikacja została napisana z użycie Javy 11, biblioteki LWJGL oraz WebSocket. Aplikacja jest przeznaczona na system operacyjny Windows 10 oraz Linux.
 
 Aplikację można pobrać ze strony:
 \
