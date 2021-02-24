@@ -8,9 +8,9 @@ import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerSt
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
 import com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory;
 import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory;
-import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
-import com.khryniewicki.projectX.game.user_interface.subjects.Subjects;
 import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
+import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
+import com.khryniewicki.projectX.utils.GameUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,8 @@ import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
+import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.SERVER;
+import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.VERSION_PROPERTY;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Slf4j
@@ -36,6 +38,7 @@ public class MainMenu extends AbstractMenu {
     private MenuSymbol noHero;
     private ServerState currentState;
     private volatile ServerState state;
+    private volatile String version = GameUtil.version;
     private boolean subscribed;
 
 
@@ -66,7 +69,7 @@ public class MainMenu extends AbstractMenu {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     String propertyName = evt.getPropertyName();
-                    if (propertyName.equals(Subjects.SERVER.getName())) {
+                    if (propertyName.equals(SERVER.getName())) {
                         ServerState serverState = (ServerState) evt.getNewValue();
                         if (serverState == ServerState.JOIN_GAME) {
                             websocketScheduler.removePropertyChangeListener(this);
@@ -74,6 +77,9 @@ public class MainMenu extends AbstractMenu {
                         } else {
                             setState(serverState);
                         }
+                    } else if (propertyName.equals(VERSION_PROPERTY.getName())) {
+                        version = (String) evt.getNewValue();
+                        System.out.println(version);
                     }
                 }
             });
@@ -140,6 +146,8 @@ public class MainMenu extends AbstractMenu {
                     enable_message(TEXT_SERVER_OFFLINE);
                 } else if (state.equals(ServerState.TWO_PLAYERS)) {
                     enable_message(TEXT_ROOM_IS_FULL);
+                } else if (!GameUtil.version.equals(version)) {
+                    enable_message(NEW_VERSION);
                 } else {
                     String heroType = heroesInstances.getHeroType();
                     if (Objects.nonNull(heroType)) {
@@ -152,6 +160,7 @@ public class MainMenu extends AbstractMenu {
                 }
                 break;
         }
+
     }
 
     private void update_label(ServerState serverState) {

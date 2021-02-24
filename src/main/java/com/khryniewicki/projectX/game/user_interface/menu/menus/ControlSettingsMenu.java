@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static com.khryniewicki.projectX.game.user_interface.menu.buttons.ButtonsFactory.CONROL_SETTINGS_RETURN;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.RETURN_BUTTON2;
 
 @Slf4j
 @Getter
@@ -33,7 +34,7 @@ public class ControlSettingsMenu extends AbstractMenu {
     @Override
     public void init() {
         setVolatileImages(factory.get_list_with_icons());
-        setButtons(new ArrayList<>(Collections.singletonList(com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.RETURN_BUTTON2)));
+        setButtons(Collections.singletonList(RETURN_BUTTON2));
     }
 
     @Override

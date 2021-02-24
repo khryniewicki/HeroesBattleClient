@@ -22,7 +22,7 @@ public class ButtonsFactory {
     }
 
     public static ButtonsFactory getInstance() {
-        return com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.ButtonsFactory.HELPER.INSTANCE;
+        return ButtonsFactory.HELPER.INSTANCE;
     }
 
     private static class HELPER {

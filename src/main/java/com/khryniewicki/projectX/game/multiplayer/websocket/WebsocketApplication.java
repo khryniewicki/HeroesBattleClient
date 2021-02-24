@@ -98,6 +98,7 @@ public class WebsocketApplication implements Runnable {
         }
 
         public void leave_room() {
+            System.out.println("MESSAGE ADDED TO STACKEVENT");
             stackEvent.addDto(new MessageDto.Builder()
                     .status(ConnectionState.DISCONNECTED)
                     .sessionID(session.getSessionId())

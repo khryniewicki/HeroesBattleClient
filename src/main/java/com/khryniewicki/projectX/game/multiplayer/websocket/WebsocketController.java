@@ -11,6 +11,7 @@ import java.util.Optional;
 @Slf4j
 public class WebsocketController {
 
+    private static final String SENDING_SERVICE = "SendingService";
     private WebsocketApplication.MyStompSessionHandler handler;
     private SendingService sendingService;
     private WebsocketApplication websocketApplication;
@@ -69,18 +70,13 @@ public class WebsocketController {
 
     public void start_sending_service() {
         sendingService = new SendingService();
-        new Thread(sendingService, "SendingService").start();
+        new Thread(sendingService, SENDING_SERVICE).start();
     }
 
     public void stop_websocket() {
         if (!get_session_id().isEmpty()) {
+            System.out.println(get_session_id());
             leave_room();
-        }
-    }
-
-    public void stop_sending_service() {
-        if (Objects.nonNull(sendingService)) {
-            sendingService.stop();
         }
     }
 

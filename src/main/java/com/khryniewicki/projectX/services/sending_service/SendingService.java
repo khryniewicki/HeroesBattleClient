@@ -21,9 +21,12 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 @Setter
 @Slf4j
 public class SendingService implements Runnable {
+    public static final String APP_HERO = "/app/hero/";
+    public static final String APP_SPELL = "/app/spell/";
+    public static final String APP_ROOM = "/app/room";
+
     private final Channels channel;
     private final StackEvent stackEvent;
-
     private int counterHero;
     private int counterSpell;
     private boolean running;
@@ -93,6 +96,7 @@ public class SendingService implements Runnable {
                 if (Objects.isNull(session)) {
                     session = WebsocketApplication.getSession();
                 }
+                System.out.println(baseDto);
                 if (session.isConnected() && no_duplicates_filter(baseDto)) {
                     String path = path(baseDto);
                     session.send(path, baseDto);
@@ -108,11 +112,11 @@ public class SendingService implements Runnable {
         BaseDtoType type = pop.getType();
         switch (type) {
             case HERO:
-                return "/app/hero/" + channel.getApp();
+                return APP_HERO + channel.getApp();
             case SPELL:
-                return "/app/spell/" + channel.getApp();
+                return APP_SPELL + channel.getApp();
             default:
-                return "/app/room";
+                return APP_ROOM;
         }
     }
 

@@ -36,7 +36,7 @@ public class WebsocketScheduler {
     private WaitingRoomMenu waitingRoomMenu;
     private String sessionId;
     private Integer period = 200;
-
+    private boolean verifiedVersion;
 
     public MultiplayerState multiplayerState = MultiplayerState.NOT_CONNECTED;
     private boolean hasStarted;
@@ -44,7 +44,6 @@ public class WebsocketScheduler {
     private WebsocketScheduler() {
         websocketInstance = WebsocketController.getWebsocketInstance();
         support = new PropertyChangeSupport(this);
-
         timer = new Timer();
     }
 
@@ -57,6 +56,12 @@ public class WebsocketScheduler {
         ParameterizedTypeReference<HashMap<String, MessageDto>> responseType = new ParameterizedTypeReference<>() {
         };
         return new RestTemplate().exchange(request(MAP), responseType).getBody();
+    }
+
+    public String version() {
+        ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<>() {
+        };
+        return new RestTemplate().exchange(request(VERSION), responseType).getBody();
     }
 
     public Long startCounter() {
@@ -82,6 +87,8 @@ public class WebsocketScheduler {
                     map = playersInGame();
                     timeLeft = startCounter();
                     setTime(timeLeft);
+                    setVersion(version());
+
                 } catch (RestClientException exception) {
                     map = null;
                 }
@@ -126,6 +133,12 @@ public class WebsocketScheduler {
     public void setTime(Long time) {
         if (Objects.nonNull(time)) {
             support.firePropertyChange(TIME_TO_LOG_OUT.getName(), null, time);
+        }
+    }
+    public void setVersion(String version) {
+        if (!verifiedVersion && Objects.nonNull(version)) {
+            support.firePropertyChange(VERSION_PROPERTY.getName(), null, version);
+            setVerifiedVersion(true);
         }
     }
 

@@ -50,7 +50,6 @@ public class Application implements Runnable {
             if (state.equals(GameState.FINISH)) {
                 MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
                 multiplayerInstance.stop_websocket();
-                multiplayerInstance.stop_sending_service();
                 multiplayerInstance.kill_process();
             }
         };

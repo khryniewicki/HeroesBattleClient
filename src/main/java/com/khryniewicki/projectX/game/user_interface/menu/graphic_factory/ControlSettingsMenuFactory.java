@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.BG_ANIMATION;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
 
@@ -28,7 +28,7 @@ public class ControlSettingsMenuFactory {
 
     public ArrayList<Symbol> get_list_with_icons() {
         return new ArrayList<>(Arrays.asList(BG_ANIMATION, MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT,
-                TEXT_UP, BASIC_ATTACK, ULTIMATE_ATTACK));
+                TEXT_UP, BASIC_ATTACK, ULTIMATE_ATTACK, LOGO, VERSION));
     }
 
     public static final MenuSymbol MOUSE = new MenuSymbol.Builder()

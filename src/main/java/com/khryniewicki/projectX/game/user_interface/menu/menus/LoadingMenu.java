@@ -18,8 +18,7 @@ import org.lwjgl.system.MemoryStack;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOADING;
-import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.LOGO;
+import static com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextureMenuFactory.*;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_GREEN;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -114,7 +113,7 @@ public class LoadingMenu extends AbstractMenu {
 
     @Override
     public void prepare() {
-        setVolatileImages(Arrays.asList(LOADING, LOGO));
+        setVolatileImages(Arrays.asList(LOADING, LOGO, VERSION));
         duration = 5000L;
         now = System.currentTimeMillis();
         flag = true;

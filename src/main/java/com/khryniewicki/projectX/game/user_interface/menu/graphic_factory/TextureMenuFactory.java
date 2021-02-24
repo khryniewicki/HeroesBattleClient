@@ -2,7 +2,10 @@ package com.khryniewicki.projectX.game.user_interface.menu.graphic_factory;
 
 import com.khryniewicki.projectX.game.user_interface.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.utils.GameUtil;
 
+import java.awt.*;
+import java.util.List;
 import java.util.*;
 
 import static com.khryniewicki.projectX.graphics.textures.GameTextures.YOU_LOSE_TEXTURE;
@@ -30,18 +33,18 @@ public class TextureMenuFactory {
 
     public List<Symbol> getListWithCharacterMenuMessages() {
         if (Objects.isNull(listWithCharacterMenuMessages)) {
-            listWithCharacterMenuMessages = new ArrayList<>(Arrays.asList(HERO_NAME, BG_ANIMATION));
+            listWithCharacterMenuMessages = Arrays.asList(HERO_NAME, BG_ANIMATION, LOGO, VERSION);
         }
         return listWithCharacterMenuMessages;
     }
 
     public List<Symbol> getListWithTextMainMenuSymbols() {
-        return new ArrayList<>(Arrays.asList(TEXT_NO_HERO, TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD,
-                TEXT_ICEWIZARD, TEXT_THUNDERWIZARD, TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL));
+        return Arrays.asList(TEXT_NO_HERO, TEXT_FALLENKING, TEXT_FALLENMONK, TEXT_FALLENWITCHER, TEXT_FIREWIZARD,
+                TEXT_ICEWIZARD, TEXT_THUNDERWIZARD, TEXT_SERVER_OFFLINE, TEXT_ROOM_IS_FULL, NEW_VERSION);
     }
 
     public List<Symbol> getListWithPermamentMainMenuSymbols() {
-        return new ArrayList<>(Arrays.asList(PLAYERS_BAR_LABEL, PLAYERS_DESCRIPTION_LABEL, BG_ANIMATION, MENU_IMAGE, LOGO));
+        return Arrays.asList(PLAYERS_BAR_LABEL, PLAYERS_DESCRIPTION_LABEL, BG_ANIMATION, MENU_IMAGE, LOGO, VERSION);
     }
 
     private void fill() {
@@ -71,6 +74,15 @@ public class TextureMenuFactory {
     public static final MenuSymbol TEXT_SERVER_OFFLINE = new MenuSymbol.Builder()
             .withTexture(TextFactory.textToImageMenu("Please try when server is on"))
             .withName("ServerOffLine")
+            .withDisabled(true)
+            .withHeight(0.7f)
+            .withWidth(4f)
+            .withPositionX(-3.5f)
+            .withPositionY(-5.4f)
+            .build();
+    public static final MenuSymbol NEW_VERSION = new MenuSymbol.Builder()
+            .withTexture(TextFactory.textToImageMenu("Please download latest version"))
+            .withName("NewVersion")
             .withDisabled(true)
             .withHeight(0.7f)
             .withWidth(4f)
@@ -158,6 +170,15 @@ public class TextureMenuFactory {
             .withPositionX(-9.6f)
             .withPositionY(-5.5f)
             .build();
+    public static final MenuSymbol VERSION = new MenuSymbol.Builder()
+            .withTexture(TextFactory.textInPlayerBar("v" + GameUtil.version, Color.WHITE))
+            .withName("version")
+            .withHeight(0.5f)
+            .withWidth(1f)
+            .withPositionX(8.9f)
+            .withPositionY(-5.45f)
+            .build();
+
     public static final MenuSymbol TABLE = new MenuSymbol.Builder()
             .withTexture(BLANK_TABLE_WINDOW)
             .withDisabled(true)
