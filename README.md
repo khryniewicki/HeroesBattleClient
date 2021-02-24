@@ -6,4 +6,4 @@ Aplikację można pobrać ze strony:
 \
 `<link>` : https://heroes-battle.khryniewicki.pl/download
 
-> Heroes Battle to gra 2D, która umożliwia grę zdalnie z innymi graczami w czasie rzeczywistym. Gracze wybierają jednego z sześciu bohaterów i walczą do utraty życia.
+> Heroes Battle to gra 2D, która umożliwia grę zdalnie z innymi graczami w czasie rzeczywistym.  
