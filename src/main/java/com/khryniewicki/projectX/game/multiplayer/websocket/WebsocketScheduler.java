@@ -4,8 +4,8 @@ import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerControll
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesRegistry;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.ServerState;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.WaitingRoomMenu;
+import com.khryniewicki.projectX.game.ui.menu.menus.MainMenu;
+import com.khryniewicki.projectX.game.ui.menu.menus.WaitingRoomMenu;
 import com.khryniewicki.projectX.services.dto.MessageDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.*;
+import static com.khryniewicki.projectX.game.ui.subjects.Subjects.*;
 import static com.khryniewicki.projectX.utils.GameUtil.*;
 
 @Data

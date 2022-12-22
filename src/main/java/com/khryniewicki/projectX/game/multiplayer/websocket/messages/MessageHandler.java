@@ -5,8 +5,8 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.HeroStar
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStartingPosition;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState;
-import com.khryniewicki.projectX.game.user_interface.subjects.Subject;
-import com.khryniewicki.projectX.game.user_interface.subjects.SubjectMultiplayerState;
+import com.khryniewicki.projectX.game.ui.subjects.Subject;
+import com.khryniewicki.projectX.game.ui.subjects.SubjectMultiplayerState;
 import com.khryniewicki.projectX.services.dto.MessageDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

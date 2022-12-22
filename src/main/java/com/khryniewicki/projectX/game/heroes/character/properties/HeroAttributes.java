@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.user_interface.menu.graphic_factory.TextFactory;
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.game.ui.menu.graphic.factory.TextFactory;
+import com.khryniewicki.projectX.game.ui.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import lombok.Getter;
 import lombok.Setter;

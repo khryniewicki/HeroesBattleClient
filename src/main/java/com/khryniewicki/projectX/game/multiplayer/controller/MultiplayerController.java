@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.beans.PropertyChangeEvent;
 
 import static com.khryniewicki.projectX.game.multiplayer.websocket.states.MultiplayerState.WAITING_FOR_SECOND_PLAYER;
-import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.MULTIPLAYER;
-import static com.khryniewicki.projectX.game.user_interface.subjects.Subjects.TIME_TO_LOG_OUT;
+import static com.khryniewicki.projectX.game.ui.subjects.Subjects.MULTIPLAYER;
+import static com.khryniewicki.projectX.game.ui.subjects.Subjects.TIME_TO_LOG_OUT;
 
 @Getter
 @Setter

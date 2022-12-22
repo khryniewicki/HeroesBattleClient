@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.multiplayer.websocket;
 
 
-import com.khryniewicki.projectX.services.sending_service.SendingService;
+import com.khryniewicki.projectX.services.sending.SendingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.stomp.StompSession;
 

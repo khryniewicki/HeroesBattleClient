@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.engine;
 
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.user_interface.board.Board;
+import com.khryniewicki.projectX.game.ui.board.Board;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

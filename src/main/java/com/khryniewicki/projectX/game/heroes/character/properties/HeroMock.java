@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
+import com.khryniewicki.projectX.services.receive.ReceiveServiceSingleton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

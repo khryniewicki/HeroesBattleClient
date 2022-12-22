@@ -1,10 +1,10 @@
 package com.khryniewicki.projectX.game.engine;
 
 import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerController;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.BlankMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.LoadingMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.MainMenu;
-import com.khryniewicki.projectX.game.user_interface.menu.menus.RestartMenu;
+import com.khryniewicki.projectX.game.ui.menu.menus.BlankMenu;
+import com.khryniewicki.projectX.game.ui.menu.menus.LoadingMenu;
+import com.khryniewicki.projectX.game.ui.menu.menus.MainMenu;
+import com.khryniewicki.projectX.game.ui.menu.menus.RestartMenu;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ConcurrentLinkedDeque;

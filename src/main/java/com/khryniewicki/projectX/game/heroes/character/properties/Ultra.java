@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.game.ui.symbols.Symbol;
 import com.khryniewicki.projectX.math.Vector;
 
 public interface Ultra extends Symbol {

@@ -5,7 +5,7 @@ import com.khryniewicki.projectX.game.attack.attackActivation.AttackTrajectory;
 import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
-import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
+import com.khryniewicki.projectX.services.receive.ReceiveServiceSingleton;
 
 public class SpellMock extends Spell {
     private final AttackExecution attackExecution;

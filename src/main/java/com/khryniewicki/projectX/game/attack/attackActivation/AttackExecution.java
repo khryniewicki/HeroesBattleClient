@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.HeroesInstances;
 import com.khryniewicki.projectX.math.Vector;
-import com.khryniewicki.projectX.services.sending_service.StackEvent;
+import com.khryniewicki.projectX.services.sending.StackEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;

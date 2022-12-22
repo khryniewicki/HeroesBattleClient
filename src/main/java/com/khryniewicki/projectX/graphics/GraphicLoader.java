@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.graphics;
 
-import com.khryniewicki.projectX.game.user_interface.symbols.Symbol;
+import com.khryniewicki.projectX.game.ui.symbols.Symbol;
 import com.khryniewicki.projectX.math.Matrix4f;
 import com.khryniewicki.projectX.math.Vector;
 import lombok.Getter;

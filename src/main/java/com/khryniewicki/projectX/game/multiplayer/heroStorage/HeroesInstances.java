@@ -2,7 +2,7 @@ package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
 import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellMock;
-import com.khryniewicki.projectX.game.control_settings.ControlSettings;
+import com.khryniewicki.projectX.game.control.settings.ControlSettings;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroMock;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
@@ -12,7 +12,7 @@ import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.MockStar
 import com.khryniewicki.projectX.game.multiplayer.websocket.WebsocketController;
 import com.khryniewicki.projectX.game.multiplayer.websocket.messages.Channels;
 import com.khryniewicki.projectX.services.dto.MessageDto;
-import com.khryniewicki.projectX.services.receive_services.ReceiveServiceSingleton;
+import com.khryniewicki.projectX.services.receive.ReceiveServiceSingleton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
