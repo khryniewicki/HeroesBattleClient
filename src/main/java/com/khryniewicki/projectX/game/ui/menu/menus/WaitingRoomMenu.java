@@ -5,7 +5,6 @@ import com.khryniewicki.projectX.game.multiplayer.controller.MultiplayerControll
 import com.khryniewicki.projectX.game.ui.menu.graphic.factory.TextFactory;
 import com.khryniewicki.projectX.game.ui.symbols.MenuSymbol;
 import com.khryniewicki.projectX.game.ui.symbols.Symbol;
-import com.khryniewicki.projectX.graphics.Colors;
 import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.khryniewicki.projectX.game.ui.menu.graphic.factory.TextureMenuFactory.TIMER;
+import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_GREEN;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 @Setter
@@ -43,7 +43,7 @@ public class WaitingRoomMenu extends AbstractMenu {
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("Interrupted sleep: ", e);
         }
     }
 
@@ -95,7 +95,7 @@ public class WaitingRoomMenu extends AbstractMenu {
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
                         String text = "Logout in: " + timeLeftToLogOut.toString() + " sec.";
-                        symbol.setTexture(TextFactory.textInLoadingMenuToImage(text, Colors.BRIGHT_GREEN, 32));
+                        symbol.setTexture(TextFactory.textInLoadingMenuToImage(text, BRIGHT_GREEN, 32));
                     }
                 })
                 .collect(Collectors.toList());

@@ -6,9 +6,9 @@ import com.khryniewicki.projectX.graphics.textures.GameTextures;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class HeroAttributes implements Symbol {
         lifeBar = initLifeBar(superHero);
         manaBar = initManaBar(superHero);
         playerNameBar = initPlayerNameBar(superHero, name);
-        symbols = new ArrayList<>(Arrays.asList(lifeBar, playerNameBar, manaBar));
+        symbols = asList(lifeBar, playerNameBar, manaBar);
     }
 
     private ManaBar initManaBar(UltraHero ultraHero) {

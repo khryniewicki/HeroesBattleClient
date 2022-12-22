@@ -21,11 +21,11 @@ public class Game implements LifeCycle {
 
     @Override
     public void prepare() {
-        create_board();
+        createBoard();
         begin();
     }
 
-    private void create_board() {
+    private void createBoard() {
         board = new Board();
     }
 
@@ -33,14 +33,14 @@ public class Game implements LifeCycle {
     public void update() {
         glfwPollEvents();
         board.update();
-        is_player_dead();
+        isPlayerDead();
     }
 
-    private void is_player_dead() {
+    private void isPlayerDead() {
         if (board.player_dead()) {
             Application.restartGame();
             stop();
-            stop_websocket();
+            stopWebsocket();
         }
     }
 
@@ -52,7 +52,7 @@ public class Game implements LifeCycle {
     }
 
 
-    public void stop_websocket() {
+    public void stopWebsocket() {
         multiplayerController.stopWebsocket();
     }
 

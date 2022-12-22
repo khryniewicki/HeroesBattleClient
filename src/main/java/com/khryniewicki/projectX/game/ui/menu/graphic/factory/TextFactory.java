@@ -11,64 +11,64 @@ import java.text.AttributedString;
 
 
 public class TextFactory {
-    private static Color defaultColor = Color.WHITE;
-    private static Color bg = new Color(0, 0, 0, 1);
+    private static final Color defaultColor = Color.WHITE;
+    private static final Color bg = new Color(0, 0, 0, 1);
     static Graphics2D g2d;
 
     public static Texture textToImageWithLine(String text, int fontSize) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW_WITH_LINE).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW_WITH_LINE).getImage();
         Font font = new Font("Open Sans", Font.BOLD, fontSize);
         setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
 
     public static Texture textToImageMenu(String text) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW).getImage();
         Font font = new Font("Open Sans", Font.BOLD, 24);
         setImage(text, font, defaultColor, image);
         return new Texture(image);
     }
 
     public static Texture textInLoadingMenuToImage(String text, Color color, Integer size) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW).getImage();
         Font font = new Font("Open Sans", Font.BOLD, size);
         setImage(text, font, color, image);
         return new Texture(image);
     }
 
-    protected static Texture createTexture(BLANK_IMAGES blank_images) {
-        return new Texture(blank_images.getPath());
+    protected static Texture createTexture(BlankImages blankImages) {
+        return new Texture(blankImages.getPath());
     }
 
     public static Texture textInPlayersMenuToImage(String text, Color color) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW).getImage();
         Font font = new Font("Open Sans", Font.BOLD, 20);
         setImage(text, font, color, image);
         return new Texture(image);
     }
 
     public static Texture textInPlayerBar(String text, Color color) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW_FOR_NUMBER).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW_FOR_NUMBER).getImage();
         Font font = new Font("Arial", Font.BOLD, 30);
         setImage(text, font, color, image);
         return new Texture(image);
     }
     public static Texture textInPlayerBarHeroName(String text, Color color) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW_FOR_HER0_NAME).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW_FOR_HER0_NAME).getImage();
         Font font = new Font("Arial", Font.BOLD, 25);
         setImage(text, font, color, image);
         return new Texture(image);
     }
 
     public static Texture textInControlSettingsToImage(String text, Color color) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW).getImage();
         Font font = new Font("Arial", Font.BOLD, 30);
         setImage(text, font, color, image);
         return new Texture(image);
     }
 
     public static Texture textInConnectionWindow(String text) {
-        BufferedImage image = createTexture(BLANK_IMAGES.BLANK_WINDOW_CONNECTION).getImage();
+        BufferedImage image = createTexture(BlankImages.BLANK_WINDOW_CONNECTION).getImage();
         Font font = new Font("Open Sans", Font.BOLD, 20);
         setImage(text, font, defaultColor, image);
         return new Texture(image);
@@ -127,13 +127,13 @@ public class TextFactory {
 
 
 
-    enum BLANK_IMAGES {
+    enum BlankImages {
         BLANK_WINDOW("blankTextWindow.png"), BLANK_WINDOW_WITH_LINE("blankTextWindowWithLine.png"),
         BLANK_WINDOW_FOR_NUMBER("blankTextWindowNumber.png"), BLANK_WINDOW_FOR_HER0_NAME("blankTextWindowHeroName.png"),BLANK_WINDOW_CONNECTION("blankTextWindowConnection.png");
 
         private String path;
 
-        BLANK_IMAGES(String path) {
+        BlankImages(String path) {
             this.path = path;
         }
 

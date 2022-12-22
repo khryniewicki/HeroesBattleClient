@@ -63,7 +63,7 @@ public class CharacterMenu extends AbstractMenu {
     public void initVolatiles() {
         HERO_NAME.addPropertyChangeListener(evt -> {
             String newValue = (String) evt.getNewValue();
-            update_volatile(HERO_NAME, getTextureFromTextFactory(newValue));
+            updateVolatile(HERO_NAME, getTextureFromTextFactory(newValue));
             set_hero_name(newValue);
         });
         setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
@@ -86,11 +86,11 @@ public class CharacterMenu extends AbstractMenu {
                 break;
             case TABLE_WITH_SKILLS:
                 boolean disabled = TABLE.isDisabled();
-                animation.toggle_table(!disabled);
+                animation.toggleTable(!disabled);
                 update_button(CHARACTER_SKILLS, disabled ? HIDE_SKILLS : SHOW_SKILLS);
                 break;
             case WRITE_HERO_NAME:
-                update_volatile(HERO_NAME, false);
+                updateVolatile(HERO_NAME, false);
                 this.activeWriting = !activeWriting;
                 update_button(TYPE_YOUR_NAME, activeWriting ? CONFIRM : TYPE_NAME);
                 break;
@@ -107,7 +107,7 @@ public class CharacterMenu extends AbstractMenu {
     @Override
     public void restart() {
         animation.restart();
-        update_volatile(HERO_NAME, !verify_hero_name());
+        updateVolatile(HERO_NAME, !verify_hero_name());
         update_button(CHARACTER_SKILLS, SHOW_SKILLS);
         update_button(TYPE_YOUR_NAME, TYPE_NAME);
         remove_button(CHARACTER_SKILLS);

@@ -32,7 +32,7 @@ public class Application implements Runnable {
         COMMANDS.add(MultiplayerController.getInstance());
         COMMANDS.add(Game.getInstance());
         COMMANDS.add(RestartMenu.getInstance());
-        COMMANDS.add(terminate());
+        COMMANDS.add(Application::terminate);
     }
 
     private static void init() {
@@ -44,15 +44,13 @@ public class Application implements Runnable {
         COMMANDS.forEach(Command::execute);
     }
 
-    private static Command terminate() {
-        return () -> {
-            log.info("TERMINATE");
-            if (state.equals(GameState.FINISH)) {
-                MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
-                multiplayerInstance.stopWebsocket();
-                multiplayerInstance.killProcess();
-            }
-        };
+    private static void terminate() {
+        log.info("TERMINATE");
+        if (state.equals(GameState.FINISH)) {
+            MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
+            multiplayerInstance.stopWebsocket();
+            multiplayerInstance.killProcess();
+        }
     }
 
     public static void restartGame() {

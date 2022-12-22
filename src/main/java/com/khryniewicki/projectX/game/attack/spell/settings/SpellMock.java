@@ -38,7 +38,7 @@ public class SpellMock extends Spell {
 
 
     private void getSpellType() {
-        spellTarget = receiveService.get_spell_mock_target(spellInstance.isBasic());
+        spellTarget = receiveService.getSpellMockTarget(spellInstance.isBasic());
     }
 
     public void getSpellMock() {
@@ -63,7 +63,7 @@ public class SpellMock extends Spell {
     }
 
     private void castingSpell() {
-        attackTrajectory.casting_spell();
+        attackTrajectory.castingSpell();
     }
 
     private void executeSpell() {

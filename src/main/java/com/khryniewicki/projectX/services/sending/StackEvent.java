@@ -34,7 +34,7 @@ public class StackEvent {
             INSTANCE = this;
             stackEventSupport = new StackEventSupport();
         } else
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Stack event instance not found");
     }
 
     public static synchronized StackEvent getInstance() {

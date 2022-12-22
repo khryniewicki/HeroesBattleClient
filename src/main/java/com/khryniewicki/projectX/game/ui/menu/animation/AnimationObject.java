@@ -6,7 +6,7 @@ import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public abstract class AnimationObject {
     }
 
     protected void initCharacterMenu() {
-        if (Objects.isNull(characterMenu)) {
+        if (isNull(characterMenu)) {
             characterMenu = CharacterMenu.getInstance();
         }
     }

@@ -45,51 +45,51 @@ public abstract class AnimationSupport implements LifeCycle {
         }
     }
 
-    protected void add_dummy() {
+    protected void addDummy() {
         dummy.addDummy(animationHero.getPositionX());
-        add_symbol(dummy);
+        addSymbol(dummy);
     }
 
-    protected void casting_spell() {
+    protected void castingSpell() {
         tmpHeroSide = animationHero.isTurningLeft();
         animationHero.turnLeft(dummy.getPositionX() < 0);
         spell.newSpell(random_number);
         spell.setTarget(new Position(dummy.getPositionX(), dummy.getPositionY()));
-        add_symbol(spell);
+        addSymbol(spell);
         setSpellActive(true);
         highlight_table();
     }
 
 
-    protected void increment_spelling_counter() {
+    protected void incrementSpellingCounter() {
         this.spellingCounter++;
     }
 
-    protected void reset_spelling_counter() {
+    protected void resetSpellingCounter() {
         this.spellingCounter = 0;
     }
 
-    protected void reset_counting() {
+    protected void resetCounting() {
         if (loopCycles == 20) {
-            reset_loop_counter();
+            resetLoopCounter();
             setSpellActive(false);
             animationHero.turnLeft(tmpHeroSide);
         }
     }
 
-    protected void reset_loop_counter() {
+    protected void resetLoopCounter() {
         this.loopCycles = 0;
     }
 
-    protected void draw_random_number() {
+    protected void drawRandomNumber() {
         this.random_number = random.ints(90, 120).findFirst().getAsInt();
     }
 
-    protected void add_symbol(AnimationObject animationObject) {
-        add_symbol(animationObject.getSymbol());
+    protected void addSymbol(AnimationObject animationObject) {
+        addSymbol(animationObject.getSymbol());
     }
 
-    protected void add_symbol(Symbol menuSymbol) {
+    protected void addSymbol(Symbol menuSymbol) {
         symbols = characterMenu.getAnimationSymbols();
         symbols.add(menuSymbol);
     }
@@ -108,11 +108,11 @@ public abstract class AnimationSupport implements LifeCycle {
         }
     }
 
-    public void remove_spell_if_exists() {
+    public void removeSpellIfExists() {
         remove_symbol(spell);
     }
 
-    protected void reset_table() {
+    protected void resetTable() {
         setSymbols(table.update(superHero, 0));
     }
 
@@ -120,7 +120,7 @@ public abstract class AnimationSupport implements LifeCycle {
         setSymbols(table.update(superHero, random_number));
     }
 
-    public void toggle_table(boolean disabled) {
+    public void toggleTable(boolean disabled) {
         setSymbols(table.toggle(disabled));
     }
 

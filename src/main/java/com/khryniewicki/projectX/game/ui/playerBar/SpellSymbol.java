@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 @Slf4j
 public class SpellSymbol implements Symbol {
     private final SpellInstance spellInstance;
@@ -19,7 +21,7 @@ public class SpellSymbol implements Symbol {
     private final GameSymbol spellTexture;
     private List<Symbol> symbolList;
     private Position spellPositionPlayerBar;
-    private boolean spell_activated;
+    private boolean isSpellActivated;
 
     public SpellSymbol(UltraSpell spell) {
         this.ultraSpell = spell;
@@ -37,7 +39,7 @@ public class SpellSymbol implements Symbol {
                 .withWidth(0.56f)
                 .withHeight(0.40f)
                 .build();
-        symbolList = new ArrayList<>(Arrays.asList(frame, this.spellTexture));
+        symbolList = asList(frame, this.spellTexture);
     }
 
     @Override
@@ -51,9 +53,9 @@ public class SpellSymbol implements Symbol {
     }
 
     private void isFaded() {
-        if (ultraSpell.isSpellActivated() != spell_activated) {
-            spell_activated = ultraSpell.isSpellActivated();
-            spellTexture.setTexture(spell_activated ? spellInstance.getFadedIcon() : spellInstance.getIcon());
+        if (ultraSpell.isSpellActivated() != isSpellActivated) {
+            isSpellActivated = ultraSpell.isSpellActivated();
+            spellTexture.setTexture(isSpellActivated ? spellInstance.getFadedIcon() : spellInstance.getIcon());
         }
     }
 

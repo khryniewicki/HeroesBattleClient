@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.beans.PropertyChangeEvent;
 import java.util.Collections;
 
-import static com.khryniewicki.projectX.game.ui.menu.buttons.ButtonsFactory.CONROL_SETTINGS_RETURN;
+import static com.khryniewicki.projectX.game.ui.menu.buttons.ButtonsFactory.CONTROL_SETTINGS_RETURN;
 import static com.khryniewicki.projectX.game.ui.menu.graphic.factory.ButtonsFactory.RETURN_BUTTON2;
 
 @Slf4j
@@ -40,7 +40,7 @@ public class ControlSettingsMenu extends AbstractMenu {
     public void propertyChange(PropertyChangeEvent evt) {
 
         ButtonsFactory btnName = (ButtonsFactory) evt.getNewValue();
-        if (btnName.equals(CONROL_SETTINGS_RETURN)) {
+        if (btnName.equals(CONTROL_SETTINGS_RETURN)) {
             runMenu(MainMenu.getInstance(), MenuCard.MAIN_MENU);
         }
     }

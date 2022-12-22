@@ -11,23 +11,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
+import static java.lang.System.currentTimeMillis;
+import static java.util.Objects.isNull;
 
 @Getter
 @Setter
 @Slf4j
 public class ManaBar extends GraphicLoader {
-    private float width, height;
-    private float offsetPositionY = 0.6f;
-    private float offsetPositionX = -0.3f;
+    private static final String BLUE = "blue";
+    private static final String BLACK = "black";
     private Vector position = new Vector();
     private Texture blueBarTexture, blackBarTexture;
     private VertexArray blueMesh, blackMesh;
-    private Long manaRegenaration = 1000L;
+    private Long madaRegeneration = 1000L;
     private UltraHero hero;
     private Long start;
     private StackEvent stackEvent;
     private Float maxMana;
+    private float width, height;
+    private float offsetPositionY = 0.6f;
+    private float offsetPositionX = -0.3f;
     private int tmpMana = 0;
     private float tmpHeroX = 0F;
     private float tmpHeroY = 0F;
@@ -54,8 +57,8 @@ public class ManaBar extends GraphicLoader {
     public void updateManaBar() {
         setPositionX(hero.getX() + offsetPositionX);
         setPositionY(hero.getY() + offsetPositionY);
-        this.blueMesh = getManaBarMesh("blue");
-        this.blackMesh = getManaBarMesh("black");
+        this.blueMesh = getManaBarMesh(BLUE);
+        this.blackMesh = getManaBarMesh(BLACK);
         this.tmpMana = hero.getLife();
         this.tmpHeroX = hero.getX();
         this.tmpHeroY = hero.getY();
@@ -73,11 +76,11 @@ public class ManaBar extends GraphicLoader {
     }
 
     private float getManaFactor(String textureType) {
-        return textureType.equals("blue") ? getManaFactor() : 1f;
+        return textureType.equals(BLUE) ? getManaFactor() : 1f;
     }
 
     private Float getManaFactor() {
-        if (Objects.isNull(hero.getMana())) {
+        if (isNull(hero.getMana())) {
             return 1f;
         } else {
             float mana = hero.getMana();
@@ -86,10 +89,10 @@ public class ManaBar extends GraphicLoader {
     }
 
     public void renegerateMana() {
-        if (Objects.isNull(start)) {
-            start = System.currentTimeMillis();
+        if (isNull(start)) {
+            start = currentTimeMillis();
         }
-        if (System.currentTimeMillis() - start > manaRegenaration) {
+        if (currentTimeMillis() - start > madaRegeneration) {
             start = null;
             addMana();
             stackEvent.addHeroDto();
@@ -98,8 +101,9 @@ public class ManaBar extends GraphicLoader {
 
     private void addMana() {
         Float mana = hero.getMana();
-        if (mana <= maxMana - hero.getManaRegeneration()) {
-            hero.setMana(mana + hero.getManaRegeneration());
+        Float manaRegeneration = hero.getManaRegeneration();
+        if (mana <= maxMana - manaRegeneration) {
+            hero.setMana(mana + manaRegeneration);
         } else
             hero.setMana(maxMana);
     }

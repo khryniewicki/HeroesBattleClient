@@ -10,10 +10,10 @@ public class ControlSettings {
     public ControlSettings() {
         this.moveSettings = new MoveSettings();
         this.mouseSettings = new MouseSettings();
-        add_control_settings();
+        addControlSettings();
     }
 
-    private void add_control_settings() {
+    private void addControlSettings() {
         mouseSettings.castSpells();
         moveSettings.move();
     }

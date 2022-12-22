@@ -18,7 +18,7 @@ public class AnimationTable extends AnimationObject {
         initCharacterMenu();
         return characterMenu.getAnimationSymbols().stream()
                 .peek(menuSymbol -> {
-                    if (menuSymbol.getName().equals(symbol.getName())) {
+                    if (is(menuSymbol)) {
                         symbol.setTexture(textureFromTableFactory(superHero, spellInstanceNumber));
                     }
                 })
@@ -29,11 +29,15 @@ public class AnimationTable extends AnimationObject {
         initCharacterMenu();
         return characterMenu.getAnimationSymbols().stream()
                 .peek(menuSymbol -> {
-                    if (menuSymbol.getName().equals(symbol.getName())) {
+                    if (is(menuSymbol)) {
                         symbol.setDisabled(disabled);
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    private boolean is(Symbol menuSymbol) {
+        return menuSymbol.getName().equals(symbol.getName());
     }
 
     private Texture textureFromTableFactory(SuperHero superHero, int spellInstanceNumber) {

@@ -26,7 +26,7 @@ public class AttackTrajectory {
     private int counter;
 
     private final UltraHero hero;
-    private  SpellInstance spellInstance;
+    private SpellInstance spellInstance;
     private final UltraSpell spell;
     private final StackEvent stackEvent;
 
@@ -39,25 +39,25 @@ public class AttackTrajectory {
         makeTargetNull();
     }
 
-    public void casting_spell() {
+    public void castingSpell() {
         target = spell.getTarget();
         if (Objects.nonNull(target)) {
             prepareSpell();
-            calculate_trajectory();
+            calculateTrajectory();
         }
         spellDuration();
     }
 
-    public void calculate_trajectory() {
+    public void calculateTrajectory() {
         Vector position = spell.getPosition();
         Float velocity = spellInstance.getCastingSpeed();
-        float half_velocity = velocity / 2;
-        if (Math.abs(distance.getX()) > half_velocity || Math.abs(distance.getY()) > half_velocity) {
-            if (Math.abs(distance.getX()) > half_velocity && Math.abs(distance.getY()) <= half_velocity) {
+        float halfVelocity = velocity / 2;
+        if (Math.abs(distance.getX()) > halfVelocity || Math.abs(distance.getY()) > halfVelocity) {
+            if (Math.abs(distance.getX()) > halfVelocity && Math.abs(distance.getY()) <= halfVelocity) {
                 spell.setPositionX(position.x + Math.signum(distance.getX()) * velocity);
-            } else if (Math.abs(distance.getX()) <= half_velocity && Math.abs(distance.getY()) > half_velocity) {
+            } else if (Math.abs(distance.getX()) <= halfVelocity && Math.abs(distance.getY()) > halfVelocity) {
                 spell.setPositionY(position.y + Math.signum(distance.getY()) * velocity);
-            } else if (Math.abs(distance.getX()) > half_velocity && Math.abs(distance.getY()) > half_velocity) {
+            } else if (Math.abs(distance.getX()) > halfVelocity && Math.abs(distance.getY()) > halfVelocity) {
                 if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
                     spell.setPositionX(position.x + Math.signum(distance.getX()) * velocity);
                     spell.setPositionY(position.y + (distance.getY()) / Math.abs(distance.getX()) * velocity);
@@ -66,8 +66,8 @@ public class AttackTrajectory {
                     spell.setPositionY(position.y + Math.signum(distance.getY()) * velocity);
                 }
             }
-            catch_spell_beyond_screen();
-            if (Math.abs(position.x - target.getX()) <= half_velocity && Math.abs(position.y - target.getY()) <= half_velocity) {
+            catchSpellBeyondScreen();
+            if (Math.abs(position.x - target.getX()) <= halfVelocity && Math.abs(position.y - target.getY()) <= halfVelocity) {
                 targetReached();
             }
         } else {
@@ -75,7 +75,7 @@ public class AttackTrajectory {
         }
     }
 
-    private void catch_spell_beyond_screen() {
+    private void catchSpellBeyondScreen() {
         if (distance.getX() > 20 || distance.getY() > 10) {
             counter++;
             if (counter > 10) {
@@ -124,14 +124,14 @@ public class AttackTrajectory {
             distance = new Position(target.getX() - spell.getHeroPositionX(), target.getY() - spell.getHeroPositionY());
 
             spell.setImage(-Math.signum(distance.getY()), -Math.signum(distance.getX()), spellInstance.getThrowingSpellTexture());
-            skull_spell_exception();
-            iceball_exception();
+            skullSpellException();
+            iceballException();
             spell.setPosition(new Vector(spell.getHeroPositionX(), spell.getHeroPositionY(), 1f));
             setSpellNotPrepared(false);
         }
     }
 
-    private void iceball_exception() {
+    private void iceballException() {
         if (spellInstance.getName().equals("Ice Berg") || spellInstance.getName().equals("Ice Bolt")) {
             float size = spellInstance.getThrowingSpellTexture().getSize();
             if (Math.abs(distance.getY()) < 1) {
@@ -142,7 +142,7 @@ public class AttackTrajectory {
         }
     }
 
-    private void skull_spell_exception() {
+    private void skullSpellException() {
         if (spellInstance.getName().equals("Skull Curse")) {
             spell.setImage(Math.signum(1), (-Math.signum(distance.getX())) * (-Math.signum(distance.getY())), spellInstance.getThrowingSpellTexture());
         }

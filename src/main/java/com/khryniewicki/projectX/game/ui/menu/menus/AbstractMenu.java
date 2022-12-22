@@ -83,12 +83,12 @@ public abstract class AbstractMenu implements Menu {
         subscribe();
     }
 
-    protected void update_volatile(Symbol symbol, Texture texture) {
+    protected void updateVolatile(Symbol symbol, Texture texture) {
         this.volatileImages = manager.update_texture(volatileImages, symbol, texture);
         render();
     }
 
-    protected void update_volatile(Symbol symbol, boolean disabled) {
+    protected void updateVolatile(Symbol symbol, boolean disabled) {
         this.volatileImages = manager.toggle_image(volatileImages, symbol, disabled);
         render();
     }

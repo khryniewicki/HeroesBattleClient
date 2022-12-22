@@ -10,9 +10,10 @@ import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.awt.Color.WHITE;
 
 @Data
 @Slf4j
@@ -30,7 +31,7 @@ public class DigitsSymbol implements Symbol {
         this.position = getPosition(name);
         mapRegistry = new HashMap<>();
 
-        number = new GameSymbol.Builder(take_texture(), position.getX(), position.getY())
+        number = new GameSymbol.Builder(takeTexture(), position.getX(), position.getY())
                 .withWidth(1f)
                 .withHeight(0.5f)
                 .withVisibility(1f)
@@ -44,18 +45,18 @@ public class DigitsSymbol implements Symbol {
 
     private void update_number() {
         if (getNumber() != tmpNumber) {
-            number.setTexture(take_texture());
-            number.update_mesh();
+            number.setTexture(takeTexture());
+            number.updateMesh();
             tmpNumber = getNumber();
         }
     }
 
-    private Texture take_texture() {
+    private Texture takeTexture() {
         Integer number = getNumber();
         if (mapRegistry.containsKey(number)) {
             return mapRegistry.get(number);
         } else {
-            Texture textureWithNumber = TextFactory.textInPlayerBar(number.toString(), Color.WHITE);
+            Texture textureWithNumber = TextFactory.textInPlayerBar(number.toString(), WHITE);
             mapRegistry.put(number, textureWithNumber);
             return textureWithNumber;
         }

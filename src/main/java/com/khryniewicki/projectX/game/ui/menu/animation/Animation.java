@@ -21,7 +21,7 @@ public class Animation extends AnimationSupport {
         dummy = new AnimationDummy(ANIMATION_DUMMY);
         table = new AnimationTable(TABLE);
         random = new Random(331);
-        draw_random_number();
+        drawRandomNumber();
     }
 
     public void execute(String hero) {
@@ -33,53 +33,53 @@ public class Animation extends AnimationSupport {
         begin();
         initCharacterMenu();
         setSuperHero(heroFactory.create(hero));
-        remove_spell_if_exists();
+        removeSpellIfExists();
         setSpell(new AnimationSpell(superHero, animationHero));
-        add_symbol(animationHero);
-        add_symbol(table);
-        reset_table();
+        addSymbol(animationHero);
+        addSymbol(table);
+        resetTable();
     }
 
     @Override
     public void update() {
         if (!spellActive) {
-            spell_and_dummy_controller();
-            hero_controller();
+            spellAndDummyController();
+            heroController();
         } else {
-            reset_counting();
+            resetCounting();
         }
         spell.update();
         loopCycles++;
     }
 
-    private void spell_and_dummy_controller() {
+    private void spellAndDummyController() {
         if (this.spellingCounter == (random_number - 60)) {
-            add_dummy();
-            increment_spelling_counter();
+            addDummy();
+            incrementSpellingCounter();
         } else if (this.spellingCounter == (random_number - 30)) {
             animationHero.attack(superHero);
-            casting_spell();
-            reset_loop_counter();
-            increment_spelling_counter();
+            castingSpell();
+            resetLoopCounter();
+            incrementSpellingCounter();
         } else if (this.spellingCounter > random_number) {
             remove_symbol(dummy);
             spell.disappear();
-            remove_spell_if_exists();
-            draw_random_number();
-            reset_table();
-            reset_spelling_counter();
+            removeSpellIfExists();
+            drawRandomNumber();
+            resetTable();
+            resetSpellingCounter();
             render();
         }
     }
 
-    private void hero_controller() {
+    private void heroController() {
         if (loopCycles == 5) {
             animationHero.walk(superHero);
-            increment_spelling_counter();
+            incrementSpellingCounter();
         } else if (loopCycles == 9) {
             animationHero.idle(superHero);
-            increment_spelling_counter();
-            reset_loop_counter();
+            incrementSpellingCounter();
+            resetLoopCounter();
         }
     }
 
@@ -92,7 +92,7 @@ public class Animation extends AnimationSupport {
         stop();
         initCharacterMenu();
         characterMenu.setAnimationSymbols(new ArrayList<>());
-        toggle_table(true);
+        toggleTable(true);
     }
 
     @Override

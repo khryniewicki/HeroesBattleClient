@@ -7,6 +7,8 @@ import com.khryniewicki.projectX.services.dto.HeroesDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import static java.util.Objects.isNull;
+
 @Getter
 @Setter
 public class StackEventSupport {
@@ -32,30 +34,11 @@ public class StackEventSupport {
                 .build();
     }
 
-//    public MessageDto join_room() {
-//        if (Objects.isNull(hero)) {
-//            this.hero = heroesInstances.getHero();
-//        }
-//        return new MessageDto.Builder()
-//                .status(ConnectionState.CONNECTED)
-//                .sessionID(session.getSessionId())
-//                .heroType(this.hero.getName())
-//                .playerName(heroesInstances.getHeroName())
-//                .build();
-//    }
-//
-//    public MessageDto leave_room() {
-//        return new MessageDto.Builder()
-//                .status(ConnectionState.DISCONNECTED)
-//                .sessionID(session.getSessionId())
-//                .build();
-//    }
-
     public Float getHeroPositionX() {
-        return this.hero.getX() == null ? heroStartingPosition.getX() : this.hero.getX();
+        return isNull(this.hero.getX()) ? heroStartingPosition.getX() : this.hero.getX();
     }
 
     public Float getHeroPositionY() {
-        return this.hero.getY() == null ? heroStartingPosition.getY() : this.hero.getY();
+        return isNull(this.hero.getY()) ? heroStartingPosition.getY() : this.hero.getY();
     }
 }

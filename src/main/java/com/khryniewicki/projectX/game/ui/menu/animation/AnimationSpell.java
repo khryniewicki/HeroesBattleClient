@@ -26,13 +26,13 @@ public class AnimationSpell extends Spell {
     }
 
     public void newSpell(int number) {
-        setSpellInstance(toss_spell_instance(number));
+        setSpellInstance(tossSpellInstance(number));
         attackTrajectory.setSpellInstance(spellInstance);
         createProperties();
         setMesh();
     }
 
-    protected SpellInstance toss_spell_instance(int number) {
+    protected SpellInstance tossSpellInstance(int number) {
         return spellInstance = number % 2 == 0 ? superHero.getBasicSpellInstance() : superHero.getUltimateSpellInstance();
     }
 

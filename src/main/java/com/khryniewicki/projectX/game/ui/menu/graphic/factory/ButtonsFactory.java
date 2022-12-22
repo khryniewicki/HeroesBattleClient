@@ -153,7 +153,7 @@ public class ButtonsFactory {
             .build();
     public static final Button RETURN_BUTTON2 = new Button.Builder()
             .withTexture(RETURN_BUTTON_TEXTURE)
-            .withButtonName(CONROL_SETTINGS_RETURN)
+            .withButtonName(CONTROL_SETTINGS_RETURN)
             .withHeight(1f)
             .withWidth(4f)
             .withPositionX(5f)

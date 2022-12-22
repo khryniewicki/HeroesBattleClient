@@ -172,7 +172,7 @@ public class Spell implements UltraSpell {
 
     @Override
     public void spellCasting() {
-        attackTrajectory.casting_spell();
+        attackTrajectory.castingSpell();
     }
 
     public void setMesh() {

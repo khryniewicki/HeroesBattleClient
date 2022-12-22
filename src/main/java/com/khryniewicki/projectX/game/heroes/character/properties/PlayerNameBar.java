@@ -7,24 +7,24 @@ public class PlayerNameBar extends GraphicLoader {
     private UltraHero ultraHero;
     float offsetPositionY = 0.55f;
     float offsetPositionX = -0.3f;
-    private float tmpHeroX=0F;
-    private float tmpHeroY=0F;
+    private float tmpHeroX = 0F;
+    private float tmpHeroY = 0F;
 
     public PlayerNameBar(Builder builder) {
         super(builder);
         this.ultraHero = builder.ultraHero;
-        update_position();
+        updatePosition();
     }
 
 
     @Override
     public void update() {
         if (ultraHero.getX() != tmpHeroX || ultraHero.getY() != tmpHeroY) {
-            update_position();
+            updatePosition();
         }
     }
 
-    public void update_position() {
+    public void updatePosition() {
         setPositionX(ultraHero.getX() + offsetPositionX);
         setPositionY(ultraHero.getY() + offsetPositionY);
         updateMesh();

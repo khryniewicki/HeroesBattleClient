@@ -20,36 +20,36 @@ public class ReceiveServiceSingleton {
     }
 
     //hero receive service
-    public Position get_hero_mock_position() {
+    public Position getHeroMockPosition() {
         return heroReceiveService.getMockPosition();
     }
 
-    public Integer get_hero_mock_life() {
+    public Integer getHeroMockLife() {
         return heroReceiveService.getMockLife();
     }
 
-    public Float get_hero_mock_mana() {
+    public Float getHeroMockMana() {
         return heroReceiveService.getMockMana();
     }
 
-    public void set_hero_mock(HeroesDto heroesDTO) {
+    public void setHeroMock(HeroesDto heroesDTO) {
         heroReceiveService.set_hero_mock(heroesDTO);
     }
 
     //spell receive service
-    public Position get_spell_mock_target(boolean isBasic) {
-        return isBasic ? get_basic_spell_mock_target() : get_ultimate_spell_mock_target();
+    public Position getSpellMockTarget(boolean isBasic) {
+        return isBasic ? getBasicSpellMockTarget() : getUltimateSpellMockTarget();
     }
 
-    public Position get_basic_spell_mock_target() {
+    public Position getBasicSpellMockTarget() {
         return spellReceiveService.getBasicSpellTarget();
     }
 
-    public Position get_ultimate_spell_mock_target() {
+    public Position getUltimateSpellMockTarget() {
         return spellReceiveService.getUltimateSpellTarget();
     }
 
-    public void set_spell_mock(SpellDto spell_dto) {
+    public void setSpellMock(SpellDto spell_dto) {
         spellReceiveService.set_spell_mock(spell_dto);
     }
 

@@ -117,7 +117,7 @@ public class WebsocketApplication implements Runnable {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
                     HeroesDto payload1 = (HeroesDto) payload;
-                    receiveService.set_hero_mock(payload1);
+                    receiveService.setHeroMock(payload1);
                 }
             });
         }
@@ -133,7 +133,7 @@ public class WebsocketApplication implements Runnable {
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
                     SpellDto payload1 = (SpellDto) payload;
-                    receiveService.set_spell_mock(payload1);
+                    receiveService.setSpellMock(payload1);
                 }
             });
         }

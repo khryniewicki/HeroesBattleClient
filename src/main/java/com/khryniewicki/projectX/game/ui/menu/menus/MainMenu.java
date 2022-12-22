@@ -170,11 +170,11 @@ public class MainMenu extends AbstractMenu {
     }
 
     private void disable_all_messages() {
-        volatileImages.forEach(images -> update_volatile(images, true));
+        volatileImages.forEach(images -> updateVolatile(images, true));
     }
 
     public void enable_message(MenuSymbol symbol) {
-        update_volatile(symbol, false);
+        updateVolatile(symbol, false);
     }
 
     public synchronized void setState(ServerState state) {

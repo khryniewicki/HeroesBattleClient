@@ -63,7 +63,7 @@ public class GameSymbol implements Symbol {
         Shader.SYMBOL.disable();
     }
 
-    public void update_mesh() {
+    public void updateMesh() {
         this.mesh = createVertexArray();
     }
 

@@ -29,13 +29,13 @@ public class SpellReceiveService {
     public void set_spell_mock(SpellDto spellDTO) {
         spellInstance = spellAdapter(spellDTO.getName());
         if (spellInstance.isBasic()) {
-            basicSpellTarget = get_spell_target(spellDTO);
+            basicSpellTarget = getSpellTarget(spellDTO);
         } else {
-            ultimateSpellTarget = get_spell_target(spellDTO);
+            ultimateSpellTarget = getSpellTarget(spellDTO);
         }
     }
 
-    private static Position get_spell_target(SpellDto spellDTO) {
+    private static Position getSpellTarget(SpellDto spellDTO) {
         return new Position(spellDTO.getTargetSpellX(), spellDTO.getTargetSpellY());
     }
 

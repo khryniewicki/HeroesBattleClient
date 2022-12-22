@@ -13,8 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompSession;
 
-import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedDeque;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 
 @Getter
@@ -41,7 +43,7 @@ public class SendingService implements Runnable {
         this.stackEvent = StackEvent.getInstance();
     }
 
-    public boolean no_duplicates_filter(BaseDto baseDto) {
+    public boolean noDuplicatesFilter(BaseDto baseDto) {
 
         switch (baseDto.getType()) {
             case HERO:
@@ -79,30 +81,30 @@ public class SendingService implements Runnable {
         running = true;
         while (running) {
             send();
-            is_player_disconnected();
+            isPlayerDisconnected();
         }
     }
 
-    private void is_player_disconnected() {
+    private void isPlayerDisconnected() {
         if (disconnected) {
             stop();
         }
     }
 
     private synchronized void send() {
-        if (events != null && events.size() != 0) {
+        if (nonNull(events) && events.size() != 0) {
             BaseDto baseDto = events.pop();
             try {
-                if (Objects.isNull(session)) {
+                if (isNull(session)) {
                     session = WebsocketApplication.getSession();
                 }
-                System.out.println(baseDto);
-                if (session.isConnected() && no_duplicates_filter(baseDto)) {
+                log.info("BaseDto: {}", baseDto);
+                if (session.isConnected() && noDuplicatesFilter(baseDto)) {
                     String path = path(baseDto);
                     session.send(path, baseDto);
                 }
             } catch (MessageDeliveryException e) {
-                e.printStackTrace();
+                log.error("Message not delivered: ", e);
             }
         }
         sleep();

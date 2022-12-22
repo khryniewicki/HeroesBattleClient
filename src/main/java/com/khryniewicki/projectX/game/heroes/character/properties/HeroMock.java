@@ -6,36 +6,37 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Slf4j
 @Getter
 @Setter
 public class HeroMock extends SuperHero {
+    private final ReceiveServiceSingleton receiveService;
     private Position tmp, finalPosition;
     private Integer tmpLife;
     private Float tmpMana;
-    private final ReceiveServiceSingleton receiveService;
-    boolean isMovingLeft, isIdle;
     private Long now;
+    boolean isMovingLeft, isIdle;
 
     public HeroMock(SuperHero superHero) {
         super();
         addProperties(superHero);
         receiveService = ReceiveServiceSingleton.getInstance();
-        verify_attributes();
+        verifyAttributes();
     }
 
     @Override
     public void update() {
         move();
-        verify_attributes();
+        verifyAttributes();
         updateHeroAttributes();
     }
 
     private void move() {
-        if (tmp != null && tmp.equals(get_hero_mock_position())) {
-            if (now != null && System.currentTimeMillis() - now > 300) {
+        if (nonNull(tmp) && tmp.equals(getHeroMockPosition())) {
+            if (nonNull(now) && System.currentTimeMillis() - now > 300) {
                 isIdle = true;
                 now = null;
             }
@@ -47,10 +48,10 @@ public class HeroMock extends SuperHero {
             return;
         }
 
-        change_mock_side();
+        changeMockSide();
         setHeroRun();
         setMesh();
-        change_mock_position();
+        changeMockPosition();
     }
 
 
@@ -58,57 +59,57 @@ public class HeroMock extends SuperHero {
         heroAttributes.update();
     }
 
-    private void change_mock_position() {
-        tmp = get_hero_mock_position();
+    private void changeMockPosition() {
+        tmp = getHeroMockPosition();
         now = System.currentTimeMillis();
         setPositionX(finalPosition.getX());
         setPositionY(finalPosition.getY());
     }
 
-    private void change_mock_side() {
-        if (tmp == null) {
-            tmp = get_hero_mock_position();
+    private void changeMockSide() {
+        if (isNull(tmp)) {
+            tmp = getHeroMockPosition();
         }
-        finalPosition = get_hero_mock_position();
-        if (Math.signum(tmp.getX() - finalPosition.getX()) == 1) {
+        finalPosition = getHeroMockPosition();
+        float direction = Math.signum(tmp.getX() - finalPosition.getX());
+        if (direction == 1) {
             isMovingLeft = true;
-        } else if (Math.signum(tmp.getX() - finalPosition.getX()) == -1) {
+        } else if (direction == -1) {
             isMovingLeft = false;
         }
         setTurningLeft(isMovingLeft);
-
     }
 
-    private Position get_hero_mock_position() {
-        return receiveService.get_hero_mock_position();
+    private Position getHeroMockPosition() {
+        return receiveService.getHeroMockPosition();
     }
 
-    private void verify_attributes() {
-        verify_life();
-        verify_mana();
+    private void verifyAttributes() {
+        verifyLife();
+        verifyMana();
     }
 
-    private void verify_life() {
+    private void verifyLife() {
         Integer life = getLife();
-        if (life != null && tmpLife != null) {
+        if (nonNull(life) && nonNull(tmpLife)) {
             if (!tmpLife.equals(life)) {
-                update_life_bar();
+                updateLifeBar();
                 tmpLife = life;
             }
         } else
             tmpLife = life;
     }
 
-    private void update_life_bar() {
+    private void updateLifeBar() {
         LifeBar lifeBar = getLifeBar();
         lifeBar.updateLifeBar();
     }
 
-    private void verify_mana() {
+    private void verifyMana() {
         Float mana = getMana();
-        if (mana != null && tmpMana != null) {
+        if (nonNull(mana) && nonNull(tmpMana)) {
             if (!tmpMana.equals(mana)) {
-                update_mana_bar();
+                updateManaBar();
                 tmpMana = mana;
             }
         } else
@@ -116,7 +117,7 @@ public class HeroMock extends SuperHero {
     }
 
 
-    private void update_mana_bar() {
+    public void updateManaBar() {
         ManaBar manaBar = getManaBar();
         manaBar.updateManaBar();
     }
@@ -124,12 +125,12 @@ public class HeroMock extends SuperHero {
 
     @Override
     public Integer getLife() {
-        return Objects.isNull(receiveService.get_hero_mock_life()) ? super.getLife() : receiveService.get_hero_mock_life();
+        return isNull(receiveService.getHeroMockLife()) ? super.getLife() : receiveService.getHeroMockLife();
     }
 
     @Override
     public Float getMana() {
-        return Objects.isNull(receiveService.get_hero_mock_mana()) ? super.getMana() : receiveService.get_hero_mock_mana();
+        return isNull(receiveService.getHeroMockMana()) ? super.getMana() : receiveService.getHeroMockMana();
     }
 
 

@@ -29,11 +29,9 @@ public class SuperHero implements UltraHero {
     protected HeroAttributes heroAttributes;
     private String name;
     private Integer life;
-    private Float mana;
-    private Float manaRegeneration;
+    private Float mana, manaRegeneration;
 
-    public static float hero_positionX0;
-    public static float hero_positionY0;
+    public static float hero_positionX0, hero_positionY0;
     private float hero_left_offset, hero_right_offset, hero_bottom_offset;
     private float hero_top_offset;
     public float SIZE = 1f;
