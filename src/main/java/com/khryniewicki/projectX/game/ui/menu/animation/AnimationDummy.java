@@ -21,7 +21,7 @@ public class AnimationDummy extends AnimationObject {
         return symbol.getPositionY();
     }
 
-    protected void add_dummy(float animationHeroPositionX) {
+    protected void addDummy(float animationHeroPositionX) {
         if (((LEFT_BOUNDARY + RIGHT_BOUNDARY) / 2) <= animationHeroPositionX) {
             setPosition(LEFT_BOUNDARY - 2f);
             turnLeft(true);

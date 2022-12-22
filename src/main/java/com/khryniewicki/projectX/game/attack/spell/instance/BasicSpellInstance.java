@@ -18,23 +18,22 @@ public class BasicSpellInstance implements SpellInstance {
     private Texture icon;
     private Texture fadedIcon;
     private Long spellDuration;
-
-    private boolean isBasic;
     private Spell spell;
+    private boolean isBasic;
 
 
     public BasicSpellInstance(Spell spell) {
         this.spell = spell;
-        this.name=spell.getName();
+        this.name = spell.getName();
         this.powerAttack = spell.getPowerAttack();
         this.manaConsumed = spell.getManaConsumed();
         this.castingSpeed = spell.getCastingSpeed();
         this.throwingSpellTexture = spell.getMissleSpell();
         this.consumedSpellTexture = spell.getExecutedSpell();
-        this.icon=spell.getIcon();
-        this.fadedIcon=spell.getFadedIcon();
+        this.icon = spell.getIcon();
+        this.fadedIcon = spell.getFadedIcon();
         this.spellDuration = spell.getSpellDuration();
-        this.isBasic=spell.isBasic();
+        this.isBasic = spell.isBasic();
     }
 
 

@@ -5,11 +5,12 @@ import com.khryniewicki.projectX.game.ui.symbols.Symbol;
 import com.khryniewicki.projectX.graphics.textures.MenuTextures;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
+import static com.khryniewicki.projectX.game.ui.menu.graphic.factory.TextureMenuFactory.*;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_BLUE;
 import static com.khryniewicki.projectX.graphics.Colors.BRIGHT_YELLOW;
+import static java.util.Arrays.asList;
 
 public class ControlSettingsMenuFactory {
 
@@ -25,9 +26,9 @@ public class ControlSettingsMenuFactory {
         private final static ControlSettingsMenuFactory INSTANCE = new ControlSettingsMenuFactory();
     }
 
-    public ArrayList<Symbol> get_list_with_icons() {
-        return new ArrayList<>(Arrays.asList(TextureMenuFactory.BG_ANIMATION, MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT,
-                TEXT_UP, BASIC_ATTACK, ULTIMATE_ATTACK, TextureMenuFactory.LOGO, TextureMenuFactory.VERSION));
+    public List<Symbol> getListWithIcons() {
+        return asList(BG_ANIMATION, MOUSE, UP, DOWN, LEFT, RIGHT, TEXT_DOWN, TEXT_LEFT, TEXT_RIGHT, TEXT_UP,
+                BASIC_ATTACK, ULTIMATE_ATTACK, LOGO, VERSION);
     }
 
     public static final MenuSymbol MOUSE = new MenuSymbol.Builder()

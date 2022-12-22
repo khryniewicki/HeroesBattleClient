@@ -40,7 +40,7 @@ public class MouseSettings {
         this.mousePosition = new MousePosition();
     }
 
-    public void cast_spells() {
+    public void castSpells() {
         glfwSetMouseButtonCallback(GameUtil.window, (window, key, action, mods) -> {
             cursorPosition = mousePosition.getCursorPosition();
             if ((key == 0 || key == 1)) {

@@ -14,7 +14,7 @@ public class ControlSettings {
     }
 
     private void add_control_settings() {
-        mouseSettings.cast_spells();
+        mouseSettings.castSpells();
         moveSettings.move();
     }
 }

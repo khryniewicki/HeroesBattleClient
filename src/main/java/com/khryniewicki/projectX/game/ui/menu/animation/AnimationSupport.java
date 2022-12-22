@@ -46,7 +46,7 @@ public abstract class AnimationSupport implements LifeCycle {
     }
 
     protected void add_dummy() {
-        dummy.add_dummy(animationHero.getPositionX());
+        dummy.addDummy(animationHero.getPositionX());
         add_symbol(dummy);
     }
 

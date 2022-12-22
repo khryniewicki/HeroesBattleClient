@@ -1,22 +1,23 @@
 package com.khryniewicki.projectX.game.attack.spell.instance;
 
 import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.king.BlackFire;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.king.SkullCurse;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.Fire;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.FireBomb;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.ice.IceBerg;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.ice.IceBolt;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.FrostFury;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.king.BlackFire;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.king.SkullCurse;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.BloodyWhip;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.FrostFury;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Lightning;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Thunderbolt;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricShock;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricBomb;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricShock;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class SpellRegistry {
 
@@ -30,7 +31,7 @@ public class SpellRegistry {
     }
 
     public void fill() {
-        Spell[] spellist = new Spell[]{
+        Spell[] spells = new Spell[]{
                 new Fire(), new FireBomb(),
                 new IceBolt(), new IceBerg(),
                 new Thunderbolt(),new Lightning(),
@@ -38,7 +39,7 @@ public class SpellRegistry {
                 new FrostFury(), new BloodyWhip(),
                 new BlackFire(),new SkullCurse()
         };
-        spellbook = Arrays.asList(spellist);
+        spellbook = asList(spells);
     }
 
     public static SpellRegistry getInstance() {
