@@ -1,10 +1,10 @@
 package com.khryniewicki.projectX.services.receive;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellRegistry;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.instance.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.instance.SpellRegistry;
+import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.dto.SpellDto;
 import lombok.Getter;

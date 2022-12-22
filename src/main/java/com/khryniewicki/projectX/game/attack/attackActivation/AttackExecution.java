@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
 import com.khryniewicki.projectX.game.heroes.character.properties.LifeBar;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;

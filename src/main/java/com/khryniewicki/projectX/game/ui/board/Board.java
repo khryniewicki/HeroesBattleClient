@@ -1,6 +1,6 @@
 package com.khryniewicki.projectX.game.ui.board;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
 import com.khryniewicki.projectX.game.ui.board.collision.Collision;
 import com.khryniewicki.projectX.game.control.settings.mouse.MousePosition;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;

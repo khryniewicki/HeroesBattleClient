@@ -1,7 +1,7 @@
-package com.khryniewicki.projectX.game.attack.spells.spellbook.king;
+package com.khryniewicki.projectX.game.attack.spell.spellbook.king;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.textures.SpellTextures;
 
 

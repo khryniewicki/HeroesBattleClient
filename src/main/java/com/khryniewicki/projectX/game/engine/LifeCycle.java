@@ -85,7 +85,7 @@ public interface LifeCycle extends Command {
 
     default void windowsShouldClose() {
         if (glfwWindowShouldClose(getWindow())) {
-            Application.finish_game();
+            Application.finishGame();
             Application.play();
             stop();
         }

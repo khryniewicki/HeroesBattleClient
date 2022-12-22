@@ -3,13 +3,12 @@ package com.khryniewicki.projectX.game.ui.menu.graphic.factory;
 import com.khryniewicki.projectX.game.ui.menu.buttons.Button;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import static com.khryniewicki.projectX.game.ui.menu.buttons.ButtonsFactory.*;
 import static com.khryniewicki.projectX.graphics.textures.MenuTextures.*;
+import static java.util.Arrays.asList;
 
 @Data
 public class ButtonsFactory {
@@ -31,14 +30,14 @@ public class ButtonsFactory {
 
     public List<Button> getListWithMainMenuButtons() {
         if (Objects.isNull(listWithMainMenuButtons)) {
-            listWithMainMenuButtons = new ArrayList<>(Arrays.asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON));
+            listWithMainMenuButtons = asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON);
         }
         return listWithMainMenuButtons;
     }
 
     public List<Button> getListWithCharacterMenuButtons() {
         if (Objects.isNull(listWithCharacterMenuButtons)) {
-            listWithCharacterMenuButtons = new ArrayList<>(Arrays.asList(TYPE_YOUR_NAME, RETURN_BUTTON, FIRE_WIZARD_BUTTON, ICE_WIZARD_BUTTON, THUNDER_WIZARD_BUTTON, FALLEN_KING_BUTTON, FALLEN_MONK_BUTTON, FALLEN_WITCHER_BUTTON));
+            listWithCharacterMenuButtons = asList(TYPE_YOUR_NAME, RETURN_BUTTON, FIRE_WIZARD_BUTTON, ICE_WIZARD_BUTTON, THUNDER_WIZARD_BUTTON, FALLEN_KING_BUTTON, FALLEN_MONK_BUTTON, FALLEN_WITCHER_BUTTON);
         }
         return listWithCharacterMenuButtons;
     }

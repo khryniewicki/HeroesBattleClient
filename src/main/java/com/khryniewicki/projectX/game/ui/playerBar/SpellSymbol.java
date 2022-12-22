@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.ui.playerBar;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.instance.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.game.ui.symbols.Symbol;
 import com.khryniewicki.projectX.game.ui.symbols.GameSymbol;

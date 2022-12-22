@@ -1,9 +1,9 @@
 package com.khryniewicki.projectX.game.heroes.character.wizards;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.Fire;
-import com.khryniewicki.projectX.game.attack.spells.spellbook.fire.FireBomb;
+import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.Fire;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.FireBomb;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 

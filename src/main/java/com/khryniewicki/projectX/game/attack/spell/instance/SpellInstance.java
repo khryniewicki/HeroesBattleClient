@@ -1,7 +1,7 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_instances;
+package com.khryniewicki.projectX.game.attack.spell.instance;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.settings.SpellTexture;
 import com.khryniewicki.projectX.graphics.Texture;
 
 public interface SpellInstance  {

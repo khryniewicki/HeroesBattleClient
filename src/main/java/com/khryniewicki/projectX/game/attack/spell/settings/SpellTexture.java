@@ -1,4 +1,4 @@
-package com.khryniewicki.projectX.game.attack.spells.spell_settings;
+package com.khryniewicki.projectX.game.attack.spell.settings;
 
 import com.khryniewicki.projectX.graphics.Texture;
 import lombok.Data;

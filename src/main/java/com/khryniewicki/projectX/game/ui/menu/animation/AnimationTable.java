@@ -14,12 +14,12 @@ public class AnimationTable extends AnimationObject {
         super(symbol);
     }
 
-    public List<Symbol> update(SuperHero superHero, int spell_instance_number) {
+    public List<Symbol> update(SuperHero superHero, int spellInstanceNumber) {
         initCharacterMenu();
         return characterMenu.getAnimationSymbols().stream()
                 .peek(menuSymbol -> {
                     if (menuSymbol.getName().equals(symbol.getName())) {
-                        symbol.setTexture(texture_from_table_factory(superHero, spell_instance_number));
+                        symbol.setTexture(textureFromTableFactory(superHero, spellInstanceNumber));
                     }
                 })
                 .collect(Collectors.toList());
@@ -36,8 +36,8 @@ public class AnimationTable extends AnimationObject {
                 .collect(Collectors.toList());
     }
 
-    private Texture texture_from_table_factory(SuperHero superHero, int spell_instance_number) {
-        return TableFactory.tableImage(superHero.getName(), spell_instance_number);
+    private Texture textureFromTableFactory(SuperHero superHero, int spellInstanceNumber) {
+        return TableFactory.tableImage(superHero.getName(), spellInstanceNumber);
     }
 
     @Override

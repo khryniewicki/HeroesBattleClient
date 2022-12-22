@@ -1,7 +1,7 @@
 package com.khryniewicki.projectX.game.multiplayer.heroStorage;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.Spell;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellMock;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.settings.SpellMock;
 import com.khryniewicki.projectX.game.control.settings.ControlSettings;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroAttributes;
 import com.khryniewicki.projectX.game.heroes.character.properties.HeroMock;

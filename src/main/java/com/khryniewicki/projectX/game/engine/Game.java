@@ -38,7 +38,7 @@ public class Game implements LifeCycle {
 
     private void is_player_dead() {
         if (board.player_dead()) {
-            Application.restart_game();
+            Application.restartGame();
             stop();
             stop_websocket();
         }
@@ -53,7 +53,7 @@ public class Game implements LifeCycle {
 
 
     public void stop_websocket() {
-        multiplayerController.stop_websocket();
+        multiplayerController.stopWebsocket();
     }
 
     private Game() {

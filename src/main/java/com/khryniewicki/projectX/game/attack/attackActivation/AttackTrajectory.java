@@ -1,8 +1,8 @@
 package com.khryniewicki.projectX.game.attack.attackActivation;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.SpellTexture;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.instance.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.settings.SpellTexture;
+import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
 import com.khryniewicki.projectX.game.heroes.character.properties.UltraHero;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.math.Vector;

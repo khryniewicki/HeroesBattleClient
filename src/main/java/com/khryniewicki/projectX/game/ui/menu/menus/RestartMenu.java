@@ -47,7 +47,7 @@ public class RestartMenu extends AbstractMenu {
             restart();
             Application.play();
         }else if (Application.state.equals(GameState.RESTART)){
-            Application.finish_game();
+            Application.finishGame();
             Application.play();
         }
     }
@@ -122,7 +122,7 @@ public class RestartMenu extends AbstractMenu {
         if (buttonName.equals(ButtonsFactory.RESTART_GO_TO_MAIN_MENU)) {
             Application.ok();
         } else if (buttonName.equals(ButtonsFactory.RESTART_QUIT)) {
-            Application.restart_game();
+            Application.restartGame();
         }
         log.info("STOP IN PROPERTY");
         stop();

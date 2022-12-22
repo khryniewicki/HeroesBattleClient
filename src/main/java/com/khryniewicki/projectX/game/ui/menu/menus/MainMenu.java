@@ -139,7 +139,7 @@ public class MainMenu extends AbstractMenu {
                 break;
             case QUIT:
                 stop();
-                Application.finish_game();
+                Application.finishGame();
                 break;
             case START:
                 if (state.equals(ServerState.SERVER_OFFLINE)) {

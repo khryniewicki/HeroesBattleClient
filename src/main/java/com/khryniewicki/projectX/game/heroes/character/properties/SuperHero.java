@@ -1,9 +1,9 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.SpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_instances.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spells.spell_settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.instance.SpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
+import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
 import com.khryniewicki.projectX.game.control.settings.ControlSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;

@@ -49,17 +49,17 @@ public class Application implements Runnable {
             log.info("TERMINATE");
             if (state.equals(GameState.FINISH)) {
                 MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
-                multiplayerInstance.stop_websocket();
-                multiplayerInstance.kill_process();
+                multiplayerInstance.stopWebsocket();
+                multiplayerInstance.killProcess();
             }
         };
     }
 
-    public static void restart_game() {
+    public static void restartGame() {
         setState(GameState.RESTART);
     }
 
-    public static void finish_game() {
+    public static void finishGame() {
         setState(GameState.FINISH);
     }
 
@@ -67,8 +67,8 @@ public class Application implements Runnable {
         setState(GameState.OK);
     }
 
-    private static void setState(GameState game_state) {
-        state = game_state;
+    private static void setState(GameState gameState) {
+        state = gameState;
         log.info("GAME STATE: {}", state);
     }
 }
