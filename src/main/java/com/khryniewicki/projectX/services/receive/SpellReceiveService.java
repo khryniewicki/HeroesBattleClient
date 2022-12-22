@@ -26,7 +26,7 @@ public class SpellReceiveService {
         createSpellBook();
     }
 
-    public void set_spell_mock(SpellDto spellDTO) {
+    public void setSpellMock(SpellDto spellDTO) {
         spellInstance = spellAdapter(spellDTO.getName());
         if (spellInstance.isBasic()) {
             basicSpellTarget = getSpellTarget(spellDTO);

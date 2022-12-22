@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.isNull;
+
 @Service
 @Data
 @Slf4j
@@ -22,19 +24,19 @@ public class HeroReceiveService {
     }
 
     public Position getMockPosition() {
-        return MockPosition == null ? new Position(mockStartingPosition.getX(), mockStartingPosition.getY()) : MockPosition;
+        return isNull(MockPosition) ? new Position(mockStartingPosition.getX(), mockStartingPosition.getY()) : MockPosition;
     }
 
-    public void set_hero_mock(HeroesDto heroesDTO) {
-        set_mock_position(heroesDTO);
+    public void setHeroMock(HeroesDto heroesDTO) {
+        setMockPosition(heroesDTO);
         MockLife = heroesDTO.getLife();
         MockMana = heroesDTO.getMana();
     }
 
-    private void set_mock_position(HeroesDto heroesDTO) {
+    private void setMockPosition(HeroesDto heroesDTO) {
         Position tmp = new Position(heroesDTO.getPositionX(), heroesDTO.getPositionY());
 
-        if (MockPosition == null) {
+        if (isNull(MockPosition)) {
             MockPosition = tmp;
         }
         if (tmp.equals(MockPosition)) {

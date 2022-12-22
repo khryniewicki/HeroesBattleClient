@@ -33,7 +33,7 @@ public class ReceiveServiceSingleton {
     }
 
     public void setHeroMock(HeroesDto heroesDTO) {
-        heroReceiveService.set_hero_mock(heroesDTO);
+        heroReceiveService.setHeroMock(heroesDTO);
     }
 
     //spell receive service
@@ -50,7 +50,7 @@ public class ReceiveServiceSingleton {
     }
 
     public void setSpellMock(SpellDto spell_dto) {
-        spellReceiveService.set_spell_mock(spell_dto);
+        spellReceiveService.setSpellMock(spell_dto);
     }
 
 
