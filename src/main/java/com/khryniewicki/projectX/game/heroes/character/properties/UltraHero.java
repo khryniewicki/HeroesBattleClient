@@ -2,10 +2,10 @@ package com.khryniewicki.projectX.game.heroes.character.properties;
 
 import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 
-public interface UltraHero extends Ultra {
+public interface UltraHero<T extends Spell, R extends Spell> extends Ultra {
     void setHeroAttributes(HeroAttributes heroAttributes);
     HeroAttributes getHeroAttributes();
 
@@ -26,16 +26,12 @@ public interface UltraHero extends Ultra {
     Float getMana();
     default void setMana(Float mana){}
 
-    UltraSpell getBasicSpell();
-    void setBasicSpell(UltraSpell ultraSpell);
-
-    UltraSpell getUltimateSpell();
-    void setUltimateSpell(UltraSpell ultraSpell);
+    T getBasicSpell();
+    R getUltimateSpell();
 
     StartingPosition getStartingPosition();
     void setStartingPosition(StartingPosition startingPosition);
 
-    default void setSpellBasis(){}
     default void setHeroIdle(){}
     default void setHeroRun(){}
     default void setHeroAttack(){}

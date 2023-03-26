@@ -1,6 +1,8 @@
 package com.khryniewicki.projectX.game.ui.menu.menus;
 
 import com.khryniewicki.projectX.game.attack.spell.instance.SpellRegistry;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.Fire;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.FireBomb;
 import com.khryniewicki.projectX.game.heroes.character.wizards.FireWizard;
 import com.khryniewicki.projectX.game.ui.menu.graphic.factory.TextFactory;
 import com.khryniewicki.projectX.graphics.GameShaders;
@@ -142,7 +144,7 @@ public class LoadingMenu extends AbstractMenu {
     }
 
     private void initSuperHeroes() {
-        new FireWizard();
+        new FireWizard(new Fire(), new FireBomb());
     }
 
     private void getProgress() {

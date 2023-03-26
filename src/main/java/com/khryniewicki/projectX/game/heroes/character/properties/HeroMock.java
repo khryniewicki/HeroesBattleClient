@@ -1,5 +1,6 @@
 package com.khryniewicki.projectX.game.heroes.character.properties;
 
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.Position;
 import com.khryniewicki.projectX.services.receive.ReceiveServiceSingleton;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Getter
 @Setter
-public class HeroMock extends SuperHero {
+public class HeroMock<T extends Spell, R extends Spell> extends SuperHero<T, R> {
     private final ReceiveServiceSingleton receiveService;
     private Position tmp, finalPosition;
     private Integer tmpLife;
@@ -20,8 +21,8 @@ public class HeroMock extends SuperHero {
     private Long now;
     boolean isMovingLeft, isIdle;
 
-    public HeroMock(SuperHero superHero) {
-        super();
+    public HeroMock(SuperHero<T, R> superHero) {
+        super(superHero.getBasicSpell(), superHero.getUltimateSpell());
         addProperties(superHero);
         receiveService = ReceiveServiceSingleton.getInstance();
         verifyAttributes();

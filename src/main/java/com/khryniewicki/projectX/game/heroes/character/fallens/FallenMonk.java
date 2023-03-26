@@ -1,27 +1,18 @@
 package com.khryniewicki.projectX.game.heroes.character.fallens;
 
-import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.FrostFury;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.BloodyWhip;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FallenMonk extends SuperHero {
+public class FallenMonk<T extends Spell, R extends Spell> extends SuperHero<T, R> {
 
-    public FallenMonk() {
+    public FallenMonk(T basicSpell, R ultimateSpell) {
+        super(basicSpell, ultimateSpell);
         setPosition();
-        setSpellBasis();
         setMesh();
         setTexture();
         setProperties();
-    }
-
-    @Override
-    public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new FrostFury()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new BloodyWhip()));
     }
 
     @Override

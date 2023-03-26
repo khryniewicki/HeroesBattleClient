@@ -1,27 +1,18 @@
 package com.khryniewicki.projectX.game.heroes.character.wizards;
 
-import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.Fire;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.FireBomb;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FireWizard extends SuperHero {
+public class FireWizard<T extends Spell, R extends Spell> extends SuperHero<T, R> {
 
-    public FireWizard() {
+    public FireWizard(T basicSpell, R ultimateSpell) {
+        super(basicSpell, ultimateSpell);
         setPosition();
-        setSpellBasis();
         setMesh();
         setTexture();
         setProperties();
-    }
-
-    @Override
-    public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Fire()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new FireBomb()));
     }
 
     @Override
@@ -35,7 +26,6 @@ public class FireWizard extends SuperHero {
         setHeroAttack(HeroTextures.FIRE_WIZARD_ATTACK);
     }
 
-
     @Override
     public void setProperties() {
         setName("Fire Wizard");
@@ -45,5 +35,4 @@ public class FireWizard extends SuperHero {
         setLife(60);
         setManaRegeneration(1f);
     }
-
 }

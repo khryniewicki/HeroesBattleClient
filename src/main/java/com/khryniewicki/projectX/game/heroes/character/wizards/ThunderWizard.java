@@ -1,19 +1,16 @@
 package com.khryniewicki.projectX.game.heroes.character.wizards;
 
 
-import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Lightning;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Thunderbolt;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class ThunderWizard extends SuperHero {
+public class ThunderWizard<T extends Spell, R extends Spell> extends SuperHero<T, R> {
 
-    public ThunderWizard() {
+    public ThunderWizard(T basicSpell, R ultimateSpell) {
+        super(basicSpell, ultimateSpell);
         setPosition();
-        setSpellBasis();
         setMesh();
         setTexture();
         setProperties();
@@ -30,13 +27,6 @@ public class ThunderWizard extends SuperHero {
         setHeroAttack(HeroTextures.THUNDER_WIZARD_ATTACK);
     }
 
-
-    @Override
-    public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new Thunderbolt()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new Lightning()));
-    }
-
     @Override
     public void setProperties() {
         setName("Thunder Wizard");
@@ -46,5 +36,4 @@ public class ThunderWizard extends SuperHero {
         setLife(65);
         setManaRegeneration(1f);
     }
-
 }

@@ -21,15 +21,15 @@ public class Texture {
     private BufferedImage image;
 
     public Texture(String path) {
-        texture = load(path);
+        texture = loadPath(path);
     }
 
     public Texture(BufferedImage image) {
-        this.texture = load2(image);
+        this.texture = loadImage(image);
     }
 
 
-    private int load(String path) {
+    private int loadPath(String path) {
         int[] pixels = null;
 
         try {
@@ -46,7 +46,7 @@ public class Texture {
         return getPixels(pixels);
     }
 
-    private int load2(BufferedImage image) {
+    private int loadImage(BufferedImage image) {
         int[] pixels;
         width = image.getWidth();
         height = image.getHeight();

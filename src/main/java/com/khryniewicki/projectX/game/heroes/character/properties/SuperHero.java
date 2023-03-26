@@ -3,7 +3,7 @@ package com.khryniewicki.projectX.game.heroes.character.properties;
 import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
 import com.khryniewicki.projectX.game.attack.spell.instance.SpellInstance;
 import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.settings.UltraSpell;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.control.settings.ControlSettings;
 import com.khryniewicki.projectX.game.multiplayer.heroStorage.positions.StartingPosition;
 import com.khryniewicki.projectX.graphics.Shader;
@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 @Slf4j
-@Service
-public class SuperHero implements UltraHero {
+public class SuperHero<T extends Spell, R extends Spell> implements UltraHero<T, R> {
 
     private boolean isTurningLeft;
     private VertexArray mesh;
@@ -41,13 +40,23 @@ public class SuperHero implements UltraHero {
     private StartingPosition startingPosition;
 
     private SpellInstance spellInstance;
-    private UltraSpell basicSpell;
-    private UltraSpell ultimateSpell;
+    private T basicSpell;
+    private R ultimateSpell;
     private BasicSpellInstance basicSpellInstance;
     private UltimateSpellInstance ultimateSpellInstance;
     private ManaBar manaBar;
 
-    public void addProperties(SuperHero superHero) {
+    public SuperHero() {
+    }
+
+    protected SuperHero(T basicSpell, R ultimateSpell) {
+        this.basicSpell = basicSpell;
+        this.ultimateSpell = ultimateSpell;
+        this.basicSpellInstance = new BasicSpellInstance(basicSpell);
+        this.ultimateSpellInstance = new UltimateSpellInstance(ultimateSpell);
+    }
+
+    public void addProperties(SuperHero<T, R> superHero) {
         this.name = superHero.name;
         this.texture = superHero.heroIdle;
         this.heroUp = superHero.heroUp;
@@ -58,8 +67,6 @@ public class SuperHero implements UltraHero {
         this.heroAttack = superHero.heroAttack;
         this.hero_left_offset = superHero.hero_left_offset;
         this.hero_top_offset = superHero.hero_top_offset;
-        this.basicSpellInstance = superHero.basicSpellInstance;
-        this.ultimateSpellInstance = superHero.ultimateSpellInstance;
         this.manaRegeneration = superHero.manaRegeneration;
         this.mana = superHero.mana;
         this.life = superHero.life;

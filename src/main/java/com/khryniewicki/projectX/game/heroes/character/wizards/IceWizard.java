@@ -1,19 +1,16 @@
 package com.khryniewicki.projectX.game.heroes.character.wizards;
 
-import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.ice.IceBerg;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.ice.IceBolt;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class IceWizard extends SuperHero {
+public class IceWizard<T extends Spell, R extends Spell> extends SuperHero<T, R>{
 
-    public IceWizard() {
+    public IceWizard(T basicSpell, R ultimateSpell) {
+        super(basicSpell, ultimateSpell);
         setPosition();
         setTexture();
-        setSpellBasis();
         setMesh();
         setProperties();
     }
@@ -27,12 +24,6 @@ public class IceWizard extends SuperHero {
         setHeroUp(HeroTextures.ICE_WIZARD_RUN);
         setHeroDown(HeroTextures.ICE_WIZARD_RUN);
         setHeroAttack(HeroTextures.ICE_WIZARD_ATTACK);
-    }
-
-    @Override
-    public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new IceBolt()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new IceBerg()));
     }
 
     @Override

@@ -119,7 +119,7 @@ public class MainMenu extends AbstractMenu {
     @Override
     public void update() {
         if (Objects.nonNull(state) && !state.equals(currentState) && currentView.equals(MenuCard.MAIN_MENU)) {
-            update_label(state);
+            updateLabel(state);
             currentState = state;
         }
         glfwPollEvents();
@@ -128,7 +128,7 @@ public class MainMenu extends AbstractMenu {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         //disable all messages
-        disable_all_messages();
+        disableAllMessages();
         ButtonsFactory buttonName = (ButtonsFactory) evt.getNewValue();
         switch (buttonName) {
             case SELECT_CHARACTER:
@@ -143,11 +143,11 @@ public class MainMenu extends AbstractMenu {
                 break;
             case START:
                 if (state.equals(ServerState.SERVER_OFFLINE)) {
-                    enable_message(TEXT_SERVER_OFFLINE);
+                    enableMessage(TEXT_SERVER_OFFLINE);
                 } else if (state.equals(ServerState.TWO_PLAYERS)) {
-                    enable_message(TEXT_ROOM_IS_FULL);
+                    enableMessage(TEXT_ROOM_IS_FULL);
                 } else if (!GameUtil.version.equals(version)) {
-                    enable_message(NEW_VERSION);
+                    enableMessage(NEW_VERSION);
                 } else {
                     String heroType = heroesInstances.getHeroType();
                     if (Objects.nonNull(heroType)) {
@@ -155,7 +155,7 @@ public class MainMenu extends AbstractMenu {
                         stop();
                         subjectMultiplayerState.setNews(MultiplayerState.CONNECT);
                     } else {
-                        enable_message(TEXT_NO_HERO);
+                        enableMessage(TEXT_NO_HERO);
                     }
                 }
                 break;
@@ -163,17 +163,17 @@ public class MainMenu extends AbstractMenu {
 
     }
 
-    private void update_label(ServerState serverState) {
+    private void updateLabel(ServerState serverState) {
         this.permanentImages = manager.update_label(permanentImages, PLAYERS_BAR_LABEL, serverState);
         this.permanentImages = manager.update_label_description(permanentImages, PLAYERS_DESCRIPTION_LABEL, serverState);
         render();
     }
 
-    private void disable_all_messages() {
+    private void disableAllMessages() {
         volatileImages.forEach(images -> updateVolatile(images, true));
     }
 
-    public void enable_message(MenuSymbol symbol) {
+    public void enableMessage(MenuSymbol symbol) {
         updateVolatile(symbol, false);
     }
 

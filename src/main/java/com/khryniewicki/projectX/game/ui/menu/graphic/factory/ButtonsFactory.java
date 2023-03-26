@@ -3,6 +3,7 @@ package com.khryniewicki.projectX.game.ui.menu.graphic.factory;
 import com.khryniewicki.projectX.game.ui.menu.buttons.Button;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,14 +31,14 @@ public class ButtonsFactory {
 
     public List<Button> getListWithMainMenuButtons() {
         if (Objects.isNull(listWithMainMenuButtons)) {
-            listWithMainMenuButtons = asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON);
+            listWithMainMenuButtons = new ArrayList<>(asList(STARTING_BUTTON, CHOOSE_CHARACTER, CONTROL_SETTINGS, QUIT_BUTTON));
         }
         return listWithMainMenuButtons;
     }
 
     public List<Button> getListWithCharacterMenuButtons() {
         if (Objects.isNull(listWithCharacterMenuButtons)) {
-            listWithCharacterMenuButtons = asList(TYPE_YOUR_NAME, RETURN_BUTTON, FIRE_WIZARD_BUTTON, ICE_WIZARD_BUTTON, THUNDER_WIZARD_BUTTON, FALLEN_KING_BUTTON, FALLEN_MONK_BUTTON, FALLEN_WITCHER_BUTTON);
+            listWithCharacterMenuButtons = new ArrayList<>(asList(TYPE_YOUR_NAME, RETURN_BUTTON, FIRE_WIZARD_BUTTON, ICE_WIZARD_BUTTON, THUNDER_WIZARD_BUTTON, FALLEN_KING_BUTTON, FALLEN_MONK_BUTTON, FALLEN_WITCHER_BUTTON));
         }
         return listWithCharacterMenuButtons;
     }
@@ -176,6 +177,4 @@ public class ButtonsFactory {
             .withPositionX(-2f)
             .withPositionY(-2.2f)
             .build();
-
-
 }

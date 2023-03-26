@@ -1,27 +1,18 @@
 package com.khryniewicki.projectX.game.heroes.character.fallens;
 
-import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.king.BlackFire;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.king.SkullCurse;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FallenKing extends SuperHero {
+public class FallenKing<T extends Spell, R extends Spell> extends SuperHero<T, R> {
 
-    public FallenKing() {
+    public FallenKing(T basicSpell, R ultimateSpell) {
+        super(basicSpell, ultimateSpell);
         setPosition();
-        setSpellBasis();
         setMesh();
         setTexture();
         setProperties();
-    }
-
-    @Override
-    public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new BlackFire()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new SkullCurse()));
     }
 
     @Override
@@ -35,7 +26,6 @@ public class FallenKing extends SuperHero {
         setHeroAttack(HeroTextures.FALLENATTACK3);
     }
 
-
     @Override
     public void setProperties() {
         setName("Fallen King");
@@ -47,6 +37,4 @@ public class FallenKing extends SuperHero {
         setSIZE(1.1F);
         setManaRegeneration(0.5f);
     }
-
-
 }

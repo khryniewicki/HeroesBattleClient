@@ -1,27 +1,18 @@
 package com.khryniewicki.projectX.game.heroes.character.fallens;
 
-import com.khryniewicki.projectX.game.attack.spell.instance.BasicSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.instance.UltimateSpellInstance;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricShock;
-import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricBomb;
+import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FallenWitcher extends SuperHero {
+public class FallenWitcher<T extends Spell, R extends Spell> extends SuperHero<T, R>{
 
-    public FallenWitcher() {
+    public FallenWitcher(T basicSpell, R ultimateSpell) {
+        super(basicSpell, ultimateSpell);
         setPosition();
-       setSpellBasis();
         setMesh();
         setTexture();
         setProperties();
-    }
-
-    @Override
-    public void setSpellBasis() {
-        setBasicSpellInstance(new BasicSpellInstance(new ElectricShock()));
-        setUltimateSpellInstance(new UltimateSpellInstance(new ElectricBomb()));
     }
 
     @Override

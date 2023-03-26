@@ -64,7 +64,7 @@ public class CharacterMenu extends AbstractMenu {
         HERO_NAME.addPropertyChangeListener(evt -> {
             String newValue = (String) evt.getNewValue();
             updateVolatile(HERO_NAME, getTextureFromTextFactory(newValue));
-            set_hero_name(newValue);
+            setHeroName(newValue);
         });
         setVolatileImages(textureMenuFactory.getListWithCharacterMenuMessages());
     }
@@ -96,10 +96,10 @@ public class CharacterMenu extends AbstractMenu {
                 break;
             default:
                 setChosenHero(buttonFactory.getName());
-                add_button(CHARACTER_SKILLS);
-                start_animation(buttonFactory.getName());
-                set_hero_type(chosenHero);
-                show_message_in_main_menu(chosenHero);
+                addButton(CHARACTER_SKILLS);
+                startAnimation(buttonFactory.getName());
+                setHeroType(chosenHero);
+                showMessageInMainMenu(chosenHero);
                 break;
         }
     }
@@ -107,42 +107,42 @@ public class CharacterMenu extends AbstractMenu {
     @Override
     public void restart() {
         animation.restart();
-        updateVolatile(HERO_NAME, !verify_hero_name());
+        updateVolatile(HERO_NAME, !verifyHeroName());
         update_button(CHARACTER_SKILLS, SHOW_SKILLS);
         update_button(TYPE_YOUR_NAME, TYPE_NAME);
-        remove_button(CHARACTER_SKILLS);
+        removeButton(CHARACTER_SKILLS);
         setActiveWriting(false);
         runMenu(MainMenu.getInstance(), MenuCard.MAIN_MENU);
     }
 
-    private void set_hero_name(String name) {
+    private void setHeroName(String name) {
         heroesInstances.setHeroName(name);
     }
 
-    private boolean verify_hero_name() {
+    private boolean verifyHeroName() {
         String heroName = heroesInstances.getHeroName();
         return Objects.nonNull(heroName) && !heroName.isEmpty();
     }
 
-    private void set_hero_type(String heroType) {
+    private void setHeroType(String heroType) {
         heroesInstances.set_hero_type(heroType);
     }
 
 
-    private void show_message_in_main_menu(String btnName) {
-        mainMenu.enable_message(textureMenuFactory.getText(btnName));
+    private void showMessageInMainMenu(String btnName) {
+        mainMenu.enableMessage(textureMenuFactory.getText(btnName));
     }
 
-    public void start_animation(String character) {
+    public void startAnimation(String character) {
         animation.execute(character);
     }
 
-    public void remove_button(Button button) {
+    public void removeButton(Button button) {
         button.removePropertyChangeListener(this);
         buttons.removeIf(b -> button.getButtonName().equals(b.getButtonName()));
     }
 
-    public void add_button(Button button) {
+    public void addButton(Button button) {
         boolean exist = buttons.stream().anyMatch(b -> b.equals(button));
         if (!exist) {
             buttons.add(button);

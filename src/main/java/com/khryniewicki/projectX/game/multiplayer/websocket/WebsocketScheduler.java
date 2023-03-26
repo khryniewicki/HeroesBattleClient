@@ -148,12 +148,12 @@ public class WebsocketScheduler {
         support.firePropertyChange(SERVER.getName(), state, new_state);
     }
 
-    public void setMultiplayerState(MultiplayerState new_state) {
+    public void setMultiplayerState(MultiplayerState newState) {
         MultiplayerController multiplayerInstance = MultiplayerController.getInstance();
         multiplayerState = multiplayerInstance.getItsState();
         if (multiplayerState.equals(MultiplayerState.WAITING_FOR_SECOND_PLAYER)) {
-            support.firePropertyChange(MULTIPLAYER.getName(), multiplayerState, new_state);
-            multiplayerState = new_state;
+            support.firePropertyChange(MULTIPLAYER.getName(), multiplayerState, newState);
+            multiplayerState = newState;
         }
     }
 
