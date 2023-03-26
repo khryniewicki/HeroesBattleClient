@@ -1,11 +1,12 @@
 package com.khryniewicki.projectX.game.heroes.character.fallens;
 
-import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.king.BlackFire;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.king.SkullCurse;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FallenKing<T extends Spell, R extends Spell> extends SuperHero<T, R> {
+public class FallenKing<T extends BlackFire, R extends SkullCurse> extends SuperHero<T, R> {
 
     public FallenKing(T basicSpell, R ultimateSpell) {
         super(basicSpell, ultimateSpell);

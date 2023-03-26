@@ -1,11 +1,12 @@
 package com.khryniewicki.projectX.game.heroes.character.fallens;
 
-import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.BloodyWhip;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.FrostFury;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FallenMonk<T extends Spell, R extends Spell> extends SuperHero<T, R> {
+public class FallenMonk<T extends FrostFury, R extends BloodyWhip> extends SuperHero<T, R> {
 
     public FallenMonk(T basicSpell, R ultimateSpell) {
         super(basicSpell, ultimateSpell);

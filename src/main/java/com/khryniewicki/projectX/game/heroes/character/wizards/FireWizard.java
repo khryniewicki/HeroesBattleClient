@@ -1,11 +1,12 @@
 package com.khryniewicki.projectX.game.heroes.character.wizards;
 
-import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.Fire;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.fire.FireBomb;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FireWizard<T extends Spell, R extends Spell> extends SuperHero<T, R> {
+public class FireWizard<T extends Fire, R extends FireBomb> extends SuperHero<T, R> {
 
     public FireWizard(T basicSpell, R ultimateSpell) {
         super(basicSpell, ultimateSpell);

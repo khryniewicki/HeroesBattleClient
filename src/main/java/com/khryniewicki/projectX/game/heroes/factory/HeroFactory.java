@@ -11,6 +11,7 @@ import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.BloodyWhip;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.monk.FrostFury;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Lightning;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Thunderbolt;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricBomb;
 import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricShock;
 import com.khryniewicki.projectX.game.heroes.character.fallens.FallenKing;
 import com.khryniewicki.projectX.game.heroes.character.fallens.FallenMonk;
@@ -43,12 +44,12 @@ public class HeroFactory {
         heroesFactory.put("Fire Wizard", () -> new FireWizard<>(new Fire(), new FireBomb()));
         heroesFactory.put("Ice Wizard", () -> new IceWizard<>(new IceBolt(), new IceBerg()));
         heroesFactory.put("Thunder Wizard", () -> new ThunderWizard<>(new Thunderbolt(), new Lightning()));
-        heroesFactory.put("Fallen Witcher", () -> new FallenWitcher<>(new ElectricShock(), new ElectricShock()));
+        heroesFactory.put("Fallen Witcher", () -> new FallenWitcher<>(new ElectricShock(), new ElectricBomb()));
         heroesFactory.put("Fallen Monk", () -> new FallenMonk<>(new FrostFury(), new BloodyWhip()));
         heroesFactory.put("Fallen King", () -> new FallenKing<>(new BlackFire(), new SkullCurse()));
     }
 
-    public SuperHero<Spell, Spell> create(String character) {
+    public SuperHero<? extends Spell, ? extends Spell> create(String character) {
         if (heroesFactory.containsKey(character)) {
             return heroesFactory.get(character).create();
         }

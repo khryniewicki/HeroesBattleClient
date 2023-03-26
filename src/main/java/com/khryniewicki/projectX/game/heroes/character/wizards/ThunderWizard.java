@@ -1,12 +1,13 @@
 package com.khryniewicki.projectX.game.heroes.character.wizards;
 
 
-import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Lightning;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.thunder.Thunderbolt;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class ThunderWizard<T extends Spell, R extends Spell> extends SuperHero<T, R> {
+public class ThunderWizard<T extends Thunderbolt, R extends Lightning> extends SuperHero<T, R> {
 
     public ThunderWizard(T basicSpell, R ultimateSpell) {
         super(basicSpell, ultimateSpell);

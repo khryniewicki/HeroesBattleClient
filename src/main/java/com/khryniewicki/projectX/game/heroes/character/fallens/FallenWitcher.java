@@ -1,11 +1,13 @@
 package com.khryniewicki.projectX.game.heroes.character.fallens;
 
 import com.khryniewicki.projectX.game.attack.spell.settings.Spell;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricBomb;
+import com.khryniewicki.projectX.game.attack.spell.spellbook.witcher.ElectricShock;
 import com.khryniewicki.projectX.game.heroes.character.properties.SuperHero;
 import com.khryniewicki.projectX.graphics.textures.HeroTextures;
 
 
-public class FallenWitcher<T extends Spell, R extends Spell> extends SuperHero<T, R>{
+public class FallenWitcher<T extends ElectricShock, R extends ElectricBomb> extends SuperHero<T, R>{
 
     public FallenWitcher(T basicSpell, R ultimateSpell) {
         super(basicSpell, ultimateSpell);
